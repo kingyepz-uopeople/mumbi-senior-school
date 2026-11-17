@@ -6,7 +6,7 @@ export const DEFAULT_OG_IMAGE = {
   url: '/images/og-image.png',
   width: 1200,
   height: 630,
-  alt: 'Mumbi Girls Senior School — Education for Empowerment (KNEC 10204102)',
+  alt: "Mumbi Girls' Senior School crest and official banner — Education for Empowerment (KNEC 10204102)",
 };
 
 interface PageMetadataOptions {

@@ -20,12 +20,12 @@ export default function OfflinePage() {
       <div className="max-w-2xl mx-auto bg-white rounded-3xl border border-slate-200 border-t-4 border-t-maroon p-6 sm:p-10 shadow-sm text-center space-y-6">
         <div className="flex items-center justify-center gap-3">
           <Image
-            src="/images/school-crest.png"
-            alt="Mumbi Girls Senior School crest"
-            width={56}
-            height={56}
-            sizes="56px"
-            className="w-14 h-14 object-contain"
+            src="/images/mumbi-logo.png"
+            alt="Mumbi Girls' Senior School crest"
+            width={60}
+            height={61}
+            sizes="60px"
+            className="w-15 h-15 rounded-xl bg-white border border-slate-200 p-1 object-contain"
           />
           <div className="w-14 h-14 rounded-2xl bg-maroon/10 text-maroon flex items-center justify-center">
             <WifiOff className="w-7 h-7" aria-hidden="true" />

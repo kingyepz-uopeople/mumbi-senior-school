@@ -20,11 +20,11 @@ export default function MobileInstallBanner() {
         <div className="flex items-start gap-3">
           <Image
             src="/icons/icon-192x192.png"
-            alt="Mumbi Portal app icon"
+            alt="Mumbi Girls' Senior School crest"
             width={48}
             height={48}
             sizes="48px"
-            className="w-12 h-12 rounded-xl shrink-0 shadow-xs"
+            className="w-12 h-12 rounded-xl bg-white border border-slate-200 object-contain shrink-0 shadow-xs"
           />
 
           <div className="flex-1 min-w-0">

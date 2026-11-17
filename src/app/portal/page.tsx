@@ -60,14 +60,15 @@ export default function PortalComingSoonPage() {
           aria-labelledby="portal-status-heading"
           className="bg-white rounded-3xl border border-slate-200 border-t-4 border-t-gold p-6 sm:p-10 md:p-12 shadow-xs text-center"
         >
-          <div className="w-20 h-20 mx-auto mb-5 rounded-2xl bg-slate-bg border border-slate-200 p-2 flex items-center justify-center shadow-xs">
+          <div className="w-28 h-28 sm:w-32 sm:h-32 mx-auto mb-6 rounded-2xl bg-white border border-slate-200 p-2.5 flex items-center justify-center shadow-xs">
             <Image
-              src="/images/school-crest.png"
-              alt="Mumbi Girls Senior School crest"
-              width={64}
-              height={64}
-              sizes="64px"
-              className="w-16 h-16 object-contain"
+              src="/images/mumbi-logo.png"
+              alt="Mumbi Girls' Senior School crest"
+              width={112}
+              height={114}
+              sizes="(max-width: 640px) 92px, 108px"
+              priority
+              className="w-full h-full object-contain rounded-lg"
             />
           </div>
 

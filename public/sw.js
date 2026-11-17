@@ -1,13 +1,14 @@
-const CACHE_NAME = 'mumbi-portal-shell-v1';
+const CACHE_NAME = 'mumbi-portal-shell-v2';
 const OFFLINE_URL = '/offline';
 const PRECACHE_URLS = [
   OFFLINE_URL,
   '/manifest.webmanifest',
+  '/icons/favicon-32x32.png',
   '/icons/icon-192x192.png',
   '/icons/icon-512x512.png',
   '/icons/icon-maskable-512x512.png',
   '/apple-touch-icon.png',
-  '/images/school-crest.png',
+  '/images/mumbi-logo.png',
 ];
 
 self.addEventListener('install', (event) => {

@@ -34,12 +34,12 @@ export default function Footer() {
           <div>
             <div className="flex items-center gap-3 mb-4">
               <Image
-                src="/images/school-crest.png"
-                alt="Mumbi Girls Senior School crest"
-                width={48}
-                height={48}
-                sizes="48px"
-                className="w-12 h-12 shrink-0"
+                src="/images/mumbi-logo.png"
+                alt="Mumbi Girls' Senior School crest"
+                width={52}
+                height={53}
+                sizes="52px"
+                className="w-13 h-13 rounded-xl bg-white p-1 object-contain shrink-0 shadow-xs"
               />
               <div>
                 <h2 className="font-bold text-base text-white leading-snug">

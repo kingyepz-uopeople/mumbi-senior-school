@@ -287,12 +287,12 @@ function MobileNavDrawer({
         <div className="flex items-center justify-between px-4 py-3.5 border-b border-slate-200 bg-maroon text-white" data-dark-surface>
           <div className="flex items-center gap-2.5 min-w-0">
             <Image
-              src="/images/school-crest.png"
-              alt="Mumbi Girls Senior School crest"
+              src="/images/mumbi-logo.png"
+              alt="Mumbi Girls' Senior School crest"
               width={32}
-              height={32}
+              height={33}
               sizes="32px"
-              className="w-8 h-8 shrink-0"
+              className="w-8 h-8 rounded-md bg-white p-0.5 object-contain shrink-0"
             />
             <span className="text-sm font-bold truncate">Navigation Menu</span>
           </div>
@@ -452,13 +452,13 @@ export default function Header() {
               className="flex items-center gap-2.5 sm:gap-3 min-w-0 rounded-lg py-1"
             >
               <Image
-                src="/images/school-crest.png"
-                alt="Mumbi Girls Senior School crest"
+                src="/images/mumbi-logo.png"
+                alt="Mumbi Girls' Senior School crest"
                 width={44}
-                height={44}
+                height={45}
                 sizes="44px"
                 priority
-                className="w-10 h-10 sm:w-11 sm:h-11 shrink-0 drop-shadow-xs"
+                className="w-10 h-10 sm:w-11 sm:h-11 rounded-lg bg-white p-0.5 object-contain shrink-0 shadow-xs"
               />
               <div className="min-w-0">
                 <span className="block text-white text-sm sm:text-base font-bold leading-tight truncate">

@@ -33,12 +33,12 @@ export default function ContactPage() {
             >
               <div className="flex items-center gap-3.5 pb-4 border-b border-slate-100">
                 <Image
-                  src="/images/school-crest.png"
-                  alt="Mumbi Girls Senior School crest"
-                  width={48}
-                  height={48}
-                  sizes="48px"
-                  className="w-12 h-12 rounded-xl object-contain shrink-0"
+                  src="/images/mumbi-logo.png"
+                  alt="Mumbi Girls' Senior School crest"
+                  width={52}
+                  height={53}
+                  sizes="52px"
+                  className="w-13 h-13 rounded-xl bg-white border border-slate-200 p-1 object-contain shrink-0"
                 />
                 <div className="min-w-0">
                   <h2

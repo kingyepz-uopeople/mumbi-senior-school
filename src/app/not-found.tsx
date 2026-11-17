@@ -7,14 +7,14 @@ export default function NotFound() {
   return (
     <div className="bg-slate-bg py-14 sm:py-20 px-4 sm:px-6">
       <div className="max-w-2xl mx-auto bg-white rounded-3xl border border-slate-200 border-t-4 border-t-gold p-6 sm:p-10 shadow-sm text-center space-y-6">
-        <div className="w-16 h-16 mx-auto">
+        <div className="w-20 h-20 mx-auto rounded-2xl bg-white border border-slate-200 p-1.5 flex items-center justify-center shadow-xs">
           <Image
-            src="/images/school-crest.png"
-            alt="Mumbi Girls Senior School crest"
-            width={64}
-            height={64}
-            sizes="64px"
-            className="w-16 h-16 object-contain"
+            src="/images/mumbi-logo.png"
+            alt="Mumbi Girls' Senior School crest"
+            width={68}
+            height={69}
+            sizes="68px"
+            className="w-full h-full object-contain rounded-lg"
           />
         </div>
 
