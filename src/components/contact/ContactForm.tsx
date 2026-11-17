@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { AlertCircle, CheckCircle2, Loader2, Send } from 'lucide-react';
+import { AlertCircle, Check, Loader2 } from 'lucide-react';
 import { formatDateKE } from '@/lib/utils';
 import type { ContactInquiry } from '@/types';
 
@@ -20,7 +20,6 @@ type FieldName = keyof ContactInquiry;
 type FormErrors = Partial<Record<FieldName, string>>;
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-// Accepts Kenyan local (07xx/01xx) and international (+254..., etc.) phone formats
 const PHONE_PATTERN = /^\+?[0-9\s()-]{9,20}$/;
 
 function validateField(field: FieldName, rawValue: string): string | undefined {
@@ -64,7 +63,7 @@ function validateField(field: FieldName, rawValue: string): string | undefined {
     case 'message':
       if (!value) return 'Please write your inquiry message.';
       if (value.length < MIN_MESSAGE_LENGTH) {
-        return `Please provide at least ${MIN_MESSAGE_LENGTH} characters so our office can assist you.`;
+        return `Please provide at least ${MIN_MESSAGE_LENGTH} characters so the office can respond clearly.`;
       }
       if (value.length > MAX_MESSAGE_LENGTH) {
         return `Message must be ${MAX_MESSAGE_LENGTH} characters or fewer.`;
@@ -140,7 +139,6 @@ export default function ContactForm() {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    // Ignore automated bot submissions silently
     if (honeypot.trim() !== '') {
       return;
     }
@@ -182,12 +180,11 @@ export default function ContactForm() {
       message: form.message.trim(),
     };
 
-    // Brief client-side feedback delay for accessible loading transition
-    await new Promise((resolve) => setTimeout(resolve, 350));
+    await new Promise((resolve) => setTimeout(resolve, 300));
 
     // TODO(database-phase): Persist `sanitizedPayload` to Supabase `contact_inquiries`
     // table via a validated Server Action with RLS insert policy and rate limiting.
-    // Intentionally mock/log-only during the public website polish phase (no Supabase writes).
+    // Intentionally mock/log-only during the public website phase (no Supabase writes).
     console.info('[Mumbi Contact Form — Mock Submission]', {
       ...sanitizedPayload,
       submittedOn: formatDateKE(new Date()),
@@ -214,37 +211,38 @@ export default function ContactForm() {
         tabIndex={-1}
         role="status"
         aria-live="polite"
-        className="p-6 sm:p-8 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-950 space-y-4"
+        className="p-6 sm:p-7 rounded-sm bg-slate-bg border border-slate-300 border-l-4 border-l-primary space-y-4"
       >
-        <div className="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-800 flex items-center justify-center">
-          <CheckCircle2 className="w-6 h-6" aria-hidden="true" />
+        <div className="flex items-center gap-2 text-primary text-xs font-semibold uppercase tracking-[0.12em]">
+          <Check className="w-4 h-4 stroke-[2]" aria-hidden="true" />
+          <span>Enquiry Recorded</span>
         </div>
 
         <div className="space-y-1.5">
-          <h3 className="font-bold text-lg sm:text-xl text-emerald-950">
-            Inquiry Received — Thank You, {receipt.name}
+          <h3 className="font-serif font-bold text-xl text-slate-900">
+            Thank you, {receipt.name}
           </h3>
-          <p className="text-sm text-emerald-900 leading-relaxed">
-            Your <strong>{receipt.category}</strong> message was validated and
-            recorded on <strong>{receipt.submittedDate}</strong>. Confirmation
-            reference email: <strong>{receipt.email}</strong>.
+          <p className="text-sm text-slate-700 leading-relaxed">
+            Your <strong>{receipt.category}</strong> message was recorded on{' '}
+            <strong className="tabular-nums">{receipt.submittedDate}</strong>{' '}
+            under <strong>{receipt.email}</strong>.
           </p>
         </div>
 
-        <p className="text-xs text-emerald-900/90 bg-white/80 border border-emerald-200 rounded-xl p-3.5 leading-relaxed">
-          <strong>Public Preview Notice:</strong> Online database submission is
-          currently in preview mode while the school portal database is being
-          prepared. For urgent inquiries, please reach the administration office
-          during weekday office hours (08:00 – 17:00) or via postal mail.
+        <p className="text-xs text-slate-600 pt-3 border-t border-slate-200 leading-relaxed">
+          <strong>Preview notice:</strong> Direct online filing will be
+          activated alongside the school portal database. For time-sensitive
+          matters, please contact the administration office during weekday hours
+          (08:00 – 17:00) or write to P.O. Box 115 - 10200, Murang&apos;a.
         </p>
 
         <div className="pt-1">
           <button
             type="button"
             onClick={() => setReceipt(null)}
-            className="min-h-11 inline-flex items-center justify-center px-5 py-2.5 rounded-xl bg-primary hover:bg-primary-dark text-white text-sm font-bold transition-colors"
+            className="min-h-11 inline-flex items-center justify-center px-5 py-2.5 rounded-sm bg-primary hover:bg-primary-dark text-white text-sm font-semibold transition-colors"
           >
-            Submit Another Inquiry
+            Send another enquiry
           </button>
         </div>
       </div>
@@ -252,7 +250,7 @@ export default function ContactForm() {
   }
 
   const inputClassName = (hasError: boolean) =>
-    `w-full min-h-12 px-4 py-3 rounded-xl border text-sm text-slate-900 placeholder:text-slate-500 transition-colors ${
+    `w-full min-h-12 px-3.5 py-2.5 rounded-sm border text-sm text-slate-900 placeholder:text-slate-500 transition-colors ${
       hasError
         ? 'border-accent bg-accent/5 focus:bg-white focus:border-accent'
         : 'border-slate-300 bg-slate-bg focus:bg-white focus:border-primary'
@@ -267,33 +265,32 @@ export default function ContactForm() {
       aria-describedby="contact-form-note"
     >
       <p id="contact-form-note" className="text-xs text-slate-600">
-        All fields marked with <span className="text-accent font-bold">*</span>{' '}
-        are required.
+        Fields marked <span className="text-accent font-bold">*</span> are
+        required.
       </p>
 
-      {/* Error Summary for Screen Readers & Keyboard Users */}
       {activeErrorCount > 0 && (
         <div
           role="alert"
-          className="p-4 rounded-xl bg-red-50 border border-red-200 text-red-900 flex items-start gap-2.5 text-xs sm:text-sm"
+          className="p-4 rounded-sm bg-accent/5 border border-accent/40 border-l-4 border-l-accent text-slate-900 flex items-start gap-2.5 text-xs sm:text-sm"
         >
           <AlertCircle
-            className="w-5 h-5 text-red-700 shrink-0 mt-0.5"
+            className="w-4 h-4 text-accent shrink-0 mt-0.5 stroke-[2]"
             aria-hidden="true"
           />
           <div>
-            <p className="font-bold">
-              Please review {activeErrorCount}{' '}
-              {activeErrorCount === 1 ? 'field' : 'fields'} before submitting.
+            <p className="font-semibold">
+              Please check {activeErrorCount}{' '}
+              {activeErrorCount === 1 ? 'field' : 'fields'} before sending.
             </p>
-            <p className="text-red-800 mt-0.5">
-              Each field with an issue is highlighted below with instructions.
+            <p className="text-slate-700 mt-0.5">
+              See the notes directly beneath each highlighted field.
             </p>
           </div>
         </div>
       )}
 
-      {/* Anti-spam honeypot (hidden from sighted and assistive-tech users) */}
+      {/* Anti-spam honeypot */}
       <div className="hidden" aria-hidden="true">
         <label htmlFor="contact-website">Leave this field empty</label>
         <input
@@ -312,7 +309,7 @@ export default function ContactForm() {
         <div>
           <label
             htmlFor="contact-name"
-            className="block text-xs font-bold uppercase tracking-wider text-slate-800 mb-1.5"
+            className="block text-xs font-semibold uppercase tracking-[0.1em] text-slate-800 mb-1.5"
           >
             Full Name <span className="text-accent" aria-hidden="true">*</span>
           </label>
@@ -335,7 +332,7 @@ export default function ContactForm() {
             <p
               id="contact-name-error"
               role="alert"
-              className="mt-1.5 text-xs font-semibold text-red-700 flex items-start gap-1.5"
+              className="mt-1.5 text-xs font-semibold text-accent flex items-start gap-1.5"
             >
               <AlertCircle
                 className="w-3.5 h-3.5 shrink-0 mt-0.5"
@@ -349,7 +346,7 @@ export default function ContactForm() {
         <div>
           <label
             htmlFor="contact-phone"
-            className="block text-xs font-bold uppercase tracking-wider text-slate-800 mb-1.5"
+            className="block text-xs font-semibold uppercase tracking-[0.1em] text-slate-800 mb-1.5"
           >
             Phone Number{' '}
             <span className="text-accent" aria-hidden="true">*</span>
@@ -374,7 +371,7 @@ export default function ContactForm() {
             <p
               id="contact-phone-error"
               role="alert"
-              className="mt-1.5 text-xs font-semibold text-red-700 flex items-start gap-1.5"
+              className="mt-1.5 text-xs font-semibold text-accent flex items-start gap-1.5"
             >
               <AlertCircle
                 className="w-3.5 h-3.5 shrink-0 mt-0.5"
@@ -391,7 +388,7 @@ export default function ContactForm() {
         <div>
           <label
             htmlFor="contact-email"
-            className="block text-xs font-bold uppercase tracking-wider text-slate-800 mb-1.5"
+            className="block text-xs font-semibold uppercase tracking-[0.1em] text-slate-800 mb-1.5"
           >
             Email Address{' '}
             <span className="text-accent" aria-hidden="true">*</span>
@@ -416,7 +413,7 @@ export default function ContactForm() {
             <p
               id="contact-email-error"
               role="alert"
-              className="mt-1.5 text-xs font-semibold text-red-700 flex items-start gap-1.5"
+              className="mt-1.5 text-xs font-semibold text-accent flex items-start gap-1.5"
             >
               <AlertCircle
                 className="w-3.5 h-3.5 shrink-0 mt-0.5"
@@ -430,10 +427,9 @@ export default function ContactForm() {
         <div>
           <label
             htmlFor="contact-category"
-            className="block text-xs font-bold uppercase tracking-wider text-slate-800 mb-1.5"
+            className="block text-xs font-semibold uppercase tracking-[0.1em] text-slate-800 mb-1.5"
           >
-            Inquiry Category{' '}
-            <span className="text-accent" aria-hidden="true">*</span>
+            Subject <span className="text-accent" aria-hidden="true">*</span>
           </label>
           <select
             id="contact-category"
@@ -458,7 +454,7 @@ export default function ContactForm() {
             <p
               id="contact-category-error"
               role="alert"
-              className="mt-1.5 text-xs font-semibold text-red-700 flex items-start gap-1.5"
+              className="mt-1.5 text-xs font-semibold text-accent flex items-start gap-1.5"
             >
               <AlertCircle
                 className="w-3.5 h-3.5 shrink-0 mt-0.5"
@@ -475,7 +471,7 @@ export default function ContactForm() {
         <div className="flex items-baseline justify-between gap-2 mb-1.5">
           <label
             htmlFor="contact-message"
-            className="block text-xs font-bold uppercase tracking-wider text-slate-800"
+            className="block text-xs font-semibold uppercase tracking-[0.1em] text-slate-800"
           >
             Message <span className="text-accent" aria-hidden="true">*</span>
           </label>
@@ -501,14 +497,14 @@ export default function ContactForm() {
               ? 'contact-message-error contact-message-hint'
               : 'contact-message-hint'
           }
-          placeholder="Write your question or inquiry clearly (for example, Grade 10 admission requirements, fee schedule clarification, or boarding inquiries)..."
+          placeholder="State your question clearly (e.g. Grade 10 reporting documents, fee structure query, or examination slip collection)."
           className={`${inputClassName(Boolean(errors.message))} resize-y`}
         />
         {errors.message && (
           <p
             id="contact-message-error"
             role="alert"
-            className="mt-1.5 text-xs font-semibold text-red-700 flex items-start gap-1.5"
+            className="mt-1.5 text-xs font-semibold text-accent flex items-start gap-1.5"
           >
             <AlertCircle
               className="w-3.5 h-3.5 shrink-0 mt-0.5"
@@ -522,18 +518,15 @@ export default function ContactForm() {
       <button
         type="submit"
         disabled={isSubmitting}
-        className="w-full min-h-12 py-3.5 px-6 rounded-xl bg-primary hover:bg-primary-dark disabled:opacity-60 disabled:cursor-not-allowed text-white font-bold text-sm inline-flex items-center justify-center gap-2 transition-colors shadow-sm"
+        className="w-full sm:w-auto min-h-12 py-3 px-7 rounded-sm bg-primary hover:bg-primary-dark disabled:opacity-60 disabled:cursor-not-allowed text-white font-semibold text-sm inline-flex items-center justify-center gap-2 transition-colors"
       >
         {isSubmitting ? (
           <>
             <Loader2 className="w-4 h-4 animate-spin" aria-hidden="true" />
-            <span>Validating &amp; Submitting...</span>
+            <span>Sending enquiry...</span>
           </>
         ) : (
-          <>
-            <Send className="w-4 h-4" aria-hidden="true" />
-            <span>Submit Official Inquiry</span>
-          </>
+          <span>Send enquiry</span>
         )}
       </button>
     </form>

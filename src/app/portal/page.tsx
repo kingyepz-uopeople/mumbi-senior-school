@@ -1,17 +1,7 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
-import {
-  ArrowLeft,
-  BookOpen,
-  Clock,
-  FileSpreadsheet,
-  FolderDown,
-  Lock,
-  Mail,
-  ShieldCheck,
-  Users,
-} from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import PageHeader from '@/components/shared/PageHeader';
 import { schoolInfo } from '@/data/mock-school-data';
 import { buildPageMetadata } from '@/lib/site';
@@ -19,28 +9,25 @@ import { buildPageMetadata } from '@/lib/site';
 export const metadata: Metadata = buildPageMetadata({
   title: 'Student & Staff Portal (Coming Soon)',
   description:
-    'Preview of the upcoming Mumbi Girls Senior School digital portal for students, parents, and teaching staff. Public downloads and circulars remain accessible now.',
+    'Information on the upcoming Mumbi Girls Senior School online portal for students, parents, and staff. Public circulars and downloads are open now without sign-in.',
   path: '/portal',
 });
 
 const UPCOMING_MODULES = [
   {
-    title: 'Student & Parent Access',
+    title: 'Students & Parents',
     description:
-      'View termly academic progress reports, subject assignments, attendance summaries, and official fee statements in a single secure dashboard.',
-    icon: BookOpen,
+      'Term academic reports, holiday assignment downloads, attendance records, and fee statements.',
   },
   {
-    title: 'Teaching Staff Workspace',
+    title: 'Teaching Staff',
     description:
-      'Publish holiday revision packages, upload departmental learning materials, and share timely academic notices with students and parents.',
-    icon: Users,
+      'Departmental assignment uploads, class lists, assessment entry, and internal notices.',
   },
   {
-    title: 'Administration & Records',
+    title: 'School Administration',
     description:
-      'Issue verified school circulars, joining instructions, examination timetables, and termly newsletters directly to the public website.',
-    icon: FileSpreadsheet,
+      'Publication of term circulars, joining instructions, examination timetables, and newsletters.',
   },
 ] as const;
 
@@ -48,128 +35,105 @@ export default function PortalComingSoonPage() {
   return (
     <div className="bg-slate-bg">
       <PageHeader
-        badge="Digital Campus Portal"
+        kicker="Online Services"
         title="Student & Staff Portal"
-        description="A secure, role-based online portal for Mumbi Girls Senior School learners, parents, and staff is scheduled for a future rollout phase."
-        icon={Lock}
+        description="Student, parent, and staff login accounts are scheduled for a later phase. Public circulars, holiday assignments, and fee schedules remain available below without sign-in."
       />
 
       <div className="max-w-5xl mx-auto px-4 sm:px-6 py-12 sm:py-16 space-y-12">
-        {/* Status Banner Card */}
+        {/* Status Notice */}
         <section
           aria-labelledby="portal-status-heading"
-          className="bg-white rounded-3xl border border-slate-200 border-t-4 border-t-primary p-6 sm:p-10 md:p-12 shadow-xs text-center"
+          className="bg-white border border-slate-200 border-t-2 border-t-primary p-6 sm:p-10"
         >
-          <div className="w-28 h-28 sm:w-32 sm:h-32 mx-auto mb-6 rounded-2xl bg-white border border-slate-200 p-2.5 flex items-center justify-center shadow-xs">
-            <Image
-              src="/images/mumbi-logo.png"
-              alt="Mumbi Girls' Senior School crest"
-              width={112}
-              height={114}
-              sizes="(max-width: 640px) 92px, 108px"
-              priority
-              className="w-full h-full object-contain rounded-lg"
-            />
-          </div>
+          <div className="flex flex-col sm:flex-row items-start gap-6 sm:gap-8">
+            <div className="w-24 sm:w-28 shrink-0 rounded-xs bg-[#f7f7f7] border border-slate-200 p-2">
+              <Image
+                src="/images/mumbi-logo.png"
+                alt="Mumbi Girls' Senior School crest"
+                width={100}
+                height={102}
+                sizes="(max-width: 640px) 80px, 96px"
+                priority
+                className="w-full h-auto object-contain"
+              />
+            </div>
 
-          <span className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider px-3.5 py-1.5 rounded-full bg-accent/10 text-accent border border-accent/25 mb-4">
-            <Clock className="w-3.5 h-3.5" aria-hidden="true" />
-            <span>Coming Soon — Planned Rollout</span>
-          </span>
+            <div className="space-y-4 max-w-2xl">
+              <span className="inline-block px-2.5 py-0.5 rounded-xs text-[11px] font-bold uppercase tracking-[0.12em] bg-accent text-white">
+                Coming Soon
+              </span>
 
-          <h2
-            id="portal-status-heading"
-            className="text-2xl sm:text-3xl font-extrabold text-slate-900 mb-3"
-          >
-            Online Sign-In Is Not Yet Active
-          </h2>
+              <h2
+                id="portal-status-heading"
+                className="font-serif text-2xl sm:text-3xl font-bold text-slate-900"
+              >
+                Online sign-in is not yet open
+              </h2>
 
-          <p className="text-sm sm:text-base text-slate-600 max-w-2xl mx-auto leading-relaxed mb-8">
-            {schoolInfo.name} is completing its public information website first.
-            Student, parent, and staff login accounts will be activated in the
-            upcoming portal phase. In the meantime, all public circulars,
-            holiday assignments, fee structures, and admission inquiries are
-            available below without signing in.
-          </p>
+              <p className="text-sm sm:text-base text-slate-700 leading-relaxed">
+                {schoolInfo.name} is publishing its public school website first.
+                Accounts for students, parents, and teaching staff will open in
+                a later rollout and will be announced through official school
+                circulars. All current public documents can be accessed below.
+              </p>
 
-          <div className="flex flex-col sm:flex-row flex-wrap items-center justify-center gap-3">
-            <Link
-              href="/downloads"
-              className="w-full sm:w-auto min-h-12 inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-primary hover:bg-primary-dark text-white text-sm font-bold transition-colors shadow-xs"
-            >
-              <FolderDown className="w-4 h-4 shrink-0" aria-hidden="true" />
-              <span>Browse Downloads Hub</span>
-            </Link>
-            <Link
-              href="/contact"
-              className="w-full sm:w-auto min-h-12 inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl border-2 border-primary text-primary hover:bg-primary hover:text-white text-sm font-bold transition-colors"
-            >
-              <Mail className="w-4 h-4 shrink-0" aria-hidden="true" />
-              <span>Contact Administration</span>
-            </Link>
-            <Link
-              href="/"
-              className="w-full sm:w-auto min-h-12 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl text-slate-700 hover:text-primary hover:bg-slate-100 text-sm font-bold transition-colors"
-            >
-              <ArrowLeft className="w-4 h-4 shrink-0" aria-hidden="true" />
-              <span>Back to Home</span>
-            </Link>
+              <div className="pt-2 flex flex-col sm:flex-row flex-wrap gap-3">
+                <Link
+                  href="/downloads"
+                  className="min-h-11 inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-sm bg-primary hover:bg-primary-dark text-white text-sm font-semibold transition-colors"
+                >
+                  <span>Downloads &amp; circulars</span>
+                  <ArrowRight
+                    className="w-4 h-4 shrink-0 stroke-[1.75]"
+                    aria-hidden="true"
+                  />
+                </Link>
+                <Link
+                  href="/contact"
+                  className="min-h-11 inline-flex items-center justify-center px-5 py-2.5 rounded-sm border border-primary text-primary hover:bg-primary hover:text-white text-sm font-semibold transition-colors"
+                >
+                  Contact administration
+                </Link>
+                <Link
+                  href="/"
+                  className="min-h-11 inline-flex items-center justify-center px-4 py-2.5 rounded-sm text-slate-700 hover:text-primary hover:underline underline-offset-4 text-sm font-medium transition-colors"
+                >
+                  Return to home
+                </Link>
+              </div>
+            </div>
           </div>
         </section>
 
-        {/* Planned Portal Capabilities */}
-        <section aria-labelledby="portal-modules-heading" className="space-y-6">
-          <div className="text-center">
-            <span className="text-xs font-bold uppercase tracking-wider text-primary">
-              Future Capabilities
-            </span>
-            <h2
-              id="portal-modules-heading"
-              className="text-xl sm:text-2xl font-bold text-slate-900 mt-1 mb-2"
-            >
-              What the Portal Will Provide
-            </h2>
-            <div
-              className="w-14 h-1 rounded-full bg-accent mx-auto"
-              aria-hidden="true"
-            />
+        {/* Planned Portal Sections */}
+        <section aria-labelledby="portal-modules-heading" className="space-y-5">
+          <h2
+            id="portal-modules-heading"
+            className="font-serif text-xl sm:text-2xl font-bold text-slate-900"
+          >
+            Planned Portal Sections
+          </h2>
+
+          <div className="bg-white border-t-2 border-t-primary border-x border-b border-slate-200 grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-slate-200">
+            {UPCOMING_MODULES.map((module) => (
+              <article key={module.title} className="p-6">
+                <h3 className="font-serif text-lg font-bold text-slate-900 mb-2">
+                  {module.title}
+                </h3>
+                <p className="text-sm text-slate-600 leading-relaxed">
+                  {module.description}
+                </p>
+              </article>
+            ))}
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {UPCOMING_MODULES.map((module) => {
-              const Icon = module.icon;
-              return (
-                <article
-                  key={module.title}
-                  className="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs flex flex-col"
-                >
-                  <div className="w-11 h-11 rounded-xl bg-primary/10 text-primary flex items-center justify-center mb-4">
-                    <Icon className="w-5 h-5" aria-hidden="true" />
-                  </div>
-                  <h3 className="font-bold text-base text-slate-900 mb-2">
-                    {module.title}
-                  </h3>
-                  <p className="text-sm text-slate-600 leading-relaxed">
-                    {module.description}
-                  </p>
-                </article>
-              );
-            })}
-          </div>
-
-          <div className="bg-primary/5 border border-primary/15 rounded-2xl p-5 flex items-start gap-3 text-xs sm:text-sm text-slate-700">
-            <ShieldCheck
-              className="w-5 h-5 text-primary shrink-0 mt-0.5"
-              aria-hidden="true"
-            />
-            <p className="leading-relaxed">
-              <strong className="text-slate-900">Data Protection Notice:</strong>{' '}
-              Never share personal passwords or admission numbers through
-              unofficial channels. Official onboarding instructions will be
-              communicated directly through verified {schoolInfo.name} circulars
-              ({schoolInfo.postalAddress}).
-            </p>
-          </div>
+          <p className="text-xs sm:text-sm text-slate-600 border-l-2 border-primary pl-4 leading-relaxed">
+            <strong className="text-slate-900">Notice to parents and students:</strong>{' '}
+            Do not share admission numbers or personal details through
+            unofficial links. Portal registration instructions will be issued
+            only by {schoolInfo.name} ({schoolInfo.postalAddress}).
+          </p>
         </section>
       </div>
     </div>

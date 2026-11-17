@@ -1,53 +1,36 @@
-import {
-  Calendar,
-  GraduationCap,
-  Route,
-  Users,
-  type LucideIcon,
-} from 'lucide-react';
 import { quickStats } from '@/data/mock-school-data';
-
-const iconMap: Record<string, LucideIcon> = {
-  Calendar,
-  Users,
-  GraduationCap,
-  Route,
-};
 
 export default function QuickStats() {
   return (
     <section
-      data-dark-surface
       aria-labelledby="quick-stats-heading"
-      className="bg-primary-dark text-white border-b border-white/10"
+      className="bg-white border-b border-slate-200"
     >
       <h2 id="quick-stats-heading" className="sr-only">
-        Mumbi Girls Senior School at a Glance
+        School Figures at a Glance
       </h2>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10 md:py-12">
-        <dl className="grid grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
-          {quickStats.map((stat) => {
-            const Icon = iconMap[stat.icon];
-            return (
-              <div
-                key={stat.label}
-                className="flex flex-col items-center text-center p-4 rounded-xl bg-white/8 border border-white/15"
-              >
-                {Icon && (
-                  <Icon
-                    className="w-7 h-7 md:w-9 md:h-9 text-blue-100 mb-2.5"
-                    aria-hidden="true"
-                  />
-                )}
-                <dd className="text-3xl sm:text-4xl font-black text-white tracking-tight mb-1">
-                  {stat.value}
-                </dd>
-                <dt className="text-xs sm:text-sm font-medium text-white/90">
-                  {stat.label}
-                </dt>
-              </div>
-            );
-          })}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+        <dl className="grid grid-cols-2 lg:grid-cols-4 divide-y lg:divide-y-0 divide-slate-200">
+          {quickStats.map((stat, index) => (
+            <div
+              key={stat.label}
+              className={`py-7 sm:py-9 ${
+                index % 2 === 1 ? 'pl-5 sm:pl-8 border-l border-slate-200' : 'pr-4 sm:pr-8'
+              } ${
+                index === 2 ? 'lg:pl-8 lg:border-l lg:border-slate-200' : ''
+              } ${index < 2 ? 'border-b lg:border-b-0' : 'border-b-0'}`}
+            >
+              <dd className="font-serif text-3xl sm:text-4xl font-bold text-primary tracking-tight tabular-nums">
+                {stat.value}
+              </dd>
+              <dt className="text-xs font-semibold uppercase tracking-[0.1em] text-slate-800 mt-1.5">
+                {stat.label}
+              </dt>
+              {stat.detail && (
+                <p className="text-xs text-slate-600 mt-0.5">{stat.detail}</p>
+              )}
+            </div>
+          ))}
         </dl>
       </div>
     </section>

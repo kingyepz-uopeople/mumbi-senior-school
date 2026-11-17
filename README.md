@@ -27,13 +27,13 @@ A production-ready, modern web platform for **Mumbi Girls Senior School**, built
 1. **Top Utility Bar & Sticky Navigation:**
    - Displays KNEC Centre Code `10204102`, postal address, office hours, student/staff login shortcuts, and mobile PWA install trigger.
 2. **Home (`/`):**
-   - 5-slide interactive Hero Carousel.
-   - Quick statistics strip (Founded 1960, 1,200+ students, 78% university transition rate, 3 CBC pathways).
-   - Chief Principal's welcome message and signature block.
-   - Foundational pillars (Motto, Mission, Vision, and Core Values).
-   - Interactive 3-tab CBC Senior School Pathways preview.
-   - KCSE Wall of Fame filterable top scholars grid.
-   - Latest circulars, newsletters, and quick downloads.
+   - Static crest hero with the official school crest, serif display heading, motto, provenance (`Mukuyu, Murang'a County · Est. 1960`), and automatic real photo slot (`public/images/hero/campus.jpg`).
+   - Key school figures (Established 1960, 1,200+ students, 78% university transition, 3 CBC Senior School pathways).
+   - Chief Principal's welcome message with portrait photo slot (`public/images/principal.jpg`).
+   - Motto, Mission, Vision, and six Core Values.
+   - 3-tab CBC Senior School Pathways overview (Grades 10–12).
+   - Filterable KCSE Roll of Honour table.
+   - School office notices, circulars, and downloads register.
 3. **About Us (`/about`):**
    - Historical background and transition to Mumbi Girls Senior School.
    - Dual School Anthems card (English *School Anthem* & Kiswahili *Wimbo wa Shule*).
@@ -67,12 +67,24 @@ A production-ready, modern web platform for **Mumbi Girls Senior School**, built
 
 ---
 
+## Adding Real School Photographs
+
+Drop JPG files at the paths below and rebuild/redeploy — pages detect them automatically without code changes (see [`public/images/README.md`](public/images/README.md) for recommended dimensions):
+
+- **Homepage hero:** `public/images/hero/campus.jpg`
+- **Chief Principal portrait:** `public/images/principal.jpg`
+- **Campus location (`/contact`):** `public/images/campus-location.jpg`
+- **Event gallery (`/gallery`):** `public/images/gallery/prayer-{1,2,3}.jpg`, `agm-{1,2,3}.jpg`, `stem-{1,2,3}.jpg`, `sports-{1,2,3}.jpg`
+
+---
+
 ## Tech Stack
 - **Framework:** Next.js 16 (App Router with Turbopack)
 - **Language:** TypeScript
-- **Styling:** Tailwind CSS
+- **Typography:** Source Serif 4 (display & headings) + Inter (body), bundled locally via `next/font/local`
+- **Styling:** Tailwind CSS v4
 - **Icons:** Lucide React
-- **Backend & Database:** Supabase (`@supabase/supabase-js`, `@supabase/ssr`) with automatic mock fallback
+- **Backend & Database:** Supabase (`@supabase/supabase-js`, `@supabase/ssr`) — deferred to portal phase
 
 ---
 

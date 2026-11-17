@@ -1,14 +1,4 @@
 import type { Metadata } from 'next';
-import {
-  BookOpen,
-  Calculator,
-  FlaskConical,
-  Globe,
-  GraduationCap,
-  Languages,
-  Wrench,
-  type LucideIcon,
-} from 'lucide-react';
 import PageHeader from '@/components/shared/PageHeader';
 import { PathwaysTabs } from '@/components/home/PathwaysPreview';
 import WallOfFameGrid from '@/components/shared/WallOfFameGrid';
@@ -18,170 +8,135 @@ import { buildPageMetadata } from '@/lib/site';
 export const metadata: Metadata = buildPageMetadata({
   title: 'Academics & CBC Pathways',
   description:
-    'Explore CBC Senior School Pathways (STEM, Social Sciences, and Arts & Sports Science for Grades 10–12), academic departments with Heads of Department, and the KCSE Wall of Fame at Mumbi Girls Senior School.',
+    'CBC Senior School pathways (STEM, Social Sciences, and Arts & Sports Science for Grades 10–12), the five teaching departments and Heads of Department, and KCSE results at Mumbi Girls Senior School.',
   path: '/academics',
 });
-
-const deptIconMap: Record<string, LucideIcon> = {
-  Calculator,
-  FlaskConical,
-  Languages,
-  Globe,
-  Wrench,
-};
 
 export default function AcademicsPage() {
   return (
     <div className="bg-slate-bg">
       <PageHeader
-        badge="Curriculum & Academic Excellence"
+        kicker="Curriculum & Examinations"
         title="Academics & CBC Pathways"
-        description="Holistic senior secondary scholarship aligned with Kenya's Competency-Based Curriculum (Grades 10–12) and KNEC national examinations."
-        icon={GraduationCap}
-        chips={[
-          `KNEC Centre: ${schoolInfo.knecCode}`,
-          '3 CBC Senior School Pathways',
+        description="Senior School pathways for Grades 10 to 12 under Kenya's Competency-Based Curriculum, our five teaching departments, and recorded KCSE placements."
+        meta={[
+          `KNEC Centre ${schoolInfo.knecCode}`,
+          '3 Senior School Pathways',
           '5 Academic Departments',
         ]}
       />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-16 space-y-16">
-        {/* CBC Pathways Explorer */}
-        <section
-          id="pathways"
-          aria-labelledby="academics-pathways-heading"
-          className="scroll-mt-28"
-        >
-          <div className="text-center mb-10">
-            <span className="text-xs font-bold uppercase tracking-wider text-primary">
-              Senior School Pathways Hub
-            </span>
+      {/* 1. CBC Pathways */}
+      <section
+        id="pathways"
+        aria-labelledby="academics-pathways-heading"
+        className="scroll-mt-28 py-16 sm:py-20 bg-slate-bg border-b border-slate-200"
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="max-w-2xl mb-8">
+            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary mb-2">
+              Grades 10 – 12
+            </p>
             <h2
               id="academics-pathways-heading"
-              className="text-2xl sm:text-3xl font-bold text-slate-900 mt-1 mb-2"
+              className="font-serif text-2xl sm:text-3xl font-bold text-slate-900"
             >
-              CBC Senior School Pathways (Grades 10 – 12)
+              CBC Senior School Pathways
             </h2>
-            <p className="text-sm sm:text-base text-slate-600 max-w-2xl mx-auto mb-3">
-              Under Kenya&apos;s Basic Education Curriculum Framework,{' '}
-              {schoolInfo.name} offers three specialised pathways tailored to
-              diverse student aptitudes and university career goals.
+            <p className="text-sm sm:text-base text-slate-600 mt-2 leading-relaxed">
+              Incoming Senior School students at {schoolInfo.name} select one of
+              three pathways according to subject placement and career plans.
             </p>
-            <div
-              className="w-16 h-1 bg-accent mx-auto rounded-full"
-              aria-hidden="true"
-            />
           </div>
 
           <PathwaysTabs idPrefix="academics-pathway" />
-        </section>
+        </div>
+      </section>
 
-        {/* Academic Departments Directory */}
-        <section
-          id="departments"
-          aria-labelledby="academics-departments-heading"
-          className="scroll-mt-28"
-        >
-          <div className="text-center mb-10">
-            <span className="text-xs font-bold uppercase tracking-wider text-primary">
-              Faculty &amp; Subject Areas
-            </span>
+      {/* 2. Academic Departments Directory */}
+      <section
+        id="departments"
+        aria-labelledby="academics-departments-heading"
+        className="scroll-mt-28 py-16 sm:py-20 bg-white border-b border-slate-200"
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="max-w-2xl mb-10">
+            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary mb-2">
+              Teaching Faculty
+            </p>
             <h2
               id="academics-departments-heading"
-              className="text-2xl sm:text-3xl font-bold text-slate-900 mt-1 mb-2"
+              className="font-serif text-2xl sm:text-3xl font-bold text-slate-900"
             >
-              Academic Departments Directory
+              Academic Departments
             </h2>
-            <p className="text-sm sm:text-base text-slate-600 max-w-2xl mx-auto mb-3">
-              Experienced teaching faculty organised into five collaborative
-              departments supporting every learner from orientation through
-              final examinations.
+            <p className="text-sm sm:text-base text-slate-600 mt-2 leading-relaxed">
+              Subject teaching, laboratory practicals, and internal examinations
+              are organised under five departments.
             </p>
-            <div
-              className="w-16 h-1 bg-accent mx-auto rounded-full"
-              aria-hidden="true"
-            />
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {departments.map((dept) => {
-              const Icon = deptIconMap[dept.icon] ?? BookOpen;
-              return (
-                <article
-                  key={dept.id}
-                  className="bg-white rounded-2xl border border-slate-200 border-t-4 border-t-primary p-6 shadow-xs hover:shadow-md transition-shadow flex flex-col justify-between"
-                >
-                  <div>
-                    <div className="flex items-center gap-3.5 mb-4">
-                      <div className="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center shrink-0">
-                        <Icon className="w-6 h-6" aria-hidden="true" />
-                      </div>
-                      <div>
-                        <h3 className="font-bold text-lg text-slate-900 leading-snug">
-                          {dept.name}
-                        </h3>
-                        <p className="text-xs text-primary font-bold mt-0.5">
-                          HOD: {dept.hod}
-                        </p>
-                      </div>
-                    </div>
+          <div className="border-t-2 border-primary divide-y divide-slate-200 border-b border-slate-200">
+            {departments.map((dept) => (
+              <article
+                key={dept.id}
+                className="py-7 grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-8 items-start"
+              >
+                <div className="md:col-span-4">
+                  <h3 className="font-serif text-xl font-bold text-slate-900">
+                    {dept.name}
+                  </h3>
+                  <p className="text-xs font-semibold text-primary mt-1">
+                    Head of Department: {dept.hod}
+                  </p>
+                </div>
 
-                    <p className="text-slate-600 text-sm mb-5 leading-relaxed">
-                      {dept.description}
-                    </p>
-                  </div>
+                <div className="md:col-span-5">
+                  <p className="text-sm sm:text-base text-slate-700 leading-relaxed">
+                    {dept.description}
+                  </p>
+                </div>
 
-                  <div className="pt-4 border-t border-slate-100">
-                    <span className="text-[11px] font-bold uppercase tracking-wider text-slate-600 block mb-2">
-                      Subjects Offered
-                    </span>
-                    <ul className="flex flex-wrap gap-1.5">
-                      {dept.subjects.map((sub) => (
-                        <li
-                          key={sub}
-                          className="text-xs px-2.5 py-1 rounded-md bg-slate-bg border border-slate-200 text-slate-800 font-medium"
-                        >
-                          {sub}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </article>
-              );
-            })}
+                <div className="md:col-span-3">
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-600 mb-1.5">
+                    Subjects
+                  </p>
+                  <p className="text-xs sm:text-sm text-slate-800 leading-relaxed">
+                    {dept.subjects.join(' · ')}
+                  </p>
+                </div>
+              </article>
+            ))}
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* Full KCSE Wall of Fame */}
-        <section
-          id="wall-of-fame"
-          aria-labelledby="academics-wof-heading"
-          className="scroll-mt-28"
-        >
-          <div className="text-center mb-10">
-            <span className="text-xs font-bold uppercase tracking-wider text-primary">
-              Academic Distinction
-            </span>
+      {/* 3. KCSE Roll of Honour */}
+      <section
+        id="wall-of-fame"
+        aria-labelledby="academics-wof-heading"
+        className="scroll-mt-28 py-16 sm:py-20 bg-slate-bg"
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="max-w-2xl mb-8">
+            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary mb-2">
+              National Examinations · KNEC {schoolInfo.knecCode}
+            </p>
             <h2
               id="academics-wof-heading"
-              className="text-2xl sm:text-3xl font-bold text-slate-900 mt-1 mb-2"
+              className="font-serif text-2xl sm:text-3xl font-bold text-slate-900"
             >
-              KCSE Wall of Fame (Top Scholars)
+              KCSE Roll of Honour
             </h2>
-            <p className="text-sm sm:text-base text-slate-600 max-w-2xl mx-auto mb-3">
-              Celebrating top-performing alumnae admitted to competitive
-              university degree programmes across Kenya. Filter by examination
-              year below.
+            <p className="text-sm sm:text-base text-slate-600 mt-2 leading-relaxed">
+              Top candidates recorded from recent KCSE sittings and the
+              university degree programmes to which they were admitted.
             </p>
-            <div
-              className="w-16 h-1 bg-accent mx-auto rounded-full"
-              aria-hidden="true"
-            />
           </div>
 
           <WallOfFameGrid />
-        </section>
-      </div>
+        </div>
+      </section>
     </div>
   );
 }

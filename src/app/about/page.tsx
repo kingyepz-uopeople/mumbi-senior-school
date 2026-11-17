@@ -1,15 +1,4 @@
 import type { Metadata } from 'next';
-import {
-  Award,
-  CheckCircle2,
-  Clock,
-  Compass,
-  Music,
-  Shield,
-  Star,
-  UserCheck,
-  Users,
-} from 'lucide-react';
 import PageHeader from '@/components/shared/PageHeader';
 import {
   bomChairpersons,
@@ -21,346 +10,340 @@ import {
 import { buildPageMetadata } from '@/lib/site';
 
 export const metadata: Metadata = buildPageMetadata({
-  title: 'About Us',
+  title: 'About the School',
   description:
-    "Explore Mumbi Girls Senior School's history since 1960, motto, mission, vision, core values, English and Kiswahili school anthems, principals and BOM leadership timelines, and student council governance in Mukuyu, Murang'a.",
+    "History of Mumbi Girls Senior School since 1960, motto, mission, vision, core values, English and Kiswahili school anthems, roll of principals, BOM chairpersons, and student council governance in Mukuyu, Murang'a County.",
   path: '/about',
 });
+
+const ROMAN = ['I', 'II', 'III'] as const;
 
 export default function AboutPage() {
   return (
     <div className="bg-slate-bg">
       <PageHeader
-        badge="Heritage & Governance"
-        title={`About ${schoolInfo.name}`}
-        description={`A ${schoolInfo.category} in Murang'a County nurturing competent, ethical, and transformative young women since ${schoolInfo.founded}.`}
-        icon={Compass}
-        chips={[
-          `KNEC Centre: ${schoolInfo.knecCode}`,
-          `MoE Reg: ${schoolInfo.moeReg}`,
-          `Founded: ${schoolInfo.founded}`,
-          "Mukuyu, Kiharu, Murang'a East",
+        kicker="About the School"
+        title={schoolInfo.name}
+        description={`A ${schoolInfo.category} in Mukuyu Sub-location, Kiharu Constituency, Murang'a East, established in ${schoolInfo.founded}.`}
+        meta={[
+          `Est. ${schoolInfo.founded}`,
+          `KNEC ${schoolInfo.knecCode}`,
+          `MoE ${schoolInfo.moeReg}`,
+          schoolInfo.postalAddress,
         ]}
       />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-16 space-y-16">
-        {/* History & Background */}
-        <section
-          id="history"
-          aria-labelledby="about-history-heading"
-          className="scroll-mt-28"
-        >
-          <div className="bg-white rounded-2xl shadow-xs border border-slate-200 border-t-4 border-t-primary p-6 sm:p-10 md:p-12">
-            <div className="flex items-start sm:items-center gap-3.5 mb-6">
-              <div className="p-3 bg-primary/10 rounded-xl text-primary shrink-0">
-                <Clock className="w-6 h-6" aria-hidden="true" />
-              </div>
-              <div>
-                <span className="text-xs font-bold uppercase tracking-wider text-primary">
-                  Historical Heritage
-                </span>
-                <h2
-                  id="about-history-heading"
-                  className="text-2xl sm:text-3xl font-bold text-slate-900 mt-0.5"
-                >
-                  Our History &amp; Background
-                </h2>
-              </div>
-            </div>
+      {/* 1. History & School Registry */}
+      <section
+        id="history"
+        aria-labelledby="about-history-heading"
+        className="scroll-mt-28 py-16 sm:py-20 bg-white border-b border-slate-200"
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16">
+          <div className="lg:col-span-7 max-w-2xl">
+            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary mb-2">
+              School History
+            </p>
+            <h2
+              id="about-history-heading"
+              className="font-serif text-2xl sm:text-3xl font-bold text-slate-900 mb-4"
+            >
+              Mukuyu, Murang&apos;a — Since {schoolInfo.founded}
+            </h2>
+            <div className="w-10 h-0.5 bg-accent mb-6" aria-hidden="true" />
 
-            <div className="text-slate-700 text-sm sm:text-base leading-relaxed space-y-4">
+            <div className="space-y-4 text-slate-700 text-base leading-relaxed">
               <p>
-                Established in <strong>{schoolInfo.founded}</strong> in the
-                historic township of <strong>Mukuyu, Murang&apos;a</strong>,{' '}
-                {schoolInfo.name} was founded on the firm belief that educating
-                a girl strengthens an entire nation. Named after <em>Mumbi</em>,
-                the revered matriarch of the Agikuyu community symbolising
-                motherly strength, dignity, and wisdom, the school began as a
-                community-driven effort to expand quality secondary education
-                for young women in Central Kenya.
+                {schoolInfo.name} was founded in{' '}
+                <strong>{schoolInfo.founded}</strong> in Mukuyu, within Kiharu
+                Constituency in Murang&apos;a East, Murang&apos;a County. The
+                school carries the name <em>Mumbi</em>, the matriarch of the
+                Agikuyu people, and opened to expand public secondary schooling
+                for girls in Murang&apos;a and the wider region.
               </p>
               <p>
-                Through decades of dedicated service by the Board of Management,
-                parents, teaching and non-teaching staff, the Ministry of
-                Education, and the local community, Mumbi Girls grew steadily
-                into an established <strong>{schoolInfo.category}</strong> (KNEC
-                Centre <strong>{schoolInfo.knecCode}</strong>, MoE Registration{' '}
-                <strong>{schoolInfo.moeReg}</strong>), preparing thousands of
-                alumnae for university study and public service.
+                Supported over six decades by successive Boards of Management,
+                parents, teaching and non-teaching staff, and the Ministry of
+                Education, the institution operates today as a registered{' '}
+                <strong>{schoolInfo.category}</strong> (KNEC Centre Code{' '}
+                <strong>{schoolInfo.knecCode}</strong>, Ministry of Education
+                Registration <strong>{schoolInfo.moeReg}</strong>) with a
+                boarding enrolment of over 1,200 students.
               </p>
               <p>
-                Under Kenya&apos;s{' '}
-                <strong>Competency-Based Curriculum (CBC)</strong>, the school
-                serves Senior School learners across three structured pathways —{' '}
-                <strong>STEM</strong>, <strong>Social Sciences</strong>, and{' '}
-                <strong>Arts &amp; Sports Science</strong> — combining modern
-                classroom and laboratory learning with vibrant co-curricular and
-                boarding life.
+                In line with Kenya&apos;s Competency-Based Curriculum (CBC), the
+                school admits Senior School students in Grades 10 to 12 across
+                three pathways — <strong>STEM</strong>,{' '}
+                <strong>Social Sciences</strong>, and{' '}
+                <strong>Arts &amp; Sports Science</strong> — alongside a full
+                boarding timetable of supervised study, sports, clubs, and
+                chaplaincy.
               </p>
             </div>
           </div>
-        </section>
 
-        {/* Motto, Mission, Vision & Core Values */}
-        <section
-          id="mission"
-          aria-labelledby="about-mission-heading"
-          className="scroll-mt-28"
-        >
-          <div className="text-center mb-10">
-            <span className="text-xs font-bold uppercase tracking-wider text-primary">
-              Our Foundations
-            </span>
+          {/* Registry Sidebar */}
+          <aside
+            aria-label="Official school registration particulars"
+            className="lg:col-span-5 lg:border-l lg:border-slate-200 lg:pl-12"
+          >
+            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-600 pb-3 border-b border-slate-300">
+              Official Registration
+            </p>
+            <dl className="divide-y divide-slate-200 text-sm">
+              <div className="py-3.5">
+                <dt className="text-xs text-slate-600">Official Name</dt>
+                <dd className="font-serif font-bold text-base text-slate-900 mt-0.5">
+                  {schoolInfo.name}
+                </dd>
+              </div>
+              <div className="py-3.5">
+                <dt className="text-xs text-slate-600">Category</dt>
+                <dd className="font-medium text-slate-900 mt-0.5">
+                  {schoolInfo.category}
+                </dd>
+              </div>
+              <div className="py-3.5 grid grid-cols-2 gap-4 tabular-nums">
+                <div>
+                  <dt className="text-xs text-slate-600">KNEC Centre Code</dt>
+                  <dd className="font-semibold text-slate-900 mt-0.5">
+                    {schoolInfo.knecCode}
+                  </dd>
+                </div>
+                <div>
+                  <dt className="text-xs text-slate-600">MoE Registration</dt>
+                  <dd className="font-semibold text-slate-900 mt-0.5">
+                    {schoolInfo.moeReg}
+                  </dd>
+                </div>
+              </div>
+              <div className="py-3.5">
+                <dt className="text-xs text-slate-600">Physical Location</dt>
+                <dd className="text-slate-800 mt-0.5">
+                  {schoolInfo.physicalLocation}
+                </dd>
+              </div>
+              <div className="py-3.5">
+                <dt className="text-xs text-slate-600">Postal Address</dt>
+                <dd className="text-slate-800 mt-0.5">
+                  {schoolInfo.postalAddress}
+                </dd>
+              </div>
+              <div className="py-3.5">
+                <dt className="text-xs text-slate-600">Office Hours</dt>
+                <dd className="text-slate-800 mt-0.5">
+                  {schoolInfo.officeHours}
+                </dd>
+              </div>
+            </dl>
+          </aside>
+        </div>
+      </section>
+
+      {/* 2. Motto, Mission, Vision & Core Values */}
+      <section
+        id="mission"
+        aria-labelledby="about-mission-heading"
+        className="scroll-mt-28 py-16 sm:py-20 bg-slate-bg border-b border-slate-200"
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 space-y-12">
+          <div className="max-w-2xl">
+            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary mb-2">
+              Charter &amp; Values
+            </p>
             <h2
               id="about-mission-heading"
-              className="text-2xl sm:text-3xl font-bold text-slate-900 mt-1 mb-3"
+              className="font-serif text-2xl sm:text-3xl font-bold text-slate-900"
             >
               Motto, Mission, Vision &amp; Core Values
             </h2>
-            <div
-              className="w-16 h-1 bg-accent mx-auto rounded-full"
-              aria-hidden="true"
-            />
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <article className="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 border-t-4 border-t-primary shadow-xs">
-              <div className="w-12 h-12 rounded-xl bg-primary text-white flex items-center justify-center mb-4">
-                <Star className="w-6 h-6" aria-hidden="true" />
-              </div>
-              <h3 className="text-xl font-bold text-primary mb-2">
+          <div className="bg-white border-t-2 border-t-primary border-x border-b border-slate-200 grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-slate-200">
+            <div className="p-6 sm:p-8">
+              <h3 className="font-sans text-xs font-semibold uppercase tracking-[0.12em] text-primary mb-3">
                 School Motto
               </h3>
-              <p className="text-xl sm:text-2xl font-serif font-black text-slate-900 italic">
+              <p className="font-serif italic text-2xl font-bold text-slate-900 leading-snug">
                 &ldquo;{schoolInfo.motto}&rdquo;
               </p>
-              <p className="text-sm text-slate-600 mt-3 leading-relaxed">
-                Reflecting our daily commitment to unlocking every learner&apos;s
-                full potential through rigorous scholarship, discipline, and
-                character formation.
-              </p>
-            </article>
+            </div>
 
-            <article className="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 border-t-4 border-t-primary shadow-xs">
-              <div className="w-12 h-12 rounded-xl bg-primary text-white flex items-center justify-center mb-4">
-                <Compass className="w-6 h-6" aria-hidden="true" />
-              </div>
-              <h3 className="text-xl font-bold text-primary mb-2">
-                Our Mission
+            <div className="p-6 sm:p-8">
+              <h3 className="font-sans text-xs font-semibold uppercase tracking-[0.12em] text-primary mb-3">
+                Mission
               </h3>
               <p className="text-sm sm:text-base text-slate-700 leading-relaxed">
                 {schoolInfo.mission}
               </p>
-            </article>
+            </div>
 
-            <article className="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 border-t-4 border-t-primary shadow-xs">
-              <div className="w-12 h-12 rounded-xl bg-primary text-white flex items-center justify-center mb-4">
-                <Award className="w-6 h-6" aria-hidden="true" />
-              </div>
-              <h3 className="text-xl font-bold text-primary mb-2">
-                Our Vision
+            <div className="p-6 sm:p-8">
+              <h3 className="font-sans text-xs font-semibold uppercase tracking-[0.12em] text-primary mb-3">
+                Vision
               </h3>
               <p className="text-sm sm:text-base text-slate-700 leading-relaxed">
                 {schoolInfo.vision}
               </p>
-            </article>
-          </div>
-
-          {/* Core Values Detailed Grid */}
-          <div className="bg-white rounded-2xl border border-slate-200 shadow-xs p-6 sm:p-8">
-            <h3 className="text-xl font-bold text-slate-900 mb-6 flex items-center gap-2.5">
-              <Shield
-                className="w-5 h-5 text-primary shrink-0"
-                aria-hidden="true"
-              />
-              <span>Core Values &amp; Guiding Principles</span>
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-              {schoolInfo.coreValues.map((val, idx) => (
-                <div
-                  key={val.title}
-                  className="p-4 sm:p-5 rounded-xl bg-slate-bg border border-slate-200 flex items-start gap-3.5"
-                >
-                  <span
-                    aria-hidden="true"
-                    className="w-9 h-9 rounded-lg bg-primary/10 text-primary font-bold text-xs flex items-center justify-center shrink-0"
-                  >
-                    0{idx + 1}
-                  </span>
-                  <div>
-                    <h4 className="font-bold text-slate-900 text-sm">
-                      {val.title}
-                    </h4>
-                    <p className="text-xs text-slate-600 mt-1 leading-relaxed">
-                      {val.description}
-                    </p>
-                  </div>
-                </div>
-              ))}
             </div>
           </div>
-        </section>
 
-        {/* Dual School Anthems */}
-        <section
-          id="anthems"
-          aria-labelledby="about-anthems-heading"
-          className="scroll-mt-28"
-        >
-          <div className="text-center mb-10">
-            <span className="text-xs font-bold uppercase tracking-wider text-primary">
-              Musical Heritage
-            </span>
+          <div>
+            <h3 className="font-sans text-xs font-semibold uppercase tracking-[0.14em] text-slate-600 pb-3 border-b border-slate-300 mb-6">
+              Six Core Values
+            </h3>
+            <ol className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-8">
+              {schoolInfo.coreValues.map((val, idx) => (
+                <li key={val.title} className="border-l border-slate-300 pl-4">
+                  <span className="block text-xs font-semibold text-primary tabular-nums mb-1">
+                    0{idx + 1}
+                  </span>
+                  <h4 className="font-serif font-bold text-lg text-slate-900 mb-1">
+                    {val.title}
+                  </h4>
+                  <p className="text-sm text-slate-600 leading-relaxed">
+                    {val.description}
+                  </p>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      {/* 3. School Anthems (English & Kiswahili) */}
+      <section
+        id="anthems"
+        aria-labelledby="about-anthems-heading"
+        className="scroll-mt-28 py-16 sm:py-20 bg-white border-b border-slate-200"
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="max-w-2xl mb-10">
+            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary mb-2">
+              Assembly Tradition
+            </p>
             <h2
               id="about-anthems-heading"
-              className="text-2xl sm:text-3xl font-bold text-slate-900 mt-1 mb-2"
+              className="font-serif text-2xl sm:text-3xl font-bold text-slate-900"
             >
-              Dual School Anthems
+              School Anthem &amp; Wimbo wa Shule
             </h2>
-            <p className="text-sm sm:text-base text-slate-600 max-w-xl mx-auto mb-3">
-              Sung with pride and unity in English and Kiswahili at official
-              school assemblies and ceremonies.
+            <p className="text-sm sm:text-base text-slate-600 mt-2 leading-relaxed">
+              Sung in English and Kiswahili at morning assemblies and official
+              school functions.
             </p>
-            <div
-              className="w-16 h-1 bg-accent mx-auto rounded-full"
-              aria-hidden="true"
-            />
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
             {/* English Anthem */}
-            <article className="bg-gradient-to-br from-primary to-primary-dark text-white rounded-2xl p-6 sm:p-8 shadow-md border border-primary-dark">
-              <div className="flex flex-wrap items-center justify-between gap-2 mb-6 border-b border-white/20 pb-4">
-                <div className="flex items-center gap-3">
-                  <Music
-                    className="w-6 h-6 text-blue-100 shrink-0"
-                    aria-hidden="true"
-                  />
-                  <h3 className="text-xl font-bold text-white">
-                    {schoolAnthem.english.title}
-                  </h3>
-                </div>
-                <span className="text-xs uppercase tracking-wider px-3 py-1 rounded-full bg-white/15 text-white font-semibold">
+            <article className="bg-slate-bg border border-slate-200 border-t-2 border-t-primary p-6 sm:p-10">
+              <div className="flex items-baseline justify-between gap-4 pb-4 mb-6 border-b border-slate-200">
+                <h3 className="font-serif text-xl sm:text-2xl font-bold text-slate-900">
+                  {schoolAnthem.english.title}
+                </h3>
+                <span className="text-xs font-semibold uppercase tracking-[0.12em] text-primary">
                   English
                 </span>
               </div>
-              <div className="space-y-4 text-sm sm:text-base leading-relaxed font-serif text-white/95 italic">
+              <ol className="space-y-6">
                 {schoolAnthem.english.verses.map((verse, i) => (
-                  <div
-                    key={i}
-                    className="p-4 rounded-xl bg-black/20 border border-white/15"
-                  >
-                    <p className="whitespace-pre-line">{verse}</p>
-                  </div>
+                  <li key={i} className="grid grid-cols-12 gap-3">
+                    <span
+                      aria-hidden="true"
+                      className="col-span-2 sm:col-span-1 font-serif text-xs font-bold text-slate-500 pt-1"
+                    >
+                      {ROMAN[i] ?? i + 1}.
+                    </span>
+                    <p className="col-span-10 sm:col-span-11 whitespace-pre-line font-serif italic text-base sm:text-[1.05rem] text-slate-800 leading-relaxed">
+                      {verse}
+                    </p>
+                  </li>
                 ))}
-              </div>
+              </ol>
             </article>
 
             {/* Kiswahili Anthem */}
             <article
               lang="sw"
-              className="bg-white rounded-2xl p-6 sm:p-8 shadow-xs border border-slate-200 border-t-4 border-t-primary"
+              className="bg-slate-bg border border-slate-200 border-t-2 border-t-primary p-6 sm:p-10"
             >
-              <div className="flex flex-wrap items-center justify-between gap-2 mb-6 border-b border-slate-200 pb-4">
-                <div className="flex items-center gap-3">
-                  <Music
-                    className="w-6 h-6 text-primary shrink-0"
-                    aria-hidden="true"
-                  />
-                  <h3 className="text-xl font-bold text-primary">
-                    {schoolAnthem.kiswahili.title}
-                  </h3>
-                </div>
-                <span className="text-xs uppercase tracking-wider px-3 py-1 rounded-full bg-primary/10 text-primary font-semibold">
+              <div className="flex items-baseline justify-between gap-4 pb-4 mb-6 border-b border-slate-200">
+                <h3 className="font-serif text-xl sm:text-2xl font-bold text-slate-900">
+                  {schoolAnthem.kiswahili.title}
+                </h3>
+                <span className="text-xs font-semibold uppercase tracking-[0.12em] text-primary">
                   Kiswahili
                 </span>
               </div>
-              <div className="space-y-4 text-sm sm:text-base leading-relaxed font-serif text-slate-800 italic">
+              <ol className="space-y-6">
                 {schoolAnthem.kiswahili.verses.map((verse, i) => (
-                  <div
-                    key={i}
-                    className="p-4 rounded-xl bg-slate-bg border border-slate-200"
-                  >
-                    <p className="whitespace-pre-line">{verse}</p>
-                  </div>
+                  <li key={i} className="grid grid-cols-12 gap-3">
+                    <span
+                      aria-hidden="true"
+                      className="col-span-2 sm:col-span-1 font-serif text-xs font-bold text-slate-500 pt-1"
+                    >
+                      {ROMAN[i] ?? i + 1}.
+                    </span>
+                    <p className="col-span-10 sm:col-span-11 whitespace-pre-line font-serif italic text-base sm:text-[1.05rem] text-slate-800 leading-relaxed">
+                      {verse}
+                    </p>
+                  </li>
                 ))}
-              </div>
+              </ol>
             </article>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* Leadership & Governance Timelines */}
-        <section
-          id="leadership"
-          aria-labelledby="about-leadership-heading"
-          className="scroll-mt-28 space-y-10"
-        >
-          <div className="text-center">
-            <span className="text-xs font-bold uppercase tracking-wider text-primary">
-              Governance &amp; Stewardship
-            </span>
+      {/* 4. Leadership & Governance */}
+      <section
+        id="leadership"
+        aria-labelledby="about-leadership-heading"
+        className="scroll-mt-28 py-16 sm:py-20 bg-slate-bg"
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 space-y-14">
+          <div className="max-w-2xl">
+            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary mb-2">
+              Leadership &amp; Governance
+            </p>
             <h2
               id="about-leadership-heading"
-              className="text-2xl sm:text-3xl font-bold text-slate-900 mt-1 mb-3"
+              className="font-serif text-2xl sm:text-3xl font-bold text-slate-900"
             >
-              Leadership Through the Decades
+              Principals, Board of Management &amp; Student Council
             </h2>
-            <div
-              className="w-16 h-1 bg-accent mx-auto rounded-full"
-              aria-hidden="true"
-            />
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
-            {/* Principals Timeline */}
-            <div className="bg-white rounded-2xl shadow-xs border border-slate-200 p-6 sm:p-8">
-              <div className="flex items-center gap-3 mb-6 pb-4 border-b border-slate-100">
-                <div className="p-2.5 bg-primary text-white rounded-xl shrink-0">
-                  <UserCheck className="w-5 h-5" aria-hidden="true" />
-                </div>
-                <div>
-                  <h3 className="text-lg font-bold text-slate-900">
-                    Roll of Principals
-                  </h3>
-                  <p className="text-xs text-slate-600">
-                    {schoolInfo.founded} to Present
-                  </p>
-                </div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-12">
+            {/* Roll of Principals */}
+            <div>
+              <div className="flex items-baseline justify-between gap-3 pb-3 border-b-2 border-primary">
+                <h3 className="font-serif text-xl font-bold text-slate-900">
+                  Roll of Principals
+                </h3>
+                <span className="text-xs text-slate-600 tabular-nums">
+                  {schoolInfo.founded} – Present
+                </span>
               </div>
-
-              <ol className="space-y-3">
-                {principals.map((principal, idx) => (
+              <ol className="bg-white border-x border-b border-slate-200 divide-y divide-slate-200">
+                {principals.map((principal) => (
                   <li
                     key={principal.id}
-                    className={`p-4 rounded-xl border flex flex-col sm:flex-row sm:items-center justify-between gap-2 transition-colors ${
-                      principal.isCurrent
-                        ? 'bg-primary/6 border-primary'
-                        : 'bg-slate-bg border-slate-200'
+                    className={`px-5 py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 ${
+                      principal.isCurrent ? 'bg-primary/5' : ''
                     }`}
                   >
-                    <div className="flex items-center gap-3 min-w-0">
-                      <span
-                        aria-hidden="true"
-                        className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-xs shrink-0 ${
-                          principal.isCurrent
-                            ? 'bg-primary text-white'
-                            : 'bg-slate-200 text-slate-800'
-                        }`}
-                      >
-                        {idx + 1}
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span className="font-serif font-bold text-base text-slate-900">
+                        {principal.name}
                       </span>
-                      <div className="min-w-0">
-                        <h4 className="font-bold text-sm text-slate-900">
-                          {principal.name}
-                        </h4>
-                        {principal.isCurrent && (
-                          <span className="inline-block px-2 py-0.5 rounded-sm text-[11px] font-bold bg-accent text-white mt-1">
-                            Current Chief Principal
-                          </span>
-                        )}
-                      </div>
+                      {principal.isCurrent && (
+                        <span className="px-2 py-0.5 rounded-xs text-[10px] font-bold uppercase tracking-wider bg-accent text-white">
+                          Current
+                        </span>
+                      )}
                     </div>
-                    <span className="self-start sm:self-center ml-11 sm:ml-0 text-xs font-semibold px-3 py-1 rounded-full bg-white border border-slate-200 text-slate-700 shrink-0">
+                    <span className="text-xs sm:text-sm text-slate-600 tabular-nums shrink-0">
                       {principal.period}
                     </span>
                   </li>
@@ -368,55 +351,35 @@ export default function AboutPage() {
               </ol>
             </div>
 
-            {/* BOM Chairpersons Timeline */}
-            <div className="bg-white rounded-2xl shadow-xs border border-slate-200 p-6 sm:p-8">
-              <div className="flex items-center gap-3 mb-6 pb-4 border-b border-slate-100">
-                <div className="p-2.5 bg-primary-dark text-white rounded-xl shrink-0">
-                  <Users className="w-5 h-5" aria-hidden="true" />
-                </div>
-                <div>
-                  <h3 className="text-lg font-bold text-slate-900">
-                    Board of Management (BOM) Chairs
-                  </h3>
-                  <p className="text-xs text-slate-600">
-                    Institutional Stewardship ({schoolInfo.founded} – Present)
-                  </p>
-                </div>
+            {/* BOM Chairpersons */}
+            <div>
+              <div className="flex items-baseline justify-between gap-3 pb-3 border-b-2 border-primary">
+                <h3 className="font-serif text-xl font-bold text-slate-900">
+                  Board of Management Chairpersons
+                </h3>
+                <span className="text-xs text-slate-600 tabular-nums">
+                  {schoolInfo.founded} – Present
+                </span>
               </div>
-
-              <ol className="space-y-3">
-                {bomChairpersons.map((chair, idx) => (
+              <ol className="bg-white border-x border-b border-slate-200 divide-y divide-slate-200">
+                {bomChairpersons.map((chair) => (
                   <li
                     key={chair.id}
-                    className={`p-4 rounded-xl border flex flex-col sm:flex-row sm:items-center justify-between gap-2 transition-colors ${
-                      chair.isCurrent
-                        ? 'bg-primary/6 border-primary'
-                        : 'bg-slate-bg border-slate-200'
+                    className={`px-5 py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 ${
+                      chair.isCurrent ? 'bg-primary/5' : ''
                     }`}
                   >
-                    <div className="flex items-center gap-3 min-w-0">
-                      <span
-                        aria-hidden="true"
-                        className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-xs shrink-0 ${
-                          chair.isCurrent
-                            ? 'bg-primary text-white'
-                            : 'bg-slate-200 text-slate-800'
-                        }`}
-                      >
-                        {idx + 1}
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span className="font-serif font-bold text-base text-slate-900">
+                        {chair.name}
                       </span>
-                      <div className="min-w-0">
-                        <h4 className="font-bold text-sm text-slate-900">
-                          {chair.name}
-                        </h4>
-                        {chair.isCurrent && (
-                          <span className="inline-block px-2 py-0.5 rounded-sm text-[11px] font-bold bg-accent text-white mt-1">
-                            Incumbent BOM Chair
-                          </span>
-                        )}
-                      </div>
+                      {chair.isCurrent && (
+                        <span className="px-2 py-0.5 rounded-xs text-[10px] font-bold uppercase tracking-wider bg-accent text-white">
+                          Incumbent
+                        </span>
+                      )}
                     </div>
-                    <span className="self-start sm:self-center ml-11 sm:ml-0 text-xs font-semibold px-3 py-1 rounded-full bg-white border border-slate-200 text-slate-700 shrink-0">
+                    <span className="text-xs sm:text-sm text-slate-600 tabular-nums shrink-0">
                       {chair.period}
                     </span>
                   </li>
@@ -425,41 +388,38 @@ export default function AboutPage() {
             </div>
           </div>
 
-          {/* Deputies & Student Council Governance */}
+          {/* Administrative Deputies & Student Council (solid deep blue, ruled columns) */}
           <div
             data-dark-surface
-            className="bg-gradient-to-br from-primary via-primary to-primary-dark text-white rounded-2xl p-6 sm:p-8 border border-primary-dark shadow-md"
+            className="bg-primary-dark text-white border border-primary-dark"
           >
-            <h3 className="text-xl font-bold mb-6 text-white flex items-center gap-2.5">
-              <Award
-                className="w-5 h-5 text-blue-100 shrink-0"
-                aria-hidden="true"
-              />
-              <span>Administrative Deputies &amp; Student Council</span>
-            </h3>
+            <div className="px-6 sm:px-8 py-5 border-b border-white/15">
+              <h3 className="font-serif text-xl font-bold text-white">
+                Administration &amp; Elected Student Council
+              </h3>
+            </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-white/15">
               {governanceRoles.map((item) => (
-                <article
-                  key={item.id}
-                  className="p-5 rounded-xl bg-black/20 border border-white/15 flex flex-col"
-                >
-                  <span className="text-xs text-blue-100 font-semibold uppercase tracking-wider mb-1">
+                <article key={item.id} className="p-6 sm:p-8 flex flex-col">
+                  <span className="text-[11px] font-semibold uppercase tracking-[0.12em] text-blue-100 mb-1.5">
                     {item.role}
                   </span>
-                  <h4 className="text-base font-bold text-white">
+                  <h4 className="font-serif text-lg font-bold text-white mb-2.5">
                     {item.title}
                   </h4>
-                  <p className="text-xs text-white/90 mt-2 leading-relaxed mb-4">
+                  <p className="text-sm text-white/85 leading-relaxed mb-5">
                     {item.description}
                   </p>
-                  <ul className="mt-auto pt-3 border-t border-white/15 space-y-1.5 text-xs text-white/90">
+                  <ul className="mt-auto pt-4 border-t border-white/15 space-y-2 text-xs text-white/90">
                     {item.responsibilities.map((resp) => (
-                      <li key={resp} className="flex items-start gap-2">
-                        <CheckCircle2
-                          className="w-3.5 h-3.5 text-blue-100 shrink-0 mt-0.5"
+                      <li key={resp} className="flex items-baseline gap-2">
+                        <span
+                          className="text-blue-200 select-none"
                           aria-hidden="true"
-                        />
+                        >
+                          –
+                        </span>
                         <span>{resp}</span>
                       </li>
                     ))}
@@ -468,8 +428,8 @@ export default function AboutPage() {
               ))}
             </div>
           </div>
-        </section>
-      </div>
+        </div>
+      </section>
     </div>
   );
 }

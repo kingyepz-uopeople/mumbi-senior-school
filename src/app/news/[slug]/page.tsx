@@ -1,15 +1,9 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import {
-  ArrowLeft,
-  ArrowRight,
-  Calendar,
-  FolderDown,
-  Mail,
-} from 'lucide-react';
+import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { newsItems, schoolInfo } from '@/data/mock-school-data';
-import { newsCategoryBadgeClasses } from '@/components/home/LatestNews';
+import { newsCategoryTextClasses } from '@/components/home/LatestNews';
 import { buildPageMetadata } from '@/lib/site';
 import { parseDateKE, toIsoDate } from '@/lib/utils';
 
@@ -29,8 +23,8 @@ export async function generateMetadata({
 
   if (!item) {
     return buildPageMetadata({
-      title: 'Announcement Not Found',
-      description: `The requested announcement could not be found on ${schoolInfo.name}.`,
+      title: 'Notice Not Found',
+      description: `The requested notice could not be found on ${schoolInfo.name}.`,
       path: `/news/${slug}`,
       noIndex: true,
     });
@@ -64,166 +58,152 @@ export default async function NewsArticlePage({
     )
     .slice(0, 3);
 
-  const headerBadgeClasses: Record<string, string> = {
-    Newsletter: 'bg-white/15 text-white border-white/30',
-    Circular: 'bg-accent text-white border-white/25',
-    Download: 'bg-white/15 text-white border-white/30',
-    Event: 'bg-white/15 text-white border-white/30',
-  };
-
   return (
     <div className="bg-slate-bg">
-      {/* Article Header Banner (sole h1 on page) */}
+      {/* Solid Crest-Blue Article Header (sole h1 on page) */}
       <header
         data-dark-surface
-        className="bg-gradient-to-br from-primary via-primary to-primary-dark text-white py-12 sm:py-16 px-4 sm:px-6 border-b border-primary-dark"
+        className="bg-primary text-white border-b border-primary-dark"
       >
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
           <Link
             href="/#latest-news"
-            className="min-h-11 inline-flex items-center gap-2 text-xs sm:text-sm font-bold text-blue-100 hover:text-white transition-colors mb-5"
+            className="min-h-11 inline-flex items-center gap-2 text-xs sm:text-sm font-medium text-blue-100 hover:text-white hover:underline underline-offset-4 transition-colors mb-5"
           >
-            <ArrowLeft className="w-4 h-4 shrink-0" aria-hidden="true" />
-            <span>Back to Notices &amp; Announcements</span>
+            <ArrowLeft
+              className="w-4 h-4 shrink-0 stroke-[1.75]"
+              aria-hidden="true"
+            />
+            <span>Back to school notices</span>
           </Link>
 
-          <div className="flex flex-wrap items-center gap-3 mb-4">
-            <span
-              className={`text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full border ${
-                headerBadgeClasses[item.category] ??
-                'bg-white/15 text-white border-white/25'
-              }`}
-            >
-              {item.category}
+          <div className="flex flex-wrap items-center gap-3 text-xs mb-3 tabular-nums">
+            {item.category === 'Circular' ? (
+              <span className="px-2 py-0.5 rounded-xs font-bold uppercase tracking-[0.12em] bg-accent text-white">
+                {item.category}
+              </span>
+            ) : (
+              <span className="font-semibold uppercase tracking-[0.14em] text-blue-100">
+                {item.category}
+              </span>
+            )}
+            <span className="text-white/40" aria-hidden="true">
+              ·
             </span>
-            <span className="inline-flex items-center gap-1.5 text-xs sm:text-sm text-white/90 font-medium">
-              <Calendar
-                className="w-4 h-4 text-blue-100 shrink-0"
-                aria-hidden="true"
-              />
-              <span>Published:</span>
-              <time dateTime={toIsoDate(item.date)} className="font-bold">
+            <span className="text-white/90">
+              Published{' '}
+              <time dateTime={toIsoDate(item.date)} className="font-semibold">
                 {item.date}
               </time>
             </span>
           </div>
 
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight leading-tight">
+          <h1 className="font-serif text-2xl sm:text-4xl font-bold text-white leading-tight">
             {item.title}
           </h1>
-          <div
-            className="w-16 h-1 rounded-full bg-accent mt-5"
-            aria-hidden="true"
-          />
+
+          <div className="w-12 h-0.5 bg-accent mt-5" aria-hidden="true" />
         </div>
       </header>
 
       {/* Article Body */}
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-12 sm:py-16 space-y-12">
-        <article className="bg-white rounded-2xl border border-slate-200 border-t-4 border-t-primary p-6 sm:p-10 shadow-xs">
-          <p className="text-base sm:text-lg font-medium text-slate-800 leading-relaxed pb-6 mb-6 border-b border-slate-200">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-12 sm:py-16 space-y-14">
+        <article className="bg-white border border-slate-200 border-t-2 border-t-primary p-6 sm:p-10">
+          <p className="font-serif text-lg sm:text-xl text-slate-900 leading-relaxed pb-6 mb-6 border-b border-slate-200">
             {item.excerpt}
           </p>
 
-          <div className="space-y-4 text-sm sm:text-base text-slate-700 leading-relaxed">
+          <div className="space-y-4 text-sm sm:text-base text-slate-700 leading-relaxed max-w-2xl">
             {item.body.map((paragraph, index) => (
               <p key={index}>{paragraph}</p>
             ))}
           </div>
 
           {/* Official Sign-Off */}
-          <div className="mt-8 pt-6 border-t border-slate-200 bg-slate-bg rounded-xl p-4 sm:p-5 text-xs sm:text-sm text-slate-600 space-y-1">
-            <p className="font-bold text-slate-900">
-              Issued by the Administration Office — {schoolInfo.name}
+          <div className="mt-10 pt-6 border-t border-slate-200 text-xs sm:text-sm text-slate-600 space-y-1 tabular-nums">
+            <p className="font-serif font-bold text-base text-slate-900">
+              Administration Office — {schoolInfo.name}
             </p>
             <p>
-              {schoolInfo.postalAddress} • KNEC: {schoolInfo.knecCode} • MoE:{' '}
+              {schoolInfo.postalAddress} · KNEC {schoolInfo.knecCode} · MoE{' '}
               {schoolInfo.moeReg}
             </p>
             <p>Office Hours: {schoolInfo.officeHours}</p>
           </div>
 
-          {/* Action Buttons */}
           <div className="mt-8 flex flex-col sm:flex-row flex-wrap gap-3">
             <Link
               href="/downloads"
-              className="min-h-11 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-primary hover:bg-primary-dark text-white text-sm font-bold transition-colors shadow-xs"
+              className="min-h-11 inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-sm bg-primary hover:bg-primary-dark text-white text-sm font-semibold transition-colors"
             >
-              <FolderDown className="w-4 h-4 shrink-0" aria-hidden="true" />
-              <span>Visit Downloads &amp; Resources Hub</span>
+              <span>Downloads &amp; circulars</span>
+              <ArrowRight
+                className="w-4 h-4 shrink-0 stroke-[1.75]"
+                aria-hidden="true"
+              />
             </Link>
             <Link
               href="/contact"
-              className="min-h-11 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl border-2 border-primary text-primary hover:bg-primary hover:text-white text-sm font-bold transition-colors"
+              className="min-h-11 inline-flex items-center justify-center px-5 py-2.5 rounded-sm border border-primary text-primary hover:bg-primary hover:text-white text-sm font-semibold transition-colors"
             >
-              <Mail className="w-4 h-4 shrink-0" aria-hidden="true" />
-              <span>Contact Administration</span>
+              Contact administration
             </Link>
           </div>
         </article>
 
-        {/* Related Announcements */}
+        {/* Related Notices */}
         {relatedItems.length > 0 && (
-          <section aria-labelledby="related-news-heading" className="space-y-6">
-            <div className="flex items-center justify-between gap-2">
+          <section aria-labelledby="related-news-heading" className="space-y-4">
+            <div className="flex items-baseline justify-between gap-2">
               <h2
                 id="related-news-heading"
-                className="text-xl sm:text-2xl font-bold text-slate-900"
+                className="font-serif text-xl sm:text-2xl font-bold text-slate-900"
               >
-                More School Announcements
+                Other School Notices
               </h2>
               <Link
                 href="/downloads"
-                className="min-h-11 inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-primary hover:text-primary-dark hover:underline shrink-0"
+                className="min-h-11 inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-primary hover:text-primary-dark hover:underline underline-offset-4 shrink-0"
               >
-                <span>All Circulars</span>
-                <ArrowRight className="w-4 h-4" aria-hidden="true" />
+                <span>All documents</span>
+                <ArrowRight
+                  className="w-4 h-4 stroke-[1.75]"
+                  aria-hidden="true"
+                />
               </Link>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            <div className="bg-white border-t-2 border-t-primary border-x border-b border-slate-200 divide-y divide-slate-200">
               {relatedItems.map((related) => {
-                const badgeClass =
-                  newsCategoryBadgeClasses[related.category] ??
-                  'bg-slate-100 text-slate-800 border-slate-200';
+                const catClass =
+                  newsCategoryTextClasses[related.category] ??
+                  newsCategoryTextClasses.Event;
                 return (
                   <article
                     key={related.id}
-                    className="bg-white rounded-2xl border border-slate-200 p-5 shadow-xs hover:border-primary hover:shadow-md transition-all flex flex-col justify-between"
+                    className="p-5 flex flex-col sm:flex-row sm:items-baseline justify-between gap-2"
                   >
-                    <div>
-                      <div className="flex items-center justify-between gap-2 mb-3">
-                        <span
-                          className={`text-[11px] font-bold uppercase px-2.5 py-1 rounded-full border ${badgeClass}`}
-                        >
-                          {related.category}
-                        </span>
-                        <time
-                          dateTime={toIsoDate(related.date)}
-                          className="text-xs font-semibold text-slate-600"
-                        >
-                          {related.date}
-                        </time>
-                      </div>
-                      <h3 className="font-bold text-sm sm:text-base text-slate-900 mb-2 leading-snug">
+                    <div className="min-w-0">
+                      <span
+                        className={`text-[11px] font-bold uppercase tracking-[0.12em] ${catClass}`}
+                      >
+                        {related.category}
+                      </span>
+                      <h3 className="font-serif text-base sm:text-lg font-bold text-slate-900 leading-snug mt-0.5">
                         <Link
                           href={`/news/${related.slug}`}
-                          className="hover:text-primary transition-colors"
+                          className="hover:text-primary hover:underline underline-offset-4 transition-colors"
                         >
                           {related.title}
                         </Link>
                       </h3>
-                      <p className="text-xs text-slate-600 line-clamp-3 leading-relaxed mb-4">
-                        {related.excerpt}
-                      </p>
                     </div>
-                    <Link
-                      href={`/news/${related.slug}`}
-                      className="min-h-11 inline-flex items-center gap-1.5 text-xs font-bold text-primary hover:text-primary-dark hover:underline"
+                    <time
+                      dateTime={toIsoDate(related.date)}
+                      className="text-xs text-slate-600 tabular-nums shrink-0"
                     >
-                      <span>Read Notice</span>
-                      <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
-                    </Link>
+                      {related.date}
+                    </time>
                   </article>
                 );
               })}

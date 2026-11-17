@@ -5,7 +5,7 @@ import { createPortal } from 'react-dom';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { ChevronDown, Download, LogIn, Menu, User, X } from 'lucide-react';
+import { ChevronDown, Download, Menu, X } from 'lucide-react';
 import { navigation } from '@/data/navigation';
 import { schoolInfo } from '@/data/mock-school-data';
 import { usePwa } from '@/components/pwa/PwaProvider';
@@ -89,10 +89,10 @@ function DesktopDropdown({
       <Link
         href={item.href}
         aria-current={isActive ? 'page' : undefined}
-        className={`relative px-3 py-2 text-sm font-semibold rounded-md transition-colors text-white ${
+        className={`relative px-3 py-2 text-sm font-medium transition-colors text-white ${
           isActive
-            ? 'bg-white/15 after:content-[""] after:absolute after:left-3 after:right-3 after:bottom-1 after:h-0.5 after:rounded-full after:bg-white'
-            : 'hover:bg-white/12'
+            ? 'after:content-[""] after:absolute after:left-3 after:right-3 after:bottom-0.5 after:h-0.5 after:bg-white'
+            : 'text-white/90 hover:text-white hover:bg-primary-dark/60'
         }`}
       >
         {item.label}
@@ -109,17 +109,19 @@ function DesktopDropdown({
       onBlur={handleBlur}
     >
       <div
-        className={`relative inline-flex items-center rounded-md transition-colors ${
+        className={`relative inline-flex items-center transition-colors ${
           isActive
-            ? 'bg-white/15 after:content-[""] after:absolute after:left-3 after:right-2.5 after:bottom-1 after:h-0.5 after:rounded-full after:bg-white'
-            : 'hover:bg-white/12'
+            ? 'after:content-[""] after:absolute after:left-3 after:right-2.5 after:bottom-0.5 after:h-0.5 after:bg-white'
+            : 'hover:bg-primary-dark/60'
         }`}
       >
         <Link
           href={item.href}
           aria-current={isActive ? 'page' : undefined}
           onClick={() => setOpen(false)}
-          className="pl-3 pr-1 py-2 text-sm font-semibold rounded-l-md text-white transition-colors"
+          className={`pl-3 pr-1 py-2 text-sm font-medium transition-colors ${
+            isActive ? 'text-white' : 'text-white/90 hover:text-white'
+          }`}
         >
           {item.label}
         </Link>
@@ -144,10 +146,10 @@ function DesktopDropdown({
               });
             }
           }}
-          className="px-1.5 py-2 rounded-r-md text-white transition-colors"
+          className="px-1.5 py-2 text-white/90 hover:text-white transition-colors"
         >
           <ChevronDown
-            className={`w-4 h-4 transition-transform duration-200 ${
+            className={`w-3.5 h-3.5 transition-transform duration-150 ${
               open ? 'rotate-180' : ''
             }`}
             aria-hidden="true"
@@ -161,13 +163,13 @@ function DesktopDropdown({
           data-light-surface
           className="absolute top-full left-0 pt-1.5 w-60 z-50"
         >
-          <ul className="bg-white rounded-xl shadow-xl border border-slate-200 py-2 overflow-hidden">
+          <ul className="bg-white rounded-sm shadow-lg border border-slate-300 border-t-2 border-t-primary py-1.5 divide-y divide-slate-100">
             {item.children.map((child) => (
               <li key={child.href}>
                 <Link
                   href={child.href}
                   onClick={() => setOpen(false)}
-                  className="block px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-primary/8 hover:text-primary focus-visible:outline-primary focus-visible:-outline-offset-2 transition-colors"
+                  className="block px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50 hover:text-primary focus-visible:outline-primary focus-visible:-outline-offset-2 transition-colors"
                 >
                   {child.label}
                 </Link>
@@ -200,14 +202,12 @@ function MobileNavDrawer({
   const closeBtnRef = useRef<HTMLButtonElement>(null);
   const initialPathnameRef = useRef(pathname);
 
-  // Close drawer automatically whenever pathname changes
   useEffect(() => {
     if (pathname !== initialPathnameRef.current) {
       onClose();
     }
   }, [pathname, onClose]);
 
-  // Lock body scroll, set initial focus, trap Tab focus, handle Escape, and restore focus
   useEffect(() => {
     const previousOverflow = document.body.style.overflow;
     const triggerEl = triggerRef.current;
@@ -265,9 +265,9 @@ function MobileNavDrawer({
 
   return createPortal(
     <div className="fixed inset-0 z-[60] lg:hidden">
-      {/* Backdrop */}
+      {/* Solid dark backdrop (no blur/glassmorphism) */}
       <div
-        className="fixed inset-0 bg-slate-950/60 backdrop-blur-xs"
+        className="fixed inset-0 bg-slate-950/65"
         aria-hidden="true"
         onClick={onClose}
       />
@@ -280,7 +280,7 @@ function MobileNavDrawer({
         aria-modal="true"
         aria-label="Mobile site navigation"
         data-light-surface
-        className="fixed inset-y-0 right-0 w-full max-w-xs bg-white shadow-2xl flex flex-col animate-fadeIn"
+        className="fixed inset-y-0 right-0 w-full max-w-xs bg-white border-l border-slate-300 shadow-xl flex flex-col animate-fadeIn"
       >
         <div
           className="flex items-center justify-between px-4 py-3.5 border-b border-primary-dark bg-primary text-white"
@@ -293,15 +293,17 @@ function MobileNavDrawer({
               width={32}
               height={33}
               sizes="32px"
-              className="w-8 h-8 rounded-md bg-white p-0.5 object-contain shrink-0"
+              className="w-8 h-8 rounded-xs bg-[#f7f7f7] p-0.5 object-contain shrink-0"
             />
-            <span className="text-sm font-bold truncate">Navigation Menu</span>
+            <span className="font-serif text-sm font-bold truncate">
+              Mumbi Girls
+            </span>
           </div>
           <button
             ref={closeBtnRef}
             type="button"
             onClick={onClose}
-            className="inline-flex items-center justify-center w-11 h-11 rounded-lg text-white hover:bg-white/15 transition-colors shrink-0"
+            className="inline-flex items-center justify-center w-11 h-11 rounded-sm text-white hover:bg-primary-dark transition-colors shrink-0"
             aria-label="Close navigation menu"
           >
             <X className="w-5 h-5" aria-hidden="true" />
@@ -310,7 +312,7 @@ function MobileNavDrawer({
 
         <nav
           aria-label="Mobile navigation"
-          className="flex-1 overflow-y-auto px-4 py-4 space-y-1"
+          className="flex-1 overflow-y-auto px-4 py-3 divide-y divide-slate-200"
         >
           {navigation.map((item) => {
             const isActive = pathname === item.href;
@@ -319,21 +321,21 @@ function MobileNavDrawer({
 
             if (item.children?.length) {
               return (
-                <div key={item.label} className="rounded-lg">
+                <div key={item.label} className="py-1">
                   <button
                     type="button"
                     aria-expanded={isExpanded}
                     aria-controls={sectionId}
                     onClick={() => toggleExpand(item.label)}
-                    className={`w-full min-h-11 flex items-center justify-between px-3.5 py-2.5 text-sm font-semibold rounded-lg transition-colors ${
+                    className={`w-full min-h-11 flex items-center justify-between px-2 py-2.5 text-sm font-medium transition-colors ${
                       isActive
-                        ? 'bg-primary/10 text-primary'
-                        : 'text-slate-800 hover:bg-primary/6 hover:text-primary'
+                        ? 'text-primary font-semibold border-l-2 border-accent pl-3'
+                        : 'text-slate-800 hover:text-primary'
                     }`}
                   >
                     <span>{item.label}</span>
                     <ChevronDown
-                      className={`w-4 h-4 shrink-0 transition-transform duration-200 ${
+                      className={`w-4 h-4 shrink-0 transition-transform duration-150 ${
                         isExpanded ? 'rotate-180 text-primary' : 'text-slate-500'
                       }`}
                       aria-hidden="true"
@@ -343,14 +345,14 @@ function MobileNavDrawer({
                   {isExpanded && (
                     <ul
                       id={sectionId}
-                      className="mt-1 ml-3 pl-3 border-l-2 border-accent space-y-0.5"
+                      className="mb-2 ml-2 pl-3 border-l border-slate-300 space-y-0.5"
                     >
                       <li>
                         <Link
                           href={item.href}
                           aria-current={isActive ? 'page' : undefined}
                           onClick={onClose}
-                          className="flex items-center min-h-11 px-3 py-2 text-sm font-semibold text-primary hover:bg-primary/6 rounded-lg transition-colors"
+                          className="flex items-center min-h-11 px-2 py-2 text-sm font-semibold text-primary hover:underline underline-offset-4"
                         >
                           {item.label} Overview
                         </Link>
@@ -360,7 +362,7 @@ function MobileNavDrawer({
                           <Link
                             href={child.href}
                             onClick={onClose}
-                            className="flex items-center min-h-11 px-3 py-2 text-sm text-slate-700 hover:text-primary hover:bg-primary/6 rounded-lg transition-colors"
+                            className="flex items-center min-h-11 px-2 py-2 text-sm text-slate-700 hover:text-primary"
                           >
                             {child.label}
                           </Link>
@@ -373,19 +375,20 @@ function MobileNavDrawer({
             }
 
             return (
-              <Link
-                key={item.label}
-                href={item.href}
-                aria-current={isActive ? 'page' : undefined}
-                onClick={onClose}
-                className={`flex items-center min-h-11 px-3.5 py-2.5 text-sm font-semibold rounded-lg transition-colors ${
-                  isActive
-                    ? 'bg-primary/10 text-primary border-l-3 border-accent'
-                    : 'text-slate-800 hover:bg-primary/6 hover:text-primary'
-                }`}
-              >
-                {item.label}
-              </Link>
+              <div key={item.label} className="py-1">
+                <Link
+                  href={item.href}
+                  aria-current={isActive ? 'page' : undefined}
+                  onClick={onClose}
+                  className={`flex items-center min-h-11 px-2 py-2.5 text-sm font-medium transition-colors ${
+                    isActive
+                      ? 'text-primary font-semibold border-l-2 border-accent pl-3'
+                      : 'text-slate-800 hover:text-primary'
+                  }`}
+                >
+                  {item.label}
+                </Link>
+              </div>
             );
           })}
         </nav>
@@ -399,32 +402,30 @@ function MobileNavDrawer({
                 await triggerNativeInstall();
                 onClose();
               }}
-              className="w-full min-h-11 px-4 py-2.5 rounded-xl bg-primary-dark text-white font-bold text-sm inline-flex items-center justify-center gap-2 hover:bg-primary transition-colors"
+              className="w-full min-h-11 px-4 py-2.5 rounded-sm bg-primary-dark text-white font-semibold text-sm inline-flex items-center justify-center gap-2 hover:bg-primary transition-colors"
             >
-              <Download className="w-4 h-4" aria-hidden="true" />
-              Install Mumbi Portal App
+              <Download className="w-4 h-4 stroke-[1.75]" aria-hidden="true" />
+              <span>Install Mumbi Portal App</span>
             </button>
           )}
           <div className="grid grid-cols-2 gap-2">
             <Link
               href="/portal"
               onClick={onClose}
-              className="min-h-11 px-3 py-2.5 inline-flex items-center justify-center gap-1.5 text-sm font-bold text-white bg-primary rounded-xl hover:bg-primary-dark transition-colors"
+              className="min-h-11 px-3 py-2.5 inline-flex items-center justify-center text-sm font-semibold text-white bg-primary rounded-sm hover:bg-primary-dark transition-colors"
             >
-              <User className="w-4 h-4 shrink-0" aria-hidden="true" />
-              <span>Student</span>
+              Student Portal
             </Link>
             <Link
               href="/portal"
               onClick={onClose}
-              className="min-h-11 px-3 py-2.5 inline-flex items-center justify-center gap-1.5 text-sm font-bold text-primary bg-white border border-primary rounded-xl hover:bg-primary/6 transition-colors"
+              className="min-h-11 px-3 py-2.5 inline-flex items-center justify-center text-sm font-semibold text-primary bg-white border border-primary rounded-sm hover:bg-slate-50 transition-colors"
             >
-              <LogIn className="w-4 h-4 shrink-0" aria-hidden="true" />
-              <span>Staff</span>
+              Staff Portal
             </Link>
           </div>
-          <p className="text-[11px] text-center text-slate-600">
-            {schoolInfo.officeHoursShort} • {schoolInfo.postalAddress}
+          <p className="text-[11px] text-slate-600 pt-1">
+            {schoolInfo.officeHoursShort} · {schoolInfo.postalAddress}
           </p>
         </div>
       </div>
@@ -444,13 +445,13 @@ export default function Header() {
 
   return (
     <>
-      <div className="bg-primary border-b border-white/10">
+      <div className="bg-primary">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="flex items-center justify-between h-16 gap-3">
-            {/* School Crest + Name */}
+            {/* Official Crest + School Name */}
             <Link
               href="/"
-              className="flex items-center gap-2.5 sm:gap-3 min-w-0 rounded-lg py-1"
+              className="flex items-center gap-3 min-w-0 py-1 rounded-xs"
             >
               <Image
                 src="/images/mumbi-logo.png"
@@ -459,14 +460,14 @@ export default function Header() {
                 height={45}
                 sizes="44px"
                 priority
-                className="w-10 h-10 sm:w-11 sm:h-11 rounded-lg bg-white p-0.5 object-contain shrink-0 shadow-xs"
+                className="w-10 h-10 sm:w-11 sm:h-11 rounded-xs bg-[#f7f7f7] p-0.5 object-contain shrink-0 border border-white/80"
               />
               <div className="min-w-0">
-                <span className="block text-white text-sm sm:text-base font-bold leading-tight truncate">
+                <span className="block font-serif text-white text-base sm:text-lg font-bold leading-tight truncate">
                   {schoolInfo.name}
                 </span>
-                <span className="block text-blue-100 text-[10px] sm:text-[11px] font-medium tracking-wider uppercase truncate">
-                  {schoolInfo.motto}
+                <span className="block text-blue-100 text-[11px] tracking-wide truncate">
+                  Mukuyu, Murang&apos;a · Est. {schoolInfo.founded}
                 </span>
               </div>
             </Link>
@@ -474,7 +475,7 @@ export default function Header() {
             {/* Desktop Navigation */}
             <nav
               aria-label="Primary navigation"
-              className="hidden lg:flex items-center gap-1"
+              className="hidden lg:flex items-center gap-0.5"
             >
               {navigation.map((item) => (
                 <DesktopDropdown
@@ -485,17 +486,17 @@ export default function Header() {
               ))}
             </nav>
 
-            {/* Mobile Hamburger Button (44x44px touch target) */}
+            {/* Mobile Menu Button (44x44px touch target) */}
             <button
               ref={hamburgerRef}
               type="button"
               onClick={() => setMobileOpen(true)}
-              className="lg:hidden inline-flex items-center justify-center w-11 h-11 rounded-lg text-white hover:bg-white/15 transition-colors shrink-0"
+              className="lg:hidden inline-flex items-center justify-center w-11 h-11 rounded-sm text-white hover:bg-primary-dark transition-colors shrink-0"
               aria-label="Open navigation menu"
               aria-expanded={mobileOpen}
               aria-controls="mobile-nav-drawer"
             >
-              <Menu className="w-6 h-6" aria-hidden="true" />
+              <Menu className="w-6 h-6 stroke-[1.75]" aria-hidden="true" />
             </button>
           </div>
         </div>

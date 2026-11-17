@@ -26,6 +26,23 @@ const inter = localFont({
   display: 'swap',
 });
 
+const sourceSerif = localFont({
+  src: [
+    {
+      path: '../../node_modules/@fontsource-variable/source-serif-4/files/source-serif-4-latin-opsz-normal.woff2',
+      weight: '200 900',
+      style: 'normal',
+    },
+    {
+      path: '../../node_modules/@fontsource-variable/source-serif-4/files/source-serif-4-latin-opsz-italic.woff2',
+      weight: '200 900',
+      style: 'italic',
+    },
+  ],
+  variable: '--font-source-serif',
+  display: 'swap',
+});
+
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
@@ -35,11 +52,11 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: `${SITE_NAME} | Education for Empowerment`,
+    default: `${SITE_NAME} | Mukuyu, Murang'a County`,
     template: `%s | ${SITE_NAME}`,
   },
   description:
-    "Mumbi Girls Senior School — a C2 Public Girls' Boarding Senior School in Mukuyu, Kiharu, Murang'a County, Kenya. KNEC Code: 10204102, MoE Reg: F2030609.",
+    "Mumbi Girls Senior School — C2 public girls' boarding senior school in Mukuyu Sub-location, Kiharu Constituency, Murang'a County, established in 1960. KNEC 10204102, MoE F2030609.",
   keywords: [
     'Mumbi Girls Senior School',
     'KNEC 10204102',
@@ -73,7 +90,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: `${SITE_NAME} | Education for Empowerment`,
     description:
-      "A centre of excellence nurturing empowered girls who are innovative, morally upright, and globally competitive in Murang'a County, Kenya.",
+      "C2 public girls' boarding senior school in Mukuyu, Kiharu, Murang'a County, Kenya. Established 1960. KNEC 10204102, MoE F2030609.",
     url: SITE_URL,
     siteName: SITE_NAME,
     locale: 'en_KE',
@@ -84,7 +101,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: `${SITE_NAME} | Education for Empowerment`,
     description:
-      "Official website and resource hub for Mumbi Girls Senior School (KNEC 10204102), Mukuyu, Murang'a County.",
+      "Mumbi Girls Senior School, Mukuyu, Murang'a County (Est. 1960, KNEC 10204102). CBC Senior School pathways, circulars, and downloads.",
     images: [DEFAULT_OG_IMAGE.url],
   },
 };
@@ -95,19 +112,25 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${inter.variable} h-full antialiased font-sans`}>
+    <html
+      lang="en"
+      className={`${inter.variable} ${sourceSerif.variable} h-full antialiased font-sans`}
+    >
       <body className="min-h-full flex flex-col bg-slate-bg text-slate-800">
         <PwaProvider>
           {/* Keyboard Skip-to-Content Link */}
           <a
             href="#main-content"
-            className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:px-4 focus:py-2.5 focus:rounded-xl focus:bg-primary focus:text-white focus:font-bold focus:text-sm focus:shadow-2xl focus:outline-2 focus:outline-white focus:outline-offset-2"
+            className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:px-4 focus:py-2.5 focus:rounded-sm focus:bg-primary-dark focus:text-white focus:font-semibold focus:text-sm focus:shadow-lg focus:outline-2 focus:outline-white focus:outline-offset-2"
           >
             Skip to main content
           </a>
 
-          {/* Unified Sticky Utility Bar + Primary Header (zero mobile gap) */}
-          <header data-dark-surface className="sticky top-0 z-40 shadow-md">
+          {/* Unified Sticky Utility Bar + Primary Header */}
+          <header
+            data-dark-surface
+            className="sticky top-0 z-40 border-b border-primary-dark"
+          >
             <TopUtilityBar />
             <Header />
           </header>

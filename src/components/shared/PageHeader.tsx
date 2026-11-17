@@ -1,49 +1,40 @@
-import type { LucideIcon } from 'lucide-react';
-
 interface PageHeaderProps {
-  badge: string;
+  kicker: string;
   title: string;
   description: string;
-  icon: LucideIcon;
-  chips?: string[];
+  meta?: string[];
 }
 
 export default function PageHeader({
-  badge,
+  kicker,
   title,
   description,
-  icon: Icon,
-  chips,
+  meta,
 }: PageHeaderProps) {
   return (
     <section
       data-dark-surface
-      className="bg-gradient-to-br from-primary via-primary to-primary-dark text-white py-12 sm:py-16 px-4 sm:px-6 border-b border-primary-dark"
+      className="bg-primary text-white border-b border-primary-dark"
     >
-      <div className="max-w-7xl mx-auto text-center">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/12 border border-white/30 text-white text-xs font-semibold uppercase tracking-wider mb-4">
-          <Icon className="w-4 h-4 text-blue-100 shrink-0" aria-hidden="true" />
-          <span>{badge}</span>
-        </div>
-        <h1 className="text-3xl sm:text-4xl md:text-5xl font-black mb-4 tracking-tight leading-tight">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
+        <p className="text-xs font-semibold uppercase tracking-[0.14em] text-blue-100 mb-3">
+          {kicker}
+        </p>
+
+        <h1 className="font-serif text-3xl sm:text-4xl lg:text-[2.75rem] font-bold text-white leading-[1.15] max-w-3xl">
           {title}
         </h1>
-        <div
-          className="w-16 h-1 rounded-full bg-accent mx-auto mb-4"
-          aria-hidden="true"
-        />
-        <p className="max-w-3xl mx-auto text-white/90 text-base sm:text-lg leading-relaxed">
+
+        <div className="w-12 h-0.5 bg-accent mt-5 mb-5" aria-hidden="true" />
+
+        <p className="max-w-2xl text-white/90 text-base sm:text-lg leading-relaxed">
           {description}
         </p>
-        {chips && chips.length > 0 && (
-          <ul className="mt-6 flex flex-wrap justify-center gap-2 sm:gap-3 text-xs font-medium text-white/95">
-            {chips.map((chip) => (
-              <li
-                key={chip}
-                className="bg-black/25 px-3 py-1.5 rounded-lg border border-white/20"
-              >
-                {chip}
-              </li>
+
+        {meta && meta.length > 0 && (
+          <ul className="mt-7 pt-5 border-t border-white/20 flex flex-wrap gap-x-6 gap-y-2 text-xs sm:text-sm text-blue-100 tabular-nums">
+            {meta.map((item) => (
+              <li key={item}>{item}</li>
             ))}
           </ul>
         )}

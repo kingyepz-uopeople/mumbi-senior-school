@@ -8,21 +8,10 @@ export interface NavItem {
   children?: NavItem[];
 }
 
-export interface HeroSlide {
-  id: number;
-  eyebrow: string;
-  title: string;
-  subtitle: string;
-  image: string;
-  alt: string;
-  ctaLabel: string;
-  ctaHref: string;
-}
-
 export interface QuickStat {
   label: string;
   value: string;
-  icon: string;
+  detail?: string;
 }
 
 export interface PathwayTrack {
@@ -31,7 +20,6 @@ export interface PathwayTrack {
   description: string;
   subjects: string[];
   careers: string[];
-  icon: string;
 }
 
 export interface CBCPathway {
