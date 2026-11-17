@@ -1,99 +1,106 @@
-import { Award, Target, Eye, Heart } from 'lucide-react';
-import { schoolInfo } from '@/data/mock';
-
-const pillars = [
-  {
-    title: 'Our Motto',
-    icon: Award,
-    content: schoolInfo.motto,
-    type: 'text' as const,
-  },
-  {
-    title: 'Our Mission',
-    icon: Target,
-    content: schoolInfo.mission,
-    type: 'text' as const,
-  },
-  {
-    title: 'Our Vision',
-    icon: Eye,
-    content: schoolInfo.vision,
-    type: 'text' as const,
-  },
-  {
-    title: 'Core Values',
-    icon: Heart,
-    content: schoolInfo.coreValues,
-    type: 'values' as const,
-  },
-];
+import { Award, Eye, Heart, Target } from 'lucide-react';
+import { schoolInfo } from '@/data/mock-school-data';
 
 export default function FoundationalPillars() {
+  const textPillars = [
+    {
+      title: 'Our Motto',
+      icon: Award,
+      content: `“${schoolInfo.motto}”`,
+      highlight: true,
+    },
+    {
+      title: 'Our Mission',
+      icon: Target,
+      content: schoolInfo.mission,
+      highlight: false,
+    },
+    {
+      title: 'Our Vision',
+      icon: Eye,
+      content: schoolInfo.vision,
+      highlight: false,
+    },
+  ];
+
   return (
-    <section className="py-16 md:py-20">
-      <div className="max-w-7xl mx-auto px-4">
-        {/* Section heading */}
-        <div className="text-center mb-12">
+    <section
+      aria-labelledby="foundational-pillars-heading"
+      className="py-14 sm:py-20 bg-white border-y border-slate-200/80"
+    >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+        {/* Section Heading */}
+        <div className="text-center mb-10 sm:mb-12">
+          <span className="text-xs font-bold uppercase tracking-wider text-primary">
+            Guiding Identity
+          </span>
           <h2
-            className="text-2xl md:text-3xl font-bold mb-2"
-            style={{ color: '#800020' }}
+            id="foundational-pillars-heading"
+            className="text-2xl sm:text-3xl font-bold text-slate-900 mt-1 mb-3"
           >
             Foundational Pillars
           </h2>
+          <p className="text-slate-600 text-sm sm:text-base max-w-2xl mx-auto mb-3">
+            The principles anchoring scholarship, character formation, and
+            community life at {schoolInfo.name}.
+          </p>
           <div
-            className="w-16 h-1 rounded-full mx-auto"
-            style={{ backgroundColor: '#D4AF37' }}
+            className="w-16 h-1 rounded-full bg-accent mx-auto"
+            aria-hidden="true"
           />
         </div>
 
-        {/* Cards grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {pillars.map((pillar) => {
+        {/* 4-Card Responsive Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {textPillars.map((pillar) => {
             const Icon = pillar.icon;
             return (
               <div
                 key={pillar.title}
-                className="bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow p-6 border-t-4"
-                style={{ borderTopColor: '#D4AF37' }}
+                className="bg-slate-bg rounded-2xl border border-slate-200 border-t-4 border-t-primary p-6 shadow-xs hover:shadow-md transition-shadow flex flex-col"
               >
                 <div className="flex items-center gap-3 mb-4">
-                  <div
-                    className="p-2 rounded-lg"
-                    style={{ backgroundColor: 'rgba(212,175,55,0.1)' }}
-                  >
-                    <Icon className="w-6 h-6" style={{ color: '#D4AF37' }} />
+                  <div className="w-11 h-11 rounded-xl bg-primary text-white flex items-center justify-center shrink-0">
+                    <Icon className="w-5 h-5" aria-hidden="true" />
                   </div>
-                  <h3
-                    className="text-lg font-bold"
-                    style={{ color: '#800020' }}
-                  >
+                  <h3 className="text-lg font-bold text-primary">
                     {pillar.title}
                   </h3>
                 </div>
 
-                {pillar.type === 'values' ? (
-                  <div className="flex flex-wrap gap-2">
-                    {(pillar.content as string[]).map((value) => (
-                      <span
-                        key={value}
-                        className="text-xs font-medium px-3 py-1.5 rounded-full"
-                        style={{
-                          backgroundColor: 'rgba(128,0,32,0.08)',
-                          color: '#800020',
-                        }}
-                      >
-                        {value}
-                      </span>
-                    ))}
-                  </div>
-                ) : (
-                  <p className="text-gray-600 text-sm leading-relaxed">
-                    {pillar.content as string}
-                  </p>
-                )}
+                <p
+                  className={
+                    pillar.highlight
+                      ? 'font-serif italic font-bold text-xl text-slate-900 leading-snug'
+                      : 'text-slate-700 text-sm leading-relaxed'
+                  }
+                >
+                  {pillar.content}
+                </p>
               </div>
             );
           })}
+
+          {/* Core Values Card */}
+          <div className="bg-slate-bg rounded-2xl border border-slate-200 border-t-4 border-t-primary p-6 shadow-xs hover:shadow-md transition-shadow flex flex-col">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-11 h-11 rounded-xl bg-primary text-white flex items-center justify-center shrink-0">
+                <Heart className="w-5 h-5" aria-hidden="true" />
+              </div>
+              <h3 className="text-lg font-bold text-primary">Core Values</h3>
+            </div>
+
+            <ul className="flex flex-wrap gap-2">
+              {schoolInfo.coreValues.map((value) => (
+                <li
+                  key={value.title}
+                  className="text-xs font-semibold px-3 py-1.5 rounded-full bg-primary/10 text-primary"
+                >
+                  {value.title}
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
     </section>

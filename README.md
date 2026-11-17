@@ -14,10 +14,11 @@ A production-ready, modern web platform for **Mumbi Girls Senior School**, built
 - **Physical Location:** Mukuyu Sub-location, Kiharu Constituency, Murang'a East, Murang'a County, Kenya
 - **Office Hours:** Monday – Friday: 08:00 AM – 05:00 PM | Weekends: Closed
 - **School Motto:** *"Education for Empowerment"*
-- **Brand Colors:**
-  - **Primary:** Deep Royal Maroon (`#800020`)
-  - **Secondary / Accent:** Academic Gold (`#D4AF37`)
-  - **Neutral:** Clean Slate (`#F8FAFC`) & Crisp White (`#FFFFFF`)
+- **Brand Colors (Official Crest Palette):**
+  - **Primary:** Crest Blue (`#115191`) with Deep Crest Blue (`#0C3D6E`) for hover states & dark sections
+  - **Secondary:** Crisp White (`#FFFFFF`)
+  - **Accent (small highlights, badges & underlines):** Crest Red (`#C22F2F`)
+  - **Background:** Clean Slate (`#F8FAFC`)
 
 ---
 

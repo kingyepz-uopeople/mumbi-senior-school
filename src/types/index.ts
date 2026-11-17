@@ -10,10 +10,13 @@ export interface NavItem {
 
 export interface HeroSlide {
   id: number;
+  eyebrow: string;
   title: string;
   subtitle: string;
   image: string;
   alt: string;
+  ctaLabel: string;
+  ctaHref: string;
 }
 
 export interface QuickStat {
@@ -32,8 +35,9 @@ export interface PathwayTrack {
 }
 
 export interface CBCPathway {
-  id: string;
+  id: 'stem' | 'social-sciences' | 'arts-sports';
   name: string;
+  summary: string;
   tracks: PathwayTrack[];
 }
 
@@ -53,6 +57,7 @@ export interface NewsItem {
   date: string; // DD/MM/YYYY
   category: 'Newsletter' | 'Circular' | 'Download' | 'Event';
   excerpt: string;
+  body: string[];
   slug: string;
 }
 
@@ -60,6 +65,7 @@ export interface Principal {
   id: number;
   name: string;
   period: string;
+  isCurrent?: boolean;
   image?: string;
 }
 
@@ -67,6 +73,15 @@ export interface BOMChairperson {
   id: number;
   name: string;
   period: string;
+  isCurrent?: boolean;
+}
+
+export interface GovernanceRole {
+  id: string;
+  role: string;
+  title: string;
+  description: string;
+  responsibilities: string[];
 }
 
 export interface Department {
@@ -93,10 +108,24 @@ export interface DailyRoutineItem {
   activity: string;
 }
 
+export interface BoardingSection {
+  id: string;
+  title: string;
+  description: string;
+  highlights: string[];
+  icon: string;
+}
+
 export interface DownloadItem {
   id: number;
   title: string;
-  category: 'Holiday Assignment' | 'Newsletter' | 'Admission & Joining Instructions' | 'Fee Structure' | 'Exam Timetable' | 'Circular';
+  category:
+    | 'Holiday Assignment'
+    | 'Newsletter'
+    | 'Admission & Joining Instructions'
+    | 'Fee Structure'
+    | 'Exam Timetable'
+    | 'Circular';
   level: 'Grade 10' | 'Grade 11' | 'Grade 12' | 'Form 3' | 'Form 4' | 'All';
   subject?: string;
   fileSize: string;
@@ -111,11 +140,14 @@ export interface GalleryImage {
   alt: string;
   event: string;
   year: number;
+  width: number;
+  height: number;
 }
 
 export interface GalleryAlbum {
   id: string;
   name: string;
+  description: string;
   coverImage: string;
   images: GalleryImage[];
   year: number;
@@ -134,12 +166,15 @@ export interface SchoolInfo {
   motto: string;
   mission: string;
   vision: string;
-  coreValues: string[];
+  coreValues: { title: string; description: string }[];
   knecCode: string;
   moeReg: string;
   postalAddress: string;
   physicalLocation: string;
   officeHours: string;
+  officeHoursShort: string;
+  email: string;
+  phonePlaceholder: string;
   founded: number;
   category: string;
   domain: string;

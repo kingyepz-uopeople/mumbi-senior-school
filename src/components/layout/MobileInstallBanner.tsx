@@ -1,110 +1,104 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { Download, X } from 'lucide-react';
-import type { BeforeInstallPromptEvent } from '@/types';
-import { isBeforeInstallPromptEvent } from '@/lib/utils';
-
-const DISMISSED_KEY = 'mumbi-install-banner-dismissed';
+import Image from 'next/image';
+import { Download, Share, X } from 'lucide-react';
+import { usePwa } from '@/components/pwa/PwaProvider';
 
 export default function MobileInstallBanner() {
-  const [visible, setVisible] = useState(false);
-  const [deferredPrompt, setDeferredPrompt] =
-    useState<BeforeInstallPromptEvent | null>(null);
+  const { bannerVisible, manualHint, handleBannerInstall, dismissBanner } =
+    usePwa();
 
-  useEffect(() => {
-    // Don't show on desktop or if previously dismissed
-    const isDismissed = localStorage.getItem(DISMISSED_KEY) === 'true';
-    if (isDismissed) return;
-
-    const mediaQuery = window.matchMedia('(max-width: 768px)');
-    if (!mediaQuery.matches) return;
-
-    // Check if already installed as PWA
-    if (window.matchMedia('(display-mode: standalone)').matches) return;
-
-    const handler = (e: Event) => {
-      if (!isBeforeInstallPromptEvent(e)) return;
-      e.preventDefault();
-      setDeferredPrompt(e);
-      setVisible(true);
-    };
-
-    window.addEventListener('beforeinstallprompt', handler);
-
-    // Also show banner on mobile even without the prompt (for awareness)
-    const timer = setTimeout(() => {
-      if (!isDismissed && mediaQuery.matches) {
-        setVisible(true);
-      }
-    }, 3000);
-
-    return () => {
-      window.removeEventListener('beforeinstallprompt', handler);
-      clearTimeout(timer);
-    };
-  }, []);
-
-  const handleInstall = async () => {
-    if (deferredPrompt) {
-      await deferredPrompt.prompt();
-      await deferredPrompt.userChoice;
-      setDeferredPrompt(null);
-    }
-    setVisible(false);
-  };
-
-  const handleDismiss = () => {
-    localStorage.setItem(DISMISSED_KEY, 'true');
-    setVisible(false);
-  };
-
-  if (!visible) return null;
+  if (!bannerVisible) return null;
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50 md:hidden">
-      <div className="bg-gold mx-3 mb-3 rounded-xl shadow-xl p-4">
-        <div className="flex items-center gap-3">
-          {/* App icon placeholder */}
-          <div className="w-12 h-12 rounded-xl bg-maroon flex items-center justify-center shrink-0">
-            <span className="text-white text-sm font-bold">MGS</span>
-          </div>
+    <aside
+      data-light-surface
+      aria-label="Install Mumbi Portal App"
+      className="fixed bottom-0 inset-x-0 md:inset-x-auto md:right-4 md:bottom-4 z-50 p-3 md:p-0 pointer-events-none"
+    >
+      <div className="pointer-events-auto bg-white rounded-2xl shadow-2xl border border-slate-200 border-t-4 border-t-primary p-4 max-w-md md:w-96 mx-auto">
+        <div className="flex items-start gap-3">
+          <Image
+            src="/icons/icon-192x192.png"
+            alt="Mumbi Girls' Senior School crest"
+            width={48}
+            height={48}
+            sizes="48px"
+            className="w-12 h-12 rounded-xl bg-white border border-slate-200 object-contain shrink-0 shadow-xs"
+          />
 
           <div className="flex-1 min-w-0">
-            <p className="text-maroon font-bold text-sm">
+            <p className="text-primary font-bold text-sm leading-snug">
               Install Mumbi Portal App
             </p>
-            <p className="text-maroon/70 text-xs">
-              Quick access to downloads, news & more
+            <p className="text-slate-600 text-xs mt-0.5 leading-relaxed">
+              Add to your home screen for quick access to circulars, downloads,
+              and school updates.
             </p>
           </div>
 
-          {/* Dismiss */}
           <button
-            onClick={handleDismiss}
-            className="p-1.5 rounded-full hover:bg-maroon/10 transition-colors shrink-0"
-            aria-label="Dismiss"
+            type="button"
+            onClick={dismissBanner}
+            className="inline-flex items-center justify-center w-11 h-11 -mr-1.5 -mt-1.5 rounded-lg text-slate-600 hover:text-primary hover:bg-primary/6 transition-colors shrink-0"
+            aria-label="Dismiss install app banner"
           >
-            <X className="w-4 h-4 text-maroon" />
+            <X className="w-5 h-5" aria-hidden="true" />
           </button>
         </div>
 
-        <div className="mt-3 flex gap-2">
-          <button
-            onClick={handleInstall}
-            className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-maroon text-white rounded-lg text-sm font-semibold hover:bg-maroon/90 transition-colors"
+        {manualHint ? (
+          <div
+            role="status"
+            aria-live="polite"
+            className="mt-3 p-3 rounded-xl bg-slate-bg border border-slate-200 text-xs text-slate-700 space-y-2"
           >
-            <Download className="w-4 h-4" />
-            Install Now
-          </button>
-          <button
-            onClick={handleDismiss}
-            className="px-4 py-2.5 text-maroon border border-maroon/30 rounded-lg text-sm font-medium hover:bg-maroon/5 transition-colors"
-          >
-            Not Now
-          </button>
-        </div>
+            {manualHint === 'ios' ? (
+              <p className="flex items-start gap-2 leading-relaxed">
+                <Share
+                  className="w-4 h-4 text-primary shrink-0 mt-0.5"
+                  aria-hidden="true"
+                />
+                <span>
+                  In Safari, tap <strong>Share</strong> at the bottom of your
+                  screen, then choose <strong>Add to Home Screen</strong>.
+                </span>
+              </p>
+            ) : (
+              <p className="leading-relaxed">
+                Open your browser menu (<strong>⋮</strong>) and tap{' '}
+                <strong>Install app</strong> or{' '}
+                <strong>Add to Home screen</strong>.
+              </p>
+            )}
+            <button
+              type="button"
+              onClick={dismissBanner}
+              className="w-full min-h-11 px-4 py-2.5 rounded-xl bg-primary text-white font-bold text-xs hover:bg-primary-dark transition-colors"
+            >
+              Got It, Don&apos;t Show Again
+            </button>
+          </div>
+        ) : (
+          <div className="mt-3 flex items-center gap-2">
+            <button
+              type="button"
+              onClick={handleBannerInstall}
+              className="flex-1 min-h-11 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-primary hover:bg-primary-dark text-white text-xs font-bold transition-colors shadow-xs"
+            >
+              <Download className="w-4 h-4" aria-hidden="true" />
+              <span>Install App</span>
+            </button>
+            <button
+              type="button"
+              onClick={dismissBanner}
+              className="min-h-11 px-3.5 py-2.5 rounded-xl border border-slate-300 text-slate-700 hover:text-primary hover:border-primary text-xs font-semibold transition-colors"
+            >
+              Not Now
+            </button>
+          </div>
+        )}
       </div>
-    </div>
+    </aside>
   );
 }

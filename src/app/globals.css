@@ -2,8 +2,9 @@
 
 /* ── Tailwind v4 Brand Theme Tokens ───────────────────────── */
 @theme {
-  --color-maroon: #800020;
-  --color-gold: #D4AF37;
+  --color-primary: #115191;
+  --color-primary-dark: #0C3D6E;
+  --color-accent: #C22F2F;
   --color-slate-bg: #F8FAFC;
   --animate-fadeIn: fadeIn 0.25s ease-out;
 
@@ -29,6 +30,7 @@
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    overflow-x: clip;
   }
 
   body {
@@ -38,6 +40,7 @@
     color: #1e293b;
     background-color: #F8FAFC;
     line-height: 1.6;
+    overflow-x: clip;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -50,9 +53,8 @@
     transition: color 0.2s ease;
   }
 
-  img {
-    max-width: 100%;
-    height: auto;
+  button:not(:disabled) {
+    cursor: pointer;
   }
 
   /* Custom Scrollbar */
@@ -66,29 +68,52 @@
   }
 
   ::-webkit-scrollbar-thumb {
-    background: var(--color-maroon);
+    background: var(--color-primary);
     border-radius: 4px;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: #600018;
+    background: var(--color-primary-dark);
   }
 
   /* Firefox scrollbar */
   * {
     scrollbar-width: thin;
-    scrollbar-color: var(--color-maroon) var(--color-slate-bg);
+    scrollbar-color: var(--color-primary) var(--color-slate-bg);
   }
 
-  /* Focus Styles */
+  /* High-contrast visible focus rings (WCAG 2.4.7 / 1.4.11) */
   :focus-visible {
-    outline: 2px solid var(--color-gold);
+    outline: 2px solid var(--color-primary);
     outline-offset: 2px;
+  }
+
+  [data-dark-surface] :focus-visible {
+    outline-color: var(--color-white);
+  }
+
+  [data-light-surface] :focus-visible {
+    outline-color: var(--color-primary);
   }
 
   /* Selection */
   ::selection {
-    background-color: var(--color-maroon);
+    background-color: var(--color-primary);
     color: var(--color-white);
+  }
+
+  /* Respect user motion preferences */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
   }
 }

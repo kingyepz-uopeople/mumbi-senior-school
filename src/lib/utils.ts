@@ -27,11 +27,19 @@ export function formatDateKE(date: Date): string {
 }
 
 /**
- * Parse a DD/MM/YYYY string to a Date object
+ * Parse a DD/MM/YYYY string to a UTC Date object
  */
 export function parseDateKE(dateStr: string): Date {
   const [dd, mm, yyyy] = dateStr.split('/').map(Number);
-  return new Date(yyyy, mm - 1, dd);
+  return new Date(Date.UTC(yyyy, mm - 1, dd));
+}
+
+/**
+ * Convert a DD/MM/YYYY string into ISO YYYY-MM-DD for HTML <time dateTime> attributes
+ */
+export function toIsoDate(dateStr: string): string {
+  const [dd, mm, yyyy] = dateStr.split('/');
+  return `${yyyy}-${mm}-${dd}`;
 }
 
 /**
