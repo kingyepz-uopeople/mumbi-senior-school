@@ -5,7 +5,7 @@ A production-ready, modern web platform for **Mumbi Girls Senior School**, built
 
 ---
 
-## 🏫 School Profile & Registry
+## School Profile & Registry
 - **Official Name:** Mumbi Girls Senior School
 - **Category:** C2 Public Girls' Boarding Senior School
 - **KNEC Centre Code:** `10204102`
@@ -21,7 +21,7 @@ A production-ready, modern web platform for **Mumbi Girls Senior School**, built
 
 ---
 
-## 🚀 Key Features & Site Architecture
+## Key Features & Site Architecture
 
 1. **Top Utility Bar & Sticky Navigation:**
    - Displays KNEC Centre Code `10204102`, postal address, office hours, student/staff login shortcuts, and mobile PWA install trigger.
@@ -66,7 +66,7 @@ A production-ready, modern web platform for **Mumbi Girls Senior School**, built
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 - **Framework:** Next.js 16 (App Router with Turbopack)
 - **Language:** TypeScript
 - **Styling:** Tailwind CSS
@@ -75,28 +75,28 @@ A production-ready, modern web platform for **Mumbi Girls Senior School**, built
 
 ---
 
-## 📦 Getting Started
+## Getting Started
 
 ### 1. Install Dependencies
-\`\`\`bash
+```bash
 npm install
-\`\`\`
+```
 
 ### 2. Configure Environment Variables (Optional)
 Copy `.env.example` to `.env.local`:
-\`\`\`bash
+```bash
 cp .env.example .env.local
-\`\`\`
+```
 *(The application works 100% out-of-the-box using built-in mock data if Supabase credentials are not provided.)*
 
 ### 3. Run Development Server
-\`\`\`bash
+```bash
 npm run dev
-\`\`\`
+```
 Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ### 4. Build for Production
-\`\`\`bash
+```bash
 npm run build
 npm start
-\`\`\`
+```
