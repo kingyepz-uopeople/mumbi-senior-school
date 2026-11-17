@@ -1,90 +1,70 @@
 'use client';
 
-import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Phone, Clock, MapPin, Download, User, LogIn } from 'lucide-react';
-import type { BeforeInstallPromptEvent } from '@/types';
-import { isBeforeInstallPromptEvent } from '@/lib/utils';
+import { Clock, Download, LogIn, MapPin, ShieldCheck, User } from 'lucide-react';
+import { schoolInfo } from '@/data/mock-school-data';
+import { usePwa } from '@/components/pwa/PwaProvider';
 
 export default function TopUtilityBar() {
-  const [deferredPrompt, setDeferredPrompt] =
-    useState<BeforeInstallPromptEvent | null>(null);
-  const [isInstallable, setIsInstallable] = useState(false);
-
-  useEffect(() => {
-    const handler = (e: Event) => {
-      if (!isBeforeInstallPromptEvent(e)) return;
-      e.preventDefault();
-      setDeferredPrompt(e);
-      setIsInstallable(true);
-    };
-
-    window.addEventListener('beforeinstallprompt', handler);
-    return () => window.removeEventListener('beforeinstallprompt', handler);
-  }, []);
-
-  const handleInstall = async () => {
-    if (!deferredPrompt) return;
-    await deferredPrompt.prompt();
-    await deferredPrompt.userChoice;
-    setDeferredPrompt(null);
-    setIsInstallable(false);
-  };
+  const { canNativeInstall, triggerNativeInstall } = usePwa();
 
   return (
-    <div className="bg-maroon text-white text-xs sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-4 py-1.5 flex items-center justify-between">
-        {/* Left: School info */}
-        <div className="flex items-center gap-4">
-          {/* Full info on desktop */}
-          <div className="hidden md:flex items-center gap-4">
-            <span className="flex items-center gap-1 text-gold font-semibold">
-              <Phone className="w-3 h-3" />
-              KNEC: 10204102
-            </span>
-            <span className="text-white/60">|</span>
-            <span className="flex items-center gap-1">
-              <MapPin className="w-3 h-3 text-gold" />
-              P.O. Box 115 - 10200, Murang&apos;a
-            </span>
-            <span className="text-white/60">|</span>
-            <span className="flex items-center gap-1">
-              <Clock className="w-3 h-3 text-gold" />
-              Mon-Fri: 8AM - 5PM
-            </span>
-          </div>
-          {/* Condensed on mobile */}
-          <div className="flex md:hidden items-center gap-2">
-            <span className="text-gold font-semibold">KNEC: 10204102</span>
-          </div>
+    <div className="bg-maroon text-white text-xs border-b border-white/15">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-1.5 flex items-center justify-between gap-2">
+        {/* Left: Official school identifiers */}
+        <div className="flex items-center gap-3 min-w-0">
+          <span className="inline-flex items-center gap-1.5 text-gold font-semibold shrink-0">
+            <ShieldCheck className="w-3.5 h-3.5 shrink-0" aria-hidden="true" />
+            <span>KNEC: {schoolInfo.knecCode}</span>
+          </span>
+
+          <span className="hidden md:inline text-white/40" aria-hidden="true">
+            |
+          </span>
+          <span className="hidden md:inline-flex items-center gap-1.5 text-white/90 truncate">
+            <MapPin className="w-3.5 h-3.5 text-gold shrink-0" aria-hidden="true" />
+            <span>{schoolInfo.postalAddress}</span>
+          </span>
+
+          <span className="hidden xl:inline text-white/40" aria-hidden="true">
+            |
+          </span>
+          <span className="hidden xl:inline-flex items-center gap-1.5 text-white/90 shrink-0">
+            <Clock className="w-3.5 h-3.5 text-gold shrink-0" aria-hidden="true" />
+            <span>{schoolInfo.officeHoursShort}</span>
+          </span>
         </div>
 
-        {/* Right: Action buttons */}
-        <div className="flex items-center gap-2">
+        {/* Right: Portal links & PWA install */}
+        <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
           <Link
             href="/portal"
-            className="hidden sm:inline-flex items-center gap-1 px-2.5 py-1 rounded text-gold hover:bg-white/10 transition-colors font-medium"
+            className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1.5 min-h-9 rounded-md text-gold hover:bg-white/10 hover:text-white transition-colors font-semibold"
           >
-            <User className="w-3 h-3" />
-            Student Login
+            <User className="w-3.5 h-3.5" aria-hidden="true" />
+            <span>Student Login</span>
           </Link>
           <Link
             href="/portal"
-            className="hidden sm:inline-flex items-center gap-1 px-2.5 py-1 rounded text-gold hover:bg-white/10 transition-colors font-medium"
+            className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1.5 min-h-9 rounded-md text-gold hover:bg-white/10 hover:text-white transition-colors font-semibold"
           >
-            <LogIn className="w-3 h-3" />
-            Staff Login
+            <LogIn className="w-3.5 h-3.5" aria-hidden="true" />
+            <span>Staff Login</span>
           </Link>
-          {isInstallable && (
+          {canNativeInstall && (
             <button
-              onClick={handleInstall}
-              className="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-gold text-maroon hover:bg-yellow-400 transition-colors font-semibold"
+              type="button"
+              onClick={triggerNativeInstall}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 min-h-9 rounded-md bg-gold text-slate-900 hover:bg-white transition-colors font-bold"
             >
-              <Download className="w-3 h-3" />
+              <Download className="w-3.5 h-3.5" aria-hidden="true" />
               <span className="hidden sm:inline">Install App</span>
               <span className="sm:hidden">Install</span>
             </button>
           )}
+          <span className="sm:hidden text-[11px] text-white/85 font-medium">
+            MoE: {schoolInfo.moeReg}
+          </span>
         </div>
       </div>
     </div>

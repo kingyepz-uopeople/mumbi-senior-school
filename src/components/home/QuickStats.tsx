@@ -1,5 +1,11 @@
-import { Calendar, Users, GraduationCap, Route, type LucideIcon } from 'lucide-react';
-import { quickStats } from '@/data/mock';
+import {
+  Calendar,
+  GraduationCap,
+  Route,
+  Users,
+  type LucideIcon,
+} from 'lucide-react';
+import { quickStats } from '@/data/mock-school-data';
 
 const iconMap: Record<string, LucideIcon> = {
   Calendar,
@@ -10,35 +16,38 @@ const iconMap: Record<string, LucideIcon> = {
 
 export default function QuickStats() {
   return (
-    <section style={{ backgroundColor: '#800020' }}>
-      <div className="max-w-7xl mx-auto px-4 py-10 md:py-14">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
+    <section
+      aria-labelledby="quick-stats-heading"
+      className="bg-maroon text-white"
+    >
+      <h2 id="quick-stats-heading" className="sr-only">
+        Mumbi Girls Senior School at a Glance
+      </h2>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10 md:py-12">
+        <dl className="grid grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
           {quickStats.map((stat) => {
             const Icon = iconMap[stat.icon];
             return (
               <div
                 key={stat.label}
-                className="flex flex-col items-center text-center group"
+                className="flex flex-col items-center text-center p-3 rounded-xl bg-white/5 border border-white/10"
               >
                 {Icon && (
                   <Icon
-                    className="w-8 h-8 md:w-10 md:h-10 mb-3 transition-transform group-hover:scale-110"
-                    style={{ color: '#D4AF37' }}
+                    className="w-7 h-7 md:w-9 md:h-9 text-gold mb-2.5"
+                    aria-hidden="true"
                   />
                 )}
-                <span className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-1">
+                <dd className="text-3xl sm:text-4xl font-black text-white tracking-tight mb-1">
                   {stat.value}
-                </span>
-                <span
-                  className="text-sm md:text-base font-medium"
-                  style={{ color: 'rgba(255,255,255,0.8)' }}
-                >
+                </dd>
+                <dt className="text-xs sm:text-sm font-medium text-white/90">
                   {stat.label}
-                </span>
+                </dt>
               </div>
             );
           })}
-        </div>
+        </dl>
       </div>
     </section>
   );

@@ -1,29 +1,99 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useCallback, useEffect, useId, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
+import Image from 'next/image';
 import Link from 'next/link';
-import { Menu, X, ChevronDown } from 'lucide-react';
+import { usePathname } from 'next/navigation';
+import { ChevronDown, Download, LogIn, Menu, User, X } from 'lucide-react';
 import { navigation } from '@/data/navigation';
+import { schoolInfo } from '@/data/mock-school-data';
+import { usePwa } from '@/components/pwa/PwaProvider';
 import type { NavItem } from '@/types';
 
-function DesktopDropdown({ item }: { item: NavItem }) {
+function DesktopDropdown({
+  item,
+  isActive,
+}: {
+  item: NavItem;
+  isActive: boolean;
+}) {
   const [open, setOpen] = useState(false);
-  const timeout = useRef<NodeJS.Timeout | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const toggleRef = useRef<HTMLButtonElement>(null);
+  const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const menuId = useId();
 
-  const handleEnter = () => {
-    if (timeout.current) clearTimeout(timeout.current);
+  const clearTimer = () => {
+    if (closeTimerRef.current) {
+      clearTimeout(closeTimerRef.current);
+      closeTimerRef.current = null;
+    }
+  };
+
+  const openMenu = () => {
+    clearTimer();
     setOpen(true);
   };
 
-  const handleLeave = () => {
-    timeout.current = setTimeout(() => setOpen(false), 150);
+  const scheduleClose = () => {
+    clearTimer();
+    closeTimerRef.current = setTimeout(() => setOpen(false), 140);
+  };
+
+  useEffect(() => {
+    return () => {
+      if (closeTimerRef.current) clearTimeout(closeTimerRef.current);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!open) return;
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        setOpen(false);
+        toggleRef.current?.focus();
+      }
+    };
+
+    const onPointerDown = (event: PointerEvent) => {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(event.target as Node)
+      ) {
+        setOpen(false);
+      }
+    };
+
+    document.addEventListener('keydown', onKeyDown);
+    document.addEventListener('pointerdown', onPointerDown);
+    return () => {
+      document.removeEventListener('keydown', onKeyDown);
+      document.removeEventListener('pointerdown', onPointerDown);
+    };
+  }, [open]);
+
+  const handleBlur = (event: React.FocusEvent<HTMLDivElement>) => {
+    if (
+      containerRef.current &&
+      !containerRef.current.contains(event.relatedTarget as Node | null)
+    ) {
+      setOpen(false);
+    }
   };
 
   if (!item.children?.length) {
     return (
       <Link
         href={item.href}
-        className="px-3 py-2 text-sm font-medium text-white hover:text-gold transition-colors rounded-md"
+        aria-current={isActive ? 'page' : undefined}
+        className={`relative px-3 py-2 text-sm font-semibold rounded-md transition-colors ${
+          isActive
+            ? 'text-gold bg-white/10'
+            : 'text-white hover:text-gold hover:bg-white/10'
+        }`}
       >
         {item.label}
       </Link>
@@ -32,45 +102,157 @@ function DesktopDropdown({ item }: { item: NavItem }) {
 
   return (
     <div
-      className="relative"
-      onMouseEnter={handleEnter}
-      onMouseLeave={handleLeave}
+      ref={containerRef}
+      className="relative flex items-center"
+      onMouseEnter={openMenu}
+      onMouseLeave={scheduleClose}
+      onBlur={handleBlur}
     >
-      <Link
-        href={item.href}
-        className="inline-flex items-center gap-1 px-3 py-2 text-sm font-medium text-white hover:text-gold transition-colors rounded-md"
+      <div
+        className={`inline-flex items-center rounded-md transition-colors ${
+          isActive ? 'bg-white/10' : 'hover:bg-white/10'
+        }`}
       >
-        {item.label}
-        <ChevronDown
-          className={`w-3.5 h-3.5 transition-transform ${open ? 'rotate-180' : ''}`}
-        />
-      </Link>
+        <Link
+          href={item.href}
+          aria-current={isActive ? 'page' : undefined}
+          onClick={() => setOpen(false)}
+          className={`pl-3 pr-1 py-2 text-sm font-semibold rounded-l-md transition-colors ${
+            isActive ? 'text-gold' : 'text-white hover:text-gold'
+          }`}
+        >
+          {item.label}
+        </Link>
+        <button
+          ref={toggleRef}
+          type="button"
+          aria-label={`${item.label} submenu`}
+          aria-expanded={open}
+          aria-haspopup="true"
+          aria-controls={menuId}
+          onClick={() => setOpen((prev) => !prev)}
+          onKeyDown={(e) => {
+            if (e.key === 'ArrowDown') {
+              e.preventDefault();
+              setOpen(true);
+              requestAnimationFrame(() => {
+                const firstLink =
+                  containerRef.current?.querySelector<HTMLAnchorElement>(
+                    `#${CSS.escape(menuId)} a`
+                  );
+                firstLink?.focus();
+              });
+            }
+          }}
+          className={`px-1.5 py-2 rounded-r-md transition-colors ${
+            isActive ? 'text-gold' : 'text-white hover:text-gold'
+          }`}
+        >
+          <ChevronDown
+            className={`w-4 h-4 transition-transform duration-200 ${
+              open ? 'rotate-180' : ''
+            }`}
+            aria-hidden="true"
+          />
+        </button>
+      </div>
 
       {open && (
-        <div className="absolute top-full left-0 mt-1 w-56 bg-white rounded-lg shadow-xl border border-gray-100 py-2 z-50">
-          {item.children.map((child) => (
-            <Link
-              key={child.href}
-              href={child.href}
-              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gold/10 hover:text-maroon transition-colors"
-            >
-              {child.label}
-            </Link>
-          ))}
+        <div
+          id={menuId}
+          data-light-surface
+          className="absolute top-full left-0 pt-1.5 w-60 z-50"
+        >
+          <ul className="bg-white rounded-xl shadow-xl border border-slate-200 py-2 overflow-hidden">
+            {item.children.map((child) => (
+              <li key={child.href}>
+                <Link
+                  href={child.href}
+                  onClick={() => setOpen(false)}
+                  className="block px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-maroon/5 hover:text-maroon focus-visible:outline-maroon focus-visible:-outline-offset-2 transition-colors"
+                >
+                  {child.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
         </div>
       )}
     </div>
   );
 }
 
-function MobileNav({
-  isOpen,
+function MobileNavDrawer({
   onClose,
+  triggerRef,
 }: {
-  isOpen: boolean;
   onClose: () => void;
+  triggerRef: React.RefObject<HTMLButtonElement | null>;
 }) {
-  const [expandedItems, setExpandedItems] = useState<Set<string>>(new Set());
+  const pathname = usePathname();
+  const { canNativeInstall, triggerNativeInstall } = usePwa();
+  const [expandedItems, setExpandedItems] = useState<Set<string>>(() => {
+    const active = navigation.find(
+      (item) => item.children?.length && pathname === item.href
+    );
+    return active ? new Set([active.label]) : new Set();
+  });
+
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const closeBtnRef = useRef<HTMLButtonElement>(null);
+  const initialPathnameRef = useRef(pathname);
+
+  // Close drawer automatically whenever pathname changes
+  useEffect(() => {
+    if (pathname !== initialPathnameRef.current) {
+      onClose();
+    }
+  }, [pathname, onClose]);
+
+  // Lock body scroll, set initial focus, trap Tab focus, handle Escape, and restore focus
+  useEffect(() => {
+    const previousOverflow = document.body.style.overflow;
+    const triggerEl = triggerRef.current;
+    document.body.style.overflow = 'hidden';
+
+    closeBtnRef.current?.focus();
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        onClose();
+        return;
+      }
+
+      if (event.key !== 'Tab' || !dialogRef.current) return;
+
+      const focusable = Array.from(
+        dialogRef.current.querySelectorAll<HTMLElement>(
+          'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
+        )
+      ).filter((el) => !el.hasAttribute('disabled'));
+
+      if (focusable.length === 0) return;
+
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener('keydown', handleKeyDown);
+      triggerEl?.focus();
+    };
+  }, [onClose, triggerRef]);
 
   const toggleExpand = (label: string) => {
     setExpandedItems((prev) => {
@@ -81,150 +263,246 @@ function MobileNav({
     });
   };
 
-  // Prevent scroll when open
-  useEffect(() => {
-    if (isOpen) document.body.style.overflow = 'hidden';
-    else document.body.style.overflow = '';
-    return () => { document.body.style.overflow = ''; };
-  }, [isOpen]);
+  if (typeof document === 'undefined') return null;
 
-  return (
-    <>
+  return createPortal(
+    <div className="fixed inset-0 z-[60] lg:hidden">
       {/* Backdrop */}
-      {isOpen && (
-        <div
-          className="fixed inset-0 bg-black/50 z-40 lg:hidden"
-          onClick={onClose}
-        />
-      )}
-
-      {/* Slide-in sidebar */}
       <div
-        className={`fixed top-0 right-0 h-full w-72 bg-white shadow-2xl z-50 transform transition-transform duration-300 lg:hidden ${
-          isOpen ? 'translate-x-0' : 'translate-x-full'
-        }`}
+        className="fixed inset-0 bg-slate-950/60 backdrop-blur-xs"
+        aria-hidden="true"
+        onClick={onClose}
+      />
+
+      {/* Accessible modal drawer */}
+      <div
+        ref={dialogRef}
+        id="mobile-nav-drawer"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Mobile site navigation"
+        data-light-surface
+        className="fixed inset-y-0 right-0 w-full max-w-xs bg-white shadow-2xl flex flex-col animate-fadeIn"
       >
-        <div className="flex items-center justify-between p-4 border-b border-gray-100">
-          <span className="text-lg font-bold text-maroon">Menu</span>
+        <div className="flex items-center justify-between px-4 py-3.5 border-b border-slate-200 bg-maroon text-white" data-dark-surface>
+          <div className="flex items-center gap-2.5 min-w-0">
+            <Image
+              src="/images/school-crest.png"
+              alt="Mumbi Girls Senior School crest"
+              width={32}
+              height={32}
+              sizes="32px"
+              className="w-8 h-8 shrink-0"
+            />
+            <span className="text-sm font-bold truncate">Navigation Menu</span>
+          </div>
           <button
+            ref={closeBtnRef}
+            type="button"
             onClick={onClose}
-            className="p-2 rounded-md hover:bg-gray-100 transition-colors"
-            aria-label="Close menu"
+            className="inline-flex items-center justify-center w-11 h-11 rounded-lg text-white hover:bg-white/15 transition-colors shrink-0"
+            aria-label="Close navigation menu"
           >
-            <X className="w-5 h-5 text-gray-600" />
+            <X className="w-5 h-5" aria-hidden="true" />
           </button>
         </div>
 
-        <nav className="p-4 overflow-y-auto h-[calc(100%-60px)]">
-          {navigation.map((item) => (
-            <div key={item.label} className="mb-1">
-              {item.children?.length ? (
-                <>
+        <nav
+          aria-label="Mobile navigation"
+          className="flex-1 overflow-y-auto px-4 py-4 space-y-1"
+        >
+          {navigation.map((item) => {
+            const isActive = pathname === item.href;
+            const isExpanded = expandedItems.has(item.label);
+            const sectionId = `mobile-sub-${item.href.replace(/\W+/g, '')}`;
+
+            if (item.children?.length) {
+              return (
+                <div key={item.label} className="rounded-lg">
                   <button
+                    type="button"
+                    aria-expanded={isExpanded}
+                    aria-controls={sectionId}
                     onClick={() => toggleExpand(item.label)}
-                    className="w-full flex items-center justify-between px-3 py-2.5 text-sm font-medium text-gray-800 hover:bg-maroon/5 hover:text-maroon rounded-md transition-colors"
+                    className={`w-full min-h-11 flex items-center justify-between px-3.5 py-2.5 text-sm font-semibold rounded-lg transition-colors ${
+                      isActive
+                        ? 'bg-maroon/10 text-maroon'
+                        : 'text-slate-800 hover:bg-maroon/5 hover:text-maroon'
+                    }`}
                   >
-                    {item.label}
+                    <span>{item.label}</span>
                     <ChevronDown
-                      className={`w-4 h-4 transition-transform ${
-                        expandedItems.has(item.label) ? 'rotate-180' : ''
+                      className={`w-4 h-4 shrink-0 transition-transform duration-200 ${
+                        isExpanded ? 'rotate-180 text-maroon' : 'text-slate-500'
                       }`}
+                      aria-hidden="true"
                     />
                   </button>
-                  {expandedItems.has(item.label) && (
-                    <div className="ml-3 pl-3 border-l-2 border-gold/30">
-                      {item.children.map((child) => (
-                        <Link
-                          key={child.href}
-                          href={child.href}
-                          onClick={onClose}
-                          className="block px-3 py-2 text-sm text-gray-600 hover:text-maroon hover:bg-maroon/5 rounded-md transition-colors"
-                        >
-                          {child.label}
-                        </Link>
-                      ))}
-                    </div>
-                  )}
-                </>
-              ) : (
-                <Link
-                  href={item.href}
-                  onClick={onClose}
-                  className="block px-3 py-2.5 text-sm font-medium text-gray-800 hover:bg-maroon/5 hover:text-maroon rounded-md transition-colors"
-                >
-                  {item.label}
-                </Link>
-              )}
-            </div>
-          ))}
 
-          {/* Mobile login links */}
-          <div className="mt-6 pt-4 border-t border-gray-100 space-y-2">
+                  {isExpanded && (
+                    <ul
+                      id={sectionId}
+                      className="mt-1 ml-3 pl-3 border-l-2 border-gold space-y-0.5"
+                    >
+                      <li>
+                        <Link
+                          href={item.href}
+                          aria-current={isActive ? 'page' : undefined}
+                          onClick={onClose}
+                          className="flex items-center min-h-11 px-3 py-2 text-sm font-semibold text-maroon hover:bg-maroon/5 rounded-lg transition-colors"
+                        >
+                          {item.label} Overview
+                        </Link>
+                      </li>
+                      {item.children.map((child) => (
+                        <li key={child.href}>
+                          <Link
+                            href={child.href}
+                            onClick={onClose}
+                            className="flex items-center min-h-11 px-3 py-2 text-sm text-slate-700 hover:text-maroon hover:bg-maroon/5 rounded-lg transition-colors"
+                          >
+                            {child.label}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              );
+            }
+
+            return (
+              <Link
+                key={item.label}
+                href={item.href}
+                aria-current={isActive ? 'page' : undefined}
+                onClick={onClose}
+                className={`flex items-center min-h-11 px-3.5 py-2.5 text-sm font-semibold rounded-lg transition-colors ${
+                  isActive
+                    ? 'bg-maroon/10 text-maroon'
+                    : 'text-slate-800 hover:bg-maroon/5 hover:text-maroon'
+                }`}
+              >
+                {item.label}
+              </Link>
+            );
+          })}
+        </nav>
+
+        {/* Mobile portal & install actions */}
+        <div className="p-4 border-t border-slate-200 bg-slate-bg space-y-2.5">
+          {canNativeInstall && (
+            <button
+              type="button"
+              onClick={async () => {
+                await triggerNativeInstall();
+                onClose();
+              }}
+              className="w-full min-h-11 px-4 py-2.5 rounded-xl bg-gold text-slate-900 font-bold text-sm inline-flex items-center justify-center gap-2 hover:bg-gold/90 transition-colors"
+            >
+              <Download className="w-4 h-4" aria-hidden="true" />
+              Install Mumbi Portal App
+            </button>
+          )}
+          <div className="grid grid-cols-2 gap-2">
             <Link
               href="/portal"
               onClick={onClose}
-              className="block w-full px-3 py-2.5 text-center text-sm font-semibold text-white bg-maroon rounded-md hover:bg-maroon/90 transition-colors"
+              className="min-h-11 px-3 py-2.5 inline-flex items-center justify-center gap-1.5 text-sm font-bold text-white bg-maroon rounded-xl hover:bg-maroon/90 transition-colors"
             >
-              Student Login
+              <User className="w-4 h-4 text-gold shrink-0" aria-hidden="true" />
+              <span>Student</span>
             </Link>
             <Link
               href="/portal"
               onClick={onClose}
-              className="block w-full px-3 py-2.5 text-center text-sm font-semibold text-maroon border border-maroon rounded-md hover:bg-maroon/5 transition-colors"
+              className="min-h-11 px-3 py-2.5 inline-flex items-center justify-center gap-1.5 text-sm font-bold text-maroon bg-white border border-maroon rounded-xl hover:bg-maroon/5 transition-colors"
             >
-              Staff Login
+              <LogIn className="w-4 h-4 shrink-0" aria-hidden="true" />
+              <span>Staff</span>
             </Link>
           </div>
-        </nav>
+          <p className="text-[11px] text-center text-slate-600">
+            {schoolInfo.officeHoursShort} • {schoolInfo.postalAddress}
+          </p>
+        </div>
       </div>
-    </>
+    </div>,
+    document.body
   );
 }
 
 export default function Header() {
+  const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const hamburgerRef = useRef<HTMLButtonElement>(null);
+
+  const closeMobile = useCallback(() => {
+    setMobileOpen(false);
+  }, []);
 
   return (
-    <header className="bg-maroon sticky top-[36px] z-40 shadow-md">
-      <div className="max-w-7xl mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo + School Name */}
-          <Link href="/" className="flex items-center gap-3 shrink-0">
-            {/* Logo placeholder: gradient circle */}
-            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#800020] to-[#D4AF37] flex items-center justify-center border-2 border-gold shadow-sm">
-              <span className="text-white text-xs font-bold tracking-wide">
-                MGS
-              </span>
-            </div>
-            <div className="hidden sm:block">
-              <h1 className="text-white text-base font-bold leading-tight">
-                Mumbi Girls Senior School
-              </h1>
-              <p className="text-gold text-[10px] tracking-wider uppercase">
-                Education for Empowerment
-              </p>
-            </div>
-          </Link>
+    <>
+      <div className="bg-maroon">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="flex items-center justify-between h-16 gap-3">
+            {/* School Crest + Name */}
+            <Link
+              href="/"
+              className="flex items-center gap-2.5 sm:gap-3 min-w-0 rounded-lg py-1"
+            >
+              <Image
+                src="/images/school-crest.png"
+                alt="Mumbi Girls Senior School crest"
+                width={44}
+                height={44}
+                sizes="44px"
+                priority
+                className="w-10 h-10 sm:w-11 sm:h-11 shrink-0 drop-shadow-xs"
+              />
+              <div className="min-w-0">
+                <span className="block text-white text-sm sm:text-base font-bold leading-tight truncate">
+                  {schoolInfo.name}
+                </span>
+                <span className="block text-gold text-[10px] sm:text-[11px] font-medium tracking-wider uppercase truncate">
+                  {schoolInfo.motto}
+                </span>
+              </div>
+            </Link>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-1">
-            {navigation.map((item) => (
-              <DesktopDropdown key={item.label} item={item} />
-            ))}
-          </nav>
+            {/* Desktop Navigation */}
+            <nav
+              aria-label="Primary navigation"
+              className="hidden lg:flex items-center gap-1"
+            >
+              {navigation.map((item) => (
+                <DesktopDropdown
+                  key={item.label}
+                  item={item}
+                  isActive={pathname === item.href}
+                />
+              ))}
+            </nav>
 
-          {/* Mobile hamburger */}
-          <button
-            onClick={() => setMobileOpen(true)}
-            className="lg:hidden p-2 rounded-md text-white hover:bg-white/10 transition-colors"
-            aria-label="Open menu"
-          >
-            <Menu className="w-6 h-6" />
-          </button>
+            {/* Mobile Hamburger Button (44x44px touch target) */}
+            <button
+              ref={hamburgerRef}
+              type="button"
+              onClick={() => setMobileOpen(true)}
+              className="lg:hidden inline-flex items-center justify-center w-11 h-11 rounded-lg text-white hover:bg-white/15 transition-colors shrink-0"
+              aria-label="Open navigation menu"
+              aria-expanded={mobileOpen}
+              aria-controls="mobile-nav-drawer"
+            >
+              <Menu className="w-6 h-6" aria-hidden="true" />
+            </button>
+          </div>
         </div>
       </div>
 
-      <MobileNav isOpen={mobileOpen} onClose={() => setMobileOpen(false)} />
-    </header>
+      {mobileOpen && (
+        <MobileNavDrawer onClose={closeMobile} triggerRef={hamburgerRef} />
+      )}
+    </>
   );
 }

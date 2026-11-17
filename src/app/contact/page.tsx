@@ -1,318 +1,190 @@
-'use client';
+import type { Metadata } from 'next';
+import Image from 'next/image';
+import { Clock, Mail, MapPin, Phone, ShieldCheck } from 'lucide-react';
+import PageHeader from '@/components/shared/PageHeader';
+import ContactForm from '@/components/contact/ContactForm';
+import { schoolInfo } from '@/data/mock-school-data';
+import { buildPageMetadata } from '@/lib/site';
 
-import React, { useState } from 'react';
-import {
-  AlertCircle,
-  CheckCircle2,
-  Clock,
-  Compass,
-  Mail,
-  MapPin,
-  Phone,
-  Send,
-} from 'lucide-react';
-import { schoolInfo } from '@/data/mock';
-import { getSupabaseBrowserClient } from '@/lib/supabase';
+export const metadata: Metadata = buildPageMetadata({
+  title: 'Contact & Campus Location',
+  description:
+    "Reach Mumbi Girls Senior School administration in Mukuyu Sub-location, Kiharu Constituency, Murang'a (P.O. Box 115 - 10200, Murang'a; KNEC 10204102; MoE F2030609).",
+  path: '/contact',
+});
 
 export default function ContactPage() {
-  const [formData, setFormData] = useState({
-    name: '',
-    phone: '',
-    email: '',
-    category: 'General Inquiry',
-    message: '',
-  });
-
-  const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
-  const [errorMessage, setErrorMessage] = useState('');
-
-  const categories = [
-    'General Inquiry',
-    'Admissions & CBC Pathways',
-    'Fees & Accounts',
-    'Academic Progress',
-    'Tender & Procurement',
-  ];
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setStatus('submitting');
-    setErrorMessage('');
-
-    if (!formData.name || !formData.email || !formData.phone || !formData.message) {
-      setStatus('error');
-      setErrorMessage('Please fill in all required fields.');
-      return;
-    }
-
-    try {
-      const supabase = getSupabaseBrowserClient();
-
-      if (supabase) {
-        // Attempt to write to Supabase if configured
-        const { error } = await supabase.from('inquiries').insert([
-          {
-            full_name: formData.name,
-            phone_number: formData.phone,
-            email_address: formData.email,
-            inquiry_category: formData.category,
-            message_body: formData.message,
-            created_at: new Date().toISOString(),
-          },
-        ]);
-
-        if (error) {
-          console.warn('Supabase insert note:', error.message);
-          // Still succeed with local fallback
-        }
-      }
-
-      // Simulate network response
-      await new Promise((resolve) => setTimeout(resolve, 800));
-
-      setStatus('success');
-      setFormData({
-        name: '',
-        phone: '',
-        email: '',
-        category: 'General Inquiry',
-        message: '',
-      });
-    } catch (err: unknown) {
-      console.error(err);
-      setStatus('error');
-      setErrorMessage(
-        err instanceof Error ? err.message : 'Something went wrong. Please try again.'
-      );
-    }
-  };
-
   return (
-    <div className="min-h-screen bg-[#F8FAFC]">
-      {/* Banner */}
-      <section className="bg-gradient-to-r from-[#800020] via-[#5c0017] to-[#800020] text-white py-16 px-4 border-b-4 border-[#D4AF37]">
-        <div className="max-w-7xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#D4AF37]/20 border border-[#D4AF37]/40 text-[#D4AF37] text-xs font-semibold uppercase tracking-wider mb-4">
-            <Mail className="w-4 h-4" />
-            Communication &amp; Inquiries
-          </div>
-          <h1 className="text-4xl md:text-5xl font-black mb-4 tracking-tight">
-            Contact &amp; Visit Us
-          </h1>
-          <p className="max-w-3xl mx-auto text-slate-200 text-lg leading-relaxed">
-            Reach out to Mumbi Girls Senior School for admissions, academic queries, or official administrative correspondence.
-          </p>
-        </div>
-      </section>
+    <div className="bg-slate-bg">
+      <PageHeader
+        badge="Administration Office"
+        title="Contact & Campus Location"
+        description="Reach the Mumbi Girls Senior School administration for admissions, academic records, fee structure inquiries, and boarding communication."
+        icon={MapPin}
+      />
 
-      <div className="max-w-7xl mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-          {/* Left Column: Official School Profile & Location Info */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
+          {/* Official Registry Details & Campus Map */}
           <div className="lg:col-span-5 space-y-6">
-            <div className="bg-white rounded-2xl border border-slate-200 p-8 shadow-sm">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 rounded-xl bg-[#800020] text-[#D4AF37] flex items-center justify-center font-bold text-lg shadow-sm">
-                  MGS
-                </div>
-                <div>
-                  <h2 className="text-xl font-bold text-slate-900">{schoolInfo.name}</h2>
-                  <p className="text-xs text-[#800020] font-semibold">{schoolInfo.category}</p>
+            <section
+              aria-labelledby="official-details-heading"
+              className="bg-white rounded-2xl border border-slate-200 border-t-4 border-t-maroon p-6 sm:p-7 shadow-xs space-y-5"
+            >
+              <div className="flex items-center gap-3.5 pb-4 border-b border-slate-100">
+                <Image
+                  src="/images/school-crest.png"
+                  alt="Mumbi Girls Senior School crest"
+                  width={48}
+                  height={48}
+                  sizes="48px"
+                  className="w-12 h-12 rounded-xl object-contain shrink-0"
+                />
+                <div className="min-w-0">
+                  <h2
+                    id="official-details-heading"
+                    className="font-bold text-lg text-slate-900 leading-snug"
+                  >
+                    Official School Details
+                  </h2>
+                  <p className="text-xs text-slate-600">{schoolInfo.category}</p>
                 </div>
               </div>
 
-              <div className="space-y-4 text-sm text-slate-600">
+              <dl className="space-y-4 text-sm text-slate-700">
                 <div className="flex items-start gap-3">
-                  <MapPin className="w-5 h-5 text-[#800020] shrink-0 mt-0.5" />
+                  <ShieldCheck
+                    className="w-5 h-5 text-maroon shrink-0 mt-0.5"
+                    aria-hidden="true"
+                  />
                   <div>
-                    <strong className="text-slate-900 block text-xs uppercase tracking-wider">Physical Campus Location</strong>
-                    <p className="text-xs text-slate-600 mt-0.5">{schoolInfo.physicalLocation}</p>
+                    <dt className="font-bold text-slate-900">
+                      Registration Codes
+                    </dt>
+                    <dd className="text-slate-600">
+                      KNEC Centre: <strong className="text-slate-800">{schoolInfo.knecCode}</strong>{' '}
+                      • MoE Reg:{' '}
+                      <strong className="text-slate-800">{schoolInfo.moeReg}</strong>
+                    </dd>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-3">
-                  <Mail className="w-5 h-5 text-[#800020] shrink-0 mt-0.5" />
+                  <MapPin
+                    className="w-5 h-5 text-maroon shrink-0 mt-0.5"
+                    aria-hidden="true"
+                  />
                   <div>
-                    <strong className="text-slate-900 block text-xs uppercase tracking-wider">Postal Address</strong>
-                    <p className="text-xs text-slate-600 mt-0.5">{schoolInfo.postalAddress}</p>
+                    <dt className="font-bold text-slate-900">
+                      Physical Location
+                    </dt>
+                    <dd className="text-slate-600">
+                      {schoolInfo.physicalLocation}
+                    </dd>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-3">
-                  <Phone className="w-5 h-5 text-[#800020] shrink-0 mt-0.5" />
-                  <div>
-                    <strong className="text-slate-900 block text-xs uppercase tracking-wider">Telephone &amp; Email</strong>
-                    <p className="text-xs text-slate-600 mt-0.5">+254 (0) 700 000 000</p>
-                    <p className="text-xs text-slate-600">info@mumbiseniorschool.sc.ke</p>
+                  <Mail
+                    className="w-5 h-5 text-maroon shrink-0 mt-0.5"
+                    aria-hidden="true"
+                  />
+                  <div className="min-w-0">
+                    <dt className="font-bold text-slate-900">
+                      Postal &amp; Official Email
+                    </dt>
+                    <dd className="text-slate-600">{schoolInfo.postalAddress}</dd>
+                    <dd className="mt-0.5">
+                      <a
+                        href={`mailto:${schoolInfo.email}`}
+                        className="text-maroon font-semibold underline decoration-maroon/40 hover:decoration-maroon break-all"
+                      >
+                        {schoolInfo.email}
+                      </a>
+                    </dd>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-3">
-                  <Clock className="w-5 h-5 text-[#800020] shrink-0 mt-0.5" />
+                  <Phone
+                    className="w-5 h-5 text-maroon shrink-0 mt-0.5"
+                    aria-hidden="true"
+                  />
                   <div>
-                    <strong className="text-slate-900 block text-xs uppercase tracking-wider">Official Office Hours</strong>
-                    <p className="text-xs text-slate-600 mt-0.5">{schoolInfo.officeHours}</p>
+                    <dt className="font-bold text-slate-900">
+                      Telephone Office
+                    </dt>
+                    <dd className="text-slate-600">
+                      {schoolInfo.phonePlaceholder}
+                    </dd>
                   </div>
                 </div>
-              </div>
 
-              <div className="mt-6 pt-6 border-t border-slate-100 grid grid-cols-2 gap-3 text-xs">
-                <div className="p-3 rounded-xl bg-[#F8FAFC] border border-slate-200">
-                  <span className="text-slate-400 block font-semibold text-[10px] uppercase">KNEC Centre</span>
-                  <span className="font-bold text-slate-900 text-sm">{schoolInfo.knecCode}</span>
+                <div className="flex items-start gap-3">
+                  <Clock
+                    className="w-5 h-5 text-maroon shrink-0 mt-0.5"
+                    aria-hidden="true"
+                  />
+                  <div>
+                    <dt className="font-bold text-slate-900">Office Hours</dt>
+                    <dd className="text-slate-600">{schoolInfo.officeHours}</dd>
+                  </div>
                 </div>
-                <div className="p-3 rounded-xl bg-[#F8FAFC] border border-slate-200">
-                  <span className="text-slate-400 block font-semibold text-[10px] uppercase">MoE Reg. No</span>
-                  <span className="font-bold text-slate-900 text-sm">{schoolInfo.moeReg}</span>
-                </div>
-              </div>
-            </div>
+              </dl>
+            </section>
 
-            {/* Embedded Map Card */}
-            <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
-              <div className="p-4 bg-slate-900 text-white flex items-center justify-between text-xs font-semibold">
-                <span className="flex items-center gap-1.5">
-                  <MapPin className="w-4 h-4 text-[#D4AF37]" />
-                  Mukuyu, Kiharu - Murang&apos;a Map
-                </span>
-                <span className="text-slate-400">Murang&apos;a East</span>
+            {/* Local Campus Locator Map */}
+            <section
+              aria-labelledby="campus-map-heading"
+              className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs"
+            >
+              <div className="relative aspect-16/9 w-full bg-slate-100">
+                <Image
+                  src="/images/campus-map.webp"
+                  alt="Illustrated campus locator map showing Mumbi Girls Senior School in Mukuyu Sub-location, Kiharu Constituency, Murang'a County"
+                  width={800}
+                  height={450}
+                  sizes="(max-width: 1024px) 100vw, 42vw"
+                  className="w-full h-full object-cover"
+                />
               </div>
-              <div className="h-48 bg-slate-100 flex flex-col items-center justify-center p-6 text-center text-slate-500">
-                <Compass className="w-10 h-10 text-[#800020] mb-2" />
-                <p className="text-xs font-bold text-slate-700">Mumbi Girls Senior School Campus</p>
-                <p className="text-[11px] text-slate-500 mt-1">Mukuyu Sub-location, Kiharu, Murang&apos;a</p>
-                <span className="mt-2 text-[10px] px-2.5 py-1 rounded bg-white border border-slate-200 font-medium">
-                  GPS: -0.7215° S, 37.1528° E
-                </span>
-              </div>
-            </div>
-          </div>
-
-          {/* Right Column: Inquiries Form */}
-          <div className="lg:col-span-7">
-            <div className="bg-white rounded-2xl border border-slate-200 p-8 shadow-sm">
-              <div className="mb-6">
-                <span className="text-xs font-bold uppercase tracking-wider text-[#800020]">Send a Message</span>
-                <h2 className="text-2xl font-bold text-slate-900 mt-1">Official Online Inquiry Form</h2>
-                <p className="text-xs text-slate-500 mt-1">
-                  All inquiries are routed to the relevant administrative office and attended to within 24–48 working hours.
+              <div className="p-5 space-y-1.5">
+                <h2
+                  id="campus-map-heading"
+                  className="font-bold text-base text-slate-900"
+                >
+                  Campus Location Overview
+                </h2>
+                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                  Situated in {schoolInfo.physicalLocation}. Visitors are
+                  requested to report at the main gate and register with the
+                  administration office during weekday office hours.
                 </p>
               </div>
-
-              {status === 'success' && (
-                <div className="p-4 mb-6 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
-                  <div>
-                    <h4 className="font-bold text-sm">Inquiry Received Successfully!</h4>
-                    <p className="text-xs mt-0.5">
-                      Thank you for contacting Mumbi Girls Senior School. A member of our administration will contact you shortly.
-                    </p>
-                  </div>
-                </div>
-              )}
-
-              {status === 'error' && (
-                <div className="p-4 mb-6 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 flex items-start gap-3">
-                  <AlertCircle className="w-5 h-5 text-rose-600 shrink-0 mt-0.5" />
-                  <div>
-                    <h4 className="font-bold text-sm">Submission Error</h4>
-                    <p className="text-xs mt-0.5">{errorMessage}</p>
-                  </div>
-                </div>
-              )}
-
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
-                      Full Name *
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      value={formData.name}
-                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      placeholder="e.g. Jane Mwangi"
-                      className="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#800020] text-sm text-slate-800"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
-                      Phone Number *
-                    </label>
-                    <input
-                      type="tel"
-                      required
-                      value={formData.phone}
-                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                      placeholder="e.g. +254 712 345 678"
-                      className="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#800020] text-sm text-slate-800"
-                    />
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
-                      Email Address *
-                    </label>
-                    <input
-                      type="email"
-                      required
-                      value={formData.email}
-                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      placeholder="e.g. jane@example.com"
-                      className="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#800020] text-sm text-slate-800"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
-                      Inquiry Category
-                    </label>
-                    <select
-                      value={formData.category}
-                      onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                      className="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#800020] text-sm text-slate-800 bg-white"
-                    >
-                      {categories.map((c) => (
-                        <option key={c} value={c}>{c}</option>
-                      ))}
-                    </select>
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
-                    Your Message / Query *
-                  </label>
-                  <textarea
-                    required
-                    rows={5}
-                    value={formData.message}
-                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    placeholder="Please specify your query in detail..."
-                    className="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#800020] text-sm text-slate-800"
-                  />
-                </div>
-
-                <button
-                  type="submit"
-                  disabled={status === 'submitting'}
-                  className="w-full py-3 px-6 rounded-xl bg-[#800020] hover:bg-[#66001a] disabled:opacity-50 text-white font-bold text-sm flex items-center justify-center gap-2 shadow-md transition-colors"
-                >
-                  {status === 'submitting' ? (
-                    'Submitting Inquiry...'
-                  ) : (
-                    <>
-                      <Send className="w-4 h-4 text-[#D4AF37]" />
-                      Submit Official Inquiry
-                    </>
-                  )}
-                </button>
-              </form>
-            </div>
+            </section>
           </div>
+
+          {/* Inquiry Form */}
+          <section
+            aria-labelledby="inquiry-form-heading"
+            className="lg:col-span-7 bg-white rounded-2xl border border-slate-200 border-t-4 border-t-gold p-6 sm:p-8 shadow-xs"
+          >
+            <div className="mb-6">
+              <h2
+                id="inquiry-form-heading"
+                className="text-xl sm:text-2xl font-bold text-slate-900 mb-1"
+              >
+                Send an Inquiry
+              </h2>
+              <p className="text-sm text-slate-600 leading-relaxed">
+                Complete the form below and our administration desk will review
+                your inquiry regarding admissions, academics, finances, or
+                student welfare.
+              </p>
+            </div>
+
+            <ContactForm />
+          </section>
         </div>
       </div>
     </div>
