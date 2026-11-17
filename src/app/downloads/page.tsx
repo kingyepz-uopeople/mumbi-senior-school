@@ -4,11 +4,9 @@ import React, { useState, useMemo } from 'react';
 import {
   Download,
   FileText,
-  Filter,
   FolderDown,
   HardDrive,
   Search,
-  Sparkles,
   Calendar,
   Building,
 } from 'lucide-react';

@@ -2,12 +2,15 @@
 
 import { useState, useEffect } from 'react';
 import { Download, X } from 'lucide-react';
+import type { BeforeInstallPromptEvent } from '@/types';
+import { isBeforeInstallPromptEvent } from '@/lib/utils';
 
 const DISMISSED_KEY = 'mumbi-install-banner-dismissed';
 
 export default function MobileInstallBanner() {
   const [visible, setVisible] = useState(false);
-  const [deferredPrompt, setDeferredPrompt] = useState<Event | null>(null);
+  const [deferredPrompt, setDeferredPrompt] =
+    useState<BeforeInstallPromptEvent | null>(null);
 
   useEffect(() => {
     // Don't show on desktop or if previously dismissed
@@ -21,6 +24,7 @@ export default function MobileInstallBanner() {
     if (window.matchMedia('(display-mode: standalone)').matches) return;
 
     const handler = (e: Event) => {
+      if (!isBeforeInstallPromptEvent(e)) return;
       e.preventDefault();
       setDeferredPrompt(e);
       setVisible(true);
@@ -43,10 +47,8 @@ export default function MobileInstallBanner() {
 
   const handleInstall = async () => {
     if (deferredPrompt) {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const promptEvent = deferredPrompt as any;
-      promptEvent.prompt();
-      await promptEvent.userChoice;
+      await deferredPrompt.prompt();
+      await deferredPrompt.userChoice;
       setDeferredPrompt(null);
     }
     setVisible(false);

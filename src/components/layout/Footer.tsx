@@ -93,8 +93,8 @@ export default function Footer() {
           <div>
             <h3 className="font-bold text-base mb-4 text-[#D4AF37] uppercase tracking-wider text-xs">Portals & Community</h3>
             <div className="space-y-2.5">
-              <a
-                href="#portal"
+              <Link
+                href="/portal"
                 className="block p-3 rounded-lg bg-white/10 hover:bg-white/15 border border-white/10 transition-colors"
               >
                 <div className="font-semibold text-sm text-white flex items-center gap-2">
@@ -102,7 +102,7 @@ export default function Footer() {
                   Student & Staff Portal
                 </div>
                 <div className="text-xs text-white/70">Access term reports, assignments & staff dashboard</div>
-              </a>
+              </Link>
               <Link
                 href="/downloads"
                 className="block p-3 rounded-lg bg-white/10 hover:bg-white/15 border border-white/10 transition-colors"

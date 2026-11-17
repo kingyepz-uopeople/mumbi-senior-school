@@ -1,7 +1,7 @@
 # Mumbi Girls Senior School (`mumbiseniorschool.sc.ke`)
 ### Official School Website, CBC Senior School Pathways Hub & PWA Student/Staff Portal
 
-A production-ready, modern web platform for **Mumbi Girls Senior School**, built with Next.js 15 (App Router), TypeScript, Tailwind CSS, Lucide Icons, and Supabase.
+A production-ready, modern web platform for **Mumbi Girls Senior School**, built with Next.js 16 (App Router), TypeScript, Tailwind CSS, Lucide Icons, and Supabase.
 
 ---
 
@@ -67,7 +67,7 @@ A production-ready, modern web platform for **Mumbi Girls Senior School**, built
 ---
 
 ## 🛠️ Tech Stack
-- **Framework:** Next.js 15 (App Router with Turbopack)
+- **Framework:** Next.js 16 (App Router with Turbopack)
 - **Language:** TypeScript
 - **Styling:** Tailwind CSS
 - **Icons:** Lucide React

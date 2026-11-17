@@ -2,6 +2,20 @@
 // Utility Helpers
 // ============================================================
 
+import type { BeforeInstallPromptEvent } from '@/types';
+
+/**
+ * Type guard for the non-standard PWA beforeinstallprompt event
+ */
+export function isBeforeInstallPromptEvent(
+  event: Event
+): event is BeforeInstallPromptEvent {
+  return (
+    'prompt' in event &&
+    typeof (event as BeforeInstallPromptEvent).prompt === 'function'
+  );
+}
+
 /**
  * Format a Date to DD/MM/YYYY (Kenyan convention)
  */

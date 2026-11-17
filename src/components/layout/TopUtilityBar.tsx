@@ -1,14 +1,19 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { Phone, Clock, MapPin, Download, User, LogIn } from 'lucide-react';
+import type { BeforeInstallPromptEvent } from '@/types';
+import { isBeforeInstallPromptEvent } from '@/lib/utils';
 
 export default function TopUtilityBar() {
-  const [deferredPrompt, setDeferredPrompt] = useState<Event | null>(null);
+  const [deferredPrompt, setDeferredPrompt] =
+    useState<BeforeInstallPromptEvent | null>(null);
   const [isInstallable, setIsInstallable] = useState(false);
 
   useEffect(() => {
     const handler = (e: Event) => {
+      if (!isBeforeInstallPromptEvent(e)) return;
       e.preventDefault();
       setDeferredPrompt(e);
       setIsInstallable(true);
@@ -20,10 +25,8 @@ export default function TopUtilityBar() {
 
   const handleInstall = async () => {
     if (!deferredPrompt) return;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const promptEvent = deferredPrompt as any;
-    promptEvent.prompt();
-    await promptEvent.userChoice;
+    await deferredPrompt.prompt();
+    await deferredPrompt.userChoice;
     setDeferredPrompt(null);
     setIsInstallable(false);
   };
@@ -58,20 +61,20 @@ export default function TopUtilityBar() {
 
         {/* Right: Action buttons */}
         <div className="flex items-center gap-2">
-          <a
-            href="/student-login"
+          <Link
+            href="/portal"
             className="hidden sm:inline-flex items-center gap-1 px-2.5 py-1 rounded text-gold hover:bg-white/10 transition-colors font-medium"
           >
             <User className="w-3 h-3" />
             Student Login
-          </a>
-          <a
-            href="/staff-login"
+          </Link>
+          <Link
+            href="/portal"
             className="hidden sm:inline-flex items-center gap-1 px-2.5 py-1 rounded text-gold hover:bg-white/10 transition-colors font-medium"
           >
             <LogIn className="w-3 h-3" />
             Staff Login
-          </a>
+          </Link>
           {isInstallable && (
             <button
               onClick={handleInstall}

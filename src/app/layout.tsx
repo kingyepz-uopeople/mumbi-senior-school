@@ -1,10 +1,32 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
+import localFont from 'next/font/local';
 import './globals.css';
 
 import TopUtilityBar from '@/components/layout/TopUtilityBar';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import MobileInstallBanner from '@/components/layout/MobileInstallBanner';
+
+const inter = localFont({
+  src: [
+    {
+      path: '../../node_modules/@fontsource-variable/inter/files/inter-latin-wght-normal.woff2',
+      weight: '100 900',
+      style: 'normal',
+    },
+    {
+      path: '../../node_modules/@fontsource-variable/inter/files/inter-latin-wght-italic.woff2',
+      weight: '100 900',
+      style: 'italic',
+    },
+  ],
+  variable: '--font-inter',
+  display: 'swap',
+});
+
+export const viewport: Viewport = {
+  themeColor: '#800020',
+};
 
 export const metadata: Metadata = {
   title: 'Mumbi Girls Senior School | Education for Empowerment',
@@ -36,7 +58,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="h-full antialiased font-sans">
+    <html lang="en" className={`${inter.variable} h-full antialiased font-sans`}>
       <body className="min-h-full flex flex-col bg-[#F8FAFC] text-slate-800">
         <TopUtilityBar />
         <Header />
