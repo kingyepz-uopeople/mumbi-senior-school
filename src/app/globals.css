@@ -1,96 +1,94 @@
 @import "tailwindcss";
 
-/* ── Brand Custom Properties ──────────────────────────────── */
-:root {
+/* ── Tailwind v4 Brand Theme Tokens ───────────────────────── */
+@theme {
   --color-maroon: #800020;
   --color-gold: #D4AF37;
   --color-slate-bg: #F8FAFC;
-  --color-white: #FFFFFF;
+  --animate-fadeIn: fadeIn 0.25s ease-out;
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(4px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 }
 
-/* ── Tailwind v4 Theme Inline ─────────────────────────────── */
 @theme inline {
-  --color-maroon: #800020;
-  --color-gold: #D4AF37;
-  --color-slate-bg: #F8FAFC;
+  --font-sans: var(--font-inter), 'Inter', system-ui, -apple-system, sans-serif;
 }
 
-/* ── Brand Utility Classes ────────────────────────────────── */
-.bg-maroon { background-color: var(--color-maroon); }
-.text-maroon { color: var(--color-maroon); }
-.border-maroon { border-color: var(--color-maroon); }
+/* ── Global Base Styles (layered so utilities win) ────────── */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
 
-.bg-gold { background-color: var(--color-gold); }
-.text-gold { color: var(--color-gold); }
-.border-gold { border-color: var(--color-gold); }
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: var(--font-inter), 'Inter', system-ui, -apple-system, sans-serif;
+    color: #1e293b;
+    background-color: #F8FAFC;
+    line-height: 1.6;
+  }
 
-.bg-slate-bg { background-color: var(--color-slate-bg); }
+  h1, h2, h3, h4, h5, h6 {
+    line-height: 1.2;
+    font-weight: 700;
+  }
 
-/* ── Global Styles ────────────────────────────────────────── */
-html {
-  scroll-behavior: smooth;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+  a {
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
 
-body {
-  margin: 0;
-  padding: 0;
-  font-family: var(--font-inter), 'Inter', system-ui, -apple-system, sans-serif;
-  color: #1e293b;
-  background-color: var(--color-white);
-  line-height: 1.6;
-}
+  img {
+    max-width: 100%;
+    height: auto;
+  }
 
-h1, h2, h3, h4, h5, h6 {
-  line-height: 1.2;
-  font-weight: 700;
-}
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
 
-a {
-  text-decoration: none;
-  color: inherit;
-  transition: color 0.2s ease;
-}
+  ::-webkit-scrollbar-track {
+    background: var(--color-slate-bg);
+  }
 
-img {
-  max-width: 100%;
-  height: auto;
-}
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-maroon);
+    border-radius: 4px;
+  }
 
-/* ── Custom Scrollbar ─────────────────────────────────────── */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
+  ::-webkit-scrollbar-thumb:hover {
+    background: #600018;
+  }
 
-::-webkit-scrollbar-track {
-  background: var(--color-slate-bg);
-}
+  /* Firefox scrollbar */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-maroon) var(--color-slate-bg);
+  }
 
-::-webkit-scrollbar-thumb {
-  background: var(--color-maroon);
-  border-radius: 4px;
-}
+  /* Focus Styles */
+  :focus-visible {
+    outline: 2px solid var(--color-gold);
+    outline-offset: 2px;
+  }
 
-::-webkit-scrollbar-thumb:hover {
-  background: #600018;
-}
-
-/* Firefox scrollbar */
-* {
-  scrollbar-width: thin;
-  scrollbar-color: var(--color-maroon) var(--color-slate-bg);
-}
-
-/* ── Focus Styles ─────────────────────────────────────────── */
-:focus-visible {
-  outline: 2px solid var(--color-gold);
-  outline-offset: 2px;
-}
-
-/* ── Selection ────────────────────────────────────────────── */
-::selection {
-  background-color: var(--color-maroon);
-  color: var(--color-white);
+  /* Selection */
+  ::selection {
+    background-color: var(--color-maroon);
+    color: var(--color-white);
+  }
 }

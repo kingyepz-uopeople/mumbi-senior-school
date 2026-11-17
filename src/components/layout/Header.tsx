@@ -160,18 +160,20 @@ function MobileNav({
 
           {/* Mobile login links */}
           <div className="mt-6 pt-4 border-t border-gray-100 space-y-2">
-            <a
-              href="/student-login"
+            <Link
+              href="/portal"
+              onClick={onClose}
               className="block w-full px-3 py-2.5 text-center text-sm font-semibold text-white bg-maroon rounded-md hover:bg-maroon/90 transition-colors"
             >
               Student Login
-            </a>
-            <a
-              href="/staff-login"
+            </Link>
+            <Link
+              href="/portal"
+              onClick={onClose}
               className="block w-full px-3 py-2.5 text-center text-sm font-semibold text-maroon border border-maroon rounded-md hover:bg-maroon/5 transition-colors"
             >
               Staff Login
-            </a>
+            </Link>
           </div>
         </nav>
       </div>

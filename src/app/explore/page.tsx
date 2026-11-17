@@ -3,10 +3,6 @@
 import React, { useState } from 'react';
 import {
   Activity,
-  Award,
-  BookOpen,
-  Calendar,
-  CheckCircle2,
   CircleDot,
   Clock,
   Compass,
@@ -25,7 +21,6 @@ import {
   Theater,
   TreePine,
   Trophy,
-  Users,
   Utensils,
 } from 'lucide-react';
 import { clubs, sports, dailyRoutine, faithGroups } from '@/data/mock';

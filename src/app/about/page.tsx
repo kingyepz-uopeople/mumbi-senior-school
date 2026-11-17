@@ -1,12 +1,8 @@
 import React from 'react';
 import {
   Award,
-  BookOpen,
-  Calendar,
-  CheckCircle,
   Clock,
   Compass,
-  Heart,
   Music,
   Shield,
   Star,

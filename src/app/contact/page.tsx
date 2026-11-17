@@ -3,7 +3,6 @@
 import React, { useState } from 'react';
 import {
   AlertCircle,
-  Building,
   CheckCircle2,
   Clock,
   Compass,
@@ -11,8 +10,6 @@ import {
   MapPin,
   Phone,
   Send,
-  Shield,
-  Sparkles,
 } from 'lucide-react';
 import { schoolInfo } from '@/data/mock';
 import { getSupabaseBrowserClient } from '@/lib/supabase';
@@ -81,10 +78,12 @@ export default function ContactPage() {
         category: 'General Inquiry',
         message: '',
       });
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error(err);
       setStatus('error');
-      setErrorMessage(err?.message || 'Something went wrong. Please try again.');
+      setErrorMessage(
+        err instanceof Error ? err.message : 'Something went wrong. Please try again.'
+      );
     }
   };
 

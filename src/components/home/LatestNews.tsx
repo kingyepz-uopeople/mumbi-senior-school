@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import { newsItems } from '@/data/mock';
 
@@ -72,14 +73,14 @@ export default function LatestNews() {
                   </p>
 
                   {/* Read More */}
-                  <a
+                  <Link
                     href={`/news/${item.slug}`}
                     className="inline-flex items-center gap-1 text-sm font-semibold transition-colors hover:gap-2"
                     style={{ color: '#D4AF37' }}
                   >
                     Read More
                     <ArrowRight className="w-4 h-4" />
-                  </a>
+                  </Link>
                 </div>
               </article>
             );

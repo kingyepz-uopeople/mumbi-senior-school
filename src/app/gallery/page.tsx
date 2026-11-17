@@ -3,11 +3,8 @@
 import React, { useState } from 'react';
 import {
   Camera,
-  Eye,
-  Filter,
   Image as ImageIcon,
   Maximize2,
-  Sparkles,
   X,
   ChevronLeft,
   ChevronRight,

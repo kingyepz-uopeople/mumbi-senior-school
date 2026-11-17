@@ -2,7 +2,6 @@
 
 import React, { useState } from 'react';
 import {
-  Award,
   BookOpen,
   Briefcase,
   Calculator,
@@ -13,11 +12,9 @@ import {
   Microscope,
   Music,
   Palette,
-  Search,
   Sparkles,
   TrendingUp,
   Trophy,
-  Users,
   Wrench,
   Globe,
 } from 'lucide-react';
