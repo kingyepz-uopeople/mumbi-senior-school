@@ -2,8 +2,9 @@
 
 /* ── Tailwind v4 Brand Theme Tokens ───────────────────────── */
 @theme {
-  --color-maroon: #800020;
-  --color-gold: #D4AF37;
+  --color-primary: #115191;
+  --color-primary-dark: #0C3D6E;
+  --color-accent: #C22F2F;
   --color-slate-bg: #F8FAFC;
   --animate-fadeIn: fadeIn 0.25s ease-out;
 
@@ -67,37 +68,37 @@
   }
 
   ::-webkit-scrollbar-thumb {
-    background: var(--color-maroon);
+    background: var(--color-primary);
     border-radius: 4px;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: #600018;
+    background: var(--color-primary-dark);
   }
 
   /* Firefox scrollbar */
   * {
     scrollbar-width: thin;
-    scrollbar-color: var(--color-maroon) var(--color-slate-bg);
+    scrollbar-color: var(--color-primary) var(--color-slate-bg);
   }
 
   /* High-contrast visible focus rings (WCAG 2.4.7 / 1.4.11) */
   :focus-visible {
-    outline: 2px solid var(--color-maroon);
+    outline: 2px solid var(--color-primary);
     outline-offset: 2px;
   }
 
   [data-dark-surface] :focus-visible {
-    outline-color: var(--color-gold);
+    outline-color: var(--color-white);
   }
 
   [data-light-surface] :focus-visible {
-    outline-color: var(--color-maroon);
+    outline-color: var(--color-primary);
   }
 
   /* Selection */
   ::selection {
-    background-color: var(--color-maroon);
+    background-color: var(--color-primary);
     color: var(--color-white);
   }
 

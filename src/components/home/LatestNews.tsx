@@ -4,10 +4,10 @@ import { newsItems } from '@/data/mock-school-data';
 import { parseDateKE, toIsoDate } from '@/lib/utils';
 
 export const newsCategoryBadgeClasses: Record<string, string> = {
-  Newsletter: 'bg-blue-50 text-blue-800 border-blue-200',
-  Circular: 'bg-amber-50 text-amber-900 border-amber-200',
-  Download: 'bg-emerald-50 text-emerald-800 border-emerald-200',
-  Event: 'bg-maroon/10 text-maroon border-maroon/20',
+  Newsletter: 'bg-primary/10 text-primary border-primary/20',
+  Circular: 'bg-accent/10 text-accent border-accent/25',
+  Download: 'bg-primary-dark/10 text-primary-dark border-primary-dark/20',
+  Event: 'bg-slate-100 text-slate-800 border-slate-300',
 };
 
 export default function LatestNews() {
@@ -25,7 +25,7 @@ export default function LatestNews() {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="text-center mb-10 sm:mb-12">
-          <span className="text-xs font-bold uppercase tracking-wider text-maroon">
+          <span className="text-xs font-bold uppercase tracking-wider text-primary">
             Notices &amp; Announcements
           </span>
           <h2
@@ -39,7 +39,7 @@ export default function LatestNews() {
             examination updates, and downloadable resource packs.
           </p>
           <div
-            className="w-16 h-1 rounded-full bg-gold mx-auto"
+            className="w-16 h-1 rounded-full bg-accent mx-auto"
             aria-hidden="true"
           />
         </div>
@@ -53,9 +53,9 @@ export default function LatestNews() {
             return (
               <article
                 key={item.id}
-                className="bg-white rounded-2xl border border-slate-200 shadow-xs hover:border-maroon hover:shadow-md transition-all overflow-hidden flex flex-col"
+                className="bg-white rounded-2xl border border-slate-200 shadow-xs hover:border-primary hover:shadow-md transition-all overflow-hidden flex flex-col"
               >
-                <div className="h-1.5 bg-maroon" aria-hidden="true" />
+                <div className="h-1.5 bg-primary" aria-hidden="true" />
 
                 <div className="p-6 flex flex-col flex-1">
                   <div className="flex items-center justify-between gap-2 mb-3">
@@ -69,7 +69,7 @@ export default function LatestNews() {
                       className="inline-flex items-center gap-1.5 text-xs font-medium text-slate-600"
                     >
                       <Calendar
-                        className="w-3.5 h-3.5 text-maroon shrink-0"
+                        className="w-3.5 h-3.5 text-primary shrink-0"
                         aria-hidden="true"
                       />
                       {item.date}
@@ -79,7 +79,7 @@ export default function LatestNews() {
                   <h3 className="font-bold text-lg text-slate-900 mb-2 leading-snug">
                     <Link
                       href={`/news/${item.slug}`}
-                      className="hover:text-maroon transition-colors"
+                      className="hover:text-primary transition-colors"
                     >
                       {item.title}
                     </Link>
@@ -92,7 +92,7 @@ export default function LatestNews() {
                   <div className="pt-4 border-t border-slate-100">
                     <Link
                       href={`/news/${item.slug}`}
-                      className="min-h-10 inline-flex items-center gap-1.5 text-sm font-bold text-maroon hover:gap-2.5 transition-all"
+                      className="min-h-10 inline-flex items-center gap-1.5 text-sm font-bold text-primary hover:text-primary-dark hover:gap-2.5 transition-all"
                     >
                       <span>Read Full Update</span>
                       <ArrowRight
@@ -110,9 +110,9 @@ export default function LatestNews() {
         <div className="mt-10 text-center">
           <Link
             href="/downloads"
-            className="min-h-11 inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-maroon hover:bg-maroon/90 text-white font-bold text-sm shadow-sm transition-colors"
+            className="min-h-11 inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-primary hover:bg-primary-dark text-white font-bold text-sm shadow-sm transition-colors"
           >
-            <FolderDown className="w-4 h-4 text-gold shrink-0" aria-hidden="true" />
+            <FolderDown className="w-4 h-4 shrink-0" aria-hidden="true" />
             <span>Open Downloads &amp; Resources Hub</span>
           </Link>
         </div>

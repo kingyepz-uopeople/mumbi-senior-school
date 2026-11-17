@@ -147,7 +147,7 @@ export default function DownloadsBrowser() {
       {/* Search & Filter Controls */}
       <section
         aria-labelledby="downloads-filter-heading"
-        className="bg-white rounded-2xl border border-slate-200 border-t-4 border-t-gold p-5 sm:p-7 shadow-xs space-y-6"
+        className="bg-white rounded-2xl border border-slate-200 border-t-4 border-t-primary p-5 sm:p-7 shadow-xs space-y-6"
       >
         <div className="flex flex-wrap items-center justify-between gap-2">
           <h2
@@ -160,7 +160,7 @@ export default function DownloadsBrowser() {
             <button
               type="button"
               onClick={resetFilters}
-              className="min-h-11 inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-bold text-maroon bg-maroon/5 hover:bg-maroon/10 transition-colors"
+              className="min-h-11 inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-bold text-accent bg-accent/8 border border-accent/25 hover:bg-accent hover:text-white transition-colors"
             >
               <RotateCcw className="w-3.5 h-3.5" aria-hidden="true" />
               <span>Reset All Filters</span>
@@ -187,14 +187,14 @@ export default function DownloadsBrowser() {
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               placeholder="Search by title, subject, category, or department..."
-              className="w-full min-h-12 pl-12 pr-12 py-3 rounded-xl border border-slate-300 bg-slate-bg focus:bg-white focus:border-maroon text-sm text-slate-900 placeholder:text-slate-500"
+              className="w-full min-h-12 pl-12 pr-12 py-3 rounded-xl border border-slate-300 bg-slate-bg focus:bg-white focus:border-primary text-sm text-slate-900 placeholder:text-slate-500"
             />
             {searchTerm && (
               <button
                 type="button"
                 onClick={() => setSearchTerm('')}
                 aria-label="Clear search query"
-                className="absolute right-0.5 top-1/2 -translate-y-1/2 inline-flex items-center justify-center w-11 h-11 rounded-lg text-slate-600 hover:text-maroon hover:bg-slate-100"
+                className="absolute right-0.5 top-1/2 -translate-y-1/2 inline-flex items-center justify-center w-11 h-11 rounded-lg text-slate-600 hover:text-primary hover:bg-slate-100"
               >
                 <X className="w-4 h-4" aria-hidden="true" />
               </button>
@@ -225,8 +225,8 @@ export default function DownloadsBrowser() {
                   onClick={() => setSelectedCategory(cat)}
                   className={`min-h-11 px-4 py-2 rounded-full text-xs font-bold transition-colors ${
                     active
-                      ? 'bg-maroon text-white shadow-xs'
-                      : 'bg-slate-bg border border-slate-300 text-slate-700 hover:border-maroon hover:text-maroon'
+                      ? 'bg-primary text-white shadow-xs'
+                      : 'bg-slate-bg border border-slate-300 text-slate-700 hover:border-primary hover:text-primary'
                   }`}
                 >
                   {cat}
@@ -259,8 +259,8 @@ export default function DownloadsBrowser() {
                   onClick={() => setSelectedLevel(lvl)}
                   className={`min-h-11 px-4 py-2 rounded-full text-xs font-bold transition-colors ${
                     active
-                      ? 'bg-gold text-slate-900 shadow-xs'
-                      : 'bg-slate-bg border border-slate-300 text-slate-700 hover:border-maroon hover:text-maroon'
+                      ? 'bg-primary-dark text-white shadow-xs'
+                      : 'bg-slate-bg border border-slate-300 text-slate-700 hover:border-primary hover:text-primary'
                   }`}
                 >
                   {lvl}
@@ -293,8 +293,8 @@ export default function DownloadsBrowser() {
                   onClick={() => setSelectedSubject(subject)}
                   className={`min-h-11 px-4 py-2 rounded-full text-xs font-bold transition-colors ${
                     active
-                      ? 'bg-maroon text-white shadow-xs'
-                      : 'bg-slate-bg border border-slate-300 text-slate-700 hover:border-maroon hover:text-maroon'
+                      ? 'bg-primary text-white shadow-xs'
+                      : 'bg-slate-bg border border-slate-300 text-slate-700 hover:border-primary hover:text-primary'
                   }`}
                 >
                   {subject}
@@ -355,14 +355,14 @@ export default function DownloadsBrowser() {
             filteredDownloads.map((item) => (
               <article
                 key={item.id}
-                className="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs hover:border-maroon hover:shadow-md transition-all flex flex-col justify-between"
+                className="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs hover:border-primary hover:shadow-md transition-all flex flex-col justify-between"
               >
                 <div>
                   <div className="flex items-start justify-between gap-2 mb-3">
-                    <span className="text-[11px] font-bold uppercase px-2.5 py-1 rounded-md bg-maroon/10 text-maroon leading-snug">
+                    <span className="text-[11px] font-bold uppercase px-2.5 py-1 rounded-md bg-primary/10 text-primary leading-snug">
                       {item.category}
                     </span>
-                    <span className="text-xs font-bold px-2.5 py-1 rounded-md bg-gold/20 text-maroon shrink-0">
+                    <span className="text-xs font-bold px-2.5 py-1 rounded-md bg-accent/10 text-accent shrink-0">
                       {item.level}
                     </span>
                   </div>
@@ -374,7 +374,7 @@ export default function DownloadsBrowser() {
                   <dl className="space-y-1.5 text-xs text-slate-600 mb-6">
                     <div className="flex items-center gap-2">
                       <Calendar
-                        className="w-3.5 h-3.5 text-maroon shrink-0"
+                        className="w-3.5 h-3.5 text-primary shrink-0"
                         aria-hidden="true"
                       />
                       <dt>Uploaded:</dt>
@@ -386,7 +386,7 @@ export default function DownloadsBrowser() {
                     </div>
                     <div className="flex items-center gap-2">
                       <Building
-                        className="w-3.5 h-3.5 text-maroon shrink-0"
+                        className="w-3.5 h-3.5 text-primary shrink-0"
                         aria-hidden="true"
                       />
                       <dt>Department:</dt>
@@ -397,7 +397,7 @@ export default function DownloadsBrowser() {
                     {item.subject && (
                       <div className="flex items-center gap-2">
                         <BookOpen
-                          className="w-3.5 h-3.5 text-maroon shrink-0"
+                          className="w-3.5 h-3.5 text-primary shrink-0"
                           aria-hidden="true"
                         />
                         <dt>Subject:</dt>
@@ -408,7 +408,7 @@ export default function DownloadsBrowser() {
                     )}
                     <div className="flex items-center gap-2">
                       <HardDrive
-                        className="w-3.5 h-3.5 text-maroon shrink-0"
+                        className="w-3.5 h-3.5 text-primary shrink-0"
                         aria-hidden="true"
                       />
                       <dt>File Size:</dt>
@@ -422,12 +422,9 @@ export default function DownloadsBrowser() {
                 <button
                   type="button"
                   onClick={() => handleDownload(item)}
-                  className="w-full min-h-11 py-2.5 px-4 rounded-xl bg-maroon hover:bg-maroon/90 text-white text-xs sm:text-sm font-bold inline-flex items-center justify-center gap-2 transition-colors shadow-xs"
+                  className="w-full min-h-11 py-2.5 px-4 rounded-xl bg-primary hover:bg-primary-dark text-white text-xs sm:text-sm font-bold inline-flex items-center justify-center gap-2 transition-colors shadow-xs"
                 >
-                  <Download
-                    className="w-4 h-4 text-gold shrink-0"
-                    aria-hidden="true"
-                  />
+                  <Download className="w-4 h-4 shrink-0" aria-hidden="true" />
                   <span>Download ({item.fileSize})</span>
                 </button>
               </article>
@@ -448,9 +445,9 @@ export default function DownloadsBrowser() {
               <button
                 type="button"
                 onClick={resetFilters}
-                className="min-h-11 inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-maroon text-white text-sm font-bold hover:bg-maroon/90 transition-colors"
+                className="min-h-11 inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-primary text-white text-sm font-bold hover:bg-primary-dark transition-colors"
               >
-                <RotateCcw className="w-4 h-4 text-gold" aria-hidden="true" />
+                <RotateCcw className="w-4 h-4" aria-hidden="true" />
                 <span>Show All Resources</span>
               </button>
             </div>

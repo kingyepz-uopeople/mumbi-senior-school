@@ -29,7 +29,7 @@ export default function ContactPage() {
           <div className="lg:col-span-5 space-y-6">
             <section
               aria-labelledby="official-details-heading"
-              className="bg-white rounded-2xl border border-slate-200 border-t-4 border-t-maroon p-6 sm:p-7 shadow-xs space-y-5"
+              className="bg-white rounded-2xl border border-slate-200 border-t-4 border-t-primary p-6 sm:p-7 shadow-xs space-y-5"
             >
               <div className="flex items-center gap-3.5 pb-4 border-b border-slate-100">
                 <Image
@@ -54,7 +54,7 @@ export default function ContactPage() {
               <dl className="space-y-4 text-sm text-slate-700">
                 <div className="flex items-start gap-3">
                   <ShieldCheck
-                    className="w-5 h-5 text-maroon shrink-0 mt-0.5"
+                    className="w-5 h-5 text-primary shrink-0 mt-0.5"
                     aria-hidden="true"
                   />
                   <div>
@@ -71,7 +71,7 @@ export default function ContactPage() {
 
                 <div className="flex items-start gap-3">
                   <MapPin
-                    className="w-5 h-5 text-maroon shrink-0 mt-0.5"
+                    className="w-5 h-5 text-primary shrink-0 mt-0.5"
                     aria-hidden="true"
                   />
                   <div>
@@ -86,7 +86,7 @@ export default function ContactPage() {
 
                 <div className="flex items-start gap-3">
                   <Mail
-                    className="w-5 h-5 text-maroon shrink-0 mt-0.5"
+                    className="w-5 h-5 text-primary shrink-0 mt-0.5"
                     aria-hidden="true"
                   />
                   <div className="min-w-0">
@@ -97,7 +97,7 @@ export default function ContactPage() {
                     <dd className="mt-0.5">
                       <a
                         href={`mailto:${schoolInfo.email}`}
-                        className="text-maroon font-semibold underline decoration-maroon/40 hover:decoration-maroon break-all"
+                        className="text-primary font-semibold underline decoration-primary/40 hover:text-primary-dark hover:decoration-primary-dark break-all"
                       >
                         {schoolInfo.email}
                       </a>
@@ -107,7 +107,7 @@ export default function ContactPage() {
 
                 <div className="flex items-start gap-3">
                   <Phone
-                    className="w-5 h-5 text-maroon shrink-0 mt-0.5"
+                    className="w-5 h-5 text-primary shrink-0 mt-0.5"
                     aria-hidden="true"
                   />
                   <div>
@@ -122,7 +122,7 @@ export default function ContactPage() {
 
                 <div className="flex items-start gap-3">
                   <Clock
-                    className="w-5 h-5 text-maroon shrink-0 mt-0.5"
+                    className="w-5 h-5 text-primary shrink-0 mt-0.5"
                     aria-hidden="true"
                   />
                   <div>
@@ -167,7 +167,7 @@ export default function ContactPage() {
           {/* Inquiry Form */}
           <section
             aria-labelledby="inquiry-form-heading"
-            className="lg:col-span-7 bg-white rounded-2xl border border-slate-200 border-t-4 border-t-gold p-6 sm:p-8 shadow-xs"
+            className="lg:col-span-7 bg-white rounded-2xl border border-slate-200 border-t-4 border-t-primary p-6 sm:p-8 shadow-xs"
           >
             <div className="mb-6">
               <h2

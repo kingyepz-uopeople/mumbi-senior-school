@@ -58,7 +58,7 @@ export default function PortalComingSoonPage() {
         {/* Status Banner Card */}
         <section
           aria-labelledby="portal-status-heading"
-          className="bg-white rounded-3xl border border-slate-200 border-t-4 border-t-gold p-6 sm:p-10 md:p-12 shadow-xs text-center"
+          className="bg-white rounded-3xl border border-slate-200 border-t-4 border-t-primary p-6 sm:p-10 md:p-12 shadow-xs text-center"
         >
           <div className="w-28 h-28 sm:w-32 sm:h-32 mx-auto mb-6 rounded-2xl bg-white border border-slate-200 p-2.5 flex items-center justify-center shadow-xs">
             <Image
@@ -72,7 +72,7 @@ export default function PortalComingSoonPage() {
             />
           </div>
 
-          <span className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider px-3.5 py-1.5 rounded-full bg-maroon/10 text-maroon mb-4">
+          <span className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider px-3.5 py-1.5 rounded-full bg-accent/10 text-accent border border-accent/25 mb-4">
             <Clock className="w-3.5 h-3.5" aria-hidden="true" />
             <span>Coming Soon — Planned Rollout</span>
           </span>
@@ -95,24 +95,21 @@ export default function PortalComingSoonPage() {
           <div className="flex flex-col sm:flex-row flex-wrap items-center justify-center gap-3">
             <Link
               href="/downloads"
-              className="w-full sm:w-auto min-h-12 inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-maroon hover:bg-maroon/90 text-white text-sm font-bold transition-colors shadow-xs"
+              className="w-full sm:w-auto min-h-12 inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-primary hover:bg-primary-dark text-white text-sm font-bold transition-colors shadow-xs"
             >
-              <FolderDown
-                className="w-4 h-4 text-gold shrink-0"
-                aria-hidden="true"
-              />
+              <FolderDown className="w-4 h-4 shrink-0" aria-hidden="true" />
               <span>Browse Downloads Hub</span>
             </Link>
             <Link
               href="/contact"
-              className="w-full sm:w-auto min-h-12 inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl border-2 border-maroon text-maroon hover:bg-maroon hover:text-white text-sm font-bold transition-colors"
+              className="w-full sm:w-auto min-h-12 inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl border-2 border-primary text-primary hover:bg-primary hover:text-white text-sm font-bold transition-colors"
             >
               <Mail className="w-4 h-4 shrink-0" aria-hidden="true" />
               <span>Contact Administration</span>
             </Link>
             <Link
               href="/"
-              className="w-full sm:w-auto min-h-12 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl text-slate-700 hover:text-maroon hover:bg-slate-100 text-sm font-bold transition-colors"
+              className="w-full sm:w-auto min-h-12 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl text-slate-700 hover:text-primary hover:bg-slate-100 text-sm font-bold transition-colors"
             >
               <ArrowLeft className="w-4 h-4 shrink-0" aria-hidden="true" />
               <span>Back to Home</span>
@@ -123,7 +120,7 @@ export default function PortalComingSoonPage() {
         {/* Planned Portal Capabilities */}
         <section aria-labelledby="portal-modules-heading" className="space-y-6">
           <div className="text-center">
-            <span className="text-xs font-bold uppercase tracking-wider text-maroon">
+            <span className="text-xs font-bold uppercase tracking-wider text-primary">
               Future Capabilities
             </span>
             <h2
@@ -133,7 +130,7 @@ export default function PortalComingSoonPage() {
               What the Portal Will Provide
             </h2>
             <div
-              className="w-14 h-1 rounded-full bg-gold mx-auto"
+              className="w-14 h-1 rounded-full bg-accent mx-auto"
               aria-hidden="true"
             />
           </div>
@@ -146,7 +143,7 @@ export default function PortalComingSoonPage() {
                   key={module.title}
                   className="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs flex flex-col"
                 >
-                  <div className="w-11 h-11 rounded-xl bg-maroon/10 text-maroon flex items-center justify-center mb-4">
+                  <div className="w-11 h-11 rounded-xl bg-primary/10 text-primary flex items-center justify-center mb-4">
                     <Icon className="w-5 h-5" aria-hidden="true" />
                   </div>
                   <h3 className="font-bold text-base text-slate-900 mb-2">
@@ -160,9 +157,9 @@ export default function PortalComingSoonPage() {
             })}
           </div>
 
-          <div className="bg-maroon/5 border border-maroon/15 rounded-2xl p-5 flex items-start gap-3 text-xs sm:text-sm text-slate-700">
+          <div className="bg-primary/5 border border-primary/15 rounded-2xl p-5 flex items-start gap-3 text-xs sm:text-sm text-slate-700">
             <ShieldCheck
-              className="w-5 h-5 text-maroon shrink-0 mt-0.5"
+              className="w-5 h-5 text-primary shrink-0 mt-0.5"
               aria-hidden="true"
             />
             <p className="leading-relaxed">

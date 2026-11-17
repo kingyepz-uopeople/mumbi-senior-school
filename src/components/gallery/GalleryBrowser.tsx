@@ -125,8 +125,8 @@ export default function GalleryBrowser() {
           }}
           className={`min-h-11 px-4 sm:px-5 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition-colors ${
             selectedAlbumId === 'all'
-              ? 'bg-maroon text-white shadow-xs'
-              : 'bg-white border border-slate-300 text-slate-700 hover:border-maroon hover:text-maroon'
+              ? 'bg-primary text-white shadow-xs'
+              : 'bg-white border border-slate-300 text-slate-700 hover:border-primary hover:text-primary'
           }`}
         >
           All Albums ({allImages.length})
@@ -145,8 +145,8 @@ export default function GalleryBrowser() {
               }}
               className={`min-h-11 px-4 sm:px-5 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition-colors ${
                 active
-                  ? 'bg-maroon text-white shadow-xs'
-                  : 'bg-white border border-slate-300 text-slate-700 hover:border-maroon hover:text-maroon'
+                  ? 'bg-primary text-white shadow-xs'
+                  : 'bg-white border border-slate-300 text-slate-700 hover:border-primary hover:text-primary'
               }`}
             >
               {album.name} ({album.images.length})
@@ -186,7 +186,7 @@ export default function GalleryBrowser() {
           {displayedImages.map((img, index) => (
             <article
               key={img.id}
-              className="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-xs hover:border-maroon hover:shadow-md transition-all flex flex-col"
+              className="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-xs hover:border-primary hover:shadow-md transition-all flex flex-col"
             >
               <button
                 type="button"
@@ -197,7 +197,7 @@ export default function GalleryBrowser() {
                 aria-label={`Open full view: ${img.alt}`}
                 className="group text-left flex flex-col flex-1 w-full rounded-2xl"
               >
-                <div className="relative w-full aspect-3/2 overflow-hidden bg-maroon">
+                <div className="relative w-full aspect-3/2 overflow-hidden bg-primary">
                   <Image
                     src={img.src}
                     alt={img.alt}
@@ -208,9 +208,9 @@ export default function GalleryBrowser() {
                   />
                   <span
                     aria-hidden="true"
-                    className="absolute inset-0 bg-maroon/75 opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity flex items-center justify-center gap-2 text-white"
+                    className="absolute inset-0 bg-gradient-to-t from-primary-dark/90 via-primary/75 to-primary-dark/65 opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity flex items-center justify-center gap-2 text-white"
                   >
-                    <Maximize2 className="w-5 h-5 text-gold" />
+                    <Maximize2 className="w-5 h-5 text-white" />
                     <span className="text-xs font-bold uppercase tracking-wider">
                       Open Lightbox
                     </span>
@@ -218,12 +218,12 @@ export default function GalleryBrowser() {
                 </div>
 
                 <div className="p-4 flex-1 flex flex-col justify-between w-full">
-                  <h3 className="font-bold text-sm text-slate-900 group-hover:text-maroon transition-colors leading-snug">
+                  <h3 className="font-bold text-sm text-slate-900 group-hover:text-primary transition-colors leading-snug">
                     {img.alt}
                   </h3>
                   <div className="flex items-center justify-between gap-2 text-xs text-slate-600 mt-3 pt-2.5 border-t border-slate-100">
                     <span className="truncate">{img.event}</span>
-                    <span className="font-bold text-maroon shrink-0">
+                    <span className="font-bold text-primary shrink-0">
                       {img.year}
                     </span>
                   </div>
@@ -260,7 +260,7 @@ export default function GalleryBrowser() {
                   aria-live="polite"
                   className="text-xs sm:text-sm font-semibold text-slate-200 truncate"
                 >
-                  <span className="text-gold font-bold">
+                  <span className="text-white font-bold">
                     {activeIndex + 1} / {displayedImages.length}
                   </span>{' '}
                   • {activeImage.event} ({activeImage.year})
@@ -303,16 +303,16 @@ export default function GalleryBrowser() {
                     type="button"
                     onClick={showPrev}
                     aria-label="Previous photo"
-                    className="flex-1 sm:flex-none min-h-11 px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-bold inline-flex items-center justify-center gap-1.5 transition-colors"
+                    className="flex-1 sm:flex-none min-h-11 px-4 py-2 rounded-xl bg-white/12 hover:bg-white/22 text-white text-xs font-bold inline-flex items-center justify-center gap-1.5 transition-colors"
                   >
-                    <ChevronLeft className="w-4 h-4 text-gold" aria-hidden="true" />
+                    <ChevronLeft className="w-4 h-4" aria-hidden="true" />
                     <span>Previous</span>
                   </button>
                   <button
                     type="button"
                     onClick={showNext}
                     aria-label="Next photo"
-                    className="flex-1 sm:flex-none min-h-11 px-4 py-2 rounded-xl bg-gold hover:bg-white text-slate-900 text-xs font-bold inline-flex items-center justify-center gap-1.5 transition-colors"
+                    className="flex-1 sm:flex-none min-h-11 px-4 py-2 rounded-xl bg-white hover:bg-blue-50 text-primary text-xs font-bold inline-flex items-center justify-center gap-1.5 transition-colors"
                   >
                     <span>Next</span>
                     <ChevronRight className="w-4 h-4" aria-hidden="true" />

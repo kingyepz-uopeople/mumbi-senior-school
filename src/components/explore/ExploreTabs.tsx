@@ -99,14 +99,17 @@ export default function ExploreTabs() {
       }
     };
 
-    const initTimer = setTimeout(() => syncFromHash(Boolean(window.location.hash)), 0);
+    const initTimer = setTimeout(
+      () => syncFromHash(Boolean(window.location.hash)),
+      0
+    );
 
     const onHashChange = () => syncFromHash(true);
 
     const onDocumentClick = (event: MouseEvent) => {
-      const anchor = (event.target as HTMLElement | null)?.closest<HTMLAnchorElement>(
-        'a[href^="/explore#"]'
-      );
+      const anchor = (
+        event.target as HTMLElement | null
+      )?.closest<HTMLAnchorElement>('a[href^="/explore#"]');
       if (!anchor) return;
       const hashIdx = anchor.href.indexOf('#');
       if (hashIdx === -1) return;
@@ -180,13 +183,13 @@ export default function ExploreTabs() {
               onKeyDown={(e) => handleKeyDown(e, index)}
               className={`min-h-11 px-5 py-2.5 rounded-xl font-bold text-sm transition-all inline-flex items-center justify-center gap-2 ${
                 selected
-                  ? 'bg-maroon text-white shadow-sm'
-                  : 'bg-white border border-slate-300 text-slate-700 hover:border-maroon hover:text-maroon'
+                  ? 'bg-primary text-white shadow-sm'
+                  : 'bg-white border border-slate-300 text-slate-700 hover:border-primary hover:text-primary'
               }`}
             >
               <Icon
                 className={`w-4 h-4 shrink-0 ${
-                  selected ? 'text-gold' : 'text-maroon'
+                  selected ? 'text-white' : 'text-primary'
                 }`}
                 aria-hidden="true"
               />
@@ -206,7 +209,7 @@ export default function ExploreTabs() {
           className="space-y-8 animate-fadeIn rounded-2xl"
         >
           <div className="text-center">
-            <span className="text-xs font-bold uppercase tracking-wider text-maroon">
+            <span className="text-xs font-bold uppercase tracking-wider text-primary">
               Leadership &amp; Service
             </span>
             <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mt-1 mb-2">
@@ -217,7 +220,7 @@ export default function ExploreTabs() {
               readiness, environmental stewardship, and creative expression.
             </p>
             <div
-              className="w-16 h-1 bg-gold mx-auto rounded-full"
+              className="w-16 h-1 bg-accent mx-auto rounded-full"
               aria-hidden="true"
             />
           </div>
@@ -228,18 +231,18 @@ export default function ExploreTabs() {
               return (
                 <article
                   key={club.id}
-                  className="bg-white rounded-2xl border border-slate-200 border-t-4 border-t-gold p-6 shadow-xs hover:shadow-md transition-shadow flex flex-col justify-between"
+                  className="bg-white rounded-2xl border border-slate-200 border-t-4 border-t-primary p-6 shadow-xs hover:shadow-md transition-shadow flex flex-col justify-between"
                 >
                   <div>
                     <div className="flex items-center gap-3.5 mb-4">
-                      <div className="w-12 h-12 rounded-xl bg-maroon/10 text-maroon flex items-center justify-center shrink-0">
+                      <div className="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center shrink-0">
                         <Icon className="w-5 h-5" aria-hidden="true" />
                       </div>
                       <div>
                         <h3 className="font-bold text-lg text-slate-900 leading-snug">
                           {club.name}
                         </h3>
-                        <span className="inline-block text-xs px-2.5 py-0.5 rounded-full bg-maroon/10 text-maroon font-semibold mt-0.5">
+                        <span className="inline-block text-xs px-2.5 py-0.5 rounded-full bg-primary/10 text-primary font-semibold mt-0.5">
                           {club.category}
                         </span>
                       </div>
@@ -276,7 +279,7 @@ export default function ExploreTabs() {
           className="space-y-8 animate-fadeIn rounded-2xl"
         >
           <div className="text-center">
-            <span className="text-xs font-bold uppercase tracking-wider text-maroon">
+            <span className="text-xs font-bold uppercase tracking-wider text-primary">
               Athletics &amp; Teamwork
             </span>
             <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mt-1 mb-2">
@@ -287,7 +290,7 @@ export default function ExploreTabs() {
               Murang&apos;a County and KSSSA secondary school championships.
             </p>
             <div
-              className="w-16 h-1 bg-gold mx-auto rounded-full"
+              className="w-16 h-1 bg-accent mx-auto rounded-full"
               aria-hidden="true"
             />
           </div>
@@ -298,18 +301,18 @@ export default function ExploreTabs() {
               return (
                 <article
                   key={sport.id}
-                  className="bg-white rounded-2xl border border-slate-200 border-t-4 border-t-gold p-6 shadow-xs hover:shadow-md transition-shadow flex flex-col justify-between"
+                  className="bg-white rounded-2xl border border-slate-200 border-t-4 border-t-primary p-6 shadow-xs hover:shadow-md transition-shadow flex flex-col justify-between"
                 >
                   <div>
                     <div className="flex items-center gap-3.5 mb-4">
-                      <div className="w-12 h-12 rounded-xl bg-gold/25 text-maroon flex items-center justify-center shrink-0">
+                      <div className="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center shrink-0">
                         <Icon className="w-5 h-5" aria-hidden="true" />
                       </div>
                       <div>
                         <h3 className="font-bold text-lg text-slate-900 leading-snug">
                           {sport.name}
                         </h3>
-                        <span className="inline-block text-xs px-2.5 py-0.5 rounded-full bg-gold/20 text-maroon font-semibold mt-0.5">
+                        <span className="inline-block text-xs px-2.5 py-0.5 rounded-full bg-accent/10 text-accent font-semibold mt-0.5">
                           Competitive Sport
                         </span>
                       </div>
@@ -348,7 +351,7 @@ export default function ExploreTabs() {
           className="space-y-8 animate-fadeIn rounded-2xl"
         >
           <div className="text-center">
-            <span className="text-xs font-bold uppercase tracking-wider text-maroon">
+            <span className="text-xs font-bold uppercase tracking-wider text-primary">
               05:00 – 22:00 Weekday Schedule
             </span>
             <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mt-1 mb-2">
@@ -359,21 +362,21 @@ export default function ExploreTabs() {
               study, nutritious meals, sports, devotion, and rest.
             </p>
             <div
-              className="w-16 h-1 bg-gold mx-auto rounded-full"
+              className="w-16 h-1 bg-accent mx-auto rounded-full"
               aria-hidden="true"
             />
           </div>
 
-          <div className="max-w-3xl mx-auto bg-white rounded-2xl border border-slate-200 border-t-4 border-t-gold shadow-xs p-5 sm:p-8">
-            <ol className="relative border-l-2 border-maroon ml-3 sm:ml-5 pl-5 sm:pl-7 space-y-4">
+          <div className="max-w-3xl mx-auto bg-white rounded-2xl border border-slate-200 border-t-4 border-t-primary shadow-xs p-5 sm:p-8">
+            <ol className="relative border-l-2 border-primary ml-3 sm:ml-5 pl-5 sm:pl-7 space-y-4">
               {dailyRoutine.map((item) => (
                 <li key={item.time} className="relative">
                   <span
                     aria-hidden="true"
-                    className="absolute -left-[29px] sm:-left-[37px] top-3 w-4 h-4 rounded-full bg-gold border-4 border-maroon"
+                    className="absolute -left-[29px] sm:-left-[37px] top-3 w-4 h-4 rounded-full bg-white border-4 border-primary"
                   />
                   <div className="bg-slate-bg p-3.5 sm:p-4 rounded-xl border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                    <span className="text-xs font-black text-maroon tracking-wider uppercase px-2.5 py-1 rounded-md bg-maroon/10 w-fit">
+                    <span className="text-xs font-black text-primary tracking-wider uppercase px-2.5 py-1 rounded-md bg-primary/10 w-fit">
                       {item.time} hrs
                     </span>
                     <span className="text-sm font-semibold text-slate-900 sm:text-right">
@@ -397,7 +400,7 @@ export default function ExploreTabs() {
           className="space-y-8 animate-fadeIn rounded-2xl"
         >
           <div className="text-center">
-            <span className="text-xs font-bold uppercase tracking-wider text-maroon">
+            <span className="text-xs font-bold uppercase tracking-wider text-primary">
               Pastoral Care &amp; Fellowship
             </span>
             <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mt-1 mb-2">
@@ -408,7 +411,7 @@ export default function ExploreTabs() {
               with respect for every student&apos;s faith tradition.
             </p>
             <div
-              className="w-16 h-1 bg-gold mx-auto rounded-full"
+              className="w-16 h-1 bg-accent mx-auto rounded-full"
               aria-hidden="true"
             />
           </div>
@@ -419,11 +422,11 @@ export default function ExploreTabs() {
               return (
                 <article
                   key={group.id}
-                  className="bg-white rounded-2xl border border-slate-200 border-t-4 border-t-gold p-6 shadow-xs hover:shadow-md transition-shadow flex flex-col justify-between"
+                  className="bg-white rounded-2xl border border-slate-200 border-t-4 border-t-primary p-6 shadow-xs hover:shadow-md transition-shadow flex flex-col justify-between"
                 >
                   <div>
                     <div className="flex items-center gap-3.5 mb-4">
-                      <div className="w-12 h-12 rounded-xl bg-maroon/10 text-maroon flex items-center justify-center shrink-0">
+                      <div className="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center shrink-0">
                         <Icon className="w-5 h-5" aria-hidden="true" />
                       </div>
                       <div>
@@ -461,7 +464,7 @@ export default function ExploreTabs() {
           className="space-y-8 animate-fadeIn rounded-2xl"
         >
           <div className="text-center">
-            <span className="text-xs font-bold uppercase tracking-wider text-maroon">
+            <span className="text-xs font-bold uppercase tracking-wider text-primary">
               Home Away From Home
             </span>
             <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mt-1 mb-2">
@@ -472,7 +475,7 @@ export default function ExploreTabs() {
               health, dignity, and focused academic life.
             </p>
             <div
-              className="w-16 h-1 bg-gold mx-auto rounded-full"
+              className="w-16 h-1 bg-accent mx-auto rounded-full"
               aria-hidden="true"
             />
           </div>
@@ -483,9 +486,9 @@ export default function ExploreTabs() {
               return (
                 <article
                   key={section.id}
-                  className="bg-white rounded-2xl border border-slate-200 border-t-4 border-t-gold p-6 shadow-xs flex flex-col"
+                  className="bg-white rounded-2xl border border-slate-200 border-t-4 border-t-primary p-6 shadow-xs flex flex-col"
                 >
-                  <div className="w-12 h-12 rounded-xl bg-maroon/10 text-maroon flex items-center justify-center mb-4">
+                  <div className="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center mb-4">
                     <Icon className="w-5 h-5" aria-hidden="true" />
                   </div>
                   <h3 className="font-bold text-lg text-slate-900 mb-2">
@@ -498,7 +501,7 @@ export default function ExploreTabs() {
                     {section.highlights.map((point) => (
                       <li key={point} className="flex items-start gap-2">
                         <CheckCircle2
-                          className="w-4 h-4 text-maroon shrink-0 mt-0.5"
+                          className="w-4 h-4 text-primary shrink-0 mt-0.5"
                           aria-hidden="true"
                         />
                         <span>{point}</span>

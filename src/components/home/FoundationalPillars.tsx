@@ -31,7 +31,7 @@ export default function FoundationalPillars() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         {/* Section Heading */}
         <div className="text-center mb-10 sm:mb-12">
-          <span className="text-xs font-bold uppercase tracking-wider text-maroon">
+          <span className="text-xs font-bold uppercase tracking-wider text-primary">
             Guiding Identity
           </span>
           <h2
@@ -45,7 +45,7 @@ export default function FoundationalPillars() {
             community life at {schoolInfo.name}.
           </p>
           <div
-            className="w-16 h-1 rounded-full bg-gold mx-auto"
+            className="w-16 h-1 rounded-full bg-accent mx-auto"
             aria-hidden="true"
           />
         </div>
@@ -57,13 +57,13 @@ export default function FoundationalPillars() {
             return (
               <div
                 key={pillar.title}
-                className="bg-slate-bg rounded-2xl border border-slate-200 border-t-4 border-t-gold p-6 shadow-xs hover:shadow-md transition-shadow flex flex-col"
+                className="bg-slate-bg rounded-2xl border border-slate-200 border-t-4 border-t-primary p-6 shadow-xs hover:shadow-md transition-shadow flex flex-col"
               >
                 <div className="flex items-center gap-3 mb-4">
-                  <div className="w-11 h-11 rounded-xl bg-maroon text-gold flex items-center justify-center shrink-0">
+                  <div className="w-11 h-11 rounded-xl bg-primary text-white flex items-center justify-center shrink-0">
                     <Icon className="w-5 h-5" aria-hidden="true" />
                   </div>
-                  <h3 className="text-lg font-bold text-maroon">
+                  <h3 className="text-lg font-bold text-primary">
                     {pillar.title}
                   </h3>
                 </div>
@@ -82,19 +82,19 @@ export default function FoundationalPillars() {
           })}
 
           {/* Core Values Card */}
-          <div className="bg-slate-bg rounded-2xl border border-slate-200 border-t-4 border-t-gold p-6 shadow-xs hover:shadow-md transition-shadow flex flex-col">
+          <div className="bg-slate-bg rounded-2xl border border-slate-200 border-t-4 border-t-primary p-6 shadow-xs hover:shadow-md transition-shadow flex flex-col">
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-11 h-11 rounded-xl bg-maroon text-gold flex items-center justify-center shrink-0">
+              <div className="w-11 h-11 rounded-xl bg-primary text-white flex items-center justify-center shrink-0">
                 <Heart className="w-5 h-5" aria-hidden="true" />
               </div>
-              <h3 className="text-lg font-bold text-maroon">Core Values</h3>
+              <h3 className="text-lg font-bold text-primary">Core Values</h3>
             </div>
 
             <ul className="flex flex-wrap gap-2">
               {schoolInfo.coreValues.map((value) => (
                 <li
                   key={value.title}
-                  className="text-xs font-semibold px-3 py-1.5 rounded-full bg-maroon/10 text-maroon"
+                  className="text-xs font-semibold px-3 py-1.5 rounded-full bg-primary/10 text-primary"
                 >
                   {value.title}
                 </li>

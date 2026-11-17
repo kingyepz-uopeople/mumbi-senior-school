@@ -29,8 +29,8 @@ export default function WallOfFameGrid() {
           onClick={() => setSelectedYear('all')}
           className={`min-h-11 px-4 py-2 rounded-full text-xs sm:text-sm font-bold transition-colors ${
             selectedYear === 'all'
-              ? 'bg-maroon text-white shadow-xs'
-              : 'bg-white border border-slate-300 text-slate-700 hover:border-maroon hover:text-maroon'
+              ? 'bg-primary text-white shadow-xs'
+              : 'bg-white border border-slate-300 text-slate-700 hover:border-primary hover:text-primary'
           }`}
         >
           All Years ({topStudents.length})
@@ -46,8 +46,8 @@ export default function WallOfFameGrid() {
               onClick={() => setSelectedYear(year)}
               className={`min-h-11 px-4 py-2 rounded-full text-xs sm:text-sm font-bold transition-colors ${
                 active
-                  ? 'bg-maroon text-white shadow-xs'
-                  : 'bg-white border border-slate-300 text-slate-700 hover:border-maroon hover:text-maroon'
+                  ? 'bg-primary text-white shadow-xs'
+                  : 'bg-white border border-slate-300 text-slate-700 hover:border-primary hover:text-primary'
               }`}
             >
               KCSE {year} ({count})
@@ -58,7 +58,10 @@ export default function WallOfFameGrid() {
 
       <p className="sr-only" role="status" aria-live="polite">
         Showing {filtered.length} top scholars
-        {selectedYear === 'all' ? ' across all years' : ` for KCSE ${selectedYear}`}.
+        {selectedYear === 'all'
+          ? ' across all years'
+          : ` for KCSE ${selectedYear}`}
+        .
       </p>
 
       {/* Scholar Cards */}
@@ -66,11 +69,11 @@ export default function WallOfFameGrid() {
         {filtered.map((student) => (
           <article
             key={student.id}
-            className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs hover:border-gold hover:shadow-md transition-all flex flex-col"
+            className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs hover:border-primary hover:shadow-md transition-all flex flex-col"
           >
-            <div className="bg-gradient-to-r from-maroon to-[#590016] text-white p-4 flex items-center justify-between gap-3">
+            <div className="bg-gradient-to-r from-primary to-primary-dark text-white p-4 flex items-center justify-between gap-3">
               <div className="min-w-0">
-                <span className="block text-xs text-gold font-semibold">
+                <span className="block text-xs text-blue-100 font-semibold">
                   KCSE {student.year}
                 </span>
                 <h3 className="font-bold text-base text-white leading-snug">
@@ -79,7 +82,7 @@ export default function WallOfFameGrid() {
               </div>
               <div
                 aria-label={`Mean grade ${student.meanGrade}`}
-                className="w-12 h-12 rounded-xl bg-white text-maroon flex items-center justify-center font-black text-lg shrink-0 shadow-xs"
+                className="w-12 h-12 rounded-xl bg-white text-primary flex items-center justify-center font-black text-lg shrink-0 shadow-xs"
               >
                 {student.meanGrade}
               </div>
@@ -88,7 +91,7 @@ export default function WallOfFameGrid() {
             <div className="p-5 flex-1 flex flex-col">
               <div className="inline-flex items-center gap-1.5 text-sm font-bold text-slate-800 mb-4">
                 <Trophy
-                  className="w-4 h-4 text-maroon shrink-0"
+                  className="w-4 h-4 text-accent shrink-0"
                   aria-hidden="true"
                 />
                 <span>{student.points} Points</span>
@@ -96,7 +99,7 @@ export default function WallOfFameGrid() {
 
               <div className="mt-auto pt-3.5 border-t border-slate-100 flex items-start gap-2.5">
                 <GraduationCap
-                  className="w-4 h-4 text-maroon mt-0.5 shrink-0"
+                  className="w-4 h-4 text-primary mt-0.5 shrink-0"
                   aria-hidden="true"
                 />
                 <div>

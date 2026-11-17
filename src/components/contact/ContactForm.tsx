@@ -242,7 +242,7 @@ export default function ContactForm() {
           <button
             type="button"
             onClick={() => setReceipt(null)}
-            className="min-h-11 inline-flex items-center justify-center px-5 py-2.5 rounded-xl bg-maroon hover:bg-maroon/90 text-white text-sm font-bold transition-colors"
+            className="min-h-11 inline-flex items-center justify-center px-5 py-2.5 rounded-xl bg-primary hover:bg-primary-dark text-white text-sm font-bold transition-colors"
           >
             Submit Another Inquiry
           </button>
@@ -254,8 +254,8 @@ export default function ContactForm() {
   const inputClassName = (hasError: boolean) =>
     `w-full min-h-12 px-4 py-3 rounded-xl border text-sm text-slate-900 placeholder:text-slate-500 transition-colors ${
       hasError
-        ? 'border-red-600 bg-red-50/40 focus:bg-white focus:border-red-700'
-        : 'border-slate-300 bg-slate-bg focus:bg-white focus:border-maroon'
+        ? 'border-accent bg-accent/5 focus:bg-white focus:border-accent'
+        : 'border-slate-300 bg-slate-bg focus:bg-white focus:border-primary'
     }`;
 
   return (
@@ -267,7 +267,7 @@ export default function ContactForm() {
       aria-describedby="contact-form-note"
     >
       <p id="contact-form-note" className="text-xs text-slate-600">
-        All fields marked with <span className="text-maroon font-bold">*</span>{' '}
+        All fields marked with <span className="text-accent font-bold">*</span>{' '}
         are required.
       </p>
 
@@ -314,7 +314,7 @@ export default function ContactForm() {
             htmlFor="contact-name"
             className="block text-xs font-bold uppercase tracking-wider text-slate-800 mb-1.5"
           >
-            Full Name <span className="text-maroon" aria-hidden="true">*</span>
+            Full Name <span className="text-accent" aria-hidden="true">*</span>
           </label>
           <input
             id="contact-name"
@@ -352,7 +352,7 @@ export default function ContactForm() {
             className="block text-xs font-bold uppercase tracking-wider text-slate-800 mb-1.5"
           >
             Phone Number{' '}
-            <span className="text-maroon" aria-hidden="true">*</span>
+            <span className="text-accent" aria-hidden="true">*</span>
           </label>
           <input
             id="contact-phone"
@@ -394,7 +394,7 @@ export default function ContactForm() {
             className="block text-xs font-bold uppercase tracking-wider text-slate-800 mb-1.5"
           >
             Email Address{' '}
-            <span className="text-maroon" aria-hidden="true">*</span>
+            <span className="text-accent" aria-hidden="true">*</span>
           </label>
           <input
             id="contact-email"
@@ -433,7 +433,7 @@ export default function ContactForm() {
             className="block text-xs font-bold uppercase tracking-wider text-slate-800 mb-1.5"
           >
             Inquiry Category{' '}
-            <span className="text-maroon" aria-hidden="true">*</span>
+            <span className="text-accent" aria-hidden="true">*</span>
           </label>
           <select
             id="contact-category"
@@ -477,7 +477,7 @@ export default function ContactForm() {
             htmlFor="contact-message"
             className="block text-xs font-bold uppercase tracking-wider text-slate-800"
           >
-            Message <span className="text-maroon" aria-hidden="true">*</span>
+            Message <span className="text-accent" aria-hidden="true">*</span>
           </label>
           <span
             id="contact-message-hint"
@@ -522,16 +522,16 @@ export default function ContactForm() {
       <button
         type="submit"
         disabled={isSubmitting}
-        className="w-full min-h-12 py-3.5 px-6 rounded-xl bg-maroon hover:bg-maroon/90 disabled:opacity-60 disabled:cursor-not-allowed text-white font-bold text-sm inline-flex items-center justify-center gap-2 transition-colors shadow-sm"
+        className="w-full min-h-12 py-3.5 px-6 rounded-xl bg-primary hover:bg-primary-dark disabled:opacity-60 disabled:cursor-not-allowed text-white font-bold text-sm inline-flex items-center justify-center gap-2 transition-colors shadow-sm"
       >
         {isSubmitting ? (
           <>
-            <Loader2 className="w-4 h-4 animate-spin text-gold" aria-hidden="true" />
+            <Loader2 className="w-4 h-4 animate-spin" aria-hidden="true" />
             <span>Validating &amp; Submitting...</span>
           </>
         ) : (
           <>
-            <Send className="w-4 h-4 text-gold" aria-hidden="true" />
+            <Send className="w-4 h-4" aria-hidden="true" />
             <span>Submit Official Inquiry</span>
           </>
         )}

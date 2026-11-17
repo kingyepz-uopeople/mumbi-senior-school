@@ -17,8 +17,9 @@ const iconMap: Record<string, LucideIcon> = {
 export default function QuickStats() {
   return (
     <section
+      data-dark-surface
       aria-labelledby="quick-stats-heading"
-      className="bg-maroon text-white"
+      className="bg-primary-dark text-white border-b border-white/10"
     >
       <h2 id="quick-stats-heading" className="sr-only">
         Mumbi Girls Senior School at a Glance
@@ -30,11 +31,11 @@ export default function QuickStats() {
             return (
               <div
                 key={stat.label}
-                className="flex flex-col items-center text-center p-3 rounded-xl bg-white/5 border border-white/10"
+                className="flex flex-col items-center text-center p-4 rounded-xl bg-white/8 border border-white/15"
               >
                 {Icon && (
                   <Icon
-                    className="w-7 h-7 md:w-9 md:h-9 text-gold mb-2.5"
+                    className="w-7 h-7 md:w-9 md:h-9 text-blue-100 mb-2.5"
                     aria-hidden="true"
                   />
                 )}

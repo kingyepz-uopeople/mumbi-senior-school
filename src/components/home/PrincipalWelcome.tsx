@@ -9,7 +9,7 @@ export default function PrincipalWelcome() {
       className="py-14 sm:py-20 bg-slate-bg"
     >
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
-        <div className="bg-white rounded-2xl border border-slate-200 border-t-4 border-t-gold shadow-xs overflow-hidden">
+        <div className="bg-white rounded-2xl border border-slate-200 border-t-4 border-t-primary shadow-xs overflow-hidden">
           <div className="flex flex-col md:flex-row items-center md:items-start gap-8 md:gap-12 p-6 sm:p-10 md:p-12">
             {/* Local Optimized Portrait Placeholder */}
             <div className="shrink-0 text-center">
@@ -19,13 +19,13 @@ export default function PrincipalWelcome() {
                 width={208}
                 height={208}
                 sizes="(max-width: 768px) 160px, 208px"
-                className="w-40 h-40 md:w-52 md:h-52 rounded-full object-cover shadow-md ring-4 ring-gold/35 mx-auto"
+                className="w-40 h-40 md:w-52 md:h-52 rounded-full object-cover shadow-md ring-4 ring-primary/20 mx-auto"
               />
             </div>
 
             {/* Welcome Message */}
             <div className="flex-1 text-center md:text-left">
-              <span className="text-xs font-bold uppercase tracking-wider text-maroon">
+              <span className="text-xs font-bold uppercase tracking-wider text-primary">
                 Message from the Administration
               </span>
               <h2
@@ -35,7 +35,7 @@ export default function PrincipalWelcome() {
                 Chief Principal&apos;s Welcome
               </h2>
               <div
-                className="w-16 h-1 rounded-full bg-gold mb-6 mx-auto md:mx-0"
+                className="w-16 h-1 rounded-full bg-accent mb-6 mx-auto md:mx-0"
                 aria-hidden="true"
               />
 
@@ -52,17 +52,17 @@ export default function PrincipalWelcome() {
 
               <div className="border-t border-slate-200 pt-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
-                  <p className="font-bold text-lg text-maroon">
+                  <p className="font-bold text-lg text-primary">
                     Mrs. Eunice Wangari Muturi
                   </p>
-                  <span className="inline-block mt-1 px-3 py-0.5 rounded-full bg-gold/20 border border-gold/40 text-maroon text-xs font-bold">
+                  <span className="inline-block mt-1 px-3 py-0.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-bold">
                     Chief Principal
                   </span>
                 </div>
 
                 <Link
                   href="/about"
-                  className="min-h-11 inline-flex items-center justify-center sm:justify-start gap-1.5 text-sm font-bold text-maroon hover:text-maroon/80 transition-colors"
+                  className="min-h-11 inline-flex items-center justify-center sm:justify-start gap-1.5 text-sm font-bold text-primary hover:text-primary-dark transition-colors"
                 >
                   <span>Read Our History &amp; Governance</span>
                   <ArrowRight className="w-4 h-4 shrink-0" aria-hidden="true" />

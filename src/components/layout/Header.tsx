@@ -89,10 +89,10 @@ function DesktopDropdown({
       <Link
         href={item.href}
         aria-current={isActive ? 'page' : undefined}
-        className={`relative px-3 py-2 text-sm font-semibold rounded-md transition-colors ${
+        className={`relative px-3 py-2 text-sm font-semibold rounded-md transition-colors text-white ${
           isActive
-            ? 'text-gold bg-white/10'
-            : 'text-white hover:text-gold hover:bg-white/10'
+            ? 'bg-white/15 after:content-[""] after:absolute after:left-3 after:right-3 after:bottom-1 after:h-0.5 after:rounded-full after:bg-white'
+            : 'hover:bg-white/12'
         }`}
       >
         {item.label}
@@ -109,17 +109,17 @@ function DesktopDropdown({
       onBlur={handleBlur}
     >
       <div
-        className={`inline-flex items-center rounded-md transition-colors ${
-          isActive ? 'bg-white/10' : 'hover:bg-white/10'
+        className={`relative inline-flex items-center rounded-md transition-colors ${
+          isActive
+            ? 'bg-white/15 after:content-[""] after:absolute after:left-3 after:right-2.5 after:bottom-1 after:h-0.5 after:rounded-full after:bg-white'
+            : 'hover:bg-white/12'
         }`}
       >
         <Link
           href={item.href}
           aria-current={isActive ? 'page' : undefined}
           onClick={() => setOpen(false)}
-          className={`pl-3 pr-1 py-2 text-sm font-semibold rounded-l-md transition-colors ${
-            isActive ? 'text-gold' : 'text-white hover:text-gold'
-          }`}
+          className="pl-3 pr-1 py-2 text-sm font-semibold rounded-l-md text-white transition-colors"
         >
           {item.label}
         </Link>
@@ -144,9 +144,7 @@ function DesktopDropdown({
               });
             }
           }}
-          className={`px-1.5 py-2 rounded-r-md transition-colors ${
-            isActive ? 'text-gold' : 'text-white hover:text-gold'
-          }`}
+          className="px-1.5 py-2 rounded-r-md text-white transition-colors"
         >
           <ChevronDown
             className={`w-4 h-4 transition-transform duration-200 ${
@@ -169,7 +167,7 @@ function DesktopDropdown({
                 <Link
                   href={child.href}
                   onClick={() => setOpen(false)}
-                  className="block px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-maroon/5 hover:text-maroon focus-visible:outline-maroon focus-visible:-outline-offset-2 transition-colors"
+                  className="block px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-primary/8 hover:text-primary focus-visible:outline-primary focus-visible:-outline-offset-2 transition-colors"
                 >
                   {child.label}
                 </Link>
@@ -284,7 +282,10 @@ function MobileNavDrawer({
         data-light-surface
         className="fixed inset-y-0 right-0 w-full max-w-xs bg-white shadow-2xl flex flex-col animate-fadeIn"
       >
-        <div className="flex items-center justify-between px-4 py-3.5 border-b border-slate-200 bg-maroon text-white" data-dark-surface>
+        <div
+          className="flex items-center justify-between px-4 py-3.5 border-b border-primary-dark bg-primary text-white"
+          data-dark-surface
+        >
           <div className="flex items-center gap-2.5 min-w-0">
             <Image
               src="/images/mumbi-logo.png"
@@ -326,14 +327,14 @@ function MobileNavDrawer({
                     onClick={() => toggleExpand(item.label)}
                     className={`w-full min-h-11 flex items-center justify-between px-3.5 py-2.5 text-sm font-semibold rounded-lg transition-colors ${
                       isActive
-                        ? 'bg-maroon/10 text-maroon'
-                        : 'text-slate-800 hover:bg-maroon/5 hover:text-maroon'
+                        ? 'bg-primary/10 text-primary'
+                        : 'text-slate-800 hover:bg-primary/6 hover:text-primary'
                     }`}
                   >
                     <span>{item.label}</span>
                     <ChevronDown
                       className={`w-4 h-4 shrink-0 transition-transform duration-200 ${
-                        isExpanded ? 'rotate-180 text-maroon' : 'text-slate-500'
+                        isExpanded ? 'rotate-180 text-primary' : 'text-slate-500'
                       }`}
                       aria-hidden="true"
                     />
@@ -342,14 +343,14 @@ function MobileNavDrawer({
                   {isExpanded && (
                     <ul
                       id={sectionId}
-                      className="mt-1 ml-3 pl-3 border-l-2 border-gold space-y-0.5"
+                      className="mt-1 ml-3 pl-3 border-l-2 border-accent space-y-0.5"
                     >
                       <li>
                         <Link
                           href={item.href}
                           aria-current={isActive ? 'page' : undefined}
                           onClick={onClose}
-                          className="flex items-center min-h-11 px-3 py-2 text-sm font-semibold text-maroon hover:bg-maroon/5 rounded-lg transition-colors"
+                          className="flex items-center min-h-11 px-3 py-2 text-sm font-semibold text-primary hover:bg-primary/6 rounded-lg transition-colors"
                         >
                           {item.label} Overview
                         </Link>
@@ -359,7 +360,7 @@ function MobileNavDrawer({
                           <Link
                             href={child.href}
                             onClick={onClose}
-                            className="flex items-center min-h-11 px-3 py-2 text-sm text-slate-700 hover:text-maroon hover:bg-maroon/5 rounded-lg transition-colors"
+                            className="flex items-center min-h-11 px-3 py-2 text-sm text-slate-700 hover:text-primary hover:bg-primary/6 rounded-lg transition-colors"
                           >
                             {child.label}
                           </Link>
@@ -379,8 +380,8 @@ function MobileNavDrawer({
                 onClick={onClose}
                 className={`flex items-center min-h-11 px-3.5 py-2.5 text-sm font-semibold rounded-lg transition-colors ${
                   isActive
-                    ? 'bg-maroon/10 text-maroon'
-                    : 'text-slate-800 hover:bg-maroon/5 hover:text-maroon'
+                    ? 'bg-primary/10 text-primary border-l-3 border-accent'
+                    : 'text-slate-800 hover:bg-primary/6 hover:text-primary'
                 }`}
               >
                 {item.label}
@@ -398,7 +399,7 @@ function MobileNavDrawer({
                 await triggerNativeInstall();
                 onClose();
               }}
-              className="w-full min-h-11 px-4 py-2.5 rounded-xl bg-gold text-slate-900 font-bold text-sm inline-flex items-center justify-center gap-2 hover:bg-gold/90 transition-colors"
+              className="w-full min-h-11 px-4 py-2.5 rounded-xl bg-primary-dark text-white font-bold text-sm inline-flex items-center justify-center gap-2 hover:bg-primary transition-colors"
             >
               <Download className="w-4 h-4" aria-hidden="true" />
               Install Mumbi Portal App
@@ -408,15 +409,15 @@ function MobileNavDrawer({
             <Link
               href="/portal"
               onClick={onClose}
-              className="min-h-11 px-3 py-2.5 inline-flex items-center justify-center gap-1.5 text-sm font-bold text-white bg-maroon rounded-xl hover:bg-maroon/90 transition-colors"
+              className="min-h-11 px-3 py-2.5 inline-flex items-center justify-center gap-1.5 text-sm font-bold text-white bg-primary rounded-xl hover:bg-primary-dark transition-colors"
             >
-              <User className="w-4 h-4 text-gold shrink-0" aria-hidden="true" />
+              <User className="w-4 h-4 shrink-0" aria-hidden="true" />
               <span>Student</span>
             </Link>
             <Link
               href="/portal"
               onClick={onClose}
-              className="min-h-11 px-3 py-2.5 inline-flex items-center justify-center gap-1.5 text-sm font-bold text-maroon bg-white border border-maroon rounded-xl hover:bg-maroon/5 transition-colors"
+              className="min-h-11 px-3 py-2.5 inline-flex items-center justify-center gap-1.5 text-sm font-bold text-primary bg-white border border-primary rounded-xl hover:bg-primary/6 transition-colors"
             >
               <LogIn className="w-4 h-4 shrink-0" aria-hidden="true" />
               <span>Staff</span>
@@ -443,7 +444,7 @@ export default function Header() {
 
   return (
     <>
-      <div className="bg-maroon">
+      <div className="bg-primary border-b border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="flex items-center justify-between h-16 gap-3">
             {/* School Crest + Name */}
@@ -464,7 +465,7 @@ export default function Header() {
                 <span className="block text-white text-sm sm:text-base font-bold leading-tight truncate">
                   {schoolInfo.name}
                 </span>
-                <span className="block text-gold text-[10px] sm:text-[11px] font-medium tracking-wider uppercase truncate">
+                <span className="block text-blue-100 text-[10px] sm:text-[11px] font-medium tracking-wider uppercase truncate">
                   {schoolInfo.motto}
                 </span>
               </div>

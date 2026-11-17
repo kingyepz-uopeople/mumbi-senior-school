@@ -53,7 +53,7 @@ export default function AcademicsPage() {
           className="scroll-mt-28"
         >
           <div className="text-center mb-10">
-            <span className="text-xs font-bold uppercase tracking-wider text-maroon">
+            <span className="text-xs font-bold uppercase tracking-wider text-primary">
               Senior School Pathways Hub
             </span>
             <h2
@@ -68,7 +68,7 @@ export default function AcademicsPage() {
               diverse student aptitudes and university career goals.
             </p>
             <div
-              className="w-16 h-1 bg-gold mx-auto rounded-full"
+              className="w-16 h-1 bg-accent mx-auto rounded-full"
               aria-hidden="true"
             />
           </div>
@@ -83,7 +83,7 @@ export default function AcademicsPage() {
           className="scroll-mt-28"
         >
           <div className="text-center mb-10">
-            <span className="text-xs font-bold uppercase tracking-wider text-maroon">
+            <span className="text-xs font-bold uppercase tracking-wider text-primary">
               Faculty &amp; Subject Areas
             </span>
             <h2
@@ -98,7 +98,7 @@ export default function AcademicsPage() {
               final examinations.
             </p>
             <div
-              className="w-16 h-1 bg-gold mx-auto rounded-full"
+              className="w-16 h-1 bg-accent mx-auto rounded-full"
               aria-hidden="true"
             />
           </div>
@@ -109,18 +109,18 @@ export default function AcademicsPage() {
               return (
                 <article
                   key={dept.id}
-                  className="bg-white rounded-2xl border border-slate-200 border-t-4 border-t-gold p-6 shadow-xs hover:shadow-md transition-shadow flex flex-col justify-between"
+                  className="bg-white rounded-2xl border border-slate-200 border-t-4 border-t-primary p-6 shadow-xs hover:shadow-md transition-shadow flex flex-col justify-between"
                 >
                   <div>
                     <div className="flex items-center gap-3.5 mb-4">
-                      <div className="w-12 h-12 rounded-xl bg-maroon/10 text-maroon flex items-center justify-center shrink-0">
+                      <div className="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center shrink-0">
                         <Icon className="w-6 h-6" aria-hidden="true" />
                       </div>
                       <div>
                         <h3 className="font-bold text-lg text-slate-900 leading-snug">
                           {dept.name}
                         </h3>
-                        <p className="text-xs text-maroon font-bold mt-0.5">
+                        <p className="text-xs text-primary font-bold mt-0.5">
                           HOD: {dept.hod}
                         </p>
                       </div>
@@ -159,7 +159,7 @@ export default function AcademicsPage() {
           className="scroll-mt-28"
         >
           <div className="text-center mb-10">
-            <span className="text-xs font-bold uppercase tracking-wider text-maroon">
+            <span className="text-xs font-bold uppercase tracking-wider text-primary">
               Academic Distinction
             </span>
             <h2
@@ -174,7 +174,7 @@ export default function AcademicsPage() {
               year below.
             </p>
             <div
-              className="w-16 h-1 bg-gold mx-auto rounded-full"
+              className="w-16 h-1 bg-accent mx-auto rounded-full"
               aria-hidden="true"
             />
           </div>

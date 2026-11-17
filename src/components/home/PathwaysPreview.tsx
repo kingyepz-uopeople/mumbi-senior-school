@@ -88,8 +88,8 @@ export function PathwaysTabs({ idPrefix = 'home-pathway' }: PathwaysTabsProps) {
                 onKeyDown={(e) => handleTabKeyDown(e, index)}
                 className={`min-h-11 px-5 py-2.5 rounded-xl text-sm font-bold transition-all ${
                   selected
-                    ? 'bg-maroon text-white shadow-sm'
-                    : 'text-slate-700 hover:text-maroon hover:bg-white/70'
+                    ? 'bg-primary text-white shadow-sm'
+                    : 'text-slate-700 hover:text-primary hover:bg-white/80'
                 }`}
               >
                 {pathway.name}
@@ -117,11 +117,11 @@ export function PathwaysTabs({ idPrefix = 'home-pathway' }: PathwaysTabsProps) {
             return (
               <article
                 key={track.id}
-                className="bg-white rounded-2xl border border-slate-200 border-t-4 border-t-gold shadow-xs hover:shadow-md transition-shadow p-6 flex flex-col justify-between"
+                className="bg-white rounded-2xl border border-slate-200 border-t-4 border-t-primary shadow-xs hover:shadow-md transition-shadow p-6 flex flex-col justify-between"
               >
                 <div>
                   <div className="flex items-center gap-3 mb-4">
-                    <div className="w-11 h-11 rounded-xl bg-maroon/10 text-maroon flex items-center justify-center shrink-0">
+                    <div className="w-11 h-11 rounded-xl bg-primary/10 text-primary flex items-center justify-center shrink-0">
                       <Icon className="w-5 h-5" aria-hidden="true" />
                     </div>
                     <h3 className="text-lg font-bold text-slate-900">
@@ -135,7 +135,7 @@ export function PathwaysTabs({ idPrefix = 'home-pathway' }: PathwaysTabsProps) {
 
                   {/* Subjects */}
                   <div className="mb-5">
-                    <h4 className="text-xs font-bold text-maroon uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                    <h4 className="text-xs font-bold text-primary uppercase tracking-wider mb-2 flex items-center gap-1.5">
                       <BookOpen className="w-3.5 h-3.5" aria-hidden="true" />
                       <span>Key Subjects</span>
                     </h4>
@@ -156,7 +156,7 @@ export function PathwaysTabs({ idPrefix = 'home-pathway' }: PathwaysTabsProps) {
                 <div className="pt-4 border-t border-slate-100">
                   <h4 className="text-xs font-bold text-slate-700 uppercase tracking-wider mb-2 flex items-center gap-1.5">
                     <Briefcase
-                      className="w-3.5 h-3.5 text-maroon"
+                      className="w-3.5 h-3.5 text-primary"
                       aria-hidden="true"
                     />
                     <span>Career Prospects</span>
@@ -165,7 +165,7 @@ export function PathwaysTabs({ idPrefix = 'home-pathway' }: PathwaysTabsProps) {
                     {track.careers.map((career) => (
                       <li
                         key={career}
-                        className="text-xs font-semibold px-2.5 py-1 rounded-full bg-gold/20 text-maroon"
+                        className="text-xs font-semibold px-2.5 py-1 rounded-full bg-primary/10 text-primary"
                       >
                         {career}
                       </li>
@@ -189,7 +189,7 @@ export default function PathwaysPreview() {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="text-center mb-10">
-          <span className="text-xs font-bold uppercase tracking-wider text-maroon">
+          <span className="text-xs font-bold uppercase tracking-wider text-primary">
             Senior School Curriculum (Grades 10–12)
           </span>
           <h2
@@ -203,7 +203,7 @@ export default function PathwaysPreview() {
             learner&apos;s strengths, talents, and university aspirations.
           </p>
           <div
-            className="w-16 h-1 rounded-full bg-gold mx-auto"
+            className="w-16 h-1 rounded-full bg-accent mx-auto"
             aria-hidden="true"
           />
         </div>
@@ -213,7 +213,7 @@ export default function PathwaysPreview() {
         <div className="mt-10 text-center">
           <Link
             href="/academics#departments"
-            className="min-h-11 inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl border border-maroon text-maroon hover:bg-maroon hover:text-white font-bold text-sm transition-colors"
+            className="min-h-11 inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl border-2 border-primary text-primary hover:bg-primary hover:text-white font-bold text-sm transition-colors"
           >
             <span>Explore Academic Departments</span>
             <ArrowRight className="w-4 h-4 shrink-0" aria-hidden="true" />

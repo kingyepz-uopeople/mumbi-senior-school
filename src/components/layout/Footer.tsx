@@ -12,21 +12,20 @@ import {
 import { schoolInfo } from '@/data/mock-school-data';
 
 const quickLinks = [
-  { label: 'About Us', href: '/about' },
-  { label: 'CBC Pathways Explorer', href: '/academics#pathways' },
-  { label: 'Academic Departments', href: '/academics#departments' },
-  { label: 'KCSE Wall of Fame', href: '/academics#wall-of-fame' },
-  { label: 'Student Life & Clubs', href: '/explore' },
-  { label: 'Downloads Hub', href: '/downloads' },
+  { label: 'Home', href: '/' },
+  { label: 'About Mumbi', href: '/about' },
+  { label: 'Academics & Pathways', href: '/academics' },
+  { label: 'Student Life', href: '/explore' },
+  { label: 'Downloads & Resources', href: '/downloads' },
   { label: 'Photo Gallery', href: '/gallery' },
-  { label: 'Contact Us', href: '/contact' },
+  { label: 'Contact & Location', href: '/contact' },
 ];
 
 export default function Footer() {
   return (
     <footer
       data-dark-surface
-      className="bg-maroon text-white border-t-4 border-gold"
+      className="bg-primary-dark text-white border-t border-white/15"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-14">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10">
@@ -45,7 +44,7 @@ export default function Footer() {
                 <h2 className="font-bold text-base text-white leading-snug">
                   {schoolInfo.name}
                 </h2>
-                <p className="text-gold text-xs italic font-medium mt-0.5">
+                <p className="text-blue-100 text-xs italic font-medium mt-0.5">
                   &ldquo;{schoolInfo.motto}&rdquo;
                 </p>
               </div>
@@ -55,13 +54,13 @@ export default function Footer() {
               inclusive, and quality education that nurtures competent, ethical,
               and empowered leaders.
             </p>
-            <dl className="text-xs text-white/85 space-y-1">
+            <dl className="text-xs text-white/90 space-y-1">
               <div className="flex gap-1.5">
-                <dt className="text-gold font-semibold">KNEC Centre:</dt>
+                <dt className="text-blue-100 font-semibold">KNEC Centre:</dt>
                 <dd>{schoolInfo.knecCode}</dd>
               </div>
               <div className="flex gap-1.5">
-                <dt className="text-gold font-semibold">MoE Reg:</dt>
+                <dt className="text-blue-100 font-semibold">MoE Reg:</dt>
                 <dd>{schoolInfo.moeReg}</dd>
               </div>
             </dl>
@@ -69,17 +68,21 @@ export default function Footer() {
 
           {/* Column 2: Quick Navigation */}
           <nav aria-label="Footer navigation">
-            <h2 className="font-bold mb-4 text-gold uppercase tracking-wider text-xs">
+            <h2 className="font-bold text-white uppercase tracking-wider text-xs">
               Quick Links
             </h2>
+            <div
+              className="w-8 h-0.5 rounded-full bg-accent mt-2 mb-4"
+              aria-hidden="true"
+            />
             <ul className="space-y-1">
               {quickLinks.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-white/85 hover:text-gold text-sm py-1.5 min-h-9 inline-flex items-center gap-2 transition-colors rounded-sm"
+                    className="text-white/85 hover:text-white text-sm py-1.5 min-h-9 inline-flex items-center gap-2 transition-colors rounded-sm"
                   >
-                    <span className="text-gold" aria-hidden="true">
+                    <span className="text-blue-200" aria-hidden="true">
                       ›
                     </span>
                     <span>{link.label}</span>
@@ -91,33 +94,37 @@ export default function Footer() {
 
           {/* Column 3: Official Contact Info */}
           <div>
-            <h2 className="font-bold mb-4 text-gold uppercase tracking-wider text-xs">
+            <h2 className="font-bold text-white uppercase tracking-wider text-xs">
               Contact &amp; Location
             </h2>
+            <div
+              className="w-8 h-0.5 rounded-full bg-accent mt-2 mb-4"
+              aria-hidden="true"
+            />
             <address className="not-italic">
               <ul className="space-y-3 text-sm text-white/85">
                 <li className="flex items-start gap-2.5">
                   <MapPin
-                    className="w-4 h-4 text-gold shrink-0 mt-1"
+                    className="w-4 h-4 text-blue-100 shrink-0 mt-1"
                     aria-hidden="true"
                   />
                   <span>{schoolInfo.physicalLocation}</span>
                 </li>
                 <li className="flex items-start gap-2.5">
                   <Mail
-                    className="w-4 h-4 text-gold shrink-0 mt-1"
+                    className="w-4 h-4 text-blue-100 shrink-0 mt-1"
                     aria-hidden="true"
                   />
                   <div className="min-w-0 space-y-0.5">
                     <span className="block">{schoolInfo.postalAddress}</span>
-                    <span className="block text-xs text-white/80 break-all">
+                    <span className="block text-xs text-white/85 break-all">
                       {schoolInfo.email}
                     </span>
                   </div>
                 </li>
                 <li className="flex items-start gap-2.5">
                   <Phone
-                    className="w-4 h-4 text-gold shrink-0 mt-1"
+                    className="w-4 h-4 text-blue-100 shrink-0 mt-1"
                     aria-hidden="true"
                   />
                   <span className="text-xs leading-relaxed">
@@ -126,7 +133,7 @@ export default function Footer() {
                 </li>
                 <li className="flex items-start gap-2.5">
                   <Clock
-                    className="w-4 h-4 text-gold shrink-0 mt-1"
+                    className="w-4 h-4 text-blue-100 shrink-0 mt-1"
                     aria-hidden="true"
                   />
                   <span>{schoolInfo.officeHours}</span>
@@ -137,9 +144,13 @@ export default function Footer() {
 
           {/* Column 4: Portals & Accreditation */}
           <div>
-            <h2 className="font-bold mb-4 text-gold uppercase tracking-wider text-xs">
+            <h2 className="font-bold text-white uppercase tracking-wider text-xs">
               Portals &amp; Resources
             </h2>
+            <div
+              className="w-8 h-0.5 rounded-full bg-accent mt-2 mb-4"
+              aria-hidden="true"
+            />
             <div className="space-y-2.5">
               <Link
                 href="/portal"
@@ -147,12 +158,12 @@ export default function Footer() {
               >
                 <span className="font-semibold text-sm text-white flex items-center gap-2">
                   <Shield
-                    className="w-4 h-4 text-gold shrink-0"
+                    className="w-4 h-4 text-blue-100 shrink-0"
                     aria-hidden="true"
                   />
                   Student &amp; Staff Portal
                 </span>
-                <span className="block text-xs text-white/80 mt-0.5">
+                <span className="block text-xs text-white/85 mt-0.5">
                   Online student and staff portal (coming soon)
                 </span>
               </Link>
@@ -163,19 +174,22 @@ export default function Footer() {
               >
                 <span className="font-semibold text-sm text-white flex items-center gap-2">
                   <FileText
-                    className="w-4 h-4 text-gold shrink-0"
+                    className="w-4 h-4 text-blue-100 shrink-0"
                     aria-hidden="true"
                   />
                   Circulars &amp; Downloads
                 </span>
-                <span className="block text-xs text-white/80 mt-0.5">
+                <span className="block text-xs text-white/85 mt-0.5">
                   Holiday assignments, newsletters &amp; fee structures
                 </span>
               </Link>
 
-              <div className="p-3.5 rounded-xl bg-black/20 border border-gold/30">
-                <p className="font-semibold text-xs text-gold flex items-center gap-1.5 mb-1">
-                  <Award className="w-4 h-4 shrink-0" aria-hidden="true" />
+              <div className="p-3.5 rounded-xl bg-black/20 border border-white/20">
+                <p className="font-semibold text-xs text-white flex items-center gap-1.5 mb-1">
+                  <Award
+                    className="w-4 h-4 text-blue-100 shrink-0"
+                    aria-hidden="true"
+                  />
                   Accredited Public Institution
                 </p>
                 <p className="text-xs text-white/85 leading-relaxed">
@@ -190,7 +204,7 @@ export default function Footer() {
 
       {/* Bottom Copyright Strip */}
       <div className="border-t border-white/15 bg-black/25 text-xs py-4">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-2 text-white/80 text-center sm:text-left">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-2 text-white/85 text-center sm:text-left">
           <p>
             © 2026 {schoolInfo.name}. All rights reserved. Aligned with Kenyan
             CBC Senior School guidelines.
@@ -200,7 +214,7 @@ export default function Footer() {
             <span aria-hidden="true">•</span>
             <span>MoE: {schoolInfo.moeReg}</span>
             <span aria-hidden="true">•</span>
-            <span className="text-gold font-semibold">
+            <span className="text-white font-semibold">
               Mukuyu, Murang&apos;a
             </span>
           </div>

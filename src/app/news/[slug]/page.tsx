@@ -65,10 +65,10 @@ export default async function NewsArticlePage({
     .slice(0, 3);
 
   const headerBadgeClasses: Record<string, string> = {
-    Newsletter: 'bg-black/25 text-white border-white/30',
-    Circular: 'bg-black/25 text-gold border-gold/45',
-    Download: 'bg-black/25 text-white border-white/30',
-    Event: 'bg-black/25 text-gold border-gold/45',
+    Newsletter: 'bg-white/15 text-white border-white/30',
+    Circular: 'bg-accent text-white border-white/25',
+    Download: 'bg-white/15 text-white border-white/30',
+    Event: 'bg-white/15 text-white border-white/30',
   };
 
   return (
@@ -76,12 +76,12 @@ export default async function NewsArticlePage({
       {/* Article Header Banner (sole h1 on page) */}
       <header
         data-dark-surface
-        className="bg-maroon text-white py-12 sm:py-16 px-4 sm:px-6 border-b-4 border-gold"
+        className="bg-gradient-to-br from-primary via-primary to-primary-dark text-white py-12 sm:py-16 px-4 sm:px-6 border-b border-primary-dark"
       >
         <div className="max-w-4xl mx-auto">
           <Link
             href="/#latest-news"
-            className="min-h-11 inline-flex items-center gap-2 text-xs sm:text-sm font-bold text-gold hover:text-white transition-colors mb-5"
+            className="min-h-11 inline-flex items-center gap-2 text-xs sm:text-sm font-bold text-blue-100 hover:text-white transition-colors mb-5"
           >
             <ArrowLeft className="w-4 h-4 shrink-0" aria-hidden="true" />
             <span>Back to Notices &amp; Announcements</span>
@@ -98,7 +98,7 @@ export default async function NewsArticlePage({
             </span>
             <span className="inline-flex items-center gap-1.5 text-xs sm:text-sm text-white/90 font-medium">
               <Calendar
-                className="w-4 h-4 text-gold shrink-0"
+                className="w-4 h-4 text-blue-100 shrink-0"
                 aria-hidden="true"
               />
               <span>Published:</span>
@@ -111,12 +111,16 @@ export default async function NewsArticlePage({
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight leading-tight">
             {item.title}
           </h1>
+          <div
+            className="w-16 h-1 rounded-full bg-accent mt-5"
+            aria-hidden="true"
+          />
         </div>
       </header>
 
       {/* Article Body */}
       <div className="max-w-4xl mx-auto px-4 sm:px-6 py-12 sm:py-16 space-y-12">
-        <article className="bg-white rounded-2xl border border-slate-200 border-t-4 border-t-gold p-6 sm:p-10 shadow-xs">
+        <article className="bg-white rounded-2xl border border-slate-200 border-t-4 border-t-primary p-6 sm:p-10 shadow-xs">
           <p className="text-base sm:text-lg font-medium text-slate-800 leading-relaxed pb-6 mb-6 border-b border-slate-200">
             {item.excerpt}
           </p>
@@ -143,17 +147,14 @@ export default async function NewsArticlePage({
           <div className="mt-8 flex flex-col sm:flex-row flex-wrap gap-3">
             <Link
               href="/downloads"
-              className="min-h-11 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-maroon hover:bg-maroon/90 text-white text-sm font-bold transition-colors shadow-xs"
+              className="min-h-11 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-primary hover:bg-primary-dark text-white text-sm font-bold transition-colors shadow-xs"
             >
-              <FolderDown
-                className="w-4 h-4 text-gold shrink-0"
-                aria-hidden="true"
-              />
+              <FolderDown className="w-4 h-4 shrink-0" aria-hidden="true" />
               <span>Visit Downloads &amp; Resources Hub</span>
             </Link>
             <Link
               href="/contact"
-              className="min-h-11 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl border-2 border-maroon text-maroon hover:bg-maroon hover:text-white text-sm font-bold transition-colors"
+              className="min-h-11 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl border-2 border-primary text-primary hover:bg-primary hover:text-white text-sm font-bold transition-colors"
             >
               <Mail className="w-4 h-4 shrink-0" aria-hidden="true" />
               <span>Contact Administration</span>
@@ -173,7 +174,7 @@ export default async function NewsArticlePage({
               </h2>
               <Link
                 href="/downloads"
-                className="min-h-11 inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-maroon hover:underline shrink-0"
+                className="min-h-11 inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-primary hover:text-primary-dark hover:underline shrink-0"
               >
                 <span>All Circulars</span>
                 <ArrowRight className="w-4 h-4" aria-hidden="true" />
@@ -188,7 +189,7 @@ export default async function NewsArticlePage({
                 return (
                   <article
                     key={related.id}
-                    className="bg-white rounded-2xl border border-slate-200 p-5 shadow-xs hover:border-maroon hover:shadow-md transition-all flex flex-col justify-between"
+                    className="bg-white rounded-2xl border border-slate-200 p-5 shadow-xs hover:border-primary hover:shadow-md transition-all flex flex-col justify-between"
                   >
                     <div>
                       <div className="flex items-center justify-between gap-2 mb-3">
@@ -207,7 +208,7 @@ export default async function NewsArticlePage({
                       <h3 className="font-bold text-sm sm:text-base text-slate-900 mb-2 leading-snug">
                         <Link
                           href={`/news/${related.slug}`}
-                          className="hover:text-maroon transition-colors"
+                          className="hover:text-primary transition-colors"
                         >
                           {related.title}
                         </Link>
@@ -218,7 +219,7 @@ export default async function NewsArticlePage({
                     </div>
                     <Link
                       href={`/news/${related.slug}`}
-                      className="min-h-11 inline-flex items-center gap-1.5 text-xs font-bold text-maroon hover:underline"
+                      className="min-h-11 inline-flex items-center gap-1.5 text-xs font-bold text-primary hover:text-primary-dark hover:underline"
                     >
                       <span>Read Notice</span>
                       <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />

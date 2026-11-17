@@ -29,7 +29,7 @@ const inter = localFont({
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
-  themeColor: '#800020',
+  themeColor: '#115191',
 };
 
 export const metadata: Metadata = {
@@ -101,7 +101,7 @@ export default function RootLayout({
           {/* Keyboard Skip-to-Content Link */}
           <a
             href="#main-content"
-            className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:px-4 focus:py-2.5 focus:rounded-xl focus:bg-maroon focus:text-white focus:font-bold focus:text-sm focus:shadow-2xl focus:outline-2 focus:outline-gold focus:outline-offset-2"
+            className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:px-4 focus:py-2.5 focus:rounded-xl focus:bg-primary focus:text-white focus:font-bold focus:text-sm focus:shadow-2xl focus:outline-2 focus:outline-white focus:outline-offset-2"
           >
             Skip to main content
           </a>

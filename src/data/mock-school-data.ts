@@ -85,7 +85,7 @@ export const heroSlides: HeroSlide[] = [
     subtitle:
       'Empowering young women through quality education, discipline, and innovation since 1960.',
     image: '/images/hero/admin-block.webp',
-    alt: 'Illustrated campus backdrop of Mumbi Girls Senior School administration block in maroon and gold',
+    alt: 'Illustrated campus backdrop of Mumbi Girls Senior School administration block in crest blue and white',
     ctaLabel: 'Discover Our Heritage',
     ctaHref: '/about',
   },
@@ -868,10 +868,10 @@ export const boardingSections: BoardingSection[] = [
     id: 'uniform',
     title: 'Official School Uniform',
     description:
-      'Our uniform reflects the pride, modesty, and identity of Mumbi Girls Senior School in Deep Royal Maroon, crisp white, and Academic Gold.',
+      "Our uniform reflects the pride, modesty, and identity of Mumbi Girls Senior School in the school's official blue and crisp white colours.",
     highlights: [
-      'Deep Royal Maroon blazer bearing the official school crest',
-      'Pleated school skirt, white collared blouse, and gold-accented tie',
+      'Official school blazer bearing the Mumbi Girls Senior School crest',
+      'Pleated school skirt, white collared blouse, and official school tie',
       'Black lace-up leather shoes, approved socks, and official PE/games kit',
     ],
     icon: 'Shirt',

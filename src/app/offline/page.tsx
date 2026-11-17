@@ -17,7 +17,7 @@ export const metadata: Metadata = buildPageMetadata({
 export default function OfflinePage() {
   return (
     <div className="bg-slate-bg py-14 sm:py-20 px-4 sm:px-6">
-      <div className="max-w-2xl mx-auto bg-white rounded-3xl border border-slate-200 border-t-4 border-t-maroon p-6 sm:p-10 shadow-sm text-center space-y-6">
+      <div className="max-w-2xl mx-auto bg-white rounded-3xl border border-slate-200 border-t-4 border-t-primary p-6 sm:p-10 shadow-sm text-center space-y-6">
         <div className="flex items-center justify-center gap-3">
           <Image
             src="/images/mumbi-logo.png"
@@ -27,13 +27,13 @@ export default function OfflinePage() {
             sizes="60px"
             className="w-15 h-15 rounded-xl bg-white border border-slate-200 p-1 object-contain"
           />
-          <div className="w-14 h-14 rounded-2xl bg-maroon/10 text-maroon flex items-center justify-center">
+          <div className="w-14 h-14 rounded-2xl bg-accent/10 text-accent flex items-center justify-center">
             <WifiOff className="w-7 h-7" aria-hidden="true" />
           </div>
         </div>
 
         <div className="space-y-2">
-          <span className="text-xs font-bold uppercase tracking-wider text-maroon">
+          <span className="text-xs font-bold uppercase tracking-wider text-accent">
             No Internet Connection
           </span>
           <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900">
@@ -50,7 +50,7 @@ export default function OfflinePage() {
           <OfflineRetryButton />
           <Link
             href="/"
-            className="w-full sm:w-auto min-h-12 inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl border-2 border-maroon text-maroon hover:bg-maroon hover:text-white text-sm font-bold transition-colors"
+            className="w-full sm:w-auto min-h-12 inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl border-2 border-primary text-primary hover:bg-primary hover:text-white text-sm font-bold transition-colors"
           >
             <Home className="w-4 h-4 shrink-0" aria-hidden="true" />
             <span>Return to Home</span>

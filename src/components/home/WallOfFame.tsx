@@ -8,7 +8,7 @@ export default function WallOfFame() {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="text-center mb-10">
-          <span className="text-xs font-bold uppercase tracking-wider text-maroon">
+          <span className="text-xs font-bold uppercase tracking-wider text-primary">
             Academic Distinction
           </span>
           <h2
@@ -22,7 +22,7 @@ export default function WallOfFame() {
             leading university degree programmes.
           </p>
           <div
-            className="w-16 h-1 rounded-full bg-gold mx-auto"
+            className="w-16 h-1 rounded-full bg-accent mx-auto"
             aria-hidden="true"
           />
         </div>
