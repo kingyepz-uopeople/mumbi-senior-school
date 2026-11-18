@@ -23,7 +23,10 @@ export default function BoardingPhotos() {
       </h3>
       <div className="grid gap-4 sm:grid-cols-2 sm:gap-5">
         {boardingPhotos.map(({ src, label, caption, alt }) => (
-          <figure key={src} className="m-0 overflow-hidden rounded-lg border border-slate-200 bg-white">
+          <figure
+        key={src}
+        className="m-0 overflow-hidden rounded-3xl border border-t-2 border-slate-200 border-t-primary bg-white shadow-sm"
+      >
             <Image
               src={src}
               alt={alt}
@@ -33,7 +36,7 @@ export default function BoardingPhotos() {
               className="block h-auto w-full"
             />
             <figcaption className="flex flex-wrap items-center gap-x-3 gap-y-1 border-t border-slate-200 px-4 py-3 text-sm font-medium text-slate-800">
-              <span className="rounded-sm bg-blue-50 px-2 py-0.5 text-xs font-semibold text-primary-dark">
+              <span className="rounded-full border border-slate-200 bg-white/85 px-3 py-1 text-xs font-semibold text-primary-dark shadow-sm backdrop-blur-md">
                 {label}
               </span>
               {caption}
