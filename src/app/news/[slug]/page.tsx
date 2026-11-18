@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
+import BlurRevealHeading from '@/components/shared/BlurRevealHeading';
 import PageHero from '@/components/shared/PageHero';
 import SectionStemBackdrop from '@/components/shared/SectionStemBackdrop';
 import { newsItems, schoolInfo } from '@/data/mock-school-data';
@@ -67,6 +68,7 @@ export default async function NewsArticlePage({
         as="header"
         maxWidth="narrow"
         variant="news"
+        titleEffect={item.slug.includes('stem') ? 'scramble' : 'mask'}
         title={item.title}
         topSlot={
           <>
@@ -163,12 +165,13 @@ export default async function NewsArticlePage({
             className="space-y-4"
           >
             <div className="flex items-baseline justify-between gap-2">
-              <h2
+              <BlurRevealHeading
                 id="related-news-heading"
+                seed={`related-news-${item.slug}`}
                 className="font-serif text-xl sm:text-2xl font-bold text-slate-900"
               >
                 Other School Notices
-              </h2>
+              </BlurRevealHeading>
               <Link
                 href="/downloads"
                 className="min-h-11 inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-primary hover:text-primary-dark hover:underline underline-offset-4 shrink-0"

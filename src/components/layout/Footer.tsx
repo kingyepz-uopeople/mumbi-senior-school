@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowUpRight, Clock, Mail, MapPin, Phone } from 'lucide-react';
+import RegistryLogo from '@/components/shared/RegistryLogo';
 import { schoolInfo } from '@/data/mock-school-data';
 
 const quickLinks = [
@@ -67,18 +68,24 @@ export default function Footer() {
               Murang&apos;a County, Kenya. Established in {schoolInfo.founded}.
             </p>
 
-            <dl className="pt-4 border-t border-white/15 text-xs text-white/90 space-y-1.5 tabular-nums">
-              <div className="flex gap-2">
-                <dt className="text-blue-100">KNEC Centre Code:</dt>
-                <dd className="font-semibold text-white">
-                  {schoolInfo.knecCode}
-                </dd>
+            <dl className="pt-4 border-t border-white/15 text-xs text-white/90 space-y-3 tabular-nums">
+              <div className="flex items-center gap-3">
+                <RegistryLogo agency="knec" size="card" surface="dark" />
+                <div className="flex flex-wrap gap-x-2 gap-y-0.5">
+                  <dt className="text-blue-100">KNEC Centre Code:</dt>
+                  <dd className="font-semibold text-white">
+                    {schoolInfo.knecCode}
+                  </dd>
+                </div>
               </div>
-              <div className="flex gap-2">
-                <dt className="text-blue-100">MoE Registration:</dt>
-                <dd className="font-semibold text-white">
-                  {schoolInfo.moeReg}
-                </dd>
+              <div className="space-y-1.5">
+                <RegistryLogo agency="moe" size="card" surface="dark" />
+                <div className="flex flex-wrap gap-x-2 gap-y-0.5">
+                  <dt className="text-blue-100">MoE Registration:</dt>
+                  <dd className="font-semibold text-white">
+                    {schoolInfo.moeReg}
+                  </dd>
+                </div>
               </div>
             </dl>
           </div>

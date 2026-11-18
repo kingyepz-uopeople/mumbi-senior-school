@@ -1,30 +1,26 @@
 'use client';
 
 import type { CSSProperties } from 'react';
-import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import {
+  getReducedMotionServerSnapshot,
+  getReducedMotionSnapshot,
+  staggeredHoldMs,
+  subscribeReducedMotion,
+  useReducedMotion,
+  useViewportActivity,
+} from '@/components/shared/motion-utils';
 
-export function subscribeReducedMotion(onStoreChange: () => void) {
-  const query = window.matchMedia('(prefers-reduced-motion: reduce)');
-  query.addEventListener('change', onStoreChange);
-  return () => query.removeEventListener('change', onStoreChange);
-}
+export {
+  getReducedMotionServerSnapshot,
+  getReducedMotionSnapshot,
+  subscribeReducedMotion,
+};
 
-export function getReducedMotionSnapshot() {
-  return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-}
-
-/**
- * Returns `true` during SSR so pre-rendered HTML carries the full static copy
- * if JavaScript is disabled, with zero hydration mismatch.
- */
-export function getReducedMotionServerSnapshot() {
-  return true;
-}
-
-type TypePhase = 'waiting' | 'typing' | 'blinking' | 'fading' | 'settled';
+type TypePhase = 'waiting' | 'typing' | 'blinking' | 'fading' | 'holding';
 
 export interface HeroTypewriterTextProps {
-  /** Exact text to type out once on load */
+  /** Exact text to type out */
   text: string;
   /** Optional static opening mark (e.g. left curly quote on the homepage motto) */
   prefix?: string;
@@ -34,7 +30,7 @@ export interface HeroTypewriterTextProps {
   className?: string;
   /** Use inline-grid for short single-line taglines/mottos; grid for full subtitles */
   inline?: boolean;
-  /** Delay before typing begins so it follows the title mask reveal & red rule (ms) */
+  /** Delay before first typing cycle begins so it follows the title & rule (ms) */
   startDelayMs?: number;
   /** Per-character typing interval (ms) */
   charDelayMs?: number;
@@ -44,16 +40,21 @@ export interface HeroTypewriterTextProps {
   punctuationDelayMs?: number;
   /** How long the caret blinks after typing finishes before fading out (ms) */
   caretHoldMs?: number;
-  /** Duration of the final caret opacity fade (ms) */
+  /** Duration of the caret opacity fade (ms) */
   caretFadeMs?: number;
+  /** Readable hold on finished text before calm loop replay (ms; 8.5–11.8s) */
+  loopHoldMs?: number;
 }
 
 /**
- * Accessible, zero-layout-shift one-shot typewriter shared by the homepage
+ * Accessible, zero-layout-shift looping typewriter shared by the homepage
  * motto and inner-page hero subtitles.
  * - Reserves exact single- or multi-line space via a stacked CSS grid sizer.
+ * - Types out smoothly, blinks caret briefly, fades caret out, holds the clean
+ *   finished text for ~9–12s (staggered from the title), and gently replays
+ *   while in view and while the browser tab is visible.
  * - Exposes the full static sentence to assistive tech (`aria-live="off"`).
- * - Pauses cleanly if the tab is hidden or the banner leaves the viewport.
+ * - Pauses cleanly when off-screen or when the browser tab is hidden.
  * - Shows final static text immediately under `prefers-reduced-motion: reduce`.
  */
 export default function HeroTypewriterText({
@@ -66,65 +67,27 @@ export default function HeroTypewriterText({
   charDelayMs = 16,
   spaceDelayMs = 22,
   punctuationDelayMs = 55,
-  caretHoldMs = 1800,
-  caretFadeMs = 500,
+  caretHoldMs = 1500,
+  caretFadeMs = 480,
+  loopHoldMs,
 }: HeroTypewriterTextProps) {
-  const isStaticOrReduced = useSyncExternalStore(
-    subscribeReducedMotion,
-    getReducedMotionSnapshot,
-    getReducedMotionServerSnapshot
-  );
-
+  const isStaticOrReduced = useReducedMotion();
   const paragraphRef = useRef<HTMLParagraphElement>(null);
-  const [paused, setPaused] = useState(false);
+  const { active } = useViewportActivity(paragraphRef, {
+    observeHost: true,
+    threshold: 0.05,
+    disabled: isStaticOrReduced,
+  });
+
   const [charCount, setCharCount] = useState(0);
   const [phase, setPhase] = useState<TypePhase>('waiting');
 
-  // Pause timers when the hero leaves the viewport or when the tab is hidden
+  const effectiveLoopHoldMs =
+    loopHoldMs ?? staggeredHoldMs(`hero-typewriter:${text}`, 8600, 11800);
+
+  // Calm looping state machine: waiting -> typing -> blinking -> fading -> holding -> typing
   useEffect(() => {
-    if (isStaticOrReduced || phase === 'settled' || typeof window === 'undefined') {
-      return;
-    }
-
-    const el = paragraphRef.current;
-    const host = el?.closest('section, header') ?? el;
-    let inView = true;
-    let hidden = document.hidden;
-
-    const sync = () => {
-      setPaused(!inView || hidden);
-    };
-
-    const observer =
-      host && 'IntersectionObserver' in window
-        ? new IntersectionObserver(
-            (entries) => {
-              const entry = entries[0];
-              if (!entry) return;
-              inView = entry.isIntersecting;
-              sync();
-            },
-            { threshold: 0 }
-          )
-        : null;
-
-    if (host) observer?.observe(host);
-
-    const onVisibility = () => {
-      hidden = document.hidden;
-      sync();
-    };
-
-    document.addEventListener('visibilitychange', onVisibility);
-    return () => {
-      observer?.disconnect();
-      document.removeEventListener('visibilitychange', onVisibility);
-    };
-  }, [isStaticOrReduced, phase]);
-
-  // One-shot typing state machine -> brief caret blink -> smooth caret fade-out
-  useEffect(() => {
-    if (isStaticOrReduced || paused || phase === 'settled') return;
+    if (isStaticOrReduced || !active) return;
 
     let timer: number;
 
@@ -137,7 +100,10 @@ export default function HeroTypewriterText({
         const prevChar = charCount > 0 ? text[charCount - 1] : '';
         const nextChar = text[charCount];
         const delay =
-          prevChar === ',' || prevChar === ';' || prevChar === '—' || prevChar === ':'
+          prevChar === ',' ||
+          prevChar === ';' ||
+          prevChar === '—' ||
+          prevChar === ':'
             ? punctuationDelayMs
             : nextChar === ' '
               ? spaceDelayMs
@@ -155,20 +121,27 @@ export default function HeroTypewriterText({
       timer = window.setTimeout(() => {
         setPhase('fading');
       }, caretHoldMs);
-    } else {
+    } else if (phase === 'fading') {
       timer = window.setTimeout(() => {
-        setPhase('settled');
+        setPhase('holding');
       }, caretFadeMs);
+    } else {
+      // Hold crisp, complete text readable for ~8.6–11.8s, then gently replay
+      timer = window.setTimeout(() => {
+        setCharCount(0);
+        setPhase('typing');
+      }, effectiveLoopHoldMs);
     }
 
     return () => window.clearTimeout(timer);
   }, [
+    active,
     caretFadeMs,
     caretHoldMs,
     charCount,
     charDelayMs,
+    effectiveLoopHoldMs,
     isStaticOrReduced,
-    paused,
     phase,
     punctuationDelayMs,
     spaceDelayMs,
@@ -177,7 +150,7 @@ export default function HeroTypewriterText({
   ]);
 
   const displayedText =
-    isStaticOrReduced || phase === 'settled' ? text : text.slice(0, charCount);
+    isStaticOrReduced || phase === 'holding' ? text : text.slice(0, charCount);
 
   const holdDelayMs = Math.max(0, startDelayMs - 40);
 
@@ -210,12 +183,12 @@ export default function HeroTypewriterText({
           <span>{displayedText}</span>
           <span
             className={`hero-caret ${
-              isStaticOrReduced || phase === 'settled'
+              isStaticOrReduced || phase === 'holding'
                 ? 'hero-caret-gone'
                 : phase === 'blinking'
-                  ? paused
-                    ? ''
-                    : 'hero-caret-blink'
+                  ? active
+                    ? 'hero-caret-blink'
+                    : ''
                   : phase === 'fading'
                     ? 'hero-caret-fade'
                     : ''

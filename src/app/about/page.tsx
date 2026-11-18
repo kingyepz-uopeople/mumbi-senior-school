@@ -1,5 +1,8 @@
 import type { Metadata } from 'next';
+import BlurRevealHeading from '@/components/shared/BlurRevealHeading';
 import PageHero from '@/components/shared/PageHero';
+import RegistryLogo from '@/components/shared/RegistryLogo';
+import ScrollHighlightText from '@/components/shared/ScrollHighlightText';
 import SectionStemBackdrop from '@/components/shared/SectionStemBackdrop';
 import {
   bomChairpersons,
@@ -47,23 +50,26 @@ export default function AboutPage() {
             <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary mb-2">
               School History
             </p>
-            <h2
+            <BlurRevealHeading
               id="about-history-heading"
+              seed="about-history"
               className="font-serif text-2xl sm:text-3xl font-bold text-slate-900 mb-4"
             >
               Mukuyu, Murang&apos;a — Since {schoolInfo.founded}
-            </h2>
+            </BlurRevealHeading>
             <div className="w-10 h-0.5 bg-accent mb-6" aria-hidden="true" />
 
             <div className="space-y-4 text-slate-700 text-base leading-relaxed">
-              <p>
-                {schoolInfo.name} was founded in{' '}
-                <strong>{schoolInfo.founded}</strong> in Mukuyu, within Kiharu
-                Constituency in Murang&apos;a East, Murang&apos;a County. The
-                school carries the name <em>Mumbi</em>, the matriarch of the
-                Agikuyu people, and opened to expand public secondary schooling
-                for girls in Murang&apos;a and the wider region.
-              </p>
+              <ScrollHighlightText
+                seed="about-history-intro"
+                segments={[
+                  `${schoolInfo.name} was founded in `,
+                  { text: String(schoolInfo.founded), strong: true },
+                  " in Mukuyu, within Kiharu Constituency in Murang'a East, Murang'a County. The school carries the name ",
+                  { text: 'Mumbi', em: true },
+                  ", the matriarch of the Agikuyu people, and opened to expand public secondary schooling for girls in Murang'a and the wider region.",
+                ]}
+              />
               <p>
                 Supported over six decades by successive Boards of Management,
                 parents, teaching and non-teaching staff, and the Ministry of
@@ -108,19 +114,23 @@ export default function AboutPage() {
                   {schoolInfo.category}
                 </dd>
               </div>
-              <div className="py-3.5 grid grid-cols-2 gap-4 tabular-nums">
+              <div className="py-3.5 flex items-center justify-between gap-4 tabular-nums">
                 <div>
                   <dt className="text-xs text-slate-600">KNEC Centre Code</dt>
                   <dd className="font-semibold text-slate-900 mt-0.5">
                     {schoolInfo.knecCode}
                   </dd>
                 </div>
+                <RegistryLogo agency="knec" size="card" surface="light" />
+              </div>
+              <div className="py-3.5 flex flex-wrap items-center justify-between gap-4 tabular-nums">
                 <div>
                   <dt className="text-xs text-slate-600">MoE Registration</dt>
                   <dd className="font-semibold text-slate-900 mt-0.5">
                     {schoolInfo.moeReg}
                   </dd>
                 </div>
+                <RegistryLogo agency="moe" size="card" surface="light" />
               </div>
               <div className="py-3.5">
                 <dt className="text-xs text-slate-600">Physical Location</dt>
@@ -157,12 +167,13 @@ export default function AboutPage() {
             <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary mb-2">
               Charter &amp; Values
             </p>
-            <h2
+            <BlurRevealHeading
               id="about-mission-heading"
+              seed="about-mission"
               className="font-serif text-2xl sm:text-3xl font-bold text-slate-900"
             >
               Motto, Mission, Vision &amp; Core Values
-            </h2>
+            </BlurRevealHeading>
           </div>
 
           <div
@@ -240,12 +251,13 @@ export default function AboutPage() {
             <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary mb-2">
               Assembly Tradition
             </p>
-            <h2
+            <BlurRevealHeading
               id="about-anthems-heading"
+              seed="about-anthems"
               className="font-serif text-2xl sm:text-3xl font-bold text-slate-900"
             >
               School Anthem &amp; Wimbo wa Shule
-            </h2>
+            </BlurRevealHeading>
             <p className="text-sm sm:text-base text-slate-600 mt-2 leading-relaxed">
               Sung in English and Kiswahili at morning assemblies and official
               school functions.
@@ -330,12 +342,13 @@ export default function AboutPage() {
             <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary mb-2">
               Leadership &amp; Governance
             </p>
-            <h2
+            <BlurRevealHeading
               id="about-leadership-heading"
+              seed="about-leadership"
               className="font-serif text-2xl sm:text-3xl font-bold text-slate-900"
             >
               Principals, Board of Management &amp; Student Council
-            </h2>
+            </BlurRevealHeading>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-12">

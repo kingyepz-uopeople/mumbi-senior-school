@@ -182,6 +182,65 @@
   }
 }
 
+@keyframes hero-word-reveal-alt {
+  from {
+    transform: translate3d(0, 115%, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* Subtle optical blur-to-focus reveal & calm loop replays for section headings */
+@keyframes blur-focus-in {
+  from {
+    opacity: 0;
+    filter: blur(5px);
+    transform: translate3d(0, 5px, 0);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes blur-focus-replay-a {
+  0% {
+    opacity: 1;
+    filter: blur(0);
+    transform: translate3d(0, 0, 0);
+  }
+  26% {
+    opacity: 0.14;
+    filter: blur(4.5px);
+    transform: translate3d(0, 4px, 0);
+  }
+  100% {
+    opacity: 1;
+    filter: blur(0);
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes blur-focus-replay-b {
+  0% {
+    opacity: 1;
+    filter: blur(0);
+    transform: translate3d(0, 0, 0);
+  }
+  26% {
+    opacity: 0.14;
+    filter: blur(4.5px);
+    transform: translate3d(0, 4px, 0);
+  }
+  100% {
+    opacity: 1;
+    filter: blur(0);
+    transform: translate3d(0, 0, 0);
+  }
+}
+
 @keyframes hero-rule-draw {
   from {
     opacity: 0;
@@ -449,6 +508,32 @@
       var(--word-delay, 110ms) backwards;
   }
 
+  .hero-word.hero-word-alt {
+    animation-name: hero-word-reveal-alt;
+  }
+
+  .blur-heading-pending {
+    opacity: 0;
+    filter: blur(5px);
+    transform: translate3d(0, 5px, 0);
+  }
+
+  .blur-heading-enter {
+    animation: blur-focus-in 620ms var(--ease-editorial) both;
+  }
+
+  .blur-heading-replay-a {
+    animation: blur-focus-replay-a 780ms var(--ease-editorial) both;
+  }
+
+  .blur-heading-replay-b {
+    animation: blur-focus-replay-b 780ms var(--ease-editorial) both;
+  }
+
+  .scroll-highlight-word {
+    transition: opacity 90ms linear;
+  }
+
   .hero-rise {
     animation: hero-rise 480ms var(--ease-editorial) var(--hero-delay, 0ms)
       backwards;
@@ -566,6 +651,11 @@
   .hero-rise,
   .hero-typewriter-hold,
   .hero-rule,
+  .blur-heading-pending,
+  .blur-heading-enter,
+  .blur-heading-replay-a,
+  .blur-heading-replay-b,
+  .scroll-highlight-word,
   .hero-stem-float,
   .section-stem-float,
   .hero-stem-layer-far,
@@ -574,6 +664,7 @@
     animation: none !important;
     transition: none !important;
     opacity: 1 !important;
+    filter: none !important;
     transform: none !important;
   }
 
