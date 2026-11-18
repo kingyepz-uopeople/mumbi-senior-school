@@ -33,19 +33,19 @@ export default function NotFound() {
         <div className="flex flex-col sm:flex-row flex-wrap gap-3 pt-1">
           <Link
             href="/"
-            className="w-full sm:w-auto min-h-11 inline-flex items-center justify-center px-5 py-2.5 rounded-sm bg-primary hover:bg-primary-dark text-white text-sm font-semibold transition-colors"
+            className="w-full sm:w-auto min-h-11 inline-flex items-center justify-center px-5 py-2.5 rounded-full bg-primary hover:bg-primary-dark text-white text-sm font-semibold transition-colors"
           >
             Home page
           </Link>
           <Link
             href="/downloads"
-            className="w-full sm:w-auto min-h-11 inline-flex items-center justify-center px-5 py-2.5 rounded-sm border border-primary text-primary hover:bg-primary hover:text-white text-sm font-semibold transition-colors"
+            className="w-full sm:w-auto min-h-11 inline-flex items-center justify-center px-5 py-2.5 rounded-full border border-primary text-primary hover:bg-primary hover:text-white text-sm font-semibold transition-colors"
           >
             Downloads &amp; circulars
           </Link>
           <Link
             href="/contact"
-            className="w-full sm:w-auto min-h-11 inline-flex items-center justify-center px-4 py-2.5 rounded-sm text-slate-700 hover:text-primary hover:underline underline-offset-4 text-sm font-medium transition-colors"
+            className="w-full sm:w-auto min-h-11 inline-flex items-center justify-center px-4 py-2.5 rounded-full text-slate-700 hover:text-primary hover:underline underline-offset-4 text-sm font-medium transition-colors"
           >
             Contact office
           </Link>

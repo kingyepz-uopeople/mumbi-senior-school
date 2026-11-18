@@ -38,11 +38,11 @@ export function PathwaysTabs({ idPrefix = 'home-pathway' }: PathwaysTabsProps) {
 
   return (
     <div>
-      {/* Underlined Editorial WAI-ARIA Tablist */}
+      {/* Pill WAI-ARIA Tablist */}
       <div
         role="tablist"
         aria-label="CBC Senior School Pathways"
-        className="flex flex-col sm:flex-row border-b border-slate-300 gap-0 sm:gap-8 mb-6"
+        className="flex flex-wrap items-center gap-2 mb-6"
       >
         {cbcPathways.map((pathway, index) => {
           const selected = index === activeIndex;
@@ -60,10 +60,10 @@ export function PathwaysTabs({ idPrefix = 'home-pathway' }: PathwaysTabsProps) {
               tabIndex={selected ? 0 : -1}
               onClick={() => setActiveIndex(index)}
               onKeyDown={(e) => handleTabKeyDown(e, index)}
-              className={`min-h-11 py-3 px-1 text-left text-sm sm:text-base font-semibold border-b-2 -mb-px transition-colors ${
+              className={`min-h-11 px-4 py-2 rounded-full text-xs sm:text-sm font-semibold border transition-colors ${
                 selected
-                  ? 'border-accent text-primary'
-                  : 'border-transparent text-slate-600 hover:text-slate-900 hover:border-slate-400'
+                  ? 'bg-primary border-primary text-white'
+                  : 'bg-white border-slate-300 text-slate-700 hover:border-primary hover:text-primary'
               }`}
             >
               {pathway.name}

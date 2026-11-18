@@ -123,7 +123,7 @@ export default function RootLayout({
           {/* Keyboard Skip-to-Content Link */}
           <a
             href="#main-content"
-            className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:px-4 focus:py-2.5 focus:rounded-sm focus:bg-primary-dark focus:text-white focus:font-semibold focus:text-sm focus:shadow-lg focus:outline-2 focus:outline-white focus:outline-offset-2"
+            className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:px-4 focus:py-2.5 focus:rounded-full focus:bg-primary-dark focus:text-white focus:font-semibold focus:text-sm focus:shadow-lg focus:outline-2 focus:outline-white focus:outline-offset-2"
           >
             Skip to main content
           </a>

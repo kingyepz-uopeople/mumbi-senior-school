@@ -62,7 +62,7 @@ export default function ContactPage() {
           <div className="flex flex-col sm:flex-row gap-3 shrink-0">
             <Link
               href="/downloads"
-              className="min-h-11 inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-sm bg-primary hover:bg-primary-dark text-white text-sm font-semibold transition-colors"
+              className="min-h-11 inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full bg-primary hover:bg-primary-dark text-white text-sm font-semibold transition-colors"
             >
               <span>Joining documents</span>
               <ArrowRight
@@ -72,7 +72,7 @@ export default function ContactPage() {
             </Link>
             <Link
               href="/academics#pathways"
-              className="min-h-11 inline-flex items-center justify-center px-5 py-2.5 rounded-sm border border-slate-300 bg-white hover:border-primary text-slate-800 hover:text-primary text-sm font-semibold transition-colors"
+              className="min-h-11 inline-flex items-center justify-center px-5 py-2.5 rounded-full border border-slate-300 bg-white hover:border-primary text-slate-800 hover:text-primary text-sm font-semibold transition-colors"
             >
               CBC pathways
             </Link>

@@ -130,7 +130,7 @@ export default function GalleryBrowser({ availableSrcs }: GalleryBrowserProps) {
   }, [isLightboxOpen, closeLightbox, showNext, showPrev]);
 
   const filterBtnClass = (active: boolean) =>
-    `min-h-11 px-4 py-2 rounded-sm text-xs sm:text-sm font-semibold border transition-colors ${
+    `min-h-11 px-4 py-2 rounded-full text-xs sm:text-sm font-semibold border transition-colors ${
       active
         ? 'bg-primary border-primary text-white'
         : 'bg-white border-slate-300 text-slate-700 hover:border-primary hover:text-primary'
@@ -329,7 +329,7 @@ export default function GalleryBrowser({ availableSrcs }: GalleryBrowserProps) {
                   type="button"
                   onClick={closeLightbox}
                   aria-label="Close photo lightbox"
-                  className="inline-flex items-center justify-center w-11 h-11 rounded-sm hover:bg-white/15 text-white transition-colors shrink-0"
+                  className="inline-flex items-center justify-center w-11 h-11 rounded-full hover:bg-white/15 text-white transition-colors shrink-0"
                 >
                   <X className="w-5 h-5" aria-hidden="true" />
                 </button>
@@ -360,7 +360,7 @@ export default function GalleryBrowser({ availableSrcs }: GalleryBrowserProps) {
                       type="button"
                       onClick={showPrev}
                       aria-label="Previous photo"
-                      className="flex-1 sm:flex-none min-h-11 px-4 py-2 rounded-sm border border-white/30 hover:bg-white/15 text-white text-xs font-semibold inline-flex items-center justify-center gap-1.5 transition-colors"
+                      className="flex-1 sm:flex-none min-h-11 px-4 py-2 rounded-full border border-white/30 hover:bg-white/15 text-white text-xs font-semibold inline-flex items-center justify-center gap-1.5 transition-colors"
                     >
                       <ChevronLeft className="w-4 h-4" aria-hidden="true" />
                       <span>Previous</span>
@@ -369,7 +369,7 @@ export default function GalleryBrowser({ availableSrcs }: GalleryBrowserProps) {
                       type="button"
                       onClick={showNext}
                       aria-label="Next photo"
-                      className="flex-1 sm:flex-none min-h-11 px-4 py-2 rounded-sm bg-white hover:bg-blue-50 text-primary text-xs font-semibold inline-flex items-center justify-center gap-1.5 transition-colors"
+                      className="flex-1 sm:flex-none min-h-11 px-4 py-2 rounded-full bg-white hover:bg-blue-50 text-primary text-xs font-semibold inline-flex items-center justify-center gap-1.5 transition-colors"
                     >
                       <span>Next</span>
                       <ChevronRight className="w-4 h-4" aria-hidden="true" />
