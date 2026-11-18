@@ -119,7 +119,7 @@ export interface GalleryImage {
   /** Optional visible caption, independent of the image's concise alt text. */
   caption?: string;
   event: string;
-  year: number;
+  year?: number;
   width: number;
   height: number;
 }
@@ -130,7 +130,7 @@ export interface GalleryAlbum {
   description: string;
   coverImage: string;
   images: GalleryImage[];
-  year: number;
+  year?: number;
 }
 
 export interface ContactInquiry {
@@ -150,6 +150,7 @@ export interface SchoolInfo {
   knecCode: string;
   moeReg: string;
   postalAddress: string;
+  locationShort: string;
   physicalLocation: string;
   officeHours: string;
   officeHoursShort: string;

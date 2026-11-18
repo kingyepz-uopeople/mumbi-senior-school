@@ -1,4 +1,4 @@
-const CACHE_NAME = 'mumbi-portal-shell-v6';
+const CACHE_NAME = 'mumbi-portal-shell-v7';
 const OFFLINE_URL = '/offline';
 const PRECACHE_URLS = [
   OFFLINE_URL,

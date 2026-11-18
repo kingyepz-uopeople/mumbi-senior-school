@@ -15,7 +15,7 @@ import { buildPageMetadata } from '@/lib/site';
 export const metadata: Metadata = buildPageMetadata({
   title: 'Contact & Campus Location',
   description:
-    "Contact Mumbi Girls Senior School administration in Mukuyu Sub-location, Kiharu Constituency, Murang'a County (P.O. Box 115 - 10200, Murang'a; KNEC 10204102; MoE F2030609).",
+    `Contact the ${schoolInfo.name} office or visit the campus in ${schoolInfo.physicalLocation}.`,
   path: '/contact',
 });
 
@@ -215,9 +215,9 @@ export default function ContactPage() {
               <PhotoSlot
                 src={PHOTO_SLOTS.campusLocation}
                 exists={hasCampusPhoto}
-                alt="Students gathered near the Mumbi Girls Senior School campus entrance"
-                width={1200}
-                height={675}
+                alt="Blue entrance gate of Mumbi Girls Senior School"
+                width={1600}
+                height={900}
                 sizes="(max-width: 1024px) 100vw, 40vw"
                 aspectClassName="aspect-16/9"
                 placeholderLabel="Photo coming soon"

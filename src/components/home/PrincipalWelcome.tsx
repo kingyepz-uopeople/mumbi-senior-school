@@ -56,7 +56,7 @@ export default function PrincipalWelcome() {
               <ScrollHighlightText
                 seed="home-principal-intro"
                 segments={[
-                  `Founded in ${schoolInfo.founded} in Mukuyu, Murang'a County, ${schoolInfo.name} is a ${schoolInfo.category} serving over 1,200 students. Our daily work is straightforward: structured classroom and laboratory teaching, supervised boarding life, and steady preparation for national examinations and university study.`,
+                  `Founded in ${schoolInfo.founded}, ${schoolInfo.name} is a ${schoolInfo.category} in ${schoolInfo.locationShort}, serving over 1,200 students. Our daily work is straightforward: structured classroom and laboratory teaching, supervised boarding life, and steady preparation for national examinations and university study.`,
                 ]}
               />
               <p>

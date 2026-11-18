@@ -11,7 +11,7 @@ A production-ready, modern web platform for **Mumbi Girls Senior School**, built
 - **KNEC Centre Code:** `10204102`
 - **MoE Registration No:** `F2030609`
 - **Postal Address:** P.O. Box 115 - 10200, Murang'a
-- **Physical Location:** Mukuyu Sub-location, Kiharu Constituency, Murang'a East, Murang'a County, Kenya
+- **Physical Location:** Murang'a Township, Mumbi area, near Mjini Primary School
 - **Office Hours:** Monday – Friday: 08:00 AM – 05:00 PM | Weekends: Closed
 - **Official School Office Contact:** `+254711461192` · `mumbigirls1968@gmail.com`
 - **Chief Principal:** Mrs. Florence Wahito Thumbi (January 2025 – Present)
@@ -29,7 +29,7 @@ A production-ready, modern web platform for **Mumbi Girls Senior School**, built
 1. **Top Utility Bar & Sticky Navigation:**
    - Displays KNEC Centre Code `10204102`, postal address, office hours, student/staff login shortcuts, and mobile PWA install trigger.
 2. **Home (`/`):**
-   - Static crest hero with the official school crest, serif display heading, motto, provenance (`Mukuyu, Murang'a County · Est. 1960`), and automatic real photo slot (`public/images/hero/campus.jpg`).
+   - Static crest hero with the official school crest, serif display heading, motto, provenance (`Murang'a Township · Est. 1960`), and automatic real photo slot (`public/images/hero/campus.jpg`).
    - Key school figures (Established 1960, 1,200+ students, 2025 KCSE mean of 7.1926 (C+), 3 CBC Senior School pathways).
    - Chief Principal's welcome message with portrait photo slot (`public/images/principal.jpg`).
    - Motto, Mission, Vision, and six Core Values.
@@ -61,10 +61,10 @@ A production-ready, modern web platform for **Mumbi Girls Senior School**, built
    - Client-side search and instant filter pills by Category, Target Class/Level, and Subject.
    - One-click file downloads with file size, upload date (`DD/MM/YYYY`), and uploader department.
 7. **Photo & Media Gallery (`/gallery`):**
-   - Filterable event albums with interactive lightbox viewer.
+   - Filterable campus and event albums with an interactive lightbox viewer.
 8. **Contact & Inquiries (`/contact`):**
    - Validated preview inquiry form; submissions are not delivered to the school office.
-   - Mukuyu campus address card, contact numbers, and embedded map placeholder.
+   - Campus location, main gate photo, and official school contacts.
 9. **Progressive Web App (PWA):**
    - Native `src/app/manifest.ts` configured for standalone installation.
    - Dismissible smart install banner for mobile users.

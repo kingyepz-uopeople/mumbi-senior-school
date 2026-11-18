@@ -479,7 +479,7 @@ export default function Header() {
                   {schoolInfo.name}
                 </span>
                 <span className="block text-blue-100 text-[11px] tracking-wide truncate">
-                  Mukuyu, Murang&apos;a · Est. {schoolInfo.founded}
+                  {schoolInfo.locationShort} · Est. {schoolInfo.founded}
                 </span>
               </div>
             </Link>
