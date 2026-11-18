@@ -36,7 +36,7 @@ export default function Footer() {
   return (
     <footer
       data-dark-surface
-      className="bg-primary-dark text-white border-t border-primary"
+      className="shrink-0 w-full overflow-x-clip bg-primary-dark text-white border-t border-primary"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-14 sm:py-16">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-8">
@@ -48,7 +48,8 @@ export default function Footer() {
                 alt="Mumbi Girls' Senior School crest"
                 width={54}
                 height={55}
-                sizes="54px"
+                sizes="64px"
+                quality={95}
                 className="w-13 h-13 rounded-xs bg-[#f7f7f7] p-1 object-contain shrink-0 border border-white/80"
               />
               <div>

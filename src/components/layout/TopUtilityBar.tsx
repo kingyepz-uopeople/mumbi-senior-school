@@ -9,8 +9,8 @@ export default function TopUtilityBar() {
   const { canNativeInstall, triggerNativeInstall } = usePwa();
 
   return (
-    <div className="bg-primary-dark text-white text-xs border-b border-white/15">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-1.5 flex items-center justify-between gap-3">
+    <div className="bg-primary-dark text-white text-xs border-b border-white/15 pt-[env(safe-area-inset-top)]">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 min-h-9 py-1 flex items-center justify-between gap-3">
         {/* Left: Official school registry details */}
         <div className="flex items-center gap-2.5 min-w-0 text-white/90 tabular-nums">
           <span className="font-medium text-white shrink-0">

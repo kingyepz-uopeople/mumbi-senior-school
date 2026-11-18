@@ -29,9 +29,9 @@ export default function CampusHero() {
     <section
       data-dark-surface
       aria-labelledby="school-hero-heading"
-      className="bg-crest-pattern text-white border-b border-primary-dark"
+      className="relative bg-crest-pattern text-white border-b border-primary-dark scroll-mt-28"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-14 sm:py-20 lg:py-24">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-12 pb-14 sm:pt-16 sm:pb-20 lg:pt-24 lg:pb-24">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start lg:items-center">
           {/* Primary Identity Column */}
           <div
@@ -40,16 +40,17 @@ export default function CampusHero() {
             }
           >
             {/* Official Crest + Provenance */}
-            <div className="flex flex-col sm:flex-row sm:items-start gap-5 sm:gap-7">
-              <div className="w-28 sm:w-32 md:w-36 shrink-0 rounded-xs bg-[#f7f7f7] p-2.5 border border-white">
+            <div className="flex flex-col sm:flex-row items-start gap-5 sm:gap-7">
+              <div className="self-start shrink-0 w-32 sm:w-36 md:w-38 rounded-xs bg-[#f7f7f7] p-2.5 sm:p-3 border border-white">
                 <Image
                   src="/images/mumbi-logo.png"
                   alt="Mumbi Girls' Senior School crest"
                   width={310}
                   height={316}
-                  sizes="(max-width: 640px) 92px, (max-width: 768px) 108px, 124px"
+                  sizes="(max-width: 639px) 128px, 155px"
+                  quality={95}
                   priority
-                  className="w-full h-auto object-contain"
+                  className="block w-full h-auto aspect-[310/316] object-contain"
                 />
               </div>
 

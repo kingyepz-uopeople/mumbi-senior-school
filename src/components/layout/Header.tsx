@@ -451,6 +451,11 @@ export default function Header() {
             {/* Official Crest + School Name */}
             <Link
               href="/"
+              onClick={() => {
+                if (pathname === '/') {
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+              }}
               className="flex items-center gap-3 min-w-0 py-1 rounded-xs"
             >
               <Image
@@ -458,7 +463,8 @@ export default function Header() {
                 alt="Mumbi Girls' Senior School crest"
                 width={44}
                 height={45}
-                sizes="44px"
+                sizes="64px"
+                quality={95}
                 priority
                 className="w-10 h-10 sm:w-11 sm:h-11 rounded-xs bg-[#f7f7f7] p-0.5 object-contain shrink-0 border border-white/80"
               />

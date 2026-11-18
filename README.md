@@ -13,7 +13,7 @@ A production-ready, modern web platform for **Mumbi Girls Senior School**, built
 - **Postal Address:** P.O. Box 115 - 10200, Murang'a
 - **Physical Location:** Mukuyu Sub-location, Kiharu Constituency, Murang'a East, Murang'a County, Kenya
 - **Office Hours:** Monday – Friday: 08:00 AM – 05:00 PM | Weekends: Closed
-- **School Motto:** *"Education for Empowerment"*
+- **School Motto:** *"Determined to Excel"*
 - **Brand Colors (Official Crest Palette):**
   - **Primary:** Crest Blue (`#115191`) with Deep Crest Blue (`#0C3D6E`) for hover states & dark sections
   - **Secondary:** Crisp White (`#FFFFFF`)

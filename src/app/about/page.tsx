@@ -12,7 +12,7 @@ import { buildPageMetadata } from '@/lib/site';
 export const metadata: Metadata = buildPageMetadata({
   title: 'About the School',
   description:
-    "History of Mumbi Girls Senior School since 1960, motto, mission, vision, core values, English and Kiswahili school anthems, roll of principals, BOM chairpersons, and student council governance in Mukuyu, Murang'a County.",
+    "History of Mumbi Girls Senior School since 1960, official motto (Determined to Excel), mission, vision, core values, English and Kiswahili school anthems, roll of principals, BOM chairpersons, and student council governance in Mukuyu, Murang'a County.",
   path: '/about',
 });
 
