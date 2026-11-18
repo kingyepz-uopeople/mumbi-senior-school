@@ -21,7 +21,7 @@ import { buildPageMetadata } from '@/lib/site';
 export const metadata: Metadata = buildPageMetadata({
   title: 'About the School',
   description:
-    "History of Mumbi Girls Senior School since 1960, official motto (Determined to Excel), mission, vision, core values, English and Kiswahili school anthems, roll of principals, BOM chairpersons, and student council governance in Mukuyu, Murang'a County.",
+    `Discover the history, values, anthems, and leadership of ${schoolInfo.name}, located in ${schoolInfo.physicalLocation}.`,
   path: '/about',
 });
 
@@ -43,7 +43,7 @@ export default function AboutPage() {
         variant="about"
         kicker="About the School"
         title={schoolInfo.name}
-        subtitle={`A ${schoolInfo.category} in Mukuyu Sub-location, Kiharu Constituency, Murang'a East, established in ${schoolInfo.founded}.`}
+        subtitle={`A ${schoolInfo.category} in ${schoolInfo.physicalLocation}. Established in ${schoolInfo.founded}.`}
         meta={[
           `Est. ${schoolInfo.founded}`,
           `KNEC ${schoolInfo.knecCode}`,
@@ -69,7 +69,7 @@ export default function AboutPage() {
               seed="about-history"
               className="font-serif text-2xl sm:text-3xl font-bold text-slate-900 mb-4"
             >
-              Mukuyu, Murang&apos;a — Since {schoolInfo.founded}
+              Educating Girls Since {schoolInfo.founded}
             </BlurRevealHeading>
             <div className="w-10 h-0.5 bg-accent mb-6" aria-hidden="true" />
 
@@ -79,9 +79,9 @@ export default function AboutPage() {
                 segments={[
                   `${schoolInfo.name} was founded in `,
                   { text: String(schoolInfo.founded), strong: true },
-                  " in Mukuyu, within Kiharu Constituency in Murang'a East, Murang'a County. The school carries the name ",
+                  " to expand public secondary schooling for girls in Murang'a and the wider region. The school carries the name ",
                   { text: 'Mumbi', em: true },
-                  ", the matriarch of the Agikuyu people, and opened to expand public secondary schooling for girls in Murang'a and the wider region.",
+                  ', the matriarch of the Agikuyu people.',
                 ]}
               />
               <p>

@@ -13,9 +13,9 @@ import { PHOTO_SLOTS, publicAssetExists } from '@/lib/media';
 import { buildPageMetadata } from '@/lib/site';
 
 export const metadata: Metadata = buildPageMetadata({
-  title: 'Contact & Admissions',
+  title: 'Contact & Campus Location',
   description:
-    "Contact Mumbi Girls Senior School administration in Mukuyu Sub-location, Kiharu Constituency, Murang'a County (P.O. Box 115 - 10200, Murang'a; KNEC 10204102; MoE F2030609).",
+    `Contact the ${schoolInfo.name} office or visit the campus in ${schoolInfo.physicalLocation}.`,
   path: '/contact',
 });
 
@@ -26,7 +26,7 @@ export default function ContactPage() {
     <div className="bg-slate-bg">
       <PageHero
         variant="contact"
-        kicker="School Office & Admissions"
+        kicker="School Office"
         title="Contact & Campus Location"
         subtitle="Enquiries on Grade 10 admissions, joining instructions, fee payments, examination records, and boarding matters."
         meta={[
@@ -56,32 +56,31 @@ export default function ContactPage() {
               seed="contact-admissions"
               className="font-serif text-xl sm:text-2xl font-bold text-slate-900 mb-2"
             >
-              Grade 10 Joining Instructions &amp; Fee Structure
+              Joining Grade 10?
             </BlurRevealHeading>
             <p className="text-sm sm:text-base text-slate-700 leading-relaxed">
-              Students placed at {schoolInfo.name} (KNEC Centre{' '}
-              {schoolInfo.knecCode}) can download the joining instructions
-              booklet and annual fee structure from the Downloads page, or send
-              an admissions question to the school office using the form below.
+              Find the reporting date, school fee guidance, and a uniform photo
+              in the Grade 10 admissions guide. Confirm the latest details with
+              the school office before travelling, shopping, or paying fees.
             </p>
           </div>
 
           <div className="flex flex-col sm:flex-row gap-3 shrink-0">
             <Link
-              href="/downloads"
+              href="/admissions"
               className="min-h-11 inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full bg-primary hover:bg-primary-dark text-white text-sm font-semibold transition-colors"
             >
-              <span>Joining documents</span>
+              <span>View admissions guide</span>
               <ArrowRight
                 className="w-4 h-4 shrink-0 stroke-[1.75]"
                 aria-hidden="true"
               />
             </Link>
             <Link
-              href="/academics#pathways"
+              href="/admissions#uniform"
               className="min-h-11 inline-flex items-center justify-center px-5 py-2.5 rounded-full border border-slate-300 bg-white hover:border-primary text-slate-800 hover:text-primary text-sm font-semibold transition-colors"
             >
-              CBC pathways
+              Uniform photo
             </Link>
           </div>
         </section>
@@ -91,9 +90,10 @@ export default function ContactPage() {
           {/* Left: Official Office Details & Location Photo Slot */}
           <div className="lg:col-span-5 space-y-8">
             <section
+              id="school-office"
               data-reveal=""
               aria-labelledby="official-details-heading"
-              className="bg-white/50 border border-slate-200 border-t-2 border-t-primary p-6 sm:p-7"
+              className="scroll-mt-4 bg-white/50 border border-slate-200 border-t-2 border-t-primary p-6 sm:p-7"
             >
               <div className="flex items-start gap-3.5 pb-5 mb-5 border-b border-slate-200">
                 <Image
@@ -178,8 +178,13 @@ export default function ContactPage() {
                   />
                   <div>
                     <dt className="font-semibold text-slate-900">Telephone</dt>
-                    <dd className="text-slate-600 mt-0.5">
-                      {schoolInfo.phonePlaceholder}
+                    <dd className="mt-0.5">
+                      <a
+                        href={`tel:${schoolInfo.phone}`}
+                        className="text-primary font-medium underline underline-offset-4 decoration-primary/40 hover:text-primary-dark hover:decoration-primary-dark tabular-nums"
+                      >
+                        {schoolInfo.phone}
+                      </a>
                     </dd>
                   </div>
                 </div>
@@ -210,9 +215,9 @@ export default function ContactPage() {
               <PhotoSlot
                 src={PHOTO_SLOTS.campusLocation}
                 exists={hasCampusPhoto}
-                alt="Students gathered near the Mumbi Girls Senior School campus entrance"
-                width={1200}
-                height={675}
+                alt="Blue entrance gate of Mumbi Girls Senior School"
+                width={1600}
+                height={900}
                 sizes="(max-width: 1024px) 100vw, 40vw"
                 aspectClassName="aspect-16/9"
                 placeholderLabel="Photo coming soon"
@@ -250,8 +255,11 @@ export default function ContactPage() {
                 Write to the Administration Office
               </BlurRevealHeading>
               <p className="text-sm text-slate-600 leading-relaxed">
-                Send a message concerning Grade 10 admission, school fees,
-                academic records, or student boarding matters.
+                This form is a preview and does not send messages to the school.
+                For admissions or fee enquiries, use the{' '}
+                <a href="#school-office" className="font-semibold text-primary underline underline-offset-4">
+                  school office contact details
+                </a>.
               </p>
             </div>
 

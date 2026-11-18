@@ -13,7 +13,7 @@ export const PHOTO_SLOTS = {
   /** Chief Principal portrait on the homepage (recommended: 800x1000 portrait JPG) */
   principalPortrait: '/images/principal.jpg',
   /** Campus entrance photograph shown on /contact. */
-  campusLocation: '/images/school/gallery-04.jpg',
+  campusLocation: '/images/school/gallery-campus-gate.jpg',
 } as const;
 
 const PUBLIC_ROOT = path.join(process.cwd(), 'public');

@@ -1,172 +1,139 @@
 'use client';
 
 import { useEffect } from 'react';
-import { usePathname } from 'next/navigation';
 
 const REVEAL_SELECTOR = '[data-reveal]';
-const PENDING_SELECTOR = '[data-reveal][data-reveal-state="pending"]';
 
-function showImmediately(el: HTMLElement) {
-  el.dataset.revealState = 'shown';
-}
-
-function animateIn(el: HTMLElement) {
-  if (el.dataset.revealState !== 'pending') {
-    el.dataset.revealState = 'shown';
-    return;
-  }
-  el.dataset.revealState = 'visible';
-  // Clear transform/transition rules once the one-time reveal settles
-  const onDone = (event: TransitionEvent) => {
-    if (event.target !== el || event.propertyName !== 'opacity') return;
-    el.dataset.revealState = 'shown';
-    el.removeEventListener('transitionend', onDone);
-  };
-  el.addEventListener('transitionend', onDone);
-}
-
-/**
- * Lightweight, dependency-free scroll-reveal observer.
- *
- * Progressive-enhancement & accessibility guarantees:
- * - Static HTML omits `data-reveal-state`, so every section and card is 100%
- *   visible if JavaScript fails, is disabled, or has not hydrated yet.
- * - Elements already in or above the viewport on load receive `"shown"`
- *   immediately (no flash of hidden content, zero CLS, zero LCP delay).
- * - Only below-the-fold elements receive `"pending"` and fade/rise gently once
- *   as they enter the viewport via native IntersectionObserver, then unobserve.
- * - Respects `prefers-reduced-motion: reduce` (including live OS toggles) and
- *   print media by displaying all content immediately with no animation.
- * - Keyboard focus (`focusin`) inside any pending element shows it instantly.
- */
+/** Reveal below-the-fold content once, without mutating React-owned markup. */
 export default function ScrollRevealObserver() {
-  const pathname = usePathname();
-
   useEffect(() => {
-    if (typeof window === 'undefined') return;
-
-    const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-
-    const showAll = () => {
-      document.querySelectorAll<HTMLElement>(REVEAL_SELECTOR).forEach((el) => {
-        showImmediately(el);
-      });
-    };
-
-    if (motionQuery.matches || !('IntersectionObserver' in window)) {
-      showAll();
+    const main = document.getElementById('main-content');
+    if (!main || !('IntersectionObserver' in window) || !('animate' in Element.prototype)) {
       return;
     }
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          // Reveal when entering the viewport or already scrolled past above it
-          if (!entry.isIntersecting && entry.boundingClientRect.top > 0) {
-            continue;
-          }
-          const target = entry.target as HTMLElement;
-          if (entry.isIntersecting) {
-            animateIn(target);
-          } else {
-            showImmediately(target);
-          }
-          observer.unobserve(target);
+    const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const shown = new WeakSet<HTMLElement>();
+    const tracked = new Map<HTMLElement, Animation | null>();
+    let frame: number | null = null;
+    let isPrinting = false;
+
+    const observer = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        const el = entry.target as HTMLElement;
+        if (tracked.get(el) !== null) continue;
+        if (!entry.isIntersecting && entry.boundingClientRect.bottom > 0) continue;
+
+        observer.unobserve(el);
+        shown.add(el);
+        if (!entry.isIntersecting || motion.matches || isPrinting || el.matches(':focus-within')) {
+          tracked.delete(el);
+          continue;
         }
-      },
-      {
-        root: null,
-        rootMargin: '0px 0px -36px 0px',
-        threshold: 0.06,
+
+        // Start just before entering the viewport. Web Animations changes the
+        // presentation only, so React can safely hydrate or stream this node.
+        const styles = getComputedStyle(el);
+        const animation = el.animate(
+          [
+            { opacity: 0, transform: 'translateY(10px)' },
+            { opacity: 1, transform: 'translateY(0)' },
+          ],
+          {
+            duration: 520,
+            delay: Number.parseFloat(styles.getPropertyValue('--reveal-delay')) || 0,
+            easing: styles.getPropertyValue('--ease-editorial').trim() || 'ease-out',
+            fill: 'backwards',
+          },
+        );
+        tracked.set(el, animation);
+        animation.onfinish = () => tracked.delete(el);
       }
-    );
+    }, { rootMargin: '0px 0px 64px 0px' });
 
-    const registerElements = () => {
-      const viewportCutoff = window.innerHeight * 0.96;
-      document.querySelectorAll<HTMLElement>(REVEAL_SELECTOR).forEach((el) => {
-        const state = el.dataset.revealState;
-        if (state === 'visible' || state === 'shown') return;
+    const stopTracking = (el: HTMLElement) => {
+      observer.unobserve(el);
+      tracked.get(el)?.cancel();
+      tracked.delete(el);
+    };
 
+    const register = () => {
+      // Tab panels and cached routes may mount or detach in the same layout.
+      for (const el of tracked.keys()) {
+        if (!main.contains(el)) stopTracking(el);
+      }
+      if (motion.matches || isPrinting) return;
+
+      for (const el of main.querySelectorAll<HTMLElement>(REVEAL_SELECTOR)) {
+        if (shown.has(el) || tracked.has(el)) continue;
         const rect = el.getBoundingClientRect();
-        if (
-          rect.top < viewportCutoff ||
-          (rect.width === 0 && rect.height === 0) ||
-          el.matches(':focus, :focus-within')
-        ) {
-          showImmediately(el);
-          observer.unobserve(el);
-          return;
-        }
-
-        if (state !== 'pending') {
-          el.dataset.revealState = 'pending';
+        if (rect.top < window.innerHeight || !el.getClientRects().length || el.matches(':focus-within')) {
+          // Keep initial above-the-fold content visible, including anchor links.
+          shown.add(el);
+        } else {
+          tracked.set(el, null);
           observer.observe(el);
         }
+      }
+    };
+
+    const mutations = new MutationObserver((records) => {
+      const hasElementChanges = records.some(({ addedNodes, removedNodes }) =>
+        [...addedNodes, ...removedNodes].some((node) => node.nodeType === Node.ELEMENT_NODE),
+      );
+      if (!hasElementChanges || frame !== null) return;
+      frame = requestAnimationFrame(() => {
+        frame = null;
+        register();
       });
-    };
+    });
 
-    registerElements();
-
-    // Re-check lazily mounted below-the-fold sections (e.g. tab panel switches)
-    const mainEl = document.getElementById('main-content');
-    let mutationFrame: number | null = null;
-    const mutationObserver =
-      mainEl && 'MutationObserver' in window
-        ? new MutationObserver((mutations) => {
-            const hasAddedElement = mutations.some((m) =>
-              Array.from(m.addedNodes).some((n) => n.nodeType === 1)
-            );
-            if (!hasAddedElement || mutationFrame !== null) return;
-            mutationFrame = window.requestAnimationFrame(() => {
-              mutationFrame = null;
-              if (!motionQuery.matches) registerElements();
-            });
-          })
-        : null;
-
-    if (mainEl && mutationObserver) {
-      mutationObserver.observe(mainEl, { childList: true, subtree: true });
-    }
-
-    // Reveal instantly when a keyboard user tabs into a below-the-fold element
-    const handleFocusIn = (event: FocusEvent) => {
-      const target = event.target;
-      if (!(target instanceof Element)) return;
-      const pending = target.closest<HTMLElement>(PENDING_SELECTOR);
-      if (pending) {
-        showImmediately(pending);
-        observer.unobserve(pending);
-      }
-    };
-
-    const handleMotionChange = (event: MediaQueryListEvent) => {
-      if (event.matches) {
-        observer.disconnect();
-        mutationObserver?.disconnect();
-        showAll();
-      }
-    };
-
-    const handleBeforePrint = () => {
+    const stopAll = () => {
       observer.disconnect();
-      showAll();
+      for (const animation of tracked.values()) animation?.cancel();
+      tracked.clear();
     };
 
-    document.addEventListener('focusin', handleFocusIn, true);
+    const handleFocus = ({ target }: FocusEvent) => {
+      if (!(target instanceof Element)) return;
+      let el = target.closest<HTMLElement>(REVEAL_SELECTOR);
+      while (el) {
+        stopTracking(el);
+        shown.add(el);
+        el = el.parentElement?.closest<HTMLElement>(REVEAL_SELECTOR) ?? null;
+      }
+    };
+
+    const handleMotionChange = () => {
+      if (motion.matches) stopAll();
+      else register();
+    };
+    const handleBeforePrint = () => {
+      isPrinting = true;
+      stopAll();
+    };
+    const handleAfterPrint = () => {
+      isPrinting = false;
+      register();
+    };
+
+    register();
+    mutations.observe(main, { childList: true, subtree: true });
+    main.addEventListener('focusin', handleFocus);
+    motion.addEventListener('change', handleMotionChange);
     window.addEventListener('beforeprint', handleBeforePrint);
-    motionQuery.addEventListener('change', handleMotionChange);
+    window.addEventListener('afterprint', handleAfterPrint);
 
     return () => {
-      if (mutationFrame !== null) {
-        window.cancelAnimationFrame(mutationFrame);
-      }
-      observer.disconnect();
-      mutationObserver?.disconnect();
-      document.removeEventListener('focusin', handleFocusIn, true);
+      if (frame !== null) cancelAnimationFrame(frame);
+      stopAll();
+      mutations.disconnect();
+      main.removeEventListener('focusin', handleFocus);
+      motion.removeEventListener('change', handleMotionChange);
       window.removeEventListener('beforeprint', handleBeforePrint);
-      motionQuery.removeEventListener('change', handleMotionChange);
+      window.removeEventListener('afterprint', handleAfterPrint);
     };
-  }, [pathname]);
+  }, []);
 
   return null;
 }

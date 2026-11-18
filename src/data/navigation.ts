@@ -21,9 +21,12 @@ export const navigation: NavItem[] = [
     children: [
       { label: 'CBC Senior School Pathways', href: '/academics#pathways' },
       { label: 'Academic Departments', href: '/academics#departments' },
+      { label: '2026 KCSE Target & Dean of Studies', href: '/academics#kcse-target' },
+      { label: 'KCSE Results by Year', href: '/academics#kcse-results' },
       { label: 'KCSE Roll of Honour', href: '/academics#wall-of-fame' },
     ],
   },
+  { label: 'Admissions', href: '/admissions' },
   {
     label: 'Student Life',
     href: '/explore',

@@ -1,18 +1,19 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
+import KcseResults from '@/components/academics/KcseResults';
+import KcseTarget from '@/components/academics/KcseTarget';
 import BlurRevealHeading from '@/components/shared/BlurRevealHeading';
 import PageHero from '@/components/shared/PageHero';
 import SectionStemBackdrop from '@/components/shared/SectionStemBackdrop';
 import { PathwaysTabs } from '@/components/home/PathwaysPreview';
 import PathwaysDetails from '@/components/academics/PathwaysDetails';
-import WallOfFameGrid from '@/components/shared/WallOfFameGrid';
 import { departments, schoolInfo } from '@/data/mock-school-data';
 import { buildPageMetadata } from '@/lib/site';
 
 export const metadata: Metadata = buildPageMetadata({
   title: 'Academics & CBC Pathways',
   description:
-    'CBC Senior School pathways (STEM, Social Sciences, and Arts & Sports Science for Grades 10–12), the five teaching departments and Heads of Department, and KCSE results at Mumbi Girls Senior School.',
+    'CBC Senior School pathways, academic departments, the Dean of Studies, the 2026 KCSE target, and KCSE results and top performers from 2022 to 2025 at Mumbi Girls Senior School.',
   path: '/academics',
 });
 
@@ -24,7 +25,7 @@ export default function AcademicsPage() {
         titleEffect="scramble"
         kicker="Curriculum & Examinations"
         title="Academics & CBC Pathways"
-        subtitle="Senior School pathways for Grades 10 to 12 under Kenya's Competency-Based Curriculum, our five teaching departments, and recorded KCSE placements."
+        subtitle="Senior School pathways for Grades 10 to 12 under Kenya's Competency-Based Curriculum, our five teaching departments, and the school’s KCSE target and results."
         meta={[
           `KNEC Centre ${schoolInfo.knecCode}`,
           '3 Senior School Pathways',
@@ -144,36 +145,8 @@ export default function AcademicsPage() {
         </div>
       </section>
 
-      {/* 3. KCSE Roll of Honour */}
-      <section
-        id="wall-of-fame"
-        aria-labelledby="academics-wof-heading"
-        className="relative scroll-mt-28 py-16 sm:py-20 bg-slate-bg"
-      >
-        <SectionStemBackdrop variant="honours" />
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
-          <div data-reveal="" className="max-w-2xl mb-8">
-            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary mb-2">
-              National Examinations · KNEC {schoolInfo.knecCode}
-            </p>
-            <BlurRevealHeading
-              id="academics-wof-heading"
-              seed="academics-wof"
-              className="font-serif text-2xl sm:text-3xl font-bold text-slate-900"
-            >
-              KCSE Roll of Honour
-            </BlurRevealHeading>
-            <p className="text-sm sm:text-base text-slate-600 mt-2 leading-relaxed">
-              Top candidates recorded from recent KCSE sittings and the
-              university degree programmes to which they were admitted.
-            </p>
-          </div>
-
-          <div data-reveal="" data-reveal-delay="1">
-            <WallOfFameGrid />
-          </div>
-        </div>
-      </section>
+      <KcseTarget />
+      <KcseResults knecCode={schoolInfo.knecCode} />
     </div>
   );
 }

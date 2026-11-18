@@ -11,16 +11,16 @@ const quickLinks = [
   { label: 'Student Life', href: '/explore' },
   { label: 'Downloads & Circulars', href: '/downloads' },
   { label: 'Photo Gallery', href: '/gallery' },
-  { label: 'Contact & Admissions', href: '/contact' },
+  { label: 'Contact & Location', href: '/contact' },
 ];
 
 const resourceLinks = [
   {
-    label: 'Grade 10 Joining Instructions',
-    href: '/news/admission-joining-instructions-2025',
+    label: 'Grade 10 Admissions Guide',
+    href: '/admissions',
   },
   {
-    label: 'Fee Structure & Term Circulars',
+    label: 'Term Circulars',
     href: '/downloads',
   },
   {
@@ -64,8 +64,7 @@ export default function Footer() {
             </div>
 
             <p className="text-white/85 text-sm leading-relaxed mb-5 max-w-sm">
-              {schoolInfo.category} in Mukuyu Sub-location, Kiharu Constituency,
-              Murang&apos;a County, Kenya. Established in {schoolInfo.founded}.
+              {schoolInfo.category} in {schoolInfo.locationShort}. Established in {schoolInfo.founded}.
             </p>
 
             <dl className="pt-4 border-t border-white/15 text-xs text-white/90 space-y-3 tabular-nums">
@@ -143,9 +142,12 @@ export default function Footer() {
                     className="w-4 h-4 text-blue-100 shrink-0 mt-1 stroke-[1.5]"
                     aria-hidden="true"
                   />
-                  <span className="text-xs leading-relaxed">
-                    {schoolInfo.phonePlaceholder}
-                  </span>
+                  <a
+                    href={`tel:${schoolInfo.phone}`}
+                    className="text-xs leading-relaxed text-white hover:underline underline-offset-4 tabular-nums"
+                  >
+                    {schoolInfo.phone}
+                  </a>
                 </li>
                 <li className="flex items-start gap-2.5">
                   <Clock
@@ -189,7 +191,7 @@ export default function Footer() {
       <div className="border-t border-white/15 text-xs py-4">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-white/80">
           <p>
-            © 2026 {schoolInfo.name}, Mukuyu, Murang&apos;a County. Ministry of
+            © 2026 {schoolInfo.name}, {schoolInfo.locationShort}. Ministry of
             Education registered public senior school.
           </p>
           <p className="tabular-nums text-white/85">

@@ -142,7 +142,7 @@ export default function GalleryBrowser({ availableSrcs }: GalleryBrowserProps) {
       {/* Left-Aligned Album Filter Controls */}
       <div
         role="group"
-        aria-label="Filter gallery by event album"
+        aria-label="Filter gallery by album"
         className="flex flex-wrap gap-2"
       >
         <button
@@ -186,7 +186,7 @@ export default function GalleryBrowser({ availableSrcs }: GalleryBrowserProps) {
               seed={`gallery-${selectedAlbum ? selectedAlbum.id : 'all'}`}
               className="font-serif text-2xl sm:text-3xl font-bold text-slate-900"
             >
-              {selectedAlbum ? selectedAlbum.name : 'All Event Albums'}
+              {selectedAlbum ? selectedAlbum.name : 'All Albums'}
             </BlurRevealHeading>
             <p className="text-sm text-slate-600 mt-1 leading-relaxed">
               {selectedAlbum
@@ -229,7 +229,7 @@ export default function GalleryBrowser({ availableSrcs }: GalleryBrowserProps) {
                       lastTriggerRef.current = e.currentTarget;
                       setActiveImageId(img.id);
                     }}
-                    aria-label={`View full size: ${img.alt}`}
+                    aria-label={`View photo: ${img.caption ?? img.alt}`}
                     className="group text-left flex flex-col w-full rounded-xs"
                   >
                     <div className="relative w-full aspect-3/2 overflow-hidden bg-slate-100 border border-slate-300 group-hover:border-primary transition-colors">
@@ -244,7 +244,7 @@ export default function GalleryBrowser({ availableSrcs }: GalleryBrowserProps) {
                     </div>
                     <div className="pt-3 space-y-1">
                       <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-primary tabular-nums">
-                        {img.event} · {img.year}
+                        {img.event}{img.year ? ` · ${img.year}` : ''}
                       </p>
                       <h3 className="font-serif text-base font-bold text-slate-900 group-hover:text-primary leading-snug">
                         {img.caption ?? img.alt}
@@ -283,7 +283,7 @@ export default function GalleryBrowser({ availableSrcs }: GalleryBrowserProps) {
 
                   <figcaption className="pt-3 space-y-1">
                     <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-primary tabular-nums">
-                      {img.event} · {img.year}
+                      {img.event}{img.year ? ` · ${img.year}` : ''}
                     </p>
                     <h3 className="font-serif text-base font-bold text-slate-900 leading-snug">
                       {img.alt}
@@ -324,7 +324,7 @@ export default function GalleryBrowser({ availableSrcs }: GalleryBrowserProps) {
                   <strong className="text-white">
                     {activeViewIndex + 1} / {viewableImages.length}
                   </strong>{' '}
-                  · {activeImage.event} ({activeImage.year})
+                  · {activeImage.event}{activeImage.year ? ` (${activeImage.year})` : ''}
                 </p>
 
                 <button

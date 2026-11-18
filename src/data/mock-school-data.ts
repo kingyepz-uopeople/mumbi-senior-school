@@ -7,7 +7,6 @@
 import {
   SchoolInfo,
   QuickStat,
-  TopStudent,
   NewsItem,
   Principal,
   BOMChairperson,
@@ -20,8 +19,11 @@ import {
   GalleryAlbum,
   CBCPathway,
 } from '@/types';
+import { formatCPlusShare, kcse2024, kcse2025 } from '@/data/kcse';
 
 // ── School Profile ──────────────────────────────────────────
+const campusTownship = "Murang'a Township";
+
 export const schoolInfo: SchoolInfo = {
   name: 'Mumbi Girls Senior School',
   motto: 'Determined to Excel',
@@ -64,12 +66,12 @@ export const schoolInfo: SchoolInfo = {
   knecCode: '10204102',
   moeReg: 'F2030609',
   postalAddress: "P.O. Box 115 - 10200, Murang'a",
-  physicalLocation:
-    "Mukuyu Sub-location, Kiharu Constituency, Murang'a East, Murang'a County, Kenya",
+  locationShort: campusTownship,
+  physicalLocation: `${campusTownship}, Mumbi area, near Mjini Primary School`,
   officeHours: 'Monday – Friday: 08:00 – 17:00 | Weekends: Closed',
   officeHoursShort: 'Mon–Fri: 08:00 – 17:00',
-  email: 'info@mumbiseniorschool.sc.ke',
-  phonePlaceholder: '+254 (0) 700 000 000 (Office Line Placeholder)',
+  email: 'mumbigirls1968@gmail.com',
+  phone: '+254711461192',
   founded: 1960,
   category: "C2 Public Girls' Boarding Senior School",
   domain: 'mumbiseniorschool.sc.ke',
@@ -77,16 +79,16 @@ export const schoolInfo: SchoolInfo = {
 
 // ── Quick Facts ─────────────────────────────────────────────
 export const quickStats: QuickStat[] = [
-  { label: 'Established', value: '1960', detail: "Mukuyu, Murang'a County" },
+  { label: 'Established', value: String(schoolInfo.founded), detail: schoolInfo.locationShort },
   {
     label: 'Student Enrolment',
     value: '1,200+',
     detail: "Public girls' boarding",
   },
   {
-    label: 'University Transition',
-    value: '78%',
-    detail: 'Direct degree placement',
+    label: `${kcse2025.year} KCSE Mean`,
+    value: String(kcse2025.meanPoints),
+    detail: `Overall grade ${kcse2025.meanGrade}`,
   },
   {
     label: 'Senior School Pathways',
@@ -297,82 +299,6 @@ export const cbcPathways: CBCPathway[] = [
   },
 ];
 
-// ── Top Students (KCSE Roll of Honour) ──────────────────────
-export const topStudents: TopStudent[] = [
-  {
-    id: 1,
-    name: 'Grace Wanjiku Muthoni',
-    year: 2024,
-    meanGrade: 'A',
-    points: 84,
-    university: 'University of Nairobi',
-    course: 'Bachelor of Medicine & Surgery',
-  },
-  {
-    id: 2,
-    name: 'Faith Njeri Kamau',
-    year: 2024,
-    meanGrade: 'A',
-    points: 82,
-    university: 'Kenyatta University',
-    course: 'Bachelor of Pharmacy',
-  },
-  {
-    id: 3,
-    name: 'Mercy Wambui Githinji',
-    year: 2024,
-    meanGrade: 'A-',
-    points: 79,
-    university: 'JKUAT',
-    course: 'BSc. Computer Science',
-  },
-  {
-    id: 4,
-    name: 'Joy Mumbi Karanja',
-    year: 2024,
-    meanGrade: 'A-',
-    points: 78,
-    university: 'Moi University',
-    course: 'Bachelor of Law (LLB)',
-  },
-  {
-    id: 5,
-    name: 'Hope Nyambura Waweru',
-    year: 2023,
-    meanGrade: 'A',
-    points: 83,
-    university: 'University of Nairobi',
-    course: 'BSc. Actuarial Science',
-  },
-  {
-    id: 6,
-    name: 'Charity Muthoni Njoroge',
-    year: 2023,
-    meanGrade: 'A-',
-    points: 80,
-    university: 'Egerton University',
-    course: 'BSc. Biomedical Science',
-  },
-  {
-    id: 7,
-    name: 'Agnes Wairimu Ndirangu',
-    year: 2023,
-    meanGrade: 'A-',
-    points: 78,
-    university: 'Strathmore University',
-    course: 'Bachelor of Commerce',
-  },
-  {
-    id: 8,
-    name: 'Esther Nyokabi Muiruri',
-    year: 2022,
-    meanGrade: 'A',
-    points: 81,
-    university: 'University of Nairobi',
-    course: 'Bachelor of Architecture',
-  },
-];
-
 // ── News & Circulars ────────────────────────────────────────
 export const newsItems: NewsItem[] = [
   {
@@ -380,12 +306,11 @@ export const newsItems: NewsItem[] = [
     title: '2024 KCSE Results Release',
     date: '20/03/2025',
     category: 'Event',
-    excerpt:
-      'Summary of the 2024 KCSE examination results, with a 78% university transition rate and result-slip collection guidance.',
+    excerpt: `The school mean was ${kcse2024.meanPoints} (${kcse2024.meanGrade}). ${kcse2024.cPlusOrHigher} of ${kcse2024.candidateCount} candidates (${formatCPlusShare(kcse2024)}) earned C+ or higher.`,
     body: [
-      'Mumbi Girls Senior School recorded a 78% direct university transition rate in the 2024 KCSE examinations, with candidates admitted to public and private universities across Kenya.',
-      'Graduating candidates secured places in degree programmes including Medicine and Surgery, Pharmacy, Computer Science, Law, and Commerce.',
-      'Candidates, parents, and guardians can review the KCSE list on the Academics page or visit the examinations office on weekdays between 08:00 and 17:00 for guidance on collecting official result slips.',
+      'The percentage reflects the grades awarded in the 2024 examinations, not university enrolment.',
+      'Select KCSE 2024 on the Academics page to see the full grade distribution, results by stream, and ranked top performers.',
+      'For guidance on collecting official result slips, contact the school office.',
     ],
     slug: '2024-kcse-results',
   },
@@ -409,11 +334,10 @@ export const newsItems: NewsItem[] = [
     date: '10/12/2024',
     category: 'Download',
     excerpt:
-      'Admission documents, boarding items list, uniform specifications, and Senior School pathway information for incoming Grade 10 students.',
+      'Archived notice for the 2025 intake. See the Grade 10 admissions guide for the upcoming intake.',
     body: [
-      'Students placed at Mumbi Girls Senior School (KNEC Centre 10204102, MoE Registration F2030609) should download the joining instructions booklet ahead of reporting day. It lists required admission forms, medical certificates, boarding items, and official uniform details.',
-      'During admission, the Academics & Curriculum office advises incoming Grade 10 students and parents on subject combinations under STEM, Social Sciences, and Arts & Sports Science.',
-      "Download the booklet from the Downloads page or contact the administration office at P.O. Box 115 - 10200, Murang'a (Monday to Friday, 08:00 – 17:00) for assistance.",
+      'This archived notice is not current and should not be used to plan reporting, purchase uniforms, or pay fees.',
+      'For the upcoming intake, check your placement and joining instructions through the Ministry of Education placement portal and confirm school-specific details with the administration office.',
     ],
     slug: 'admission-joining-instructions-2025',
   },
@@ -470,8 +394,8 @@ export const principals: Principal[] = [
   { id: 5, name: "Mrs. Agnes Muthoni Ndung'u", period: '2011 – 2020' },
   {
     id: 6,
-    name: 'Mrs. Eunice Wangari Muturi',
-    period: '2021 – Present',
+    name: 'Mrs. Florence Wahito Thumbi',
+    period: 'January 2025 – Present',
     isCurrent: true,
     image: '/images/principal.jpg',
   },
@@ -823,7 +747,7 @@ export const boardingSections: BoardingSection[] = [
     id: 'welfare',
     title: 'Dormitories, Health & Safety',
     description:
-      'All students reside in supervised boarding houses on the Mukuyu compound throughout the school term.',
+      'All students reside in supervised boarding houses on campus throughout the school term.',
     highlights: [
       '24-hour gate security and house-mistress supervision in dormitories',
       'On-site school sanatorium with hospital referral procedures when required',
@@ -961,6 +885,69 @@ export const downloads: DownloadItem[] = [
 // ── Gallery Albums ──────────────────────────────────────────
 // Supplied school photographs live under `public/images/school/`.
 export const galleryAlbums: GalleryAlbum[] = [
+  {
+    id: 'school-campus',
+    name: 'School Campus',
+    description:
+      'A look around Mumbi Girls Senior School, from the main gate to the Tahidi study area and academic buildings.',
+    coverImage: '/images/school/gallery-campus-serenity.jpg',
+    images: [
+      {
+        id: 16,
+        src: '/images/school/gallery-campus-serenity.jpg',
+        alt: 'Elevated view of campus lawns, palm trees, paths, and blue-pillared buildings',
+        caption: 'Serenity from Above',
+        event: 'School Campus',
+        width: 1600,
+        height: 777,
+      },
+      {
+        id: 17,
+        src: '/images/school/gallery-campus-green-walk.jpg',
+        alt: 'Paved campus walkway with trees and lawns behind low blue walls',
+        caption: 'The Green Walk',
+        event: 'School Campus',
+        width: 1600,
+        height: 900,
+      },
+      {
+        id: 18,
+        src: '/images/school/gallery-campus-gate.jpg',
+        alt: 'Blue main gate with the school motto Determined to Excel',
+        caption: 'Gateway to Excellence',
+        event: 'School Campus',
+        width: 1600,
+        height: 900,
+      },
+      {
+        id: 19,
+        src: '/images/school/gallery-campus-tahidi.jpg',
+        alt: 'Outdoor study tables on the lawn in the Tahidi area',
+        caption: 'Tahidi: Room to Think',
+        event: 'School Campus',
+        width: 1600,
+        height: 900,
+      },
+      {
+        id: 20,
+        src: '/images/school/gallery-campus-learning-corridors.jpg',
+        alt: 'Long covered corridor beside a landscaped courtyard',
+        caption: 'Corridors of Discovery',
+        event: 'School Campus',
+        width: 1600,
+        height: 823,
+      },
+      {
+        id: 21,
+        src: '/images/school/gallery-campus-academic-block.jpg',
+        alt: 'Three-storey academic block with blue trim and the Mumbi Girls sign',
+        caption: 'Building Bright Futures',
+        event: 'School Campus',
+        width: 1600,
+        height: 900,
+      },
+    ],
+  },
   {
     id: 'prayer-day-2024',
     name: 'Prayer Day 2024',

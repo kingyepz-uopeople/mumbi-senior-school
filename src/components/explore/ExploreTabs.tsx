@@ -1,6 +1,7 @@
 'use client';
 
 import { useMemo, useState } from 'react';
+import BoardingPhotos from '@/components/explore/BoardingPhotos';
 import ProspectusCardArt, {
   type ProspectusArtKey,
 } from '@/components/shared/ProspectusCardArt';
@@ -290,6 +291,10 @@ export default function ExploreTabs() {
           title="Boarding, Dining & School Uniform"
           description="Practical arrangements for meals, official school dress, dormitory supervision, and student health during the term."
         />
+
+        <div className="mb-8">
+          <BoardingPhotos />
+        </div>
 
         <SpotlightCardGroup
           cardCount={boardingSections.length}

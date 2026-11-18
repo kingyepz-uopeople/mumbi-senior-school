@@ -75,7 +75,7 @@ export default function CampusHero() {
                   data-hero-step="1"
                   className="hero-rise text-xs sm:text-sm font-semibold uppercase tracking-[0.14em] text-blue-100 tabular-nums"
                 >
-                  Mukuyu, Murang&apos;a County · Est. {schoolInfo.founded}
+                  {schoolInfo.locationShort} · Est. {schoolInfo.founded}
                 </p>
 
                 <HeroMaskedTitle
@@ -115,20 +115,19 @@ export default function CampusHero() {
               data-hero-step="intro"
               className="hero-rise text-base sm:text-lg text-white/90 leading-relaxed max-w-2xl"
             >
-              A {schoolInfo.category} in Mukuyu Sub-location, Kiharu
-              Constituency, offering Senior School instruction in STEM, Social
-              Sciences, and Arts &amp; Sports Science under Kenya&apos;s
-              Competency-Based Curriculum.
+              A {schoolInfo.category} in {schoolInfo.physicalLocation}. We offer
+              STEM, Social Sciences, and Arts &amp; Sports Science under
+              Kenya&apos;s Competency-Based Curriculum.
             </p>
 
             {/* Two Clear Actions */}
             <div className="pt-1 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
               <Link
-                href="/contact#admissions"
+                href="/admissions"
                 data-hero-step="cta-1"
                 className="hero-rise min-h-11 inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-white hover:bg-blue-50 text-primary font-semibold text-sm transition-colors"
               >
-                <span>Admissions</span>
+                <span>Grade 10 admissions</span>
                 <ArrowRight
                   className="w-4 h-4 shrink-0 stroke-[1.75]"
                   aria-hidden="true"
