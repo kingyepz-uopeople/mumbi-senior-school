@@ -174,7 +174,7 @@ export default function ExploreTabs() {
             </p>
           </div>
 
-          <div className="bg-white border-t-2 border-t-primary border-x border-b border-slate-200 divide-y divide-slate-200">
+          <div className="bg-white/45 border-t-2 border-t-primary border-x border-b border-slate-200 divide-y divide-slate-200">
             {clubs.map((club) => (
               <article
                 key={club.id}
@@ -240,7 +240,7 @@ export default function ExploreTabs() {
             </p>
           </div>
 
-          <div className="bg-white border-t-2 border-t-primary border-x border-b border-slate-200 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 divide-y md:divide-y-0 divide-slate-200">
+          <div className="bg-white/45 border-t-2 border-t-primary border-x border-b border-slate-200 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 divide-y md:divide-y-0 divide-slate-200">
             {sports.map((sport, index) => (
               <article
                 key={sport.id}
@@ -306,7 +306,7 @@ export default function ExploreTabs() {
             </p>
           </div>
 
-          <div className="max-w-3xl bg-white border-t-2 border-t-primary border-x border-b border-slate-200">
+          <div className="max-w-3xl bg-white/45 border-t-2 border-t-primary border-x border-b border-slate-200">
             <ol className="divide-y divide-slate-200">
               {dailyRoutine.map((item) => (
                 <li
@@ -351,7 +351,7 @@ export default function ExploreTabs() {
             </p>
           </div>
 
-          <div className="bg-white border-t-2 border-t-primary border-x border-b border-slate-200 grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 divide-slate-200">
+          <div className="bg-white/45 border-t-2 border-t-primary border-x border-b border-slate-200 grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 divide-slate-200">
             {faithGroups.map((group, index) => (
               <article
                 key={group.id}
@@ -410,7 +410,7 @@ export default function ExploreTabs() {
             </p>
           </div>
 
-          <div className="bg-white border-t-2 border-t-primary border-x border-b border-slate-200 grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-slate-200">
+          <div className="bg-white/45 border-t-2 border-t-primary border-x border-b border-slate-200 grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-slate-200">
             {boardingSections.map((section, idx) => (
               <article
                 key={section.id}

@@ -144,7 +144,7 @@ export default function DownloadsBrowser() {
       <section
         data-reveal=""
         aria-labelledby="downloads-filter-heading"
-        className="bg-white border border-slate-200 border-t-2 border-t-primary p-5 sm:p-7 space-y-6"
+        className="bg-white/50 border border-slate-200 border-t-2 border-t-primary p-5 sm:p-7 space-y-6"
       >
         <div className="flex flex-wrap items-center justify-between gap-2 pb-4 border-b border-slate-200">
           <BlurRevealHeading
@@ -333,7 +333,7 @@ export default function DownloadsBrowser() {
         </div>
 
         {filteredDownloads.length > 0 ? (
-          <div className="bg-white border-t-2 border-t-primary border-x border-b border-slate-200 divide-y divide-slate-200">
+          <div className="bg-white/45 border-t-2 border-t-primary border-x border-b border-slate-200 divide-y divide-slate-200">
             {filteredDownloads.map((item) => (
               <article
                 key={item.id}
@@ -393,7 +393,7 @@ export default function DownloadsBrowser() {
             ))}
           </div>
         ) : (
-          <div className="py-12 px-6 bg-white border border-slate-200 space-y-3">
+          <div className="py-12 px-6 bg-white/45 border border-slate-200 space-y-3">
             <h3 className="font-serif text-lg font-bold text-slate-900">
               No matching documents
             </h3>

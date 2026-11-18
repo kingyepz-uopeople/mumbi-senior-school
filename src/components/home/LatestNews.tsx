@@ -57,7 +57,7 @@ export default function LatestNews() {
         </div>
 
         {/* Editorial Notice Register */}
-        <div className="bg-white border-t-2 border-t-primary border-x border-b border-slate-200 divide-y divide-slate-200">
+        <div className="bg-white/45 border-t-2 border-t-primary border-x border-b border-slate-200 divide-y divide-slate-200">
           {displayItems.map((item, idx) => {
             const categoryClass =
               newsCategoryTextClasses[item.category] ??
