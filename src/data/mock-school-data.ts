@@ -24,9 +24,7 @@ import {
 // ── School Profile ──────────────────────────────────────────
 export const schoolInfo: SchoolInfo = {
   name: 'Mumbi Girls Senior School',
-  // NOTE: Kept as recorded in project data. The official crest reads
-  // "Determined to Excel" — flagged for client confirmation before changing.
-  motto: 'Education for Empowerment',
+  motto: 'Determined to Excel',
   mission:
     'To provide a holistic, inclusive, and quality education that empowers girls to become competent, ethical, and transformative leaders in a dynamic global society.',
   vision:

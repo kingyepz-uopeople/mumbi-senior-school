@@ -40,9 +40,12 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    /* Reserve space for the sticky TopUtilityBar + Header on anchor jumps and
+       Next.js App Router route transitions so the hero crest never sits behind
+       the sticky header on mobile or desktop. */
+    scroll-padding-top: 6.75rem;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    overflow-x: clip;
   }
 
   body {
@@ -52,7 +55,6 @@
     color: #1e293b;
     background-color: #F8FAFC;
     line-height: 1.65;
-    overflow-x: clip;
   }
 
   h1,

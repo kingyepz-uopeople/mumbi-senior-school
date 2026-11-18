@@ -6,7 +6,7 @@ export default function manifest(): MetadataRoute.Manifest {
     name: 'Mumbi Girls Senior School Portal',
     short_name: 'Mumbi Portal',
     description:
-      'Official website and resource portal for Mumbi Girls Senior School — CBC Senior School pathways, circulars, downloads, news, gallery, and campus information.',
+      'Official website and resource portal for Mumbi Girls Senior School — Determined to Excel. CBC Senior School pathways, circulars, downloads, news, gallery, and campus information.',
     start_url: '/',
     scope: '/',
     display: 'standalone',

@@ -56,7 +56,7 @@ export const metadata: Metadata = {
     template: `%s | ${SITE_NAME}`,
   },
   description:
-    "Mumbi Girls Senior School — C2 public girls' boarding senior school in Mukuyu Sub-location, Kiharu Constituency, Murang'a County, established in 1960. KNEC 10204102, MoE F2030609.",
+    "Mumbi Girls Senior School — Determined to Excel. C2 public girls' boarding senior school in Mukuyu Sub-location, Kiharu Constituency, Murang'a County, established in 1960. KNEC 10204102, MoE F2030609.",
   keywords: [
     'Mumbi Girls Senior School',
     'KNEC 10204102',
@@ -88,9 +88,9 @@ export const metadata: Metadata = {
     title: 'Mumbi Portal',
   },
   openGraph: {
-    title: `${SITE_NAME} | Education for Empowerment`,
+    title: `${SITE_NAME} | Determined to Excel`,
     description:
-      "C2 public girls' boarding senior school in Mukuyu, Kiharu, Murang'a County, Kenya. Established 1960. KNEC 10204102, MoE F2030609.",
+      "Determined to Excel — C2 public girls' boarding senior school in Mukuyu, Kiharu, Murang'a County, Kenya. Established 1960. KNEC 10204102, MoE F2030609.",
     url: SITE_URL,
     siteName: SITE_NAME,
     locale: 'en_KE',
@@ -99,9 +99,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: `${SITE_NAME} | Education for Empowerment`,
+    title: `${SITE_NAME} | Determined to Excel`,
     description:
-      "Mumbi Girls Senior School, Mukuyu, Murang'a County (Est. 1960, KNEC 10204102). CBC Senior School pathways, circulars, and downloads.",
+      "Mumbi Girls Senior School — Determined to Excel. Mukuyu, Murang'a County (Est. 1960, KNEC 10204102). CBC Senior School pathways, circulars, and downloads.",
     images: [DEFAULT_OG_IMAGE.url],
   },
 };
@@ -114,9 +114,10 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${sourceSerif.variable} h-full antialiased font-sans`}
+      data-scroll-behavior="smooth"
+      className={`${inter.variable} ${sourceSerif.variable} antialiased font-sans`}
     >
-      <body className="min-h-full flex flex-col bg-slate-bg text-slate-800">
+      <body className="min-h-dvh flex flex-col bg-slate-bg text-slate-800">
         <PwaProvider>
           {/* Keyboard Skip-to-Content Link */}
           <a
@@ -129,7 +130,7 @@ export default function RootLayout({
           {/* Unified Sticky Utility Bar + Primary Header */}
           <header
             data-dark-surface
-            className="sticky top-0 z-40 border-b border-primary-dark"
+            className="sticky top-0 z-40 shrink-0 w-full bg-primary border-b border-primary-dark"
           >
             <TopUtilityBar />
             <Header />
@@ -138,7 +139,7 @@ export default function RootLayout({
           <main
             id="main-content"
             tabIndex={-1}
-            className="flex-1 focus:outline-none"
+            className="relative z-0 grow shrink-0 w-full overflow-x-clip scroll-mt-28 focus:outline-none"
           >
             {children}
           </main>

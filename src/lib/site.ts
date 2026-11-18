@@ -6,7 +6,7 @@ export const DEFAULT_OG_IMAGE = {
   url: '/images/og-image.png',
   width: 1200,
   height: 630,
-  alt: "Mumbi Girls' Senior School crest and official banner — Education for Empowerment (KNEC 10204102)",
+  alt: "Mumbi Girls' Senior School crest and official banner — Determined to Excel (KNEC 10204102)",
 };
 
 interface PageMetadataOptions {
@@ -28,7 +28,7 @@ export function buildPageMetadata({
 }: PageMetadataOptions): Metadata {
   const fullTitle =
     path === '/'
-      ? `${SITE_NAME} | Education for Empowerment`
+      ? `${SITE_NAME} | Determined to Excel`
       : `${title} | ${SITE_NAME}`;
   const canonicalUrl = new URL(path, SITE_URL).toString();
 
