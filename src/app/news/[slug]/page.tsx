@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import PageHero from '@/components/shared/PageHero';
+import SectionStemBackdrop from '@/components/shared/SectionStemBackdrop';
 import { newsItems, schoolInfo } from '@/data/mock-school-data';
 import { newsCategoryTextClasses } from '@/components/home/LatestNews';
 import { buildPageMetadata } from '@/lib/site';
@@ -105,7 +106,9 @@ export default async function NewsArticlePage({
       />
 
       {/* Article Body */}
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-12 sm:py-16 space-y-14">
+      <div className="relative">
+        <SectionStemBackdrop variant="article" />
+        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 py-12 sm:py-16 space-y-14">
         <article
           data-reveal=""
           className="bg-white border border-slate-200 border-t-2 border-t-primary p-6 sm:p-10"
@@ -215,6 +218,7 @@ export default async function NewsArticlePage({
             </div>
           </section>
         )}
+        </div>
       </div>
     </div>
   );

@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import PageHero from '@/components/shared/PageHero';
+import SectionStemBackdrop from '@/components/shared/SectionStemBackdrop';
 import { PathwaysTabs } from '@/components/home/PathwaysPreview';
 import WallOfFameGrid from '@/components/shared/WallOfFameGrid';
 import { departments, schoolInfo } from '@/data/mock-school-data';
@@ -31,9 +32,10 @@ export default function AcademicsPage() {
       <section
         id="pathways"
         aria-labelledby="academics-pathways-heading"
-        className="scroll-mt-28 py-16 sm:py-20 bg-slate-bg border-b border-slate-200"
+        className="relative scroll-mt-28 py-16 sm:py-20 bg-slate-bg border-b border-slate-200"
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+        <SectionStemBackdrop variant="stem" />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
           <div data-reveal="" className="max-w-2xl mb-8">
             <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary mb-2">
               Grades 10 – 12
@@ -60,9 +62,10 @@ export default function AcademicsPage() {
       <section
         id="departments"
         aria-labelledby="academics-departments-heading"
-        className="scroll-mt-28 py-16 sm:py-20 bg-white border-b border-slate-200"
+        className="relative scroll-mt-28 py-16 sm:py-20 bg-white border-b border-slate-200"
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+        <SectionStemBackdrop variant="laboratory" />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
           <div data-reveal="" className="max-w-2xl mb-10">
             <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary mb-2">
               Teaching Faculty
@@ -119,9 +122,10 @@ export default function AcademicsPage() {
       <section
         id="wall-of-fame"
         aria-labelledby="academics-wof-heading"
-        className="scroll-mt-28 py-16 sm:py-20 bg-slate-bg"
+        className="relative scroll-mt-28 py-16 sm:py-20 bg-slate-bg"
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+        <SectionStemBackdrop variant="honours" />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
           <div data-reveal="" className="max-w-2xl mb-8">
             <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary mb-2">
               National Examinations · KNEC {schoolInfo.knecCode}

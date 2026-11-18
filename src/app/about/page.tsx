@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import PageHero from '@/components/shared/PageHero';
+import SectionStemBackdrop from '@/components/shared/SectionStemBackdrop';
 import {
   bomChairpersons,
   governanceRoles,
@@ -38,9 +39,10 @@ export default function AboutPage() {
       <section
         id="history"
         aria-labelledby="about-history-heading"
-        className="scroll-mt-28 py-16 sm:py-20 bg-white border-b border-slate-200"
+        className="relative scroll-mt-28 py-16 sm:py-20 bg-white border-b border-slate-200"
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16">
+        <SectionStemBackdrop variant="history" />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16">
           <div data-reveal="" className="lg:col-span-7 max-w-2xl">
             <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary mb-2">
               School History
@@ -147,9 +149,10 @@ export default function AboutPage() {
       <section
         id="mission"
         aria-labelledby="about-mission-heading"
-        className="scroll-mt-28 py-16 sm:py-20 bg-slate-bg border-b border-slate-200"
+        className="relative scroll-mt-28 py-16 sm:py-20 bg-slate-bg border-b border-slate-200"
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 space-y-12">
+        <SectionStemBackdrop variant="ethos" />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 space-y-12">
           <div data-reveal="" className="max-w-2xl">
             <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary mb-2">
               Charter &amp; Values
@@ -229,9 +232,10 @@ export default function AboutPage() {
       <section
         id="anthems"
         aria-labelledby="about-anthems-heading"
-        className="scroll-mt-28 py-16 sm:py-20 bg-white border-b border-slate-200"
+        className="relative scroll-mt-28 py-16 sm:py-20 bg-white border-b border-slate-200"
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+        <SectionStemBackdrop variant="anthems" />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
           <div data-reveal="" className="max-w-2xl mb-10">
             <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary mb-2">
               Assembly Tradition
@@ -318,9 +322,10 @@ export default function AboutPage() {
       <section
         id="leadership"
         aria-labelledby="about-leadership-heading"
-        className="scroll-mt-28 py-16 sm:py-20 bg-slate-bg"
+        className="relative scroll-mt-28 py-16 sm:py-20 bg-slate-bg"
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 space-y-14">
+        <SectionStemBackdrop variant="leadership" />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 space-y-14">
           <div data-reveal="" className="max-w-2xl">
             <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary mb-2">
               Leadership &amp; Governance

@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import PageHero from '@/components/shared/PageHero';
+import SectionStemBackdrop from '@/components/shared/SectionStemBackdrop';
 import GalleryBrowser from '@/components/gallery/GalleryBrowser';
 import { galleryAlbums } from '@/data/mock-school-data';
 import { getAvailablePublicAssets } from '@/lib/media';
@@ -28,8 +29,11 @@ export default function GalleryPage() {
         meta={[`${galleryAlbums.length} Event Albums`, 'Mukuyu Campus']}
       />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
-        <GalleryBrowser availableSrcs={availableSrcs} />
+      <div className="relative">
+        <SectionStemBackdrop variant="gallery" />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
+          <GalleryBrowser availableSrcs={availableSrcs} />
+        </div>
       </div>
     </div>
   );

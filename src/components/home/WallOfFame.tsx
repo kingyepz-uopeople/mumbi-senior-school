@@ -1,14 +1,16 @@
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
+import SectionStemBackdrop from '@/components/shared/SectionStemBackdrop';
 import WallOfFameGrid from '@/components/shared/WallOfFameGrid';
 
 export default function WallOfFame() {
   return (
     <section
       aria-labelledby="home-wof-heading"
-      className="py-16 sm:py-24 bg-white border-y border-slate-200"
+      className="relative py-16 sm:py-24 bg-white border-y border-slate-200"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+      <SectionStemBackdrop variant="honours" />
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
         <div
           data-reveal=""
           className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8"

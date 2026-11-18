@@ -1,15 +1,17 @@
+import SectionStemBackdrop from '@/components/shared/SectionStemBackdrop';
 import { quickStats } from '@/data/mock-school-data';
 
 export default function QuickStats() {
   return (
     <section
       aria-labelledby="quick-stats-heading"
-      className="bg-white border-b border-slate-200"
+      className="relative bg-white border-b border-slate-200"
     >
+      <SectionStemBackdrop variant="stats" />
       <h2 id="quick-stats-heading" className="sr-only">
         School Figures at a Glance
       </h2>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
         <dl className="grid grid-cols-2 lg:grid-cols-4 divide-y lg:divide-y-0 divide-slate-200">
           {quickStats.map((stat, index) => (
             <div
