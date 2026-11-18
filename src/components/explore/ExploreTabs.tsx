@@ -2,6 +2,10 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import BlurRevealHeading from '@/components/shared/BlurRevealHeading';
+import ProspectusCardArt, {
+  type ProspectusArtKey,
+} from '@/components/shared/ProspectusCardArt';
+import SpotlightCardGroup from '@/components/shared/SpotlightCardGroup';
 import {
   boardingSections,
   clubs,
@@ -21,6 +25,41 @@ const TABS: { id: ExploreTabId; label: string }[] = [
 ];
 
 const VALID_TAB_IDS = new Set<string>(TABS.map((t) => t.id));
+
+const MOBILE_CARD_RAIL =
+  '-mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-3 pt-2 sm:mx-0 sm:grid sm:gap-5 sm:overflow-visible sm:px-0 sm:pb-0 sm:pt-2';
+
+const CLUB_ART: Record<string, ProspectusArtKey> = {
+  'girl-guides': 'girl-guides',
+  'st-john': 'st-john',
+  'red-cross': 'red-cross',
+  journalism: 'journalism',
+  drama: 'drama',
+  wildlife: 'wildlife',
+  integrity: 'integrity-club',
+};
+
+const SPORT_ART: Record<string, ProspectusArtKey> = {
+  volleyball: 'volleyball',
+  netball: 'netball',
+  basketball: 'basketball',
+  hockey: 'hockey',
+  athletics: 'athletics',
+  handball: 'handball',
+};
+
+const FAITH_ART: Record<string, ProspectusArtKey> = {
+  cu: 'christian-union',
+  ycs: 'young-christian-students',
+  sda: 'sda-fellowship',
+  muslim: 'muslim-association',
+};
+
+const BOARDING_ART: Record<string, ProspectusArtKey> = {
+  meals: 'dining-hall',
+  uniform: 'school-uniform',
+  welfare: 'boarding-welfare',
+};
 
 function parseHashToTab(hash: string): ExploreTabId | null {
   const clean = hash.replace(/^#/, '').trim();
@@ -174,43 +213,59 @@ export default function ExploreTabs() {
             </p>
           </div>
 
-          <div className="bg-white/45 border-t-2 border-t-primary border-x border-b border-slate-200 divide-y divide-slate-200">
-            {clubs.map((club) => (
+          <SpotlightCardGroup
+            cardCount={clubs.length}
+            className={`${MOBILE_CARD_RAIL} sm:grid-cols-2 lg:grid-cols-3`}
+          >
+            {clubs.map((club, index) => (
               <article
                 key={club.id}
                 data-reveal=""
-                className="p-5 sm:p-6 grid grid-cols-1 md:grid-cols-12 gap-3 md:gap-8 items-start"
+                data-reveal-delay={index % 3 > 0 ? String(index % 3) : undefined}
+                className="w-[82vw] max-w-sm shrink-0 snap-center sm:w-auto sm:max-w-none"
               >
-                <div className="md:col-span-4">
-                  <span className="block text-[11px] font-semibold uppercase tracking-[0.12em] text-primary mb-0.5">
-                    {club.category}
-                  </span>
-                  <h3 className="font-serif text-lg font-bold text-slate-900">
-                    {club.name}
-                  </h3>
+                <div
+                  data-card-cycle
+                  className="flex h-full min-h-[480px] flex-col rounded-3xl border border-t-2 border-slate-200 border-t-primary bg-white p-5 sm:min-h-[500px] sm:p-6"
+                >
+                  <div>
+                    <span className="mb-1 block text-[11px] font-semibold uppercase tracking-[0.12em] text-primary">
+                      {club.category}
+                    </span>
+                    <h3 className="font-serif text-xl font-bold text-primary-dark sm:text-2xl">
+                      {club.name}
+                    </h3>
+                  </div>
+
+                  <div className="my-5 flex min-h-36 flex-1 items-center justify-center rounded-2xl bg-slate-bg py-4">
+                    <ProspectusCardArt
+                      kind={CLUB_ART[club.id]}
+                      className="h-28 w-36 sm:h-32 sm:w-40"
+                    />
+                  </div>
+
+                  <dl className="space-y-2 border-t border-slate-200 pt-4 text-xs text-slate-600">
+                    <div>
+                      <dt className="inline font-semibold text-slate-800">
+                        Patron:{' '}
+                      </dt>
+                      <dd className="inline">{club.patron}</dd>
+                    </div>
+                    <div>
+                      <dt className="inline font-semibold text-slate-800">
+                        Meets:{' '}
+                      </dt>
+                      <dd className="inline tabular-nums">{club.meetingDay}</dd>
+                    </div>
+                  </dl>
+
+                  <p className="mt-4 border-t border-slate-200 pt-4 text-sm leading-relaxed text-slate-700">
+                    {club.description}
+                  </p>
                 </div>
-
-                <p className="md:col-span-5 text-sm text-slate-700 leading-relaxed">
-                  {club.description}
-                </p>
-
-                <dl className="md:col-span-3 text-xs text-slate-600 space-y-1">
-                  <div>
-                    <dt className="inline font-semibold text-slate-800">
-                      Patron:{' '}
-                    </dt>
-                    <dd className="inline">{club.patron}</dd>
-                  </div>
-                  <div>
-                    <dt className="inline font-semibold text-slate-800">
-                      Meets:{' '}
-                    </dt>
-                    <dd className="inline tabular-nums">{club.meetingDay}</dd>
-                  </div>
-                </dl>
               </article>
             ))}
-          </div>
+          </SpotlightCardGroup>
         </div>
       )}
 
@@ -240,44 +295,54 @@ export default function ExploreTabs() {
             </p>
           </div>
 
-          <div className="bg-white/45 border-t-2 border-t-primary border-x border-b border-slate-200 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 divide-y md:divide-y-0 divide-slate-200">
+          <SpotlightCardGroup
+            cardCount={sports.length}
+            className={`${MOBILE_CARD_RAIL} sm:grid-cols-2 lg:grid-cols-3`}
+          >
             {sports.map((sport, index) => (
               <article
                 key={sport.id}
                 data-reveal=""
                 data-reveal-delay={index % 3 > 0 ? String(index % 3) : undefined}
-                className={`p-6 flex flex-col justify-between gap-5 border-slate-200 ${
-                  index % 2 === 1 ? 'md:border-l lg:border-l-0' : ''
-                } ${index >= 2 ? 'md:border-t lg:border-t-0' : ''} ${
-                  index % 3 !== 0 ? 'lg:border-l' : ''
-                } ${index >= 3 ? 'lg:border-t' : ''}`}
+                className="w-[82vw] max-w-sm shrink-0 snap-center sm:w-auto sm:max-w-none"
               >
-                <div>
-                  <h3 className="font-serif text-xl font-bold text-slate-900 mb-2">
+                <div
+                  data-card-cycle
+                  className="flex h-full min-h-[460px] flex-col rounded-3xl border border-t-2 border-slate-200 border-t-primary bg-white p-5 sm:min-h-[480px] sm:p-6"
+                >
+                  <h3 className="font-serif text-xl font-bold text-primary-dark sm:text-2xl">
                     {sport.name}
                   </h3>
-                  <p className="text-sm text-slate-600 leading-relaxed">
+
+                  <div className="my-5 flex min-h-36 flex-1 items-center justify-center rounded-2xl bg-slate-bg py-4">
+                    <ProspectusCardArt
+                      kind={SPORT_ART[sport.id]}
+                      className="h-28 w-36 sm:h-32 sm:w-40"
+                    />
+                  </div>
+
+                  <dl className="space-y-2 border-t border-slate-200 pt-4 text-xs text-slate-600">
+                    <div>
+                      <dt className="inline font-semibold text-slate-800">
+                        Coach / Patron:{' '}
+                      </dt>
+                      <dd className="inline">{sport.patron}</dd>
+                    </div>
+                    <div>
+                      <dt className="inline font-semibold text-slate-800">
+                        Training:{' '}
+                      </dt>
+                      <dd className="inline tabular-nums">{sport.meetingDay}</dd>
+                    </div>
+                  </dl>
+
+                  <p className="mt-4 border-t border-slate-200 pt-4 text-sm leading-relaxed text-slate-700">
                     {sport.description}
                   </p>
                 </div>
-
-                <dl className="pt-4 border-t border-slate-200 text-xs text-slate-600 space-y-1">
-                  <div>
-                    <dt className="inline font-semibold text-slate-800">
-                      Coach / Patron:{' '}
-                    </dt>
-                    <dd className="inline">{sport.patron}</dd>
-                  </div>
-                  <div>
-                    <dt className="inline font-semibold text-slate-800">
-                      Training:{' '}
-                    </dt>
-                    <dd className="inline tabular-nums">{sport.meetingDay}</dd>
-                  </div>
-                </dl>
               </article>
             ))}
-          </div>
+          </SpotlightCardGroup>
         </div>
       )}
 
@@ -351,37 +416,48 @@ export default function ExploreTabs() {
             </p>
           </div>
 
-          <div className="bg-white/45 border-t-2 border-t-primary border-x border-b border-slate-200 grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 divide-slate-200">
+          <SpotlightCardGroup
+            cardCount={faithGroups.length}
+            className={`${MOBILE_CARD_RAIL} sm:grid-cols-2 xl:grid-cols-4`}
+          >
             {faithGroups.map((group, index) => (
               <article
                 key={group.id}
                 data-reveal=""
-                data-reveal-delay={index % 2 === 1 ? '1' : undefined}
-                className={`p-6 sm:p-7 flex flex-col justify-between gap-5 border-slate-200 ${
-                  index % 2 === 1 ? 'md:border-l' : ''
-                } ${index >= 2 ? 'md:border-t' : ''}`}
+                data-reveal-delay={index % 3 > 0 ? String(index % 3) : undefined}
+                className="w-[82vw] max-w-sm shrink-0 snap-center sm:w-auto sm:max-w-none"
               >
-                <div>
-                  <h3 className="font-serif text-xl font-bold text-slate-900 mb-1">
+                <div
+                  data-card-cycle
+                  className="flex h-full min-h-[500px] flex-col rounded-3xl border border-t-2 border-slate-200 border-t-primary bg-white p-5 sm:min-h-[520px] sm:p-6"
+                >
+                  <h3 className="font-serif text-xl font-bold text-primary-dark sm:text-2xl">
                     {group.name}
                   </h3>
-                  <p className="text-xs font-semibold text-primary tabular-nums mb-3">
+                  <p className="mt-1 text-xs font-semibold tabular-nums text-primary">
                     {group.meetingDay}
                   </p>
-                  <p className="text-sm text-slate-600 leading-relaxed">
+
+                  <div className="my-5 flex min-h-36 flex-1 items-center justify-center rounded-2xl bg-slate-bg py-4">
+                    <ProspectusCardArt
+                      kind={FAITH_ART[group.id]}
+                      className="h-28 w-36 sm:h-32 sm:w-40"
+                    />
+                  </div>
+
+                  <p className="text-sm leading-relaxed text-slate-700">
                     {group.description}
                   </p>
+                  <p className="mt-4 border-t border-slate-200 pt-4 text-xs text-slate-600">
+                    <strong className="font-semibold text-slate-800">
+                      Patron:
+                    </strong>{' '}
+                    {group.patron}
+                  </p>
                 </div>
-
-                <p className="pt-4 border-t border-slate-200 text-xs text-slate-600">
-                  <strong className="font-semibold text-slate-800">
-                    Patron:
-                  </strong>{' '}
-                  {group.patron}
-                </p>
               </article>
             ))}
-          </div>
+          </SpotlightCardGroup>
         </div>
       )}
 
@@ -410,36 +486,52 @@ export default function ExploreTabs() {
             </p>
           </div>
 
-          <div className="bg-white/45 border-t-2 border-t-primary border-x border-b border-slate-200 grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-slate-200">
+          <SpotlightCardGroup
+            cardCount={boardingSections.length}
+            className={`${MOBILE_CARD_RAIL} sm:grid-cols-2 lg:grid-cols-3`}
+          >
             {boardingSections.map((section, idx) => (
               <article
                 key={section.id}
                 data-reveal=""
-                data-reveal-delay={idx > 0 ? String(idx) : undefined}
-                className="p-6 sm:p-7 flex flex-col"
+                data-reveal-delay={idx % 3 > 0 ? String(idx % 3) : undefined}
+                className="w-[82vw] max-w-sm shrink-0 snap-center sm:w-auto sm:max-w-none"
               >
-                <h3 className="font-serif text-xl font-bold text-slate-900 mb-2">
-                  {section.title}
-                </h3>
-                <p className="text-sm text-slate-600 leading-relaxed mb-5">
-                  {section.description}
-                </p>
-                <ul className="mt-auto pt-4 border-t border-slate-200 space-y-2 text-xs sm:text-sm text-slate-700">
-                  {section.highlights.map((point) => (
-                    <li key={point} className="flex items-baseline gap-2">
-                      <span
-                        className="text-primary font-bold select-none"
-                        aria-hidden="true"
-                      >
-                        –
-                      </span>
-                      <span>{point}</span>
-                    </li>
-                  ))}
-                </ul>
+                <div
+                  data-card-cycle
+                  className="flex h-full min-h-[580px] flex-col rounded-3xl border border-t-2 border-slate-200 border-t-primary bg-white p-5 sm:min-h-[600px] sm:p-6"
+                >
+                  <h3 className="font-serif text-xl font-bold text-primary-dark sm:text-2xl">
+                    {section.title}
+                  </h3>
+
+                  <div className="my-5 flex min-h-36 items-center justify-center rounded-2xl bg-slate-bg py-4">
+                    <ProspectusCardArt
+                      kind={BOARDING_ART[section.id]}
+                      className="h-28 w-36 sm:h-32 sm:w-40"
+                    />
+                  </div>
+
+                  <p className="text-sm leading-relaxed text-slate-700">
+                    {section.description}
+                  </p>
+                  <ul className="mt-auto space-y-2 border-t border-slate-200 pt-4 text-xs text-slate-700 sm:text-sm">
+                    {section.highlights.map((point) => (
+                      <li key={point} className="flex items-baseline gap-2">
+                        <span
+                          className="select-none font-bold text-primary"
+                          aria-hidden="true"
+                        >
+                          –
+                        </span>
+                        <span>{point}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </article>
             ))}
-          </div>
+          </SpotlightCardGroup>
         </div>
       )}
     </div>

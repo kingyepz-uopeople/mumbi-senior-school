@@ -1,11 +1,28 @@
 'use client';
 
+import Image from 'next/image';
 import { useRef, useState } from 'react';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import BlurRevealHeading from '@/components/shared/BlurRevealHeading';
 import SectionStemBackdrop from '@/components/shared/SectionStemBackdrop';
+import SpotlightCardGroup from '@/components/shared/SpotlightCardGroup';
 import { cbcPathways } from '@/data/mock-school-data';
+
+const PATHWAY_VISUALS = {
+  stem: {
+    src: '/images/pathways/pathways-stem.jpg',
+    alt: 'Students conducting a science practical in a laboratory',
+  },
+  'social-sciences': {
+    src: '/images/pathways/pathways-social-sciences.jpg',
+    alt: 'Students studying together in a school library',
+  },
+  'arts-sports': {
+    src: '/images/pathways/pathways-arts-sports-science.jpg',
+    alt: 'Students training for an outdoor athletics event',
+  },
+} as const;
 
 interface PathwaysTabsProps {
   idPrefix?: string;
@@ -40,14 +57,16 @@ export function PathwaysTabs({ idPrefix = 'home-pathway' }: PathwaysTabsProps) {
 
   return (
     <div>
-      {/* Pill WAI-ARIA Tablist */}
-      <div
+      {/* Tall pathway-card WAI-ARIA Tablist */}
+      <SpotlightCardGroup
+        cardCount={cbcPathways.length}
         role="tablist"
         aria-label="CBC Senior School Pathways"
-        className="flex flex-wrap items-center gap-2 mb-6"
+        className="-mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-3 pt-2 lg:mx-0 lg:grid lg:grid-cols-3 lg:gap-5 lg:overflow-visible lg:px-0 lg:pt-2"
       >
         {cbcPathways.map((pathway, index) => {
           const selected = index === activeIndex;
+          const visual = PATHWAY_VISUALS[pathway.id];
           return (
             <button
               key={pathway.id}
@@ -57,22 +76,48 @@ export function PathwaysTabs({ idPrefix = 'home-pathway' }: PathwaysTabsProps) {
               id={`${idPrefix}-tab-${pathway.id}`}
               type="button"
               role="tab"
+              aria-label={pathway.name}
+              aria-describedby={`${idPrefix}-summary-${pathway.id}`}
               aria-selected={selected}
               aria-controls={`${idPrefix}-panel-${pathway.id}`}
               tabIndex={selected ? 0 : -1}
+              data-reveal=""
+              data-reveal-delay={index > 0 ? String(index) : undefined}
               onClick={() => setActiveIndex(index)}
               onKeyDown={(e) => handleTabKeyDown(e, index)}
-              className={`min-h-11 px-4 py-2 rounded-full text-xs sm:text-sm font-semibold border transition-colors ${
-                selected
-                  ? 'bg-primary border-primary text-white'
-                  : 'bg-white border-slate-300 text-slate-700 hover:border-primary hover:text-primary'
-              }`}
+              className="w-[82vw] max-w-sm shrink-0 snap-center text-left focus-visible:rounded-3xl lg:w-full lg:max-w-none"
             >
-              {pathway.name}
+              <span
+                data-card-cycle
+                className={`flex h-full min-h-[430px] flex-col rounded-3xl border border-t-2 bg-white p-5 text-left sm:min-h-[460px] sm:p-6 ${
+                  selected
+                    ? 'border-primary ring-1 ring-primary/15'
+                    : 'border-slate-200 border-t-primary'
+                }`}
+              >
+                <span className="font-serif text-xl font-bold text-primary-dark sm:text-2xl">
+                  {pathway.name}
+                </span>
+                <span className="relative mt-5 block aspect-[4/3] w-full overflow-hidden rounded-2xl bg-slate-bg">
+                  <Image
+                    src={visual.src}
+                    alt={visual.alt}
+                    fill
+                    sizes="(max-width: 639px) 82vw, (max-width: 1023px) 384px, 32vw"
+                    className="object-cover"
+                  />
+                </span>
+                <span
+                  id={`${idPrefix}-summary-${pathway.id}`}
+                  className="mt-auto pt-5 text-sm leading-relaxed text-slate-700"
+                >
+                  {pathway.summary}
+                </span>
+              </span>
             </button>
           );
         })}
-      </div>
+      </SpotlightCardGroup>
 
       {/* Active Pathway Tabpanel */}
       <div
@@ -80,12 +125,8 @@ export function PathwaysTabs({ idPrefix = 'home-pathway' }: PathwaysTabsProps) {
         role="tabpanel"
         aria-labelledby={activeTabId}
         tabIndex={0}
-        className="animate-fadeIn"
+        className="mt-8 animate-fadeIn"
       >
-        <p className="text-sm sm:text-base text-slate-700 max-w-2xl mb-8 leading-relaxed">
-          {activePathway.summary}
-        </p>
-
         <div className="bg-white/45 border-t-2 border-t-primary border-x border-b border-slate-200 grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-slate-200">
           {activePathway.tracks.map((track) => (
             <article
