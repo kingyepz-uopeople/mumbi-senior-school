@@ -1,29 +1,33 @@
 # School Photographs Guide (`public/images`)
 
-All imagery is served locally. Until verified school photographs are supplied, the website renders a solid crest-blue hero (with a subtle pattern drawn from the school crest) and clean neutral **"Photo coming soon"** frames rather than stock or vector illustrations.
+All imagery is served locally. The school's supplied photographs are stored in `public/images/school/` and displayed with `next/image`. Until a verified Chief Principal portrait is supplied, the homepage keeps its neutral portrait placeholder rather than misidentifying another person.
 
-## How to add real photographs
+## How to add or replace photographs
 
-Place each photograph at the exact path below (keep filenames lowercase) and rebuild or redeploy the site. Each page automatically detects the file and displays it via `next/image` — no code edits are required.
+Place each photograph at the exact path below (keep filenames lowercase) and rebuild or redeploy the site. The pages detect the campus and principal photo slots automatically; the gallery and feature images reference their paths in the source.
 
-### Core campus photographs
+### Core school photographs
 
-| File path | Where it appears | Recommended size |
+| File path | Where it appears | Supplied size |
 | --- | --- | --- |
-| `public/images/hero/campus.jpg` | Homepage hero (`/`) | `1600 × 1067 px` (3:2 landscape JPG) |
-| `public/images/principal.jpg` | Chief Principal section on `/` | `800 × 1000 px` (4:5 portrait JPG) |
-| `public/images/campus-location.jpg` | Campus location section on `/contact` | `1200 × 675 px` (16:9 landscape JPG) |
+| `public/images/school/hero-assembly.jpg` | Homepage campus hero (`/`) | `1599 × 899 px` landscape JPG |
+| `public/images/school/gallery-04.jpg` | Campus entrance on `/contact` | `1599 × 899 px` landscape JPG |
+| `public/images/school/academics-study.jpg` | Feature image on `/academics` | `1599 × 899 px` landscape JPG |
+| `public/images/school/about-prize-1.jpg` and `about-prize-2.jpg` | Prize-giving photographs on `/about` | Portrait JPGs |
+| `public/images/principal.jpg` | Chief Principal section on `/` | `800 × 1000 px` portrait JPG |
 
 ### Event gallery photographs (`/gallery`)
 
-Recommended size: `1200 × 800 px` or `960 × 640 px` (3:2 landscape JPG). To rename albums, change captions, or add more photographs, edit `galleryAlbums` in `src/data/mock-school-data.ts`.
+The uploaded gallery photographs are assigned to the existing event albums in `src/data/mock-school-data.ts`. Gallery cards and the lightbox use responsive `next/image` sizes.
 
 | Album | File paths |
 | --- | --- |
-| Prayer Day 2024 | `public/images/gallery/prayer-1.jpg`, `public/images/gallery/prayer-2.jpg`, `public/images/gallery/prayer-3.jpg` |
-| AGM & Prize Giving 2024 | `public/images/gallery/agm-1.jpg`, `public/images/gallery/agm-2.jpg`, `public/images/gallery/agm-3.jpg` |
-| STEM Innovation Fair 2024 | `public/images/gallery/stem-1.jpg`, `public/images/gallery/stem-2.jpg`, `public/images/gallery/stem-3.jpg` |
-| KSSSA Sports 2024 | `public/images/gallery/sports-1.jpg`, `public/images/gallery/sports-2.jpg`, `public/images/gallery/sports-3.jpg` |
+| Prayer Day 2024 | `gallery-05.jpg`, `gallery-08.jpg`, `gallery-17.jpg` |
+| AGM & Prize Giving 2024 | `gallery-06.jpg`, `gallery-07.jpg`, `gallery-09.jpg`, `gallery-12.jpg` |
+| STEM Innovation Fair 2024 | `gallery-04.jpg`, `gallery-11.jpg`, `gallery-14.jpg`, `gallery-15.jpg` |
+| KSSSA Sports 2024 | `gallery-10.jpg`, `gallery-18.jpg`, `gallery-19.jpg`, `gallery-23.jpg` |
+
+All event gallery files are under `public/images/school/`. Recommended gallery source size is around `1200 × 800 px` or larger in a 3:2 landscape ratio.
 
 ### Official brand assets (keep in place)
 

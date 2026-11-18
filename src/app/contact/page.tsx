@@ -201,7 +201,7 @@ export default function ContactPage() {
               </dl>
             </section>
 
-            {/* Campus Gate / Location Photo Slot (reads from public/images/campus-location.jpg) */}
+            {/* Campus entrance photograph from the supplied school photo collection */}
             <section
               data-reveal=""
               aria-labelledby="campus-location-heading"
@@ -210,7 +210,7 @@ export default function ContactPage() {
               <PhotoSlot
                 src={PHOTO_SLOTS.campusLocation}
                 exists={hasCampusPhoto}
-                alt="Main gate and administration block at Mumbi Girls Senior School, Mukuyu, Murang'a County"
+                alt="Students gathered near the Mumbi Girls Senior School campus entrance"
                 width={1200}
                 height={675}
                 sizes="(max-width: 1024px) 100vw, 40vw"

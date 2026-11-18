@@ -3,27 +3,23 @@ import { existsSync } from 'node:fs';
 import path from 'node:path';
 
 /**
- * Real photograph file paths expected under `/public`.
- *
- * To add or replace a school photograph, place the image file at the exact
- * path under `public/` (for example, `public/images/hero/campus.jpg`) and
- * redeploy. No code changes are required — each component checks whether the
- * file exists and switches automatically from its placeholder state to
- * rendering the real photograph via `next/image`.
+ * Root-relative paths for real photographs expected under `public/`.
+ * Each slot checks for its file and switches from a placeholder to
+ * `next/image` automatically when the photograph is supplied.
  */
 export const PHOTO_SLOTS = {
-  /** Homepage hero photograph (recommended: 1600x1067 or 1920x1280 landscape JPG) */
-  heroCampus: '/images/hero/campus.jpg',
+  /** Homepage hero photograph supplied with the school photo collection. */
+  heroCampus: '/images/school/hero-assembly.jpg',
   /** Chief Principal portrait on the homepage (recommended: 800x1000 portrait JPG) */
   principalPortrait: '/images/principal.jpg',
-  /** Campus gate or administration block on /contact (recommended: 1200x675 landscape JPG) */
-  campusLocation: '/images/campus-location.jpg',
+  /** Campus entrance photograph shown on /contact. */
+  campusLocation: '/images/school/gallery-04.jpg',
 } as const;
 
 const PUBLIC_ROOT = path.join(process.cwd(), 'public');
 
 /**
- * Checks whether a root-relative asset path (e.g. `/images/hero/campus.jpg`)
+ * Checks whether a root-relative asset path (e.g. `/images/school/hero-assembly.jpg`)
  * exists inside `public/` at build/render time.
  */
 export function publicAssetExists(publicSrc: string): boolean {
