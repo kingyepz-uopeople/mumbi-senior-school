@@ -1,12 +1,14 @@
+import SectionStemBackdrop from '@/components/shared/SectionStemBackdrop';
 import { schoolInfo } from '@/data/mock-school-data';
 
 export default function FoundationalPillars() {
   return (
     <section
       aria-labelledby="school-ethos-heading"
-      className="py-16 sm:py-24 bg-white border-y border-slate-200"
+      className="relative py-16 sm:py-24 bg-white border-y border-slate-200"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+      <SectionStemBackdrop variant="ethos" />
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
           {/* Left Column: Motto, Mission & Vision */}
           <div data-reveal="" className="lg:col-span-5">

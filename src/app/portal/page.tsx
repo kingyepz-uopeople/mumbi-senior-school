@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import PageHero from '@/components/shared/PageHero';
+import SectionStemBackdrop from '@/components/shared/SectionStemBackdrop';
 import { schoolInfo } from '@/data/mock-school-data';
 import { buildPageMetadata } from '@/lib/site';
 
@@ -41,7 +42,9 @@ export default function PortalComingSoonPage() {
         subtitle="Student, parent, and staff login accounts are scheduled for a later phase. Public circulars, holiday assignments, and fee schedules remain available below without sign-in."
       />
 
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 py-12 sm:py-16 space-y-12">
+      <div className="relative">
+        <SectionStemBackdrop variant="portal" />
+        <div className="relative max-w-5xl mx-auto px-4 sm:px-6 py-12 sm:py-16 space-y-12">
         {/* Status Notice */}
         <section
           data-reveal=""
@@ -146,6 +149,7 @@ export default function PortalComingSoonPage() {
             only by {schoolInfo.name} ({schoolInfo.postalAddress}).
           </p>
         </section>
+        </div>
       </div>
     </div>
   );

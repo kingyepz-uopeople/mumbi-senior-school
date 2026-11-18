@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import OfflineRetryButton from '@/components/pwa/OfflineRetryButton';
+import SectionStemBackdrop from '@/components/shared/SectionStemBackdrop';
 import { schoolInfo } from '@/data/mock-school-data';
 import { buildPageMetadata } from '@/lib/site';
 
@@ -15,8 +16,9 @@ export const metadata: Metadata = buildPageMetadata({
 
 export default function OfflinePage() {
   return (
-    <div className="bg-slate-bg py-14 sm:py-20 px-4 sm:px-6">
-      <div className="max-w-2xl mx-auto bg-white border border-slate-200 border-t-2 border-t-primary p-6 sm:p-10 space-y-6">
+    <div className="relative bg-slate-bg py-14 sm:py-20 px-4 sm:px-6">
+      <SectionStemBackdrop variant="notices" />
+      <div className="relative max-w-2xl mx-auto bg-white border border-slate-200 border-t-2 border-t-primary p-6 sm:p-10 space-y-6">
         <div className="flex items-start gap-4">
           <Image
             src="/images/mumbi-logo.png"

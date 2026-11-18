@@ -271,6 +271,53 @@
   }
 }
 
+/* Lighter, calmer drift loops for white & #F8FAFC content section edges */
+@keyframes section-stem-drift-a {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate3d(6px, -5px, 0) rotate(2deg);
+  }
+}
+
+@keyframes section-stem-drift-b {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate3d(-6px, 5px, 0) rotate(-2.2deg);
+  }
+}
+
+@keyframes section-stem-drift-c {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  33% {
+    transform: translate3d(5px, 4px, 0) rotate(-1.6deg);
+  }
+  66% {
+    transform: translate3d(-5px, 5px, 0) rotate(1.8deg);
+  }
+}
+
+@keyframes section-stem-drift-d {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  33% {
+    transform: translate3d(-5px, -5px, 0) rotate(2deg);
+  }
+  66% {
+    transform: translate3d(5px, -3px, 0) rotate(-1.5deg);
+  }
+}
+
 .hero-word-mask {
   display: inline-block;
   overflow: hidden;
@@ -302,6 +349,18 @@
     left: var(--stem-x);
     top: var(--stem-y);
     transform: rotate(var(--stem-tilt, 0deg));
+  }
+}
+
+/* Sparse edge & corner STEM motifs for light (#FFFFFF / #F8FAFC) sections */
+.section-stem-item {
+  transform: rotate(var(--stem-tilt, 0deg));
+  transform-origin: center center;
+}
+
+@media (max-width: 639px) {
+  .section-stem-mobile-scale {
+    transform: rotate(var(--stem-tilt, 0deg)) scale(0.72);
   }
 }
 
@@ -447,8 +506,26 @@
       var(--stem-delay, 0s) infinite;
   }
 
-  /* Pause background drift whenever hero is off-screen or browser tab is hidden */
-  .hero-stem-field[data-paused='true'] .hero-stem-float {
+  .section-stem-float[data-drift='a'] {
+    animation: section-stem-drift-a var(--stem-duration, 44s) ease-in-out
+      var(--stem-delay, 0s) infinite;
+  }
+  .section-stem-float[data-drift='b'] {
+    animation: section-stem-drift-b var(--stem-duration, 46s) ease-in-out
+      var(--stem-delay, 0s) infinite;
+  }
+  .section-stem-float[data-drift='c'] {
+    animation: section-stem-drift-c var(--stem-duration, 42s) ease-in-out
+      var(--stem-delay, 0s) infinite;
+  }
+  .section-stem-float[data-drift='d'] {
+    animation: section-stem-drift-d var(--stem-duration, 48s) ease-in-out
+      var(--stem-delay, 0s) infinite;
+  }
+
+  /* Pause background drift whenever hero or section is off-screen or tab hidden */
+  .hero-stem-field[data-paused='true'] .hero-stem-float,
+  .section-stem-field[data-paused='true'] .section-stem-float {
     animation-play-state: paused;
   }
 
@@ -490,6 +567,7 @@
   .hero-typewriter-hold,
   .hero-rule,
   .hero-stem-float,
+  .section-stem-float,
   .hero-stem-layer-far,
   .hero-stem-layer-near,
   [data-reveal] {

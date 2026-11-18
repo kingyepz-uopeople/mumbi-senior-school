@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { ArrowRight, Clock, Mail, MapPin, Phone } from 'lucide-react';
 import PageHero from '@/components/shared/PageHero';
 import PhotoSlot from '@/components/shared/PhotoSlot';
+import SectionStemBackdrop from '@/components/shared/SectionStemBackdrop';
 import ContactForm from '@/components/contact/ContactForm';
 import { schoolInfo } from '@/data/mock-school-data';
 import { PHOTO_SLOTS, publicAssetExists } from '@/lib/media';
@@ -34,7 +35,9 @@ export default function ContactPage() {
         ]}
       />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-16 space-y-12">
+      <div className="relative">
+        <SectionStemBackdrop variant="contact" />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-16 space-y-12">
         {/* Admissions Guidance Band */}
         <section
           id="admissions"
@@ -244,6 +247,7 @@ export default function ContactPage() {
 
             <ContactForm />
           </section>
+        </div>
         </div>
       </div>
     </div>

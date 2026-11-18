@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import PhotoSlot from '@/components/shared/PhotoSlot';
+import SectionStemBackdrop from '@/components/shared/SectionStemBackdrop';
 import { principals, schoolInfo } from '@/data/mock-school-data';
 import { PHOTO_SLOTS, publicAssetExists } from '@/lib/media';
 
@@ -12,9 +13,10 @@ export default function PrincipalWelcome() {
   return (
     <section
       aria-labelledby="principal-welcome-heading"
-      className="py-16 sm:py-24 bg-slate-bg"
+      className="relative py-16 sm:py-24 bg-slate-bg"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+      <SectionStemBackdrop variant="welcome" />
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 lg:gap-16 items-start">
           {/* Portrait Frame (reads from public/images/principal.jpg) */}
           <div data-reveal="" className="md:col-span-4 max-w-xs w-full">

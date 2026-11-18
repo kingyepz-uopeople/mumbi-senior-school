@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
+import SectionStemBackdrop from '@/components/shared/SectionStemBackdrop';
 import { newsItems } from '@/data/mock-school-data';
 import { parseDateKE, toIsoDate } from '@/lib/utils';
 
@@ -21,9 +22,10 @@ export default function LatestNews() {
     <section
       id="latest-news"
       aria-labelledby="latest-news-heading"
-      className="py-16 sm:py-24 bg-slate-bg scroll-mt-28"
+      className="relative py-16 sm:py-24 bg-slate-bg scroll-mt-28"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+      <SectionStemBackdrop variant="notices" />
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
         <div
           data-reveal=""
           className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8"

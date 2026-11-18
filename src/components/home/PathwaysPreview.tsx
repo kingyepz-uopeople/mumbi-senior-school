@@ -3,6 +3,7 @@
 import { useRef, useState } from 'react';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
+import SectionStemBackdrop from '@/components/shared/SectionStemBackdrop';
 import { cbcPathways } from '@/data/mock-school-data';
 
 interface PathwaysTabsProps {
@@ -138,9 +139,10 @@ export default function PathwaysPreview() {
   return (
     <section
       aria-labelledby="cbc-pathways-heading"
-      className="py-16 sm:py-24 bg-slate-bg"
+      className="relative py-16 sm:py-24 bg-slate-bg"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+      <SectionStemBackdrop variant="stem" />
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
         <div
           data-reveal=""
           className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8"

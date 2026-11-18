@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import PageHero from '@/components/shared/PageHero';
+import SectionStemBackdrop from '@/components/shared/SectionStemBackdrop';
 import ExploreTabs from '@/components/explore/ExploreTabs';
 import { buildPageMetadata } from '@/lib/site';
 
@@ -26,8 +27,11 @@ export default function ExplorePage() {
         ]}
       />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
-        <ExploreTabs />
+      <div className="relative">
+        <SectionStemBackdrop variant="student-life" />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
+          <ExploreTabs />
+        </div>
       </div>
     </div>
   );
