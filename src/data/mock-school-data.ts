@@ -22,6 +22,8 @@ import {
 import { formatCPlusShare, kcse2024, kcse2025 } from '@/data/kcse';
 
 // ── School Profile ──────────────────────────────────────────
+const campusTownship = "Murang'a Township";
+
 export const schoolInfo: SchoolInfo = {
   name: 'Mumbi Girls Senior School',
   motto: 'Determined to Excel',
@@ -64,8 +66,8 @@ export const schoolInfo: SchoolInfo = {
   knecCode: '10204102',
   moeReg: 'F2030609',
   postalAddress: "P.O. Box 115 - 10200, Murang'a",
-  physicalLocation:
-    "Mukuyu Sub-location, Kiharu Constituency, Murang'a East, Murang'a County, Kenya",
+  locationShort: campusTownship,
+  physicalLocation: `${campusTownship}, Mumbi area, near Mjini Primary School`,
   officeHours: 'Monday – Friday: 08:00 – 17:00 | Weekends: Closed',
   officeHoursShort: 'Mon–Fri: 08:00 – 17:00',
   email: 'mumbigirls1968@gmail.com',
@@ -77,7 +79,7 @@ export const schoolInfo: SchoolInfo = {
 
 // ── Quick Facts ─────────────────────────────────────────────
 export const quickStats: QuickStat[] = [
-  { label: 'Established', value: '1960', detail: "Mukuyu, Murang'a County" },
+  { label: 'Established', value: String(schoolInfo.founded), detail: schoolInfo.locationShort },
   {
     label: 'Student Enrolment',
     value: '1,200+',
@@ -745,7 +747,7 @@ export const boardingSections: BoardingSection[] = [
     id: 'welfare',
     title: 'Dormitories, Health & Safety',
     description:
-      'All students reside in supervised boarding houses on the Mukuyu compound throughout the school term.',
+      'All students reside in supervised boarding houses on campus throughout the school term.',
     highlights: [
       '24-hour gate security and house-mistress supervision in dormitories',
       'On-site school sanatorium with hospital referral procedures when required',
@@ -883,6 +885,69 @@ export const downloads: DownloadItem[] = [
 // ── Gallery Albums ──────────────────────────────────────────
 // Supplied school photographs live under `public/images/school/`.
 export const galleryAlbums: GalleryAlbum[] = [
+  {
+    id: 'school-campus',
+    name: 'School Campus',
+    description:
+      'A look around Mumbi Girls Senior School, from the main gate to the Tahidi study area and academic buildings.',
+    coverImage: '/images/school/gallery-campus-serenity.jpg',
+    images: [
+      {
+        id: 16,
+        src: '/images/school/gallery-campus-serenity.jpg',
+        alt: 'Elevated view of campus lawns, palm trees, paths, and blue-pillared buildings',
+        caption: 'Serenity from Above',
+        event: 'School Campus',
+        width: 1600,
+        height: 777,
+      },
+      {
+        id: 17,
+        src: '/images/school/gallery-campus-green-walk.jpg',
+        alt: 'Paved campus walkway with trees and lawns behind low blue walls',
+        caption: 'The Green Walk',
+        event: 'School Campus',
+        width: 1600,
+        height: 900,
+      },
+      {
+        id: 18,
+        src: '/images/school/gallery-campus-gate.jpg',
+        alt: 'Blue main gate with the school motto Determined to Excel',
+        caption: 'Gateway to Excellence',
+        event: 'School Campus',
+        width: 1600,
+        height: 900,
+      },
+      {
+        id: 19,
+        src: '/images/school/gallery-campus-tahidi.jpg',
+        alt: 'Outdoor study tables on the lawn in the Tahidi area',
+        caption: 'Tahidi: Room to Think',
+        event: 'School Campus',
+        width: 1600,
+        height: 900,
+      },
+      {
+        id: 20,
+        src: '/images/school/gallery-campus-learning-corridors.jpg',
+        alt: 'Long covered corridor beside a landscaped courtyard',
+        caption: 'Corridors of Discovery',
+        event: 'School Campus',
+        width: 1600,
+        height: 823,
+      },
+      {
+        id: 21,
+        src: '/images/school/gallery-campus-academic-block.jpg',
+        alt: 'Three-storey academic block with blue trim and the Mumbi Girls sign',
+        caption: 'Building Bright Futures',
+        event: 'School Campus',
+        width: 1600,
+        height: 900,
+      },
+    ],
+  },
   {
     id: 'prayer-day-2024',
     name: 'Prayer Day 2024',

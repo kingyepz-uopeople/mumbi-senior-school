@@ -8,6 +8,7 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import MobileInstallBanner from '@/components/layout/MobileInstallBanner';
 import ScrollRevealObserver from '@/components/shared/ScrollRevealObserver';
+import { schoolInfo } from '@/data/mock-school-data';
 import { DEFAULT_OG_IMAGE, SITE_NAME, SITE_URL } from '@/lib/site';
 
 const inter = localFont({
@@ -50,21 +51,22 @@ export const viewport: Viewport = {
   themeColor: '#115191',
 };
 
+const schoolDescription = `${SITE_NAME} — ${schoolInfo.motto}. ${schoolInfo.category} in ${schoolInfo.physicalLocation}. Established ${schoolInfo.founded}. KNEC ${schoolInfo.knecCode}, MoE ${schoolInfo.moeReg}.`;
+
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: `${SITE_NAME} | Mukuyu, Murang'a County`,
+    default: `${SITE_NAME} | ${schoolInfo.locationShort}`,
     template: `%s | ${SITE_NAME}`,
   },
-  description:
-    "Mumbi Girls Senior School — Determined to Excel. C2 public girls' boarding senior school in Mukuyu Sub-location, Kiharu Constituency, Murang'a County, established in 1960. KNEC 10204102, MoE F2030609.",
+  description: schoolDescription,
   keywords: [
     'Mumbi Girls Senior School',
     'KNEC 10204102',
     'MoE F2030609',
-    "Murang'a",
-    'Mukuyu',
-    'Kiharu',
+    schoolInfo.locationShort,
+    'Mumbi area',
+    'Mjini Primary School',
     'Kenya senior school',
     'girls boarding school',
     'CBC pathways',
@@ -90,8 +92,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: `${SITE_NAME} | Determined to Excel`,
-    description:
-      "Determined to Excel — C2 public girls' boarding senior school in Mukuyu, Kiharu, Murang'a County, Kenya. Established 1960. KNEC 10204102, MoE F2030609.",
+    description: schoolDescription,
     url: SITE_URL,
     siteName: SITE_NAME,
     locale: 'en_KE',
@@ -101,8 +102,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: `${SITE_NAME} | Determined to Excel`,
-    description:
-      "Mumbi Girls Senior School — Determined to Excel. Mukuyu, Murang'a County (Est. 1960, KNEC 10204102). CBC Senior School pathways, circulars, and downloads.",
+    description: schoolDescription,
     images: [DEFAULT_OG_IMAGE.url],
   },
 };

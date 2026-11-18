@@ -169,8 +169,8 @@ export default function AdmissionsPage() {
                 <div>
                   <h3 className="font-serif text-lg font-bold text-slate-900">Check before you travel</h3>
                   <p className="mt-1 text-sm leading-relaxed text-slate-700">
-                    Confirm when to arrive at the Mukuyu campus and where to
-                    check in, especially if the reporting date changes.
+                    The school is in {schoolInfo.physicalLocation}. Confirm your
+                    arrival time and where to check in before travelling.
                   </p>
                 </div>
               </li>

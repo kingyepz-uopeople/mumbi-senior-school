@@ -75,7 +75,7 @@ export default function CampusHero() {
                   data-hero-step="1"
                   className="hero-rise text-xs sm:text-sm font-semibold uppercase tracking-[0.14em] text-blue-100 tabular-nums"
                 >
-                  Mukuyu, Murang&apos;a County · Est. {schoolInfo.founded}
+                  {schoolInfo.locationShort} · Est. {schoolInfo.founded}
                 </p>
 
                 <HeroMaskedTitle
@@ -115,10 +115,9 @@ export default function CampusHero() {
               data-hero-step="intro"
               className="hero-rise text-base sm:text-lg text-white/90 leading-relaxed max-w-2xl"
             >
-              A {schoolInfo.category} in Mukuyu Sub-location, Kiharu
-              Constituency, offering Senior School instruction in STEM, Social
-              Sciences, and Arts &amp; Sports Science under Kenya&apos;s
-              Competency-Based Curriculum.
+              A {schoolInfo.category} in {schoolInfo.physicalLocation}. We offer
+              STEM, Social Sciences, and Arts &amp; Sports Science under
+              Kenya&apos;s Competency-Based Curriculum.
             </p>
 
             {/* Two Clear Actions */}
