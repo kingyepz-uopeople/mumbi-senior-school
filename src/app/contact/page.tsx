@@ -45,7 +45,7 @@ export default function ContactPage() {
           id="admissions"
           data-reveal=""
           aria-labelledby="admissions-heading"
-          className="scroll-mt-28 bg-white border border-slate-200 border-l-4 border-l-primary p-6 sm:p-8 flex flex-col lg:flex-row lg:items-center justify-between gap-6"
+          className="scroll-mt-28 bg-white/50 border border-slate-200 border-l-4 border-l-primary p-6 sm:p-8 flex flex-col lg:flex-row lg:items-center justify-between gap-6"
         >
           <div className="max-w-2xl">
             <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary mb-1.5">
@@ -93,7 +93,7 @@ export default function ContactPage() {
             <section
               data-reveal=""
               aria-labelledby="official-details-heading"
-              className="bg-white border border-slate-200 border-t-2 border-t-primary p-6 sm:p-7"
+              className="bg-white/50 border border-slate-200 border-t-2 border-t-primary p-6 sm:p-7"
             >
               <div className="flex items-start gap-3.5 pb-5 mb-5 border-b border-slate-200">
                 <Image
@@ -239,7 +239,7 @@ export default function ContactPage() {
             data-reveal=""
             data-reveal-delay="1"
             aria-labelledby="inquiry-form-heading"
-            className="lg:col-span-7 bg-white border border-slate-200 border-t-2 border-t-primary p-6 sm:p-9"
+            className="lg:col-span-7 bg-white/55 border border-slate-200 border-t-2 border-t-primary p-6 sm:p-9"
           >
             <div className="pb-5 mb-6 border-b border-slate-200">
               <BlurRevealHeading

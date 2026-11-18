@@ -266,7 +266,7 @@ export default function GalleryBrowser({ availableSrcs }: GalleryBrowserProps) {
                   <div
                     role="img"
                     aria-label={`Photo coming soon — ${img.alt}`}
-                    className="relative w-full aspect-3/2 bg-slate-100 border border-slate-300 flex flex-col items-center justify-center p-6 text-center"
+                    className="relative w-full aspect-3/2 bg-slate-100/65 border border-slate-300 flex flex-col items-center justify-center p-6 text-center"
                   >
                     <div
                       aria-hidden="true"

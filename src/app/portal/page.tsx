@@ -50,7 +50,7 @@ export default function PortalComingSoonPage() {
         <section
           data-reveal=""
           aria-labelledby="portal-status-heading"
-          className="bg-white border border-slate-200 border-t-2 border-t-primary p-6 sm:p-10"
+          className="bg-white/45 border border-slate-200 border-t-2 border-t-primary p-6 sm:p-10"
         >
           <div className="flex flex-col sm:flex-row items-start gap-6 sm:gap-8">
             <div className="w-24 sm:w-28 shrink-0 rounded-xs bg-[#f7f7f7] border border-slate-200 p-2">
@@ -123,7 +123,7 @@ export default function PortalComingSoonPage() {
             Planned Portal Sections
           </BlurRevealHeading>
 
-          <div className="bg-white border-t-2 border-t-primary border-x border-b border-slate-200 grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-slate-200">
+          <div className="bg-white/45 border-t-2 border-t-primary border-x border-b border-slate-200 grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-slate-200">
             {UPCOMING_MODULES.map((module, idx) => (
               <article
                 key={module.title}

@@ -111,10 +111,10 @@ export default async function NewsArticlePage({
       <div className="relative">
         <SectionStemBackdrop variant="article" />
         <div className="relative max-w-4xl mx-auto px-4 sm:px-6 py-12 sm:py-16 space-y-14">
-        <article
-          data-reveal=""
-          className="bg-white border border-slate-200 border-t-2 border-t-primary p-6 sm:p-10"
-        >
+          <article
+            data-reveal=""
+            className="bg-white/60 border border-slate-200 border-t-2 border-t-primary p-6 sm:p-10"
+          >
           <p className="font-serif text-lg sm:text-xl text-slate-900 leading-relaxed pb-6 mb-6 border-b border-slate-200">
             {item.excerpt}
           </p>
@@ -184,7 +184,7 @@ export default async function NewsArticlePage({
               </Link>
             </div>
 
-            <div className="bg-white border-t-2 border-t-primary border-x border-b border-slate-200 divide-y divide-slate-200">
+            <div className="bg-white/45 border-t-2 border-t-primary border-x border-b border-slate-200 divide-y divide-slate-200">
               {relatedItems.map((related) => {
                 const catClass =
                   newsCategoryTextClasses[related.category] ??

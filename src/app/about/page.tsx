@@ -161,7 +161,7 @@ export default function AboutPage() {
         aria-labelledby="about-mission-heading"
         className="relative scroll-mt-28 py-16 sm:py-20 bg-slate-bg border-b border-slate-200"
       >
-        <SectionStemBackdrop variant="ethos" />
+        <SectionStemBackdrop variant="about-ethos" />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 space-y-12">
           <div data-reveal="" className="max-w-2xl">
             <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary mb-2">
@@ -179,7 +179,7 @@ export default function AboutPage() {
           <div
             data-reveal=""
             data-reveal-delay="1"
-            className="bg-white border-t-2 border-t-primary border-x border-b border-slate-200 grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-slate-200"
+            className="bg-white/35 border-t-2 border-t-primary border-x border-b border-slate-200 grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-slate-200"
           >
             <div className="p-6 sm:p-8">
               <h3 className="font-sans text-xs font-semibold uppercase tracking-[0.12em] text-primary mb-3">
@@ -268,7 +268,7 @@ export default function AboutPage() {
             {/* English Anthem */}
             <article
               data-reveal=""
-              className="bg-slate-bg border border-slate-200 border-t-2 border-t-primary p-6 sm:p-10"
+              className="bg-slate-bg/45 border border-slate-200 border-t-2 border-t-primary p-6 sm:p-10"
             >
               <div className="flex items-baseline justify-between gap-4 pb-4 mb-6 border-b border-slate-200">
                 <h3 className="font-serif text-xl sm:text-2xl font-bold text-slate-900">
@@ -300,7 +300,7 @@ export default function AboutPage() {
               lang="sw"
               data-reveal=""
               data-reveal-delay="1"
-              className="bg-slate-bg border border-slate-200 border-t-2 border-t-primary p-6 sm:p-10"
+              className="bg-slate-bg/45 border border-slate-200 border-t-2 border-t-primary p-6 sm:p-10"
             >
               <div className="flex items-baseline justify-between gap-4 pb-4 mb-6 border-b border-slate-200">
                 <h3 className="font-serif text-xl sm:text-2xl font-bold text-slate-900">
@@ -362,7 +362,7 @@ export default function AboutPage() {
                   {schoolInfo.founded} – Present
                 </span>
               </div>
-              <ol className="bg-white border-x border-b border-slate-200 divide-y divide-slate-200">
+              <ol className="bg-white/45 border-x border-b border-slate-200 divide-y divide-slate-200">
                 {principals.map((principal) => (
                   <li
                     key={principal.id}
@@ -398,7 +398,7 @@ export default function AboutPage() {
                   {schoolInfo.founded} – Present
                 </span>
               </div>
-              <ol className="bg-white border-x border-b border-slate-200 divide-y divide-slate-200">
+              <ol className="bg-white/45 border-x border-b border-slate-200 divide-y divide-slate-200">
                 {bomChairpersons.map((chair) => (
                   <li
                     key={chair.id}

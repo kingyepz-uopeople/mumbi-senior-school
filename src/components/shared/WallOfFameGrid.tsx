@@ -64,10 +64,10 @@ export default function WallOfFameGrid() {
       </p>
 
       {/* Desktop / Tablet Honours Table */}
-      <div className="hidden md:block bg-white border-t-2 border-t-primary border-x border-b border-slate-200">
+      <div className="hidden md:block bg-white/45 border-t-2 border-t-primary border-x border-b border-slate-200">
         <table className="w-full text-left border-collapse">
           <thead>
-            <tr className="border-b border-slate-200 bg-slate-bg text-xs font-semibold uppercase tracking-[0.1em] text-slate-600">
+            <tr className="border-b border-slate-200 bg-slate-bg/60 text-xs font-semibold uppercase tracking-[0.1em] text-slate-600">
               <th scope="col" className="py-3.5 px-5">
                 Candidate
               </th>
@@ -119,7 +119,7 @@ export default function WallOfFameGrid() {
       </div>
 
       {/* Mobile Stacked Honours List (zero horizontal scroll at 360px) */}
-      <ul className="md:hidden bg-white border-t-2 border-t-primary border-x border-b border-slate-200 divide-y divide-slate-200">
+      <ul className="md:hidden bg-white/45 border-t-2 border-t-primary border-x border-b border-slate-200 divide-y divide-slate-200">
         {filtered.map((student) => (
           <li key={student.id} className="p-4 space-y-1.5">
             <div className="flex items-baseline justify-between gap-3">

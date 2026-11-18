@@ -330,14 +330,20 @@
   }
 }
 
-/* Lighter, calmer drift loops for white & #F8FAFC content section edges */
+/* Soft, slow full-section drift loops for white & #F8FAFC content sections */
 @keyframes section-stem-drift-a {
   0%,
   100% {
     transform: translate3d(0, 0, 0) rotate(0deg);
   }
+  25% {
+    transform: translate3d(7px, -9px, 0) rotate(2.2deg);
+  }
   50% {
-    transform: translate3d(6px, -5px, 0) rotate(2deg);
+    transform: translate3d(11px, 3px, 0) rotate(3.4deg);
+  }
+  75% {
+    transform: translate3d(3px, 8px, 0) rotate(1.1deg);
   }
 }
 
@@ -346,8 +352,14 @@
   100% {
     transform: translate3d(0, 0, 0) rotate(0deg);
   }
+  25% {
+    transform: translate3d(-8px, 7px, 0) rotate(-2.4deg);
+  }
   50% {
-    transform: translate3d(-6px, 5px, 0) rotate(-2.2deg);
+    transform: translate3d(-5px, -10px, 0) rotate(-3.8deg);
+  }
+  75% {
+    transform: translate3d(7px, -5px, 0) rotate(-1.3deg);
   }
 }
 
@@ -357,10 +369,10 @@
     transform: translate3d(0, 0, 0) rotate(0deg);
   }
   33% {
-    transform: translate3d(5px, 4px, 0) rotate(-1.6deg);
+    transform: translate3d(10px, 7px, 0) rotate(-2.8deg);
   }
   66% {
-    transform: translate3d(-5px, 5px, 0) rotate(1.8deg);
+    transform: translate3d(-7px, 9px, 0) rotate(2.5deg);
   }
 }
 
@@ -370,10 +382,10 @@
     transform: translate3d(0, 0, 0) rotate(0deg);
   }
   33% {
-    transform: translate3d(-5px, -5px, 0) rotate(2deg);
+    transform: translate3d(-7px, -9px, 0) rotate(3.2deg);
   }
   66% {
-    transform: translate3d(5px, -3px, 0) rotate(-1.5deg);
+    transform: translate3d(8px, -4px, 0) rotate(-2.2deg);
   }
 }
 
@@ -411,15 +423,29 @@
   }
 }
 
-/* Sparse edge & corner STEM motifs for light (#FFFFFF / #F8FAFC) sections */
+/* Full-section crest-blue (#115191) STEM motifs for #FFFFFF & #F8FAFC sections */
+.section-stem-field svg {
+  stroke-width: 1.4;
+}
+
 .section-stem-item {
-  transform: rotate(var(--stem-tilt, 0deg));
+  left: var(--s-mx);
+  top: var(--s-my);
+  transform: rotate(var(--stem-tilt, 0deg)) scale(var(--s-mscale, 1));
   transform-origin: center center;
 }
 
-@media (max-width: 639px) {
-  .section-stem-mobile-scale {
-    transform: rotate(var(--stem-tilt, 0deg)) scale(0.72);
+@media (min-width: 640px) {
+  .section-stem-item {
+    left: var(--s-x);
+    top: var(--s-y);
+    transform: rotate(var(--stem-tilt, 0deg)) scale(0.85);
+  }
+}
+
+@media (min-width: 1024px) {
+  .section-stem-item {
+    transform: rotate(var(--stem-tilt, 0deg));
   }
 }
 
@@ -677,6 +703,12 @@
   }
 
   .hero-pathways-animated {
+    display: none !important;
+  }
+}
+
+@media print {
+  .section-stem-field {
     display: none !important;
   }
 }

@@ -86,7 +86,7 @@ export function PathwaysTabs({ idPrefix = 'home-pathway' }: PathwaysTabsProps) {
           {activePathway.summary}
         </p>
 
-        <div className="bg-white border-t-2 border-t-primary border-x border-b border-slate-200 grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-slate-200">
+        <div className="bg-white/45 border-t-2 border-t-primary border-x border-b border-slate-200 grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-slate-200">
           {activePathway.tracks.map((track) => (
             <article
               key={track.id}
