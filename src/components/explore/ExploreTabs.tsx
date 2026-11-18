@@ -1,6 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useRef, useState } from 'react';
+import BoardingPhotos from '@/components/explore/BoardingPhotos';
 import BlurRevealHeading from '@/components/shared/BlurRevealHeading';
 import ProspectusCardArt, {
   type ProspectusArtKey,
@@ -485,6 +486,8 @@ export default function ExploreTabs() {
               supervision, and student health during the term.
             </p>
           </div>
+
+          <BoardingPhotos />
 
           <SpotlightCardGroup
             cardCount={boardingSections.length}

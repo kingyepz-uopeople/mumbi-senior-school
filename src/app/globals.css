@@ -672,19 +672,6 @@
     transform: none;
   }
 
-  [data-reveal][data-reveal-state='pending'] {
-    opacity: 0;
-    transform: translate3d(0, 10px, 0);
-  }
-
-  [data-reveal][data-reveal-state='visible'] {
-    opacity: 1;
-    transform: translate3d(0, 0, 0);
-    transition:
-      opacity 520ms var(--ease-editorial) var(--reveal-delay, 0ms),
-      transform 520ms var(--ease-editorial) var(--reveal-delay, 0ms);
-  }
-
   [data-card-cycle] {
     position: relative;
   }
@@ -718,17 +705,6 @@
   [data-card-spotlight-group][data-card-cycle-state='paused']
     [data-card-cycle][data-cycle-active='true']::after {
     animation-play-state: paused;
-  }
-
-  [data-reveal][data-reveal-state='pending']:is(
-      :focus,
-      :focus-visible,
-      :focus-within
-    ),
-  [data-reveal][data-reveal-state='visible']:is(:focus, :focus-visible) {
-    opacity: 1;
-    transform: none;
-    transition: none;
   }
 }
 

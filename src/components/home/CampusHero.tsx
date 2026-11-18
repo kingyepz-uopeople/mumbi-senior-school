@@ -124,11 +124,11 @@ export default function CampusHero() {
             {/* Two Clear Actions */}
             <div className="pt-1 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
               <Link
-                href="/contact#admissions"
+                href="/admissions"
                 data-hero-step="cta-1"
                 className="hero-rise min-h-11 inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-white hover:bg-blue-50 text-primary font-semibold text-sm transition-colors"
               >
-                <span>Admissions</span>
+                <span>Grade 10 admissions</span>
                 <ArrowRight
                   className="w-4 h-4 shrink-0 stroke-[1.75]"
                   aria-hidden="true"

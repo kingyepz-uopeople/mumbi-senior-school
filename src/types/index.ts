@@ -29,16 +29,6 @@ export interface CBCPathway {
   tracks: PathwayTrack[];
 }
 
-export interface TopStudent {
-  id: number;
-  name: string;
-  year: number;
-  meanGrade: string;
-  points: number;
-  university: string;
-  course: string;
-}
-
 export interface NewsItem {
   id: number;
   title: string;
@@ -164,7 +154,7 @@ export interface SchoolInfo {
   officeHours: string;
   officeHoursShort: string;
   email: string;
-  phonePlaceholder: string;
+  phone: string;
   founded: number;
   category: string;
   domain: string;

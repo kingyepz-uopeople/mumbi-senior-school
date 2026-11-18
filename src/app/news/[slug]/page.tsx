@@ -54,6 +54,14 @@ export default async function NewsArticlePage({
     notFound();
   }
 
+  const isArchivedAdmissionsNotice =
+    item.slug === 'admission-joining-instructions-2025';
+  const isKcseResultsNotice = item.slug === '2024-kcse-results';
+  const primaryAction = isArchivedAdmissionsNotice
+    ? { href: '/admissions', label: 'Grade 10 admissions guide' }
+    : isKcseResultsNotice
+      ? { href: '/academics#kcse-results', label: 'View KCSE results by year' }
+      : { href: '/downloads', label: 'Downloads & circulars' };
   const relatedItems = newsItems
     .filter((entry) => entry.slug !== item.slug)
     .sort(
@@ -139,10 +147,10 @@ export default async function NewsArticlePage({
 
           <div className="mt-8 flex flex-col sm:flex-row flex-wrap gap-3">
             <Link
-              href="/downloads"
+              href={primaryAction.href}
               className="min-h-11 inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full bg-primary hover:bg-primary-dark text-white text-sm font-semibold transition-colors"
             >
-              <span>Downloads &amp; circulars</span>
+              <span>{primaryAction.label}</span>
               <ArrowRight
                 className="w-4 h-4 shrink-0 stroke-[1.75]"
                 aria-hidden="true"
