@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import PageHeader from '@/components/shared/PageHeader';
+import PageHero from '@/components/shared/PageHero';
 import GalleryBrowser from '@/components/gallery/GalleryBrowser';
 import { galleryAlbums } from '@/data/mock-school-data';
 import { getAvailablePublicAssets } from '@/lib/media';
@@ -20,10 +20,11 @@ export default function GalleryPage() {
 
   return (
     <div className="bg-slate-bg">
-      <PageHeader
+      <PageHero
+        variant="gallery"
         kicker="School Archives"
         title="Photo Gallery"
-        description="Event albums from Prayer Day, the Annual General Meeting & Prize Giving, the Murang'a County STEM Innovation Fair, and KSSSA term games."
+        subtitle="Event albums from Prayer Day, the Annual General Meeting & Prize Giving, the Murang'a County STEM Innovation Fair, and KSSSA term games."
         meta={[`${galleryAlbums.length} Event Albums`, 'Mukuyu Campus']}
       />
 

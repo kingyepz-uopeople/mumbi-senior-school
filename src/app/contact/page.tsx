@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight, Clock, Mail, MapPin, Phone } from 'lucide-react';
-import PageHeader from '@/components/shared/PageHeader';
+import PageHero from '@/components/shared/PageHero';
 import PhotoSlot from '@/components/shared/PhotoSlot';
 import ContactForm from '@/components/contact/ContactForm';
 import { schoolInfo } from '@/data/mock-school-data';
@@ -21,10 +21,11 @@ export default function ContactPage() {
 
   return (
     <div className="bg-slate-bg">
-      <PageHeader
+      <PageHero
+        variant="contact"
         kicker="School Office & Admissions"
         title="Contact & Campus Location"
-        description="Enquiries on Grade 10 admissions, joining instructions, fee payments, examination records, and boarding matters."
+        subtitle="Enquiries on Grade 10 admissions, joining instructions, fee payments, examination records, and boarding matters."
         meta={[
           schoolInfo.postalAddress,
           `KNEC ${schoolInfo.knecCode}`,

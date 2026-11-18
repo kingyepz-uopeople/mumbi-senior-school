@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import PageHeader from '@/components/shared/PageHeader';
+import PageHero from '@/components/shared/PageHero';
 import {
   bomChairpersons,
   governanceRoles,
@@ -21,10 +21,11 @@ const ROMAN = ['I', 'II', 'III'] as const;
 export default function AboutPage() {
   return (
     <div className="bg-slate-bg">
-      <PageHeader
+      <PageHero
+        variant="about"
         kicker="About the School"
         title={schoolInfo.name}
-        description={`A ${schoolInfo.category} in Mukuyu Sub-location, Kiharu Constituency, Murang'a East, established in ${schoolInfo.founded}.`}
+        subtitle={`A ${schoolInfo.category} in Mukuyu Sub-location, Kiharu Constituency, Murang'a East, established in ${schoolInfo.founded}.`}
         meta={[
           `Est. ${schoolInfo.founded}`,
           `KNEC ${schoolInfo.knecCode}`,

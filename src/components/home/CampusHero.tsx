@@ -1,9 +1,10 @@
-import type { CSSProperties } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
-import HeroStemBackdrop from '@/components/home/HeroStemBackdrop';
-import HeroTypewriterLines from '@/components/home/HeroTypewriterLines';
+import HeroPathwaysRotator from '@/components/home/HeroPathwaysRotator';
+import HeroMaskedTitle from '@/components/shared/HeroMaskedTitle';
+import HeroStemBackdrop from '@/components/shared/HeroStemBackdrop';
+import HeroTypewriterText from '@/components/shared/HeroTypewriterText';
 import { schoolInfo } from '@/data/mock-school-data';
 import { PHOTO_SLOTS, publicAssetExists } from '@/lib/media';
 
@@ -27,7 +28,6 @@ const HERO_PHOTO_ALT =
 
 export default function CampusHero() {
   const hasCampusPhoto = publicAssetExists(HERO_PHOTO_PATH);
-  const schoolNameWords = schoolInfo.name.split(' ');
 
   return (
     <section
@@ -55,7 +55,7 @@ export default function CampusHero() {
       )}
 
       {/* Faint animated stroke-only school & STEM line-art layer */}
-      <HeroStemBackdrop />
+      <HeroStemBackdrop variant="home" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 pt-12 pb-14 sm:pt-16 sm:pb-20 lg:pt-24 lg:pb-24">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start lg:items-center">
@@ -87,26 +87,13 @@ export default function CampusHero() {
                   Mukuyu, Murang&apos;a County · Est. {schoolInfo.founded}
                 </p>
 
-                <h1
+                <HeroMaskedTitle
                   id="school-hero-heading"
+                  text={schoolInfo.name}
+                  baseDelayMs={110}
+                  staggerMs={75}
                   className="font-serif text-3xl sm:text-5xl lg:text-[3.25rem] font-bold text-white leading-[1.08] tracking-tight"
-                >
-                  {schoolNameWords.map((word, index) => (
-                    <span key={`${word}-${index}`}>
-                      <span className="hero-word-mask">
-                        <span
-                          className="hero-word"
-                          style={
-                            { '--word-index': index } as CSSProperties
-                          }
-                        >
-                          {word}
-                        </span>
-                      </span>
-                      {index < schoolNameWords.length - 1 ? ' ' : null}
-                    </span>
-                  ))}
-                </h1>
+                />
 
                 <div
                   data-hero-step="rule"
@@ -114,7 +101,22 @@ export default function CampusHero() {
                   aria-hidden="true"
                 />
 
-                <HeroTypewriterLines motto={schoolInfo.motto} />
+                <div className="space-y-2">
+                  <HeroTypewriterText
+                    text={schoolInfo.motto}
+                    prefix="“"
+                    suffix="”"
+                    inline
+                    startDelayMs={780}
+                    charDelayMs={44}
+                    spaceDelayMs={62}
+                    caretHoldMs={2200}
+                    caretFadeMs={500}
+                    className="font-serif italic text-xl sm:text-2xl text-white/95 leading-snug"
+                  />
+
+                  <HeroPathwaysRotator />
+                </div>
               </div>
             </div>
 

@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import PageHeader from '@/components/shared/PageHeader';
+import PageHero from '@/components/shared/PageHero';
 import DownloadsBrowser from '@/components/downloads/DownloadsBrowser';
 import { schoolInfo } from '@/data/mock-school-data';
 import { buildPageMetadata } from '@/lib/site';
@@ -14,10 +14,11 @@ export const metadata: Metadata = buildPageMetadata({
 export default function DownloadsPage() {
   return (
     <div className="bg-slate-bg">
-      <PageHeader
+      <PageHero
+        variant="downloads"
         kicker="School Documents"
         title="Downloads & Circulars"
-        description="Term opening circulars, Grade 10 joining instructions, the annual fee structure, examination timetables, newsletters, and departmental holiday assignments."
+        subtitle="Term opening circulars, Grade 10 joining instructions, the annual fee structure, examination timetables, newsletters, and departmental holiday assignments."
         meta={[
           `KNEC ${schoolInfo.knecCode}`,
           'Grades 10 – 12 & Forms 3 – 4',
