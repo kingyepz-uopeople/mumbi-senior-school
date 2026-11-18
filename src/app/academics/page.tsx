@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import BlurRevealHeading from '@/components/shared/BlurRevealHeading';
 import PageHero from '@/components/shared/PageHero';
 import SectionStemBackdrop from '@/components/shared/SectionStemBackdrop';
@@ -38,25 +39,42 @@ export default function AcademicsPage() {
       >
         <SectionStemBackdrop variant="stem" />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
-          <div data-reveal="" className="max-w-2xl mb-8">
-            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary mb-2">
-              Grades 10 – 12
-            </p>
-            <BlurRevealHeading
-              id="academics-pathways-heading"
-              seed="academics-pathways"
-              className="font-serif text-2xl sm:text-3xl font-bold text-slate-900"
-            >
-              CBC Senior School Pathways
-            </BlurRevealHeading>
-            <p className="text-sm sm:text-base text-slate-600 mt-2 leading-relaxed">
-              Incoming Senior School students at {schoolInfo.name} select one of
-              three pathways according to subject placement and career plans.
-            </p>
-          </div>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
+            <div className="lg:col-span-7">
+              <div data-reveal="" className="max-w-2xl mb-8">
+                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary mb-2">
+                  Grades 10 – 12
+                </p>
+                <BlurRevealHeading
+                  id="academics-pathways-heading"
+                  seed="academics-pathways"
+                  className="font-serif text-2xl sm:text-3xl font-bold text-slate-900"
+                >
+                  CBC Senior School Pathways
+                </BlurRevealHeading>
+                <p className="text-sm sm:text-base text-slate-600 mt-2 leading-relaxed">
+                  Incoming Senior School students at {schoolInfo.name} select one of
+                  three pathways according to subject placement and career plans.
+                </p>
+              </div>
 
-          <div data-reveal="" data-reveal-delay="1">
-            <PathwaysTabs idPrefix="academics-pathway" />
+              <div data-reveal="" data-reveal-delay="1">
+                <PathwaysTabs idPrefix="academics-pathway" />
+              </div>
+            </div>
+
+            <figure data-reveal="" className="m-0 lg:col-span-5">
+              <div className="relative w-full aspect-16/9 overflow-hidden bg-slate-100 border border-slate-300">
+                <Image
+                  src="/images/school/academics-study.jpg"
+                  alt="Students studying together at classroom tables"
+                  width={1599}
+                  height={899}
+                  sizes="(max-width: 1024px) 100vw, (max-width: 1280px) 40vw, 500px"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </figure>
           </div>
         </div>
       </section>

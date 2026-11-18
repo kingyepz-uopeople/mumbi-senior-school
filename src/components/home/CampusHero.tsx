@@ -10,22 +10,12 @@ import { schoolInfo } from '@/data/mock-school-data';
 import { PHOTO_SLOTS, publicAssetExists } from '@/lib/media';
 
 /**
- * Real homepage hero photograph slot.
- *
- * To display an actual school photograph in the hero:
- *   1. Save a landscape photograph at `public/images/hero/campus.jpg`
- *      (recommended: 1600x1067 px or 1920x1280 px JPG).
- *   2. Optionally update `HERO_PHOTO_ALT` below to describe the scene.
- *   3. Rebuild or redeploy — this component detects the file automatically
- *      and renders it beneath a deep crest-blue (#0C3D6E) overlay with the
- *      faint animated school/STEM line-art layer sitting directly above it.
- *
- * Until `public/images/hero/campus.jpg` is added, the hero renders on solid
- * crest blue (#115191) with the faint animated school/STEM line-art layer.
+ * Real homepage hero photograph from the supplied school photo collection.
+ * The photo renders beneath the existing deep crest-blue overlay, with the
+ * faint animated school/STEM line-art layer sitting directly above it.
  */
-const HERO_PHOTO_PATH = PHOTO_SLOTS.heroCampus; // '/images/hero/campus.jpg'
-const HERO_PHOTO_ALT =
-  "Mumbi Girls Senior School campus in Mukuyu, Murang'a County";
+const HERO_PHOTO_PATH = PHOTO_SLOTS.heroCampus;
+const HERO_PHOTO_ALT = 'Students gathered outside Mumbi Girls Senior School';
 
 export default function CampusHero() {
   const hasCampusPhoto = publicAssetExists(HERO_PHOTO_PATH);
@@ -44,7 +34,7 @@ export default function CampusHero() {
             alt={HERO_PHOTO_ALT}
             fill
             sizes="100vw"
-            quality={95}
+            quality={75}
             priority
             className="z-0 object-cover object-center"
           />

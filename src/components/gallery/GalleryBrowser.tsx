@@ -10,8 +10,8 @@ import type { GalleryImage } from '@/types';
 
 interface GalleryBrowserProps {
   /**
-   * Root-relative `/images/gallery/*.jpg` paths that currently exist in
-   * `public/`. Frames without a matching file on disk display a clean neutral
+   * Root-relative `/images/school/gallery-*.jpg` paths that currently exist
+   * in `public/`. Frames without a matching file on disk display a clean neutral
    * "Photo coming soon" card rather than a placeholder illustration.
    */
   availableSrcs: string[];
@@ -247,7 +247,7 @@ export default function GalleryBrowser({ availableSrcs }: GalleryBrowserProps) {
                         {img.event} · {img.year}
                       </p>
                       <h3 className="font-serif text-base font-bold text-slate-900 group-hover:text-primary leading-snug">
-                        {img.alt}
+                        {img.caption ?? img.alt}
                       </h3>
                     </div>
                   </button>
@@ -354,7 +354,7 @@ export default function GalleryBrowser({ availableSrcs }: GalleryBrowserProps) {
                   id="gallery-lightbox-title"
                   className="font-serif text-base font-bold text-white leading-snug"
                 >
-                  {activeImage.alt}
+                  {activeImage.caption ?? activeImage.alt}
                 </h2>
 
                 {viewableImages.length > 1 && (

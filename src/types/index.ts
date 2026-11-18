@@ -126,6 +126,8 @@ export interface GalleryImage {
   id: number;
   src: string;
   alt: string;
+  /** Optional visible caption, independent of the image's concise alt text. */
+  caption?: string;
   event: string;
   year: number;
   width: number;

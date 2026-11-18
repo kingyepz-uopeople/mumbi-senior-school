@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import BlurRevealHeading from '@/components/shared/BlurRevealHeading';
 import PageHero from '@/components/shared/PageHero';
 import RegistryLogo from '@/components/shared/RegistryLogo';
@@ -165,6 +166,34 @@ export default function AboutPage() {
               </div>
             </dl>
           </aside>
+
+          <div className="lg:col-span-12 grid grid-cols-1 sm:grid-cols-2 gap-6 lg:gap-8">
+            <figure data-reveal="" className="m-0">
+              <div className="relative w-full aspect-3/4 overflow-hidden bg-slate-100 border border-slate-300">
+                <Image
+                  src="/images/school/about-prize-1.jpg"
+                  alt="Student receiving a prize from school staff"
+                  width={960}
+                  height={1280}
+                  sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 600px"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </figure>
+
+            <figure data-reveal="" data-reveal-delay="1" className="m-0">
+              <div className="relative w-full aspect-3/4 overflow-hidden bg-slate-100 border border-slate-300">
+                <Image
+                  src="/images/school/about-prize-2.jpg"
+                  alt="Student accepting a trophy during prize giving"
+                  width={1200}
+                  height={1600}
+                  sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 600px"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </figure>
+          </div>
         </div>
       </section>
 
