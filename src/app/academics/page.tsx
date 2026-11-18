@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import BlurRevealHeading from '@/components/shared/BlurRevealHeading';
 import PageHero from '@/components/shared/PageHero';
 import SectionStemBackdrop from '@/components/shared/SectionStemBackdrop';
 import { PathwaysTabs } from '@/components/home/PathwaysPreview';
@@ -18,6 +19,7 @@ export default function AcademicsPage() {
     <div className="bg-slate-bg">
       <PageHero
         variant="academics"
+        titleEffect="scramble"
         kicker="Curriculum & Examinations"
         title="Academics & CBC Pathways"
         subtitle="Senior School pathways for Grades 10 to 12 under Kenya's Competency-Based Curriculum, our five teaching departments, and recorded KCSE placements."
@@ -40,12 +42,13 @@ export default function AcademicsPage() {
             <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary mb-2">
               Grades 10 – 12
             </p>
-            <h2
+            <BlurRevealHeading
               id="academics-pathways-heading"
+              seed="academics-pathways"
               className="font-serif text-2xl sm:text-3xl font-bold text-slate-900"
             >
               CBC Senior School Pathways
-            </h2>
+            </BlurRevealHeading>
             <p className="text-sm sm:text-base text-slate-600 mt-2 leading-relaxed">
               Incoming Senior School students at {schoolInfo.name} select one of
               three pathways according to subject placement and career plans.
@@ -70,12 +73,13 @@ export default function AcademicsPage() {
             <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary mb-2">
               Teaching Faculty
             </p>
-            <h2
+            <BlurRevealHeading
               id="academics-departments-heading"
+              seed="academics-departments"
               className="font-serif text-2xl sm:text-3xl font-bold text-slate-900"
             >
               Academic Departments
-            </h2>
+            </BlurRevealHeading>
             <p className="text-sm sm:text-base text-slate-600 mt-2 leading-relaxed">
               Subject teaching, laboratory practicals, and internal examinations
               are organised under five departments.
@@ -130,12 +134,13 @@ export default function AcademicsPage() {
             <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary mb-2">
               National Examinations · KNEC {schoolInfo.knecCode}
             </p>
-            <h2
+            <BlurRevealHeading
               id="academics-wof-heading"
+              seed="academics-wof"
               className="font-serif text-2xl sm:text-3xl font-bold text-slate-900"
             >
               KCSE Roll of Honour
-            </h2>
+            </BlurRevealHeading>
             <p className="text-sm sm:text-base text-slate-600 mt-2 leading-relaxed">
               Top candidates recorded from recent KCSE sittings and the
               university degree programmes to which they were admitted.

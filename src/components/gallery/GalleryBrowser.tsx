@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import Image from 'next/image';
 import { Camera, ChevronLeft, ChevronRight, X } from 'lucide-react';
+import BlurRevealHeading from '@/components/shared/BlurRevealHeading';
 import { galleryAlbums } from '@/data/mock-school-data';
 import type { GalleryImage } from '@/types';
 
@@ -179,12 +180,14 @@ export default function GalleryBrowser({ availableSrcs }: GalleryBrowserProps) {
       <section aria-labelledby="gallery-album-heading" className="space-y-6">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2 pb-4 border-b border-slate-300">
           <div className="max-w-2xl">
-            <h2
+            <BlurRevealHeading
+              key={selectedAlbum ? selectedAlbum.id : 'all-albums'}
               id="gallery-album-heading"
+              seed={`gallery-${selectedAlbum ? selectedAlbum.id : 'all'}`}
               className="font-serif text-2xl sm:text-3xl font-bold text-slate-900"
             >
               {selectedAlbum ? selectedAlbum.name : 'All Event Albums'}
-            </h2>
+            </BlurRevealHeading>
             <p className="text-sm text-slate-600 mt-1 leading-relaxed">
               {selectedAlbum
                 ? selectedAlbum.description

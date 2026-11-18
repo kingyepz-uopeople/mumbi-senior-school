@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from 'react';
 import { Check, Download, RotateCcw, Search, X } from 'lucide-react';
+import BlurRevealHeading from '@/components/shared/BlurRevealHeading';
 import { downloads, schoolInfo } from '@/data/mock-school-data';
 import { parseDateKE, toIsoDate } from '@/lib/utils';
 import type { DownloadItem } from '@/types';
@@ -146,12 +147,13 @@ export default function DownloadsBrowser() {
         className="bg-white border border-slate-200 border-t-2 border-t-primary p-5 sm:p-7 space-y-6"
       >
         <div className="flex flex-wrap items-center justify-between gap-2 pb-4 border-b border-slate-200">
-          <h2
+          <BlurRevealHeading
             id="downloads-filter-heading"
+            seed="downloads-filter"
             className="font-serif text-xl font-bold text-slate-900"
           >
             Find a Document
-          </h2>
+          </BlurRevealHeading>
           {hasActiveFilters && (
             <button
               type="button"
@@ -313,12 +315,13 @@ export default function DownloadsBrowser() {
         className="space-y-4"
       >
         <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1">
-          <h2
+          <BlurRevealHeading
             id="downloads-results-heading"
+            seed="downloads-register"
             className="font-serif text-xl sm:text-2xl font-bold text-slate-900"
           >
             Document Register
-          </h2>
+          </BlurRevealHeading>
           <p
             role="status"
             aria-live="polite"

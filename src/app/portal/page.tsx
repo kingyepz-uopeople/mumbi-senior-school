@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
+import BlurRevealHeading from '@/components/shared/BlurRevealHeading';
 import PageHero from '@/components/shared/PageHero';
 import SectionStemBackdrop from '@/components/shared/SectionStemBackdrop';
 import { schoolInfo } from '@/data/mock-school-data';
@@ -69,12 +70,13 @@ export default function PortalComingSoonPage() {
                 Coming Soon
               </span>
 
-              <h2
+              <BlurRevealHeading
                 id="portal-status-heading"
+                seed="portal-status"
                 className="font-serif text-2xl sm:text-3xl font-bold text-slate-900"
               >
                 Online sign-in is not yet open
-              </h2>
+              </BlurRevealHeading>
 
               <p className="text-sm sm:text-base text-slate-700 leading-relaxed">
                 {schoolInfo.name} is publishing its public school website first.
@@ -113,13 +115,13 @@ export default function PortalComingSoonPage() {
 
         {/* Planned Portal Sections */}
         <section aria-labelledby="portal-modules-heading" className="space-y-5">
-          <h2
+          <BlurRevealHeading
             id="portal-modules-heading"
-            data-reveal=""
+            seed="portal-modules"
             className="font-serif text-xl sm:text-2xl font-bold text-slate-900"
           >
             Planned Portal Sections
-          </h2>
+          </BlurRevealHeading>
 
           <div className="bg-white border-t-2 border-t-primary border-x border-b border-slate-200 grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-slate-200">
             {UPCOMING_MODULES.map((module, idx) => (

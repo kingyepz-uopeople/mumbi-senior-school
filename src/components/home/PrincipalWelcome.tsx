@@ -1,6 +1,8 @@
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
+import BlurRevealHeading from '@/components/shared/BlurRevealHeading';
 import PhotoSlot from '@/components/shared/PhotoSlot';
+import ScrollHighlightText from '@/components/shared/ScrollHighlightText';
 import SectionStemBackdrop from '@/components/shared/SectionStemBackdrop';
 import { principals, schoolInfo } from '@/data/mock-school-data';
 import { PHOTO_SLOTS, publicAssetExists } from '@/lib/media';
@@ -41,23 +43,22 @@ export default function PrincipalWelcome() {
             <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary mb-2">
               Office of the Chief Principal
             </p>
-            <h2
+            <BlurRevealHeading
               id="principal-welcome-heading"
+              seed="home-principal-welcome"
               className="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-900 leading-tight"
             >
               Welcome to {schoolInfo.name}
-            </h2>
+            </BlurRevealHeading>
             <div className="w-10 h-0.5 bg-accent mt-4 mb-6" aria-hidden="true" />
 
             <div className="space-y-4 text-slate-700 text-base leading-relaxed">
-              <p>
-                Founded in {schoolInfo.founded} in Mukuyu, Murang&apos;a County,{' '}
-                {schoolInfo.name} is a {schoolInfo.category} serving over 1,200
-                students. Our daily work is straightforward: structured
-                classroom and laboratory teaching, supervised boarding life, and
-                steady preparation for national examinations and university
-                study.
-              </p>
+              <ScrollHighlightText
+                seed="home-principal-intro"
+                segments={[
+                  `Founded in ${schoolInfo.founded} in Mukuyu, Murang'a County, ${schoolInfo.name} is a ${schoolInfo.category} serving over 1,200 students. Our daily work is straightforward: structured classroom and laboratory teaching, supervised boarding life, and steady preparation for national examinations and university study.`,
+                ]}
+              />
               <p>
                 Under Kenya&apos;s Competency-Based Curriculum, Senior School
                 learners in Grades 10 to 12 study across three pathways — STEM,

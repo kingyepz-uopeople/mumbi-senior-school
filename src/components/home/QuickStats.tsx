@@ -1,3 +1,4 @@
+import CountUpStat from '@/components/shared/CountUpStat';
 import SectionStemBackdrop from '@/components/shared/SectionStemBackdrop';
 import { quickStats } from '@/data/mock-school-data';
 
@@ -24,9 +25,11 @@ export default function QuickStats() {
                 index === 2 ? 'lg:pl-8 lg:border-l lg:border-slate-200' : ''
               } ${index < 2 ? 'border-b lg:border-b-0' : 'border-b-0'}`}
             >
-              <dd className="font-serif text-3xl sm:text-4xl font-bold text-primary tracking-tight tabular-nums">
-                {stat.value}
-              </dd>
+              <CountUpStat
+                value={stat.value}
+                index={index}
+                className="font-serif text-3xl sm:text-4xl font-bold text-primary tracking-tight tabular-nums"
+              />
               <dt className="text-xs font-semibold uppercase tracking-[0.1em] text-slate-800 mt-1.5">
                 {stat.label}
               </dt>

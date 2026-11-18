@@ -3,6 +3,7 @@
 import { useRef, useState } from 'react';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
+import BlurRevealHeading from '@/components/shared/BlurRevealHeading';
 import SectionStemBackdrop from '@/components/shared/SectionStemBackdrop';
 import { cbcPathways } from '@/data/mock-school-data';
 
@@ -151,12 +152,13 @@ export default function PathwaysPreview() {
             <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary mb-2">
               Senior School Curriculum · Grades 10 – 12
             </p>
-            <h2
+            <BlurRevealHeading
               id="cbc-pathways-heading"
+              seed="home-cbc-pathways"
               className="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-900 leading-tight"
             >
               CBC Senior School Pathways
-            </h2>
+            </BlurRevealHeading>
           </div>
 
           <Link

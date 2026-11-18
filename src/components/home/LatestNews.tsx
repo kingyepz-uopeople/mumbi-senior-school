@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
+import BlurRevealHeading from '@/components/shared/BlurRevealHeading';
 import SectionStemBackdrop from '@/components/shared/SectionStemBackdrop';
 import { newsItems } from '@/data/mock-school-data';
 import { parseDateKE, toIsoDate } from '@/lib/utils';
@@ -34,12 +35,13 @@ export default function LatestNews() {
             <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary mb-2">
               School Office Notices
             </p>
-            <h2
+            <BlurRevealHeading
               id="latest-news-heading"
+              seed="home-latest-news"
               className="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-900 leading-tight"
             >
               Circulars, News &amp; Downloads
-            </h2>
+            </BlurRevealHeading>
           </div>
 
           <Link

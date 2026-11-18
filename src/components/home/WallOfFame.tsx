@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
+import BlurRevealHeading from '@/components/shared/BlurRevealHeading';
 import SectionStemBackdrop from '@/components/shared/SectionStemBackdrop';
 import WallOfFameGrid from '@/components/shared/WallOfFameGrid';
 
@@ -19,12 +20,13 @@ export default function WallOfFame() {
             <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary mb-2">
               National Examinations · KNEC 10204102
             </p>
-            <h2
+            <BlurRevealHeading
               id="home-wof-heading"
+              seed="home-roll-of-honour"
               className="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-900 leading-tight"
             >
               KCSE Roll of Honour
-            </h2>
+            </BlurRevealHeading>
             <p className="text-slate-600 text-sm sm:text-base mt-2 leading-relaxed">
               Recorded top candidates from recent KCSE sittings and their
               university degree placements.

@@ -1,3 +1,4 @@
+import BlurRevealHeading from '@/components/shared/BlurRevealHeading';
 import SectionStemBackdrop from '@/components/shared/SectionStemBackdrop';
 import { schoolInfo } from '@/data/mock-school-data';
 
@@ -15,12 +16,13 @@ export default function FoundationalPillars() {
             <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary mb-2">
               School Ethos
             </p>
-            <h2
+            <BlurRevealHeading
               id="school-ethos-heading"
+              seed="home-school-ethos"
               className="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-900 leading-tight mb-8"
             >
               Motto, Mission &amp; Vision
-            </h2>
+            </BlurRevealHeading>
 
             <div className="pl-5 border-l-2 border-accent mb-8">
               <p className="text-xs font-semibold uppercase tracking-[0.12em] text-slate-600 mb-1">

@@ -1,6 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useRef, useState } from 'react';
+import BlurRevealHeading from '@/components/shared/BlurRevealHeading';
 import {
   boardingSections,
   clubs,
@@ -160,9 +161,12 @@ export default function ExploreTabs() {
             <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary mb-2">
               Afternoon &amp; Weekend Societies
             </p>
-            <h2 className="font-serif text-2xl sm:text-3xl font-bold text-slate-900">
+            <BlurRevealHeading
+              seed="explore-clubs"
+              className="font-serif text-2xl sm:text-3xl font-bold text-slate-900"
+            >
               Clubs &amp; Uniformed Movements
-            </h2>
+            </BlurRevealHeading>
             <p className="text-sm sm:text-base text-slate-600 mt-2 leading-relaxed">
               Students join clubs and uniformed movements that meet after
               afternoon lessons and on Saturday afternoons under teacher
@@ -223,9 +227,12 @@ export default function ExploreTabs() {
             <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary mb-2">
               KSSSA &amp; Inter-House Games
             </p>
-            <h2 className="font-serif text-2xl sm:text-3xl font-bold text-slate-900">
+            <BlurRevealHeading
+              seed="explore-sports"
+              className="font-serif text-2xl sm:text-3xl font-bold text-slate-900"
+            >
               Sports &amp; Games
-            </h2>
+            </BlurRevealHeading>
             <p className="text-sm sm:text-base text-slate-600 mt-2 leading-relaxed">
               Games run daily from 16:00, with school teams entered in
               inter-house leagues and Murang&apos;a County KSSSA secondary
@@ -287,9 +294,12 @@ export default function ExploreTabs() {
             <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary mb-2 tabular-nums">
               Weekday Bell Schedule · 05:00 – 22:00
             </p>
-            <h2 className="font-serif text-2xl sm:text-3xl font-bold text-slate-900">
+            <BlurRevealHeading
+              seed="explore-routine"
+              className="font-serif text-2xl sm:text-3xl font-bold text-slate-900"
+            >
               Daily Boarding Timetable
-            </h2>
+            </BlurRevealHeading>
             <p className="text-sm sm:text-base text-slate-600 mt-2 leading-relaxed">
               The standard weekday schedule observed during the school term,
               from morning preps through evening roll call and lights out.
@@ -329,9 +339,12 @@ export default function ExploreTabs() {
             <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary mb-2">
               Pastoral Care
             </p>
-            <h2 className="font-serif text-2xl sm:text-3xl font-bold text-slate-900">
+            <BlurRevealHeading
+              seed="explore-faith"
+              className="font-serif text-2xl sm:text-3xl font-bold text-slate-900"
+            >
               Chaplaincy &amp; Faith Fellowships
-            </h2>
+            </BlurRevealHeading>
             <p className="text-sm sm:text-base text-slate-600 mt-2 leading-relaxed">
               Weekly services and student faith societies operate under staff
               patrons, with scheduled worship times for each group.
@@ -385,9 +398,12 @@ export default function ExploreTabs() {
             <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary mb-2">
               Residential Life
             </p>
-            <h2 className="font-serif text-2xl sm:text-3xl font-bold text-slate-900">
+            <BlurRevealHeading
+              seed="explore-boarding"
+              className="font-serif text-2xl sm:text-3xl font-bold text-slate-900"
+            >
               Boarding, Dining &amp; School Uniform
-            </h2>
+            </BlurRevealHeading>
             <p className="text-sm sm:text-base text-slate-600 mt-2 leading-relaxed">
               Practical arrangements for meals, official school dress, dormitory
               supervision, and student health during the term.

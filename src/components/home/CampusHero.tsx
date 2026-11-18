@@ -5,6 +5,7 @@ import HeroPathwaysRotator from '@/components/home/HeroPathwaysRotator';
 import HeroMaskedTitle from '@/components/shared/HeroMaskedTitle';
 import HeroStemBackdrop from '@/components/shared/HeroStemBackdrop';
 import HeroTypewriterText from '@/components/shared/HeroTypewriterText';
+import RegistryLogo from '@/components/shared/RegistryLogo';
 import { schoolInfo } from '@/data/mock-school-data';
 import { PHOTO_SLOTS, publicAssetExists } from '@/lib/media';
 
@@ -168,19 +169,23 @@ export default function CampusHero() {
                   {schoolInfo.category}
                 </dd>
               </div>
-              <div className="py-2.5 grid grid-cols-2 gap-4 tabular-nums">
+              <div className="py-2.5 flex items-center justify-between gap-3 tabular-nums">
                 <div>
                   <dt className="text-xs text-blue-100">KNEC Code</dt>
                   <dd className="font-semibold text-white mt-0.5">
                     {schoolInfo.knecCode}
                   </dd>
                 </div>
+                <RegistryLogo agency="knec" size="card" surface="dark" />
+              </div>
+              <div className="py-2.5 flex flex-wrap items-center justify-between gap-3 tabular-nums">
                 <div>
                   <dt className="text-xs text-blue-100">MoE Registration</dt>
                   <dd className="font-semibold text-white mt-0.5">
                     {schoolInfo.moeReg}
                   </dd>
                 </div>
+                <RegistryLogo agency="moe" size="card" surface="dark" />
               </div>
               <div className="py-2.5">
                 <dt className="text-xs text-blue-100">Postal Address</dt>

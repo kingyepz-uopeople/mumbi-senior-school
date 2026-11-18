@@ -2,8 +2,10 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight, Clock, Mail, MapPin, Phone } from 'lucide-react';
+import BlurRevealHeading from '@/components/shared/BlurRevealHeading';
 import PageHero from '@/components/shared/PageHero';
 import PhotoSlot from '@/components/shared/PhotoSlot';
+import RegistryLogo from '@/components/shared/RegistryLogo';
 import SectionStemBackdrop from '@/components/shared/SectionStemBackdrop';
 import ContactForm from '@/components/contact/ContactForm';
 import { schoolInfo } from '@/data/mock-school-data';
@@ -49,12 +51,13 @@ export default function ContactPage() {
             <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary mb-1.5">
               Senior School Admissions
             </p>
-            <h2
+            <BlurRevealHeading
               id="admissions-heading"
+              seed="contact-admissions"
               className="font-serif text-xl sm:text-2xl font-bold text-slate-900 mb-2"
             >
               Grade 10 Joining Instructions &amp; Fee Structure
-            </h2>
+            </BlurRevealHeading>
             <p className="text-sm sm:text-base text-slate-700 leading-relaxed">
               Students placed at {schoolInfo.name} (KNEC Centre{' '}
               {schoolInfo.knecCode}) can download the joining instructions
@@ -102,12 +105,13 @@ export default function ContactPage() {
                   className="w-12 h-12 rounded-xs bg-[#f7f7f7] border border-slate-200 p-1 object-contain shrink-0"
                 />
                 <div className="min-w-0">
-                  <h2
+                  <BlurRevealHeading
                     id="official-details-heading"
+                    seed="contact-office-details"
                     className="font-serif font-bold text-xl text-slate-900 leading-snug"
                   >
                     Administration Office
-                  </h2>
+                  </BlurRevealHeading>
                   <p className="text-xs text-slate-600 mt-0.5">
                     {schoolInfo.category}
                   </p>
@@ -123,6 +127,10 @@ export default function ContactPage() {
                     KNEC Centre <strong>{schoolInfo.knecCode}</strong> · MoE
                     Reg. <strong>{schoolInfo.moeReg}</strong>
                   </dd>
+                  <div className="mt-3 flex flex-wrap items-center gap-4">
+                    <RegistryLogo agency="knec" size="card" surface="light" />
+                    <RegistryLogo agency="moe" size="card" surface="light" />
+                  </div>
                 </div>
 
                 <div className="py-3.5 flex items-start gap-3">
@@ -210,12 +218,13 @@ export default function ContactPage() {
                 placeholderLabel="Photo coming soon"
               />
               <div>
-                <h2
+                <BlurRevealHeading
                   id="campus-location-heading"
+                  seed="contact-visiting"
                   className="font-serif text-lg font-bold text-slate-900"
                 >
                   Visiting the School
-                </h2>
+                </BlurRevealHeading>
                 <p className="text-xs sm:text-sm text-slate-600 mt-1 leading-relaxed">
                   The compound is in {schoolInfo.physicalLocation}. All visitors
                   sign in at the main gate and report to the administration
@@ -233,12 +242,13 @@ export default function ContactPage() {
             className="lg:col-span-7 bg-white border border-slate-200 border-t-2 border-t-primary p-6 sm:p-9"
           >
             <div className="pb-5 mb-6 border-b border-slate-200">
-              <h2
+              <BlurRevealHeading
                 id="inquiry-form-heading"
+                seed="contact-inquiry-form"
                 className="font-serif text-2xl font-bold text-slate-900 mb-1.5"
               >
                 Write to the Administration Office
-              </h2>
+              </BlurRevealHeading>
               <p className="text-sm text-slate-600 leading-relaxed">
                 Send a message concerning Grade 10 admission, school fees,
                 academic records, or student boarding matters.
