@@ -6,14 +6,17 @@
   --color-primary-dark: #0C3D6E;
   --color-accent: #C22F2F;
   --color-slate-bg: #F8FAFC;
-  --animate-fadeIn: fadeIn 0.2s ease-out;
+  --ease-editorial: cubic-bezier(0.22, 1, 0.36, 1);
+  --animate-fadeIn: fadeIn 0.22s cubic-bezier(0.22, 1, 0.36, 1);
 
   @keyframes fadeIn {
     from {
       opacity: 0;
+      transform: translate3d(0, 4px, 0);
     }
     to {
       opacity: 1;
+      transform: translate3d(0, 0, 0);
     }
   }
 }
@@ -136,9 +139,138 @@
     *,
     *::before,
     *::after {
+      animation-delay: 0ms !important;
       animation-duration: 0.01ms !important;
       animation-iteration-count: 1 !important;
+      transition-delay: 0ms !important;
       transition-duration: 0.01ms !important;
     }
+  }
+}
+
+/* ── Editorial Motion System (CSS + Progressive IntersectionObserver) ──
+ * Calm, understated motion inspired by a printed school prospectus:
+ * 1. Hero stagger (`.hero-rise`, `.hero-rule`): pure CSS on load, 70ms steps,
+ *    completes in under 1.0s with zero layout shift (GPU transform + opacity).
+ *    Remains 100% readable in DOM and completes cleanly even without JS.
+ * 2. Scroll reveals (`[data-reveal]`): visible by default (safe without JS);
+ *    below-the-fold items set `data-reveal-state="pending"` and rise gently
+ *    once on entering the viewport.
+ * 3. Disabled entirely when `prefers-reduced-motion: reduce` is active.
+ */
+@keyframes hero-rise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 8px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes hero-rule-draw {
+  from {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+  to {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+}
+
+.hero-rule {
+  transform-origin: left center;
+}
+
+/* Staggered hero steps (70ms apart; final item settles at 490 + 460 = 950ms < 1.2s) */
+[data-hero-step='0'] {
+  --hero-delay: 0ms;
+}
+[data-hero-step='1'] {
+  --hero-delay: 70ms;
+}
+[data-hero-step='2'] {
+  --hero-delay: 140ms;
+}
+[data-hero-step='3'] {
+  --hero-delay: 210ms;
+}
+[data-hero-step='4'] {
+  --hero-delay: 280ms;
+}
+[data-hero-step='5'] {
+  --hero-delay: 350ms;
+}
+[data-hero-step='6'] {
+  --hero-delay: 420ms;
+}
+[data-hero-step='7'] {
+  --hero-delay: 490ms;
+}
+
+/* Optional gentle stagger for sibling cards/rows on scroll */
+[data-reveal-delay='1'] {
+  --reveal-delay: 65ms;
+}
+[data-reveal-delay='2'] {
+  --reveal-delay: 130ms;
+}
+[data-reveal-delay='3'] {
+  --reveal-delay: 195ms;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-rise {
+    animation: hero-rise 460ms var(--ease-editorial) var(--hero-delay, 0ms)
+      backwards;
+  }
+
+  .hero-rule {
+    animation: hero-rule-draw 460ms var(--ease-editorial)
+      var(--hero-delay, 120ms) backwards;
+  }
+
+  /* Never obscure an element receiving immediate keyboard focus */
+  .hero-rise:is(:focus, :focus-visible, :focus-within) {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+
+  [data-reveal][data-reveal-state='pending'] {
+    opacity: 0;
+    transform: translate3d(0, 10px, 0);
+  }
+
+  [data-reveal][data-reveal-state='visible'] {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+    transition:
+      opacity 520ms var(--ease-editorial) var(--reveal-delay, 0ms),
+      transform 520ms var(--ease-editorial) var(--reveal-delay, 0ms);
+  }
+
+  [data-reveal][data-reveal-state='pending']:is(
+      :focus,
+      :focus-visible,
+      :focus-within
+    ),
+  [data-reveal][data-reveal-state='visible']:is(:focus, :focus-visible) {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce), print {
+  .hero-rise,
+  .hero-rule,
+  [data-reveal] {
+    animation: none !important;
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
   }
 }

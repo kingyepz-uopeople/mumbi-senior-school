@@ -14,6 +14,8 @@ export default function QuickStats() {
           {quickStats.map((stat, index) => (
             <div
               key={stat.label}
+              data-reveal=""
+              data-reveal-delay={index > 0 ? String(index) : undefined}
               className={`py-7 sm:py-9 ${
                 index % 2 === 1 ? 'pl-5 sm:pl-8 border-l border-slate-200' : 'pr-4 sm:pr-8'
               } ${

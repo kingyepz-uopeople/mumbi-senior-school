@@ -9,7 +9,7 @@ export default function FoundationalPillars() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
           {/* Left Column: Motto, Mission & Vision */}
-          <div className="lg:col-span-5">
+          <div data-reveal="" className="lg:col-span-5">
             <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary mb-2">
               School Ethos
             </p>
@@ -51,7 +51,10 @@ export default function FoundationalPillars() {
 
           {/* Right Column: Ruled Core Values Ledger */}
           <div className="lg:col-span-7 lg:border-l lg:border-slate-200 lg:pl-14">
-            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-600 pb-3 border-b border-slate-300 mb-2">
+            <p
+              data-reveal=""
+              className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-600 pb-3 border-b border-slate-300 mb-2"
+            >
               Core Values
             </p>
 
@@ -59,6 +62,8 @@ export default function FoundationalPillars() {
               {schoolInfo.coreValues.map((value, idx) => (
                 <li
                   key={value.title}
+                  data-reveal=""
+                  data-reveal-delay={idx % 2 === 1 ? '1' : undefined}
                   className={`py-6 ${
                     idx === 1 ? 'sm:border-t-0' : ''
                   }`}

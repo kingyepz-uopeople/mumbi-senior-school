@@ -43,6 +43,7 @@ export default function PortalComingSoonPage() {
       <div className="max-w-5xl mx-auto px-4 sm:px-6 py-12 sm:py-16 space-y-12">
         {/* Status Notice */}
         <section
+          data-reveal=""
           aria-labelledby="portal-status-heading"
           className="bg-white border border-slate-200 border-t-2 border-t-primary p-6 sm:p-10"
         >
@@ -110,14 +111,20 @@ export default function PortalComingSoonPage() {
         <section aria-labelledby="portal-modules-heading" className="space-y-5">
           <h2
             id="portal-modules-heading"
+            data-reveal=""
             className="font-serif text-xl sm:text-2xl font-bold text-slate-900"
           >
             Planned Portal Sections
           </h2>
 
           <div className="bg-white border-t-2 border-t-primary border-x border-b border-slate-200 grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-slate-200">
-            {UPCOMING_MODULES.map((module) => (
-              <article key={module.title} className="p-6">
+            {UPCOMING_MODULES.map((module, idx) => (
+              <article
+                key={module.title}
+                data-reveal=""
+                data-reveal-delay={idx > 0 ? String(idx) : undefined}
+                className="p-6"
+              >
                 <h3 className="font-serif text-lg font-bold text-slate-900 mb-2">
                   {module.title}
                 </h3>
@@ -128,7 +135,10 @@ export default function PortalComingSoonPage() {
             ))}
           </div>
 
-          <p className="text-xs sm:text-sm text-slate-600 border-l-2 border-primary pl-4 leading-relaxed">
+          <p
+            data-reveal=""
+            className="text-xs sm:text-sm text-slate-600 border-l-2 border-primary pl-4 leading-relaxed"
+          >
             <strong className="text-slate-900">Notice to parents and students:</strong>{' '}
             Do not share admission numbers or personal details through
             unofficial links. Portal registration instructions will be issued

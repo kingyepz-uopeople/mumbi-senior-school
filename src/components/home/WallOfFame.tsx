@@ -9,7 +9,10 @@ export default function WallOfFame() {
       className="py-16 sm:py-24 bg-white border-y border-slate-200"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+        <div
+          data-reveal=""
+          className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8"
+        >
           <div className="max-w-2xl">
             <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary mb-2">
               National Examinations · KNEC 10204102
@@ -38,7 +41,9 @@ export default function WallOfFame() {
           </Link>
         </div>
 
-        <WallOfFameGrid />
+        <div data-reveal="" data-reveal-delay="1">
+          <WallOfFameGrid />
+        </div>
       </div>
     </section>
   );

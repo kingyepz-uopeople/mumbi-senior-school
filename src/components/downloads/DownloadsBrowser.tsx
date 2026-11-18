@@ -141,6 +141,7 @@ export default function DownloadsBrowser() {
     <div className="space-y-10">
       {/* Search & Filter Panel */}
       <section
+        data-reveal=""
         aria-labelledby="downloads-filter-heading"
         className="bg-white border border-slate-200 border-t-2 border-t-primary p-5 sm:p-7 space-y-6"
       >
@@ -306,7 +307,11 @@ export default function DownloadsBrowser() {
       )}
 
       {/* Document Register */}
-      <section aria-labelledby="downloads-results-heading" className="space-y-4">
+      <section
+        data-reveal=""
+        aria-labelledby="downloads-results-heading"
+        className="space-y-4"
+      >
         <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1">
           <h2
             id="downloads-results-heading"

@@ -141,7 +141,10 @@ export default function PathwaysPreview() {
       className="py-16 sm:py-24 bg-slate-bg"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+        <div
+          data-reveal=""
+          className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8"
+        >
           <div className="max-w-2xl">
             <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary mb-2">
               Senior School Curriculum · Grades 10 – 12
@@ -166,7 +169,9 @@ export default function PathwaysPreview() {
           </Link>
         </div>
 
-        <PathwaysTabs idPrefix="home-pathway" />
+        <div data-reveal="" data-reveal-delay="1">
+          <PathwaysTabs idPrefix="home-pathway" />
+        </div>
       </div>
     </section>
   );

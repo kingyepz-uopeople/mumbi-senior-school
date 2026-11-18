@@ -17,7 +17,7 @@ export default function PrincipalWelcome() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 lg:gap-16 items-start">
           {/* Portrait Frame (reads from public/images/principal.jpg) */}
-          <div className="md:col-span-4 max-w-xs w-full">
+          <div data-reveal="" className="md:col-span-4 max-w-xs w-full">
             <PhotoSlot
               src={PHOTO_SLOTS.principalPortrait}
               exists={hasPortrait}
@@ -31,7 +31,11 @@ export default function PrincipalWelcome() {
           </div>
 
           {/* Left-Aligned Welcome Letter */}
-          <div className="md:col-span-8 max-w-2xl">
+          <div
+            data-reveal=""
+            data-reveal-delay="1"
+            className="md:col-span-8 max-w-2xl"
+          >
             <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary mb-2">
               Office of the Chief Principal
             </p>

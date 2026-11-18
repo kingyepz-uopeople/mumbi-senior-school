@@ -40,7 +40,7 @@ export default function AboutPage() {
         className="scroll-mt-28 py-16 sm:py-20 bg-white border-b border-slate-200"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16">
-          <div className="lg:col-span-7 max-w-2xl">
+          <div data-reveal="" className="lg:col-span-7 max-w-2xl">
             <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary mb-2">
               School History
             </p>
@@ -84,6 +84,8 @@ export default function AboutPage() {
 
           {/* Registry Sidebar */}
           <aside
+            data-reveal=""
+            data-reveal-delay="1"
             aria-label="Official school registration particulars"
             className="lg:col-span-5 lg:border-l lg:border-slate-200 lg:pl-12"
           >
@@ -147,7 +149,7 @@ export default function AboutPage() {
         className="scroll-mt-28 py-16 sm:py-20 bg-slate-bg border-b border-slate-200"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 space-y-12">
-          <div className="max-w-2xl">
+          <div data-reveal="" className="max-w-2xl">
             <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary mb-2">
               Charter &amp; Values
             </p>
@@ -159,7 +161,11 @@ export default function AboutPage() {
             </h2>
           </div>
 
-          <div className="bg-white border-t-2 border-t-primary border-x border-b border-slate-200 grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-slate-200">
+          <div
+            data-reveal=""
+            data-reveal-delay="1"
+            className="bg-white border-t-2 border-t-primary border-x border-b border-slate-200 grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-slate-200"
+          >
             <div className="p-6 sm:p-8">
               <h3 className="font-sans text-xs font-semibold uppercase tracking-[0.12em] text-primary mb-3">
                 School Motto
@@ -194,7 +200,14 @@ export default function AboutPage() {
             </h3>
             <ol className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-8">
               {schoolInfo.coreValues.map((val, idx) => (
-                <li key={val.title} className="border-l border-slate-300 pl-4">
+                <li
+                  key={val.title}
+                  data-reveal=""
+                  data-reveal-delay={
+                    idx % 3 > 0 ? String(idx % 3) : undefined
+                  }
+                  className="border-l border-slate-300 pl-4"
+                >
                   <span className="block text-xs font-semibold text-primary tabular-nums mb-1">
                     0{idx + 1}
                   </span>
@@ -218,7 +231,7 @@ export default function AboutPage() {
         className="scroll-mt-28 py-16 sm:py-20 bg-white border-b border-slate-200"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="max-w-2xl mb-10">
+          <div data-reveal="" className="max-w-2xl mb-10">
             <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary mb-2">
               Assembly Tradition
             </p>
@@ -236,7 +249,10 @@ export default function AboutPage() {
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
             {/* English Anthem */}
-            <article className="bg-slate-bg border border-slate-200 border-t-2 border-t-primary p-6 sm:p-10">
+            <article
+              data-reveal=""
+              className="bg-slate-bg border border-slate-200 border-t-2 border-t-primary p-6 sm:p-10"
+            >
               <div className="flex items-baseline justify-between gap-4 pb-4 mb-6 border-b border-slate-200">
                 <h3 className="font-serif text-xl sm:text-2xl font-bold text-slate-900">
                   {schoolAnthem.english.title}
@@ -265,6 +281,8 @@ export default function AboutPage() {
             {/* Kiswahili Anthem */}
             <article
               lang="sw"
+              data-reveal=""
+              data-reveal-delay="1"
               className="bg-slate-bg border border-slate-200 border-t-2 border-t-primary p-6 sm:p-10"
             >
               <div className="flex items-baseline justify-between gap-4 pb-4 mb-6 border-b border-slate-200">
@@ -302,7 +320,7 @@ export default function AboutPage() {
         className="scroll-mt-28 py-16 sm:py-20 bg-slate-bg"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 space-y-14">
-          <div className="max-w-2xl">
+          <div data-reveal="" className="max-w-2xl">
             <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary mb-2">
               Leadership &amp; Governance
             </p>
@@ -316,7 +334,7 @@ export default function AboutPage() {
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-12">
             {/* Roll of Principals */}
-            <div>
+            <div data-reveal="">
               <div className="flex items-baseline justify-between gap-3 pb-3 border-b-2 border-primary">
                 <h3 className="font-serif text-xl font-bold text-slate-900">
                   Roll of Principals
@@ -352,7 +370,7 @@ export default function AboutPage() {
             </div>
 
             {/* BOM Chairpersons */}
-            <div>
+            <div data-reveal="" data-reveal-delay="1">
               <div className="flex items-baseline justify-between gap-3 pb-3 border-b-2 border-primary">
                 <h3 className="font-serif text-xl font-bold text-slate-900">
                   Board of Management Chairpersons
@@ -391,6 +409,7 @@ export default function AboutPage() {
           {/* Administrative Deputies & Student Council (solid deep blue, ruled columns) */}
           <div
             data-dark-surface
+            data-reveal=""
             className="bg-primary-dark text-white border border-primary-dark"
           >
             <div className="px-6 sm:px-8 py-5 border-b border-white/15">

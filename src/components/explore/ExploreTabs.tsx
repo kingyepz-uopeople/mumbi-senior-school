@@ -174,6 +174,7 @@ export default function ExploreTabs() {
             {clubs.map((club) => (
               <article
                 key={club.id}
+                data-reveal=""
                 className="p-5 sm:p-6 grid grid-cols-1 md:grid-cols-12 gap-3 md:gap-8 items-start"
               >
                 <div className="md:col-span-4">
@@ -236,6 +237,8 @@ export default function ExploreTabs() {
             {sports.map((sport, index) => (
               <article
                 key={sport.id}
+                data-reveal=""
+                data-reveal-delay={index % 3 > 0 ? String(index % 3) : undefined}
                 className={`p-6 flex flex-col justify-between gap-5 border-slate-200 ${
                   index % 2 === 1 ? 'md:border-l lg:border-l-0' : ''
                 } ${index >= 2 ? 'md:border-t lg:border-t-0' : ''} ${
@@ -339,6 +342,8 @@ export default function ExploreTabs() {
             {faithGroups.map((group, index) => (
               <article
                 key={group.id}
+                data-reveal=""
+                data-reveal-delay={index % 2 === 1 ? '1' : undefined}
                 className={`p-6 sm:p-7 flex flex-col justify-between gap-5 border-slate-200 ${
                   index % 2 === 1 ? 'md:border-l' : ''
                 } ${index >= 2 ? 'md:border-t' : ''}`}
@@ -390,8 +395,13 @@ export default function ExploreTabs() {
           </div>
 
           <div className="bg-white border-t-2 border-t-primary border-x border-b border-slate-200 grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-slate-200">
-            {boardingSections.map((section) => (
-              <article key={section.id} className="p-6 sm:p-7 flex flex-col">
+            {boardingSections.map((section, idx) => (
+              <article
+                key={section.id}
+                data-reveal=""
+                data-reveal-delay={idx > 0 ? String(idx) : undefined}
+                className="p-6 sm:p-7 flex flex-col"
+              >
                 <h3 className="font-serif text-xl font-bold text-slate-900 mb-2">
                   {section.title}
                 </h3>

@@ -207,12 +207,19 @@ export default function GalleryBrowser({ availableSrcs }: GalleryBrowserProps) {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-8">
-          {displayedImages.map((img) => {
+          {displayedImages.map((img, index) => {
             const hasPhoto = availableSet.has(img.src);
+            const staggerDelay =
+              index % 3 > 0 ? String(index % 3) : undefined;
 
             if (hasPhoto) {
               return (
-                <article key={img.id} className="flex flex-col">
+                <article
+                  key={img.id}
+                  data-reveal=""
+                  data-reveal-delay={staggerDelay}
+                  className="flex flex-col"
+                >
                   <button
                     type="button"
                     onClick={(e) => {
@@ -246,7 +253,12 @@ export default function GalleryBrowser({ availableSrcs }: GalleryBrowserProps) {
             }
 
             return (
-              <article key={img.id} className="flex flex-col">
+              <article
+                key={img.id}
+                data-reveal=""
+                data-reveal-delay={staggerDelay}
+                className="flex flex-col"
+              >
                 <figure className="m-0 flex flex-col flex-1">
                   <div
                     role="img"

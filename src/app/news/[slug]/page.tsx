@@ -102,13 +102,20 @@ export default async function NewsArticlePage({
             {item.title}
           </h1>
 
-          <div className="w-12 h-0.5 bg-accent mt-5" aria-hidden="true" />
+          <div
+            data-hero-step="2"
+            className="hero-rule w-12 h-0.5 bg-accent mt-5"
+            aria-hidden="true"
+          />
         </div>
       </header>
 
       {/* Article Body */}
       <div className="max-w-4xl mx-auto px-4 sm:px-6 py-12 sm:py-16 space-y-14">
-        <article className="bg-white border border-slate-200 border-t-2 border-t-primary p-6 sm:p-10">
+        <article
+          data-reveal=""
+          className="bg-white border border-slate-200 border-t-2 border-t-primary p-6 sm:p-10"
+        >
           <p className="font-serif text-lg sm:text-xl text-slate-900 leading-relaxed pb-6 mb-6 border-b border-slate-200">
             {item.excerpt}
           </p>
@@ -153,7 +160,11 @@ export default async function NewsArticlePage({
 
         {/* Related Notices */}
         {relatedItems.length > 0 && (
-          <section aria-labelledby="related-news-heading" className="space-y-4">
+          <section
+            data-reveal=""
+            aria-labelledby="related-news-heading"
+            className="space-y-4"
+          >
             <div className="flex items-baseline justify-between gap-2">
               <h2
                 id="related-news-heading"
