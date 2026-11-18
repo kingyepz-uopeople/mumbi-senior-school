@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import PageHeader from '@/components/shared/PageHeader';
+import PageHero from '@/components/shared/PageHero';
 import ExploreTabs from '@/components/explore/ExploreTabs';
 import { buildPageMetadata } from '@/lib/site';
 
@@ -13,10 +13,11 @@ export const metadata: Metadata = buildPageMetadata({
 export default function ExplorePage() {
   return (
     <div className="bg-slate-bg">
-      <PageHeader
+      <PageHero
+        variant="student-life"
         kicker="Boarding & Co-Curricular Life"
         title="Student Life at Mumbi Girls"
-        description="Uniformed movements and clubs, afternoon games, the 05:00 to 22:00 weekday boarding timetable, school chaplaincy, dining, and uniform guidelines."
+        subtitle="Uniformed movements and clubs, afternoon games, the 05:00 to 22:00 weekday boarding timetable, school chaplaincy, dining, and uniform guidelines."
         meta={[
           '7 Clubs & Movements',
           '6 KSSSA Sports',

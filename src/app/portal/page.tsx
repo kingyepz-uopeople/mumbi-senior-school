@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
-import PageHeader from '@/components/shared/PageHeader';
+import PageHero from '@/components/shared/PageHero';
 import { schoolInfo } from '@/data/mock-school-data';
 import { buildPageMetadata } from '@/lib/site';
 
@@ -34,10 +34,11 @@ const UPCOMING_MODULES = [
 export default function PortalComingSoonPage() {
   return (
     <div className="bg-slate-bg">
-      <PageHeader
+      <PageHero
+        variant="portal"
         kicker="Online Services"
         title="Student & Staff Portal"
-        description="Student, parent, and staff login accounts are scheduled for a later phase. Public circulars, holiday assignments, and fee schedules remain available below without sign-in."
+        subtitle="Student, parent, and staff login accounts are scheduled for a later phase. Public circulars, holiday assignments, and fee schedules remain available below without sign-in."
       />
 
       <div className="max-w-5xl mx-auto px-4 sm:px-6 py-12 sm:py-16 space-y-12">

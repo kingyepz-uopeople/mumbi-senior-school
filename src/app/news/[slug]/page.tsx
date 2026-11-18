@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
+import PageHero from '@/components/shared/PageHero';
 import { newsItems, schoolInfo } from '@/data/mock-school-data';
 import { newsCategoryTextClasses } from '@/components/home/LatestNews';
 import { buildPageMetadata } from '@/lib/site';
@@ -61,54 +62,47 @@ export default async function NewsArticlePage({
   return (
     <div className="bg-slate-bg">
       {/* Solid Crest-Blue Article Header (sole h1 on page) */}
-      <header
-        data-dark-surface
-        className="bg-primary text-white border-b border-primary-dark"
-      >
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
-          <Link
-            href="/#latest-news"
-            className="min-h-11 inline-flex items-center gap-2 text-xs sm:text-sm font-medium text-blue-100 hover:text-white hover:underline underline-offset-4 transition-colors mb-5"
-          >
-            <ArrowLeft
-              className="w-4 h-4 shrink-0 stroke-[1.75]"
-              aria-hidden="true"
-            />
-            <span>Back to school notices</span>
-          </Link>
+      <PageHero
+        as="header"
+        maxWidth="narrow"
+        variant="news"
+        title={item.title}
+        topSlot={
+          <>
+            <Link
+              href="/#latest-news"
+              className="min-h-11 inline-flex items-center gap-2 text-xs sm:text-sm font-medium text-blue-100 hover:text-white hover:underline underline-offset-4 transition-colors mb-5"
+            >
+              <ArrowLeft
+                className="w-4 h-4 shrink-0 stroke-[1.75]"
+                aria-hidden="true"
+              />
+              <span>Back to school notices</span>
+            </Link>
 
-          <div className="flex flex-wrap items-center gap-3 text-xs mb-3 tabular-nums">
-            {item.category === 'Circular' ? (
-              <span className="px-2 py-0.5 rounded-xs font-bold uppercase tracking-[0.12em] bg-accent text-white">
-                {item.category}
+            <div className="flex flex-wrap items-center gap-3 text-xs mb-3 tabular-nums">
+              {item.category === 'Circular' ? (
+                <span className="px-2 py-0.5 rounded-xs font-bold uppercase tracking-[0.12em] bg-accent text-white">
+                  {item.category}
+                </span>
+              ) : (
+                <span className="font-semibold uppercase tracking-[0.14em] text-blue-100">
+                  {item.category}
+                </span>
+              )}
+              <span className="text-white/40" aria-hidden="true">
+                ·
               </span>
-            ) : (
-              <span className="font-semibold uppercase tracking-[0.14em] text-blue-100">
-                {item.category}
+              <span className="text-white/90">
+                Published{' '}
+                <time dateTime={toIsoDate(item.date)} className="font-semibold">
+                  {item.date}
+                </time>
               </span>
-            )}
-            <span className="text-white/40" aria-hidden="true">
-              ·
-            </span>
-            <span className="text-white/90">
-              Published{' '}
-              <time dateTime={toIsoDate(item.date)} className="font-semibold">
-                {item.date}
-              </time>
-            </span>
-          </div>
-
-          <h1 className="font-serif text-2xl sm:text-4xl font-bold text-white leading-tight">
-            {item.title}
-          </h1>
-
-          <div
-            data-hero-step="2"
-            className="hero-rule w-12 h-0.5 bg-accent mt-5"
-            aria-hidden="true"
-          />
-        </div>
-      </header>
+            </div>
+          </>
+        }
+      />
 
       {/* Article Body */}
       <div className="max-w-4xl mx-auto px-4 sm:px-6 py-12 sm:py-16 space-y-14">

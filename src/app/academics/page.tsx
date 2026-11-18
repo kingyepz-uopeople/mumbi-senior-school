@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import PageHeader from '@/components/shared/PageHeader';
+import PageHero from '@/components/shared/PageHero';
 import { PathwaysTabs } from '@/components/home/PathwaysPreview';
 import WallOfFameGrid from '@/components/shared/WallOfFameGrid';
 import { departments, schoolInfo } from '@/data/mock-school-data';
@@ -15,10 +15,11 @@ export const metadata: Metadata = buildPageMetadata({
 export default function AcademicsPage() {
   return (
     <div className="bg-slate-bg">
-      <PageHeader
+      <PageHero
+        variant="academics"
         kicker="Curriculum & Examinations"
         title="Academics & CBC Pathways"
-        description="Senior School pathways for Grades 10 to 12 under Kenya's Competency-Based Curriculum, our five teaching departments, and recorded KCSE placements."
+        subtitle="Senior School pathways for Grades 10 to 12 under Kenya's Competency-Based Curriculum, our five teaching departments, and recorded KCSE placements."
         meta={[
           `KNEC Centre ${schoolInfo.knecCode}`,
           '3 Senior School Pathways',
