@@ -30,9 +30,17 @@ const TRACK_VISUALS: Partial<Record<string, TrackVisual>> = {
     src: '/images/school/gallery-14.jpg',
     alt: 'Students working together around classroom tables',
   },
+  'technical-engineering': {
+    src: '/images/pathways/gemini-stem-technical-engineering.jpg',
+    alt: 'Robotics tools and a 3D printer in a workshop',
+  },
   humanities: {
     src: '/images/pathways/pathways-social-sciences.jpg',
     alt: 'Students studying together in a school library',
+  },
+  'business-studies': {
+    src: '/images/pathways/gemini-social-business-studies.jpg',
+    alt: 'Business classroom with books and a globe',
   },
   'languages-literature': {
     src: '/images/school/gallery-14.jpg',
@@ -41,6 +49,10 @@ const TRACK_VISUALS: Partial<Record<string, TrackVisual>> = {
   'performing-arts': {
     src: '/images/school/gallery-05.jpg',
     alt: 'Students gathered in the assembly hall',
+  },
+  'visual-arts': {
+    src: '/images/pathways/gemini-arts-visual-arts.jpg',
+    alt: 'Painting and sculpture in an art studio',
   },
   'sports-science': {
     src: '/images/pathways/pathways-arts-sports-science.jpg',
