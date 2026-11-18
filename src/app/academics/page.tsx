@@ -33,7 +33,7 @@ export default function AcademicsPage() {
         className="scroll-mt-28 py-16 sm:py-20 bg-slate-bg border-b border-slate-200"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="max-w-2xl mb-8">
+          <div data-reveal="" className="max-w-2xl mb-8">
             <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary mb-2">
               Grades 10 – 12
             </p>
@@ -49,7 +49,9 @@ export default function AcademicsPage() {
             </p>
           </div>
 
-          <PathwaysTabs idPrefix="academics-pathway" />
+          <div data-reveal="" data-reveal-delay="1">
+            <PathwaysTabs idPrefix="academics-pathway" />
+          </div>
         </div>
       </section>
 
@@ -60,7 +62,7 @@ export default function AcademicsPage() {
         className="scroll-mt-28 py-16 sm:py-20 bg-white border-b border-slate-200"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="max-w-2xl mb-10">
+          <div data-reveal="" className="max-w-2xl mb-10">
             <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary mb-2">
               Teaching Faculty
             </p>
@@ -80,6 +82,7 @@ export default function AcademicsPage() {
             {departments.map((dept) => (
               <article
                 key={dept.id}
+                data-reveal=""
                 className="py-7 grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-8 items-start"
               >
                 <div className="md:col-span-4">
@@ -118,7 +121,7 @@ export default function AcademicsPage() {
         className="scroll-mt-28 py-16 sm:py-20 bg-slate-bg"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="max-w-2xl mb-8">
+          <div data-reveal="" className="max-w-2xl mb-8">
             <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary mb-2">
               National Examinations · KNEC {schoolInfo.knecCode}
             </p>
@@ -134,7 +137,9 @@ export default function AcademicsPage() {
             </p>
           </div>
 
-          <WallOfFameGrid />
+          <div data-reveal="" data-reveal-delay="1">
+            <WallOfFameGrid />
+          </div>
         </div>
       </section>
     </div>

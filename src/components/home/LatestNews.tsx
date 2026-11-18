@@ -24,7 +24,10 @@ export default function LatestNews() {
       className="py-16 sm:py-24 bg-slate-bg scroll-mt-28"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+        <div
+          data-reveal=""
+          className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8"
+        >
           <div className="max-w-2xl">
             <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary mb-2">
               School Office Notices
@@ -51,7 +54,7 @@ export default function LatestNews() {
 
         {/* Editorial Notice Register */}
         <div className="bg-white border-t-2 border-t-primary border-x border-b border-slate-200 divide-y divide-slate-200">
-          {displayItems.map((item) => {
+          {displayItems.map((item, idx) => {
             const categoryClass =
               newsCategoryTextClasses[item.category] ??
               newsCategoryTextClasses.Event;
@@ -59,6 +62,8 @@ export default function LatestNews() {
             return (
               <article
                 key={item.id}
+                data-reveal=""
+                data-reveal-delay={idx > 0 ? String(Math.min(idx, 3)) : undefined}
                 className="p-5 sm:p-7 grid grid-cols-1 md:grid-cols-12 gap-3 md:gap-6 items-start"
               >
                 <div className="md:col-span-3 flex md:flex-col items-center md:items-start gap-3 md:gap-1">

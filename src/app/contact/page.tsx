@@ -37,6 +37,7 @@ export default function ContactPage() {
         {/* Admissions Guidance Band */}
         <section
           id="admissions"
+          data-reveal=""
           aria-labelledby="admissions-heading"
           className="scroll-mt-28 bg-white border border-slate-200 border-l-4 border-l-primary p-6 sm:p-8 flex flex-col lg:flex-row lg:items-center justify-between gap-6"
         >
@@ -83,6 +84,7 @@ export default function ContactPage() {
           {/* Left: Official Office Details & Location Photo Slot */}
           <div className="lg:col-span-5 space-y-8">
             <section
+              data-reveal=""
               aria-labelledby="official-details-heading"
               className="bg-white border border-slate-200 border-t-2 border-t-primary p-6 sm:p-7"
             >
@@ -189,6 +191,7 @@ export default function ContactPage() {
 
             {/* Campus Gate / Location Photo Slot (reads from public/images/campus-location.jpg) */}
             <section
+              data-reveal=""
               aria-labelledby="campus-location-heading"
               className="space-y-3"
             >
@@ -220,6 +223,8 @@ export default function ContactPage() {
 
           {/* Right: Inquiry Form */}
           <section
+            data-reveal=""
+            data-reveal-delay="1"
             aria-labelledby="inquiry-form-heading"
             className="lg:col-span-7 bg-white border border-slate-200 border-t-2 border-t-primary p-6 sm:p-9"
           >

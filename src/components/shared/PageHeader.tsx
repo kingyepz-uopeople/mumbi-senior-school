@@ -25,7 +25,11 @@ export default function PageHeader({
           {title}
         </h1>
 
-        <div className="w-12 h-0.5 bg-accent mt-5 mb-5" aria-hidden="true" />
+        <div
+          data-hero-step="2"
+          className="hero-rule w-12 h-0.5 bg-accent mt-5 mb-5"
+          aria-hidden="true"
+        />
 
         <p className="max-w-2xl text-white/90 text-base sm:text-lg leading-relaxed">
           {description}

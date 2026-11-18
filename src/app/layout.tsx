@@ -7,6 +7,7 @@ import TopUtilityBar from '@/components/layout/TopUtilityBar';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import MobileInstallBanner from '@/components/layout/MobileInstallBanner';
+import ScrollRevealObserver from '@/components/shared/ScrollRevealObserver';
 import { DEFAULT_OG_IMAGE, SITE_NAME, SITE_URL } from '@/lib/site';
 
 const inter = localFont({
@@ -146,6 +147,7 @@ export default function RootLayout({
 
           <Footer />
           <MobileInstallBanner />
+          <ScrollRevealObserver />
         </PwaProvider>
       </body>
     </html>
