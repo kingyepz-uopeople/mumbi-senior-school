@@ -13,6 +13,8 @@ Place each photograph at the exact path below (keep filenames lowercase) and reb
 | `public/images/school/hero-assembly.jpg` | Homepage campus hero (`/`) | `1599 × 899 px` landscape JPG |
 | `public/images/school/gallery-04.jpg` | Campus entrance on `/contact` | `1599 × 899 px` landscape JPG |
 | `public/images/school/academics-study.jpg` | Feature image on `/academics` | `1599 × 899 px` landscape JPG |
+| `public/images/school/dean-of-studies.jpg` | Mr. Kiruri, Dean of Studies, beside the KCSE target on `/academics#kcse-target` | `900 × 1600 px` portrait JPG |
+| `public/images/school/boarding-1.jpg` and `boarding-2.jpg` | Boarding corridor and wash area on `/explore#boarding` | `1600 × 900 px` landscape JPGs |
 | `public/images/school/about-prize-1.jpg` and `about-prize-2.jpg` | Prize-giving photographs on `/about` | Portrait JPGs |
 | `public/images/principal.jpg` | Chief Principal section on `/` | `800 × 1000 px` portrait JPG |
 

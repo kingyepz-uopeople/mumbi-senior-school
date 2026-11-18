@@ -11,16 +11,16 @@ const quickLinks = [
   { label: 'Student Life', href: '/explore' },
   { label: 'Downloads & Circulars', href: '/downloads' },
   { label: 'Photo Gallery', href: '/gallery' },
-  { label: 'Contact & Admissions', href: '/contact' },
+  { label: 'Contact & Location', href: '/contact' },
 ];
 
 const resourceLinks = [
   {
-    label: 'Grade 10 Joining Instructions',
-    href: '/news/admission-joining-instructions-2025',
+    label: 'Grade 10 Admissions Guide',
+    href: '/admissions',
   },
   {
-    label: 'Fee Structure & Term Circulars',
+    label: 'Term Circulars',
     href: '/downloads',
   },
   {
@@ -143,9 +143,12 @@ export default function Footer() {
                     className="w-4 h-4 text-blue-100 shrink-0 mt-1 stroke-[1.5]"
                     aria-hidden="true"
                   />
-                  <span className="text-xs leading-relaxed">
-                    {schoolInfo.phonePlaceholder}
-                  </span>
+                  <a
+                    href={`tel:${schoolInfo.phone}`}
+                    className="text-xs leading-relaxed text-white hover:underline underline-offset-4 tabular-nums"
+                  >
+                    {schoolInfo.phone}
+                  </a>
                 </li>
                 <li className="flex items-start gap-2.5">
                   <Clock

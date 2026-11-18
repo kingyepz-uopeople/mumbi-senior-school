@@ -7,7 +7,7 @@ import { buildPageMetadata } from '@/lib/site';
 export const metadata: Metadata = buildPageMetadata({
   title: 'Student Life & Boarding',
   description:
-    'Student life at Mumbi Girls Senior School — clubs and uniformed movements, KSSSA sports, the 05:00–22:00 weekday boarding timetable, chaplaincy groups, dining hall, and official school uniform.',
+    'Student life at Mumbi Girls Senior School — clubs and uniformed movements, KSSSA sports, the 05:00–22:00 weekday boarding timetable, chaplaincy groups, photos of the boarding area, and the official school uniform.',
   path: '/explore',
 });
 
