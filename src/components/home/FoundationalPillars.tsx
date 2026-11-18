@@ -1,105 +1,80 @@
-import { Award, Eye, Heart, Target } from 'lucide-react';
 import { schoolInfo } from '@/data/mock-school-data';
 
 export default function FoundationalPillars() {
-  const textPillars = [
-    {
-      title: 'Our Motto',
-      icon: Award,
-      content: `“${schoolInfo.motto}”`,
-      highlight: true,
-    },
-    {
-      title: 'Our Mission',
-      icon: Target,
-      content: schoolInfo.mission,
-      highlight: false,
-    },
-    {
-      title: 'Our Vision',
-      icon: Eye,
-      content: schoolInfo.vision,
-      highlight: false,
-    },
-  ];
-
   return (
     <section
-      aria-labelledby="foundational-pillars-heading"
-      className="py-14 sm:py-20 bg-white border-y border-slate-200/80"
+      aria-labelledby="school-ethos-heading"
+      className="py-16 sm:py-24 bg-white border-y border-slate-200"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        {/* Section Heading */}
-        <div className="text-center mb-10 sm:mb-12">
-          <span className="text-xs font-bold uppercase tracking-wider text-primary">
-            Guiding Identity
-          </span>
-          <h2
-            id="foundational-pillars-heading"
-            className="text-2xl sm:text-3xl font-bold text-slate-900 mt-1 mb-3"
-          >
-            Foundational Pillars
-          </h2>
-          <p className="text-slate-600 text-sm sm:text-base max-w-2xl mx-auto mb-3">
-            The principles anchoring scholarship, character formation, and
-            community life at {schoolInfo.name}.
-          </p>
-          <div
-            className="w-16 h-1 rounded-full bg-accent mx-auto"
-            aria-hidden="true"
-          />
-        </div>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
+          {/* Left Column: Motto, Mission & Vision */}
+          <div className="lg:col-span-5">
+            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary mb-2">
+              School Ethos
+            </p>
+            <h2
+              id="school-ethos-heading"
+              className="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-900 leading-tight mb-8"
+            >
+              Motto, Mission &amp; Vision
+            </h2>
 
-        {/* 4-Card Responsive Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {textPillars.map((pillar) => {
-            const Icon = pillar.icon;
-            return (
-              <div
-                key={pillar.title}
-                className="bg-slate-bg rounded-2xl border border-slate-200 border-t-4 border-t-primary p-6 shadow-xs hover:shadow-md transition-shadow flex flex-col"
-              >
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-11 h-11 rounded-xl bg-primary text-white flex items-center justify-center shrink-0">
-                    <Icon className="w-5 h-5" aria-hidden="true" />
-                  </div>
-                  <h3 className="text-lg font-bold text-primary">
-                    {pillar.title}
-                  </h3>
-                </div>
-
-                <p
-                  className={
-                    pillar.highlight
-                      ? 'font-serif italic font-bold text-xl text-slate-900 leading-snug'
-                      : 'text-slate-700 text-sm leading-relaxed'
-                  }
-                >
-                  {pillar.content}
-                </p>
-              </div>
-            );
-          })}
-
-          {/* Core Values Card */}
-          <div className="bg-slate-bg rounded-2xl border border-slate-200 border-t-4 border-t-primary p-6 shadow-xs hover:shadow-md transition-shadow flex flex-col">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-11 h-11 rounded-xl bg-primary text-white flex items-center justify-center shrink-0">
-                <Heart className="w-5 h-5" aria-hidden="true" />
-              </div>
-              <h3 className="text-lg font-bold text-primary">Core Values</h3>
+            <div className="pl-5 border-l-2 border-accent mb-8">
+              <p className="text-xs font-semibold uppercase tracking-[0.12em] text-slate-600 mb-1">
+                School Motto
+              </p>
+              <p className="font-serif italic text-2xl sm:text-[1.65rem] font-bold text-slate-900 leading-snug">
+                &ldquo;{schoolInfo.motto}&rdquo;
+              </p>
             </div>
 
-            <ul className="flex flex-wrap gap-2">
-              {schoolInfo.coreValues.map((value) => (
+            <dl className="divide-y divide-slate-200 border-t border-slate-200">
+              <div className="py-5">
+                <dt className="text-xs font-semibold uppercase tracking-[0.12em] text-primary mb-2">
+                  Mission
+                </dt>
+                <dd className="text-sm sm:text-base text-slate-700 leading-relaxed">
+                  {schoolInfo.mission}
+                </dd>
+              </div>
+              <div className="py-5">
+                <dt className="text-xs font-semibold uppercase tracking-[0.12em] text-primary mb-2">
+                  Vision
+                </dt>
+                <dd className="text-sm sm:text-base text-slate-700 leading-relaxed">
+                  {schoolInfo.vision}
+                </dd>
+              </div>
+            </dl>
+          </div>
+
+          {/* Right Column: Ruled Core Values Ledger */}
+          <div className="lg:col-span-7 lg:border-l lg:border-slate-200 lg:pl-14">
+            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-600 pb-3 border-b border-slate-300 mb-2">
+              Core Values
+            </p>
+
+            <ol className="grid grid-cols-1 sm:grid-cols-2 gap-x-10 divide-y divide-slate-200">
+              {schoolInfo.coreValues.map((value, idx) => (
                 <li
                   key={value.title}
-                  className="text-xs font-semibold px-3 py-1.5 rounded-full bg-primary/10 text-primary"
+                  className={`py-6 ${
+                    idx === 1 ? 'sm:border-t-0' : ''
+                  }`}
                 >
-                  {value.title}
+                  <span className="block text-xs font-semibold text-primary tabular-nums mb-1.5">
+                    0{idx + 1}
+                  </span>
+                  <h3 className="font-serif text-lg font-bold text-slate-900 mb-1.5">
+                    {value.title}
+                  </h3>
+                  <p className="text-sm text-slate-600 leading-relaxed">
+                    {value.description}
+                  </p>
                 </li>
               ))}
-            </ul>
+            </ol>
           </div>
         </div>
       </div>

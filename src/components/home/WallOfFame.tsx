@@ -1,30 +1,41 @@
+import Link from 'next/link';
+import { ArrowRight } from 'lucide-react';
 import WallOfFameGrid from '@/components/shared/WallOfFameGrid';
 
 export default function WallOfFame() {
   return (
     <section
       aria-labelledby="home-wof-heading"
-      className="py-14 sm:py-20 bg-white border-y border-slate-200/80"
+      className="py-16 sm:py-24 bg-white border-y border-slate-200"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="text-center mb-10">
-          <span className="text-xs font-bold uppercase tracking-wider text-primary">
-            Academic Distinction
-          </span>
-          <h2
-            id="home-wof-heading"
-            className="text-2xl sm:text-3xl font-bold text-slate-900 mt-1 mb-3"
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+          <div className="max-w-2xl">
+            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary mb-2">
+              National Examinations · KNEC 10204102
+            </p>
+            <h2
+              id="home-wof-heading"
+              className="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-900 leading-tight"
+            >
+              KCSE Roll of Honour
+            </h2>
+            <p className="text-slate-600 text-sm sm:text-base mt-2 leading-relaxed">
+              Recorded top candidates from recent KCSE sittings and their
+              university degree placements.
+            </p>
+          </div>
+
+          <Link
+            href="/academics#wall-of-fame"
+            className="min-h-11 inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:text-primary-dark hover:underline underline-offset-4 transition-colors shrink-0"
           >
-            KCSE Wall of Fame
-          </h2>
-          <p className="text-slate-600 text-sm sm:text-base max-w-xl mx-auto mb-3">
-            Celebrating our top-performing scholars and their placement in
-            leading university degree programmes.
-          </p>
-          <div
-            className="w-16 h-1 rounded-full bg-accent mx-auto"
-            aria-hidden="true"
-          />
+            <span>Academics &amp; results</span>
+            <ArrowRight
+              className="w-4 h-4 shrink-0 stroke-[1.75]"
+              aria-hidden="true"
+            />
+          </Link>
         </div>
 
         <WallOfFameGrid />

@@ -1,12 +1,11 @@
 // ============================================================
-// Mumbi Girls Senior School - Mock Data
-// Serves as full public-site data before Supabase is connected.
+// Mumbi Girls Senior School - Public School Data
+// Serves public-site content before Supabase is connected.
 // All dates strictly follow DD/MM/YYYY.
 // ============================================================
 
 import {
   SchoolInfo,
-  HeroSlide,
   QuickStat,
   TopStudent,
   NewsItem,
@@ -25,6 +24,8 @@ import {
 // ── School Profile ──────────────────────────────────────────
 export const schoolInfo: SchoolInfo = {
   name: 'Mumbi Girls Senior School',
+  // NOTE: Kept as recorded in project data. The official crest reads
+  // "Determined to Excel" — flagged for client confirmation before changing.
   motto: 'Education for Empowerment',
   mission:
     'To provide a holistic, inclusive, and quality education that empowers girls to become competent, ethical, and transformative leaders in a dynamic global society.',
@@ -34,32 +35,32 @@ export const schoolInfo: SchoolInfo = {
     {
       title: 'Academic Excellence',
       description:
-        'Pursuing mastery across every subject, continuous inquiry, and strong national examination readiness.',
+        'Consistent classroom study, laboratory practice, and thorough preparation for national assessments.',
     },
     {
       title: 'Integrity & Accountability',
       description:
-        'Upholding honesty, personal responsibility, and ethical stewardship in academic and campus life.',
+        'Honesty in schoolwork, personal responsibility, and careful stewardship of shared school property.',
     },
     {
       title: 'Discipline & Self-Governance',
       description:
-        'Respecting time, community standards, and democratic student leadership inside and outside class.',
+        'Respect for school hours, boarding rules, and elected student council representation.',
     },
     {
       title: 'Innovation & Creativity',
       description:
-        'Encouraging scientific curiosity, artistic expression, digital literacy, and practical problem-solving.',
+        'Practical inquiry in science laboratories, computing, agriculture, music, drama, and visual arts.',
     },
     {
       title: 'Faith & Moral Uprightness',
       description:
-        'Nurturing character, compassion, service, and spiritual growth across diverse faith traditions.',
+        'Pastoral care, service to others, and weekly worship across the faith traditions present in the school.',
     },
     {
-      title: 'Inclusivity & Respect for Diversity',
+      title: 'Inclusivity & Respect',
       description:
-        'Fostering a welcoming boarding sisterhood where every learner is valued, supported, and heard.',
+        'A boarding community where girls from different backgrounds live and study together with mutual respect.',
     },
   ],
   knecCode: '10204102',
@@ -76,86 +77,39 @@ export const schoolInfo: SchoolInfo = {
   domain: 'mumbiseniorschool.sc.ke',
 };
 
-// ── Hero Slides ─────────────────────────────────────────────
-export const heroSlides: HeroSlide[] = [
-  {
-    id: 1,
-    eyebrow: "Est. 1960 • Mukuyu, Murang'a",
-    title: 'Welcome to Mumbi Girls Senior School',
-    subtitle:
-      'Empowering young women through quality education, discipline, and innovation since 1960.',
-    image: '/images/hero/admin-block.webp',
-    alt: 'Illustrated campus backdrop of Mumbi Girls Senior School administration block in crest blue and white',
-    ctaLabel: 'Discover Our Heritage',
-    ctaHref: '/about',
-  },
-  {
-    id: 2,
-    eyebrow: 'Character & Governance',
-    title: 'Student Leadership & Parade',
-    subtitle:
-      "Nurturing tomorrow's leaders through democratic student council governance and disciplined formations.",
-    image: '/images/hero/parade.webp',
-    alt: 'Illustrated ceremonial parade plaza backdrop representing student leadership at Mumbi Girls Senior School',
-    ctaLabel: 'Explore Student Life',
-    ctaHref: '/explore',
-  },
-  {
-    id: 3,
-    eyebrow: 'CBC Senior School Pathways',
-    title: 'Science & STEM Excellence',
-    subtitle:
-      'Well-equipped laboratories driving discovery across Pure Sciences, Applied Sciences, and Technical & Engineering tracks.',
-    image: '/images/hero/stem-lab.webp',
-    alt: 'Illustrated science and STEM geometry backdrop for Mumbi Girls Senior School laboratories',
-    ctaLabel: 'Explore CBC Pathways',
-    ctaHref: '/academics#pathways',
-  },
-  {
-    id: 4,
-    eyebrow: 'Talent & Expression',
-    title: 'Cultural & Music Festival Champions',
-    subtitle:
-      'Celebrating creative excellence through drama, choral music, visual arts, and cultural showcases.',
-    image: '/images/hero/cultural.webp',
-    alt: 'Illustrated stage spotlight backdrop representing music, drama, and cultural festivals',
-    ctaLabel: 'View Campus Gallery',
-    ctaHref: '/gallery',
-  },
-  {
-    id: 5,
-    eyebrow: 'Service & Sisterhood',
-    title: 'Girl Guides & St. John Ambulance',
-    subtitle:
-      'Building resilience, civic duty, and compassionate community service through uniformed movements.',
-    image: '/images/hero/guides.webp',
-    alt: 'Illustrated compass and service emblem backdrop representing Girl Guides and St. John Ambulance',
-    ctaLabel: 'Clubs & Movements',
-    ctaHref: '/explore#clubs',
-  },
-];
-
-// ── Quick Stats ─────────────────────────────────────────────
+// ── Quick Facts ─────────────────────────────────────────────
 export const quickStats: QuickStat[] = [
-  { label: 'Founded', value: '1960', icon: 'Calendar' },
-  { label: 'Student Enrolment', value: '1,200+', icon: 'Users' },
-  { label: 'University Transition Rate', value: '78%', icon: 'GraduationCap' },
-  { label: 'CBC Pathways Offered', value: '3', icon: 'Route' },
+  { label: 'Established', value: '1960', detail: "Mukuyu, Murang'a County" },
+  {
+    label: 'Student Enrolment',
+    value: '1,200+',
+    detail: "Public girls' boarding",
+  },
+  {
+    label: 'University Transition',
+    value: '78%',
+    detail: 'Direct degree placement',
+  },
+  {
+    label: 'Senior School Pathways',
+    value: '3',
+    detail: 'Grades 10 – 12 (CBC)',
+  },
 ];
 
-// ── CBC Pathways ────────────────────────────────────────────
+// ── CBC Senior School Pathways ──────────────────────────────
 export const cbcPathways: CBCPathway[] = [
   {
     id: 'stem',
     name: 'STEM',
     summary:
-      'Analytical, experimental, and design-focused tracks preparing learners for medicine, engineering, computing, agriculture, and scientific research.',
+      'Science, technology, engineering, and mathematics tracks for Grades 10–12, taught across the Mathematics, Sciences, and Technical & Applied departments.',
     tracks: [
       {
         id: 'pure-sciences',
         name: 'Pure Sciences',
         description:
-          'Rigorous grounding in Mathematics, Physics, Chemistry, and Biology for research and medical careers.',
+          'Classroom and laboratory study in Mathematics, Physics, Chemistry, Biology, and Computer Science.',
         subjects: [
           'Mathematics',
           'Physics',
@@ -170,13 +124,12 @@ export const cbcPathways: CBCPathway[] = [
           'Pharmacy',
           'Data Science',
         ],
-        icon: 'FlaskConical',
       },
       {
         id: 'applied-sciences',
         name: 'Applied Sciences',
         description:
-          'Practical applications of science in agriculture, health, environment, and food technology.',
+          'Applied scientific study in agriculture, home science, health, environmental management, and food technology.',
         subjects: [
           'Agriculture',
           'Home Science',
@@ -191,13 +144,12 @@ export const cbcPathways: CBCPathway[] = [
           'Public Health',
           'Food Science',
         ],
-        icon: 'Microscope',
       },
       {
         id: 'technical-engineering',
         name: 'Technical & Engineering',
         description:
-          'Hands-on technical skills in computing, design, and engineering fundamentals.',
+          'Practical coursework in computing, technical drawing, applied physics, and design.',
         subjects: [
           'Computer Science',
           'Mathematics',
@@ -212,7 +164,6 @@ export const cbcPathways: CBCPathway[] = [
           'IT Management',
           'Mechatronics',
         ],
-        icon: 'Cpu',
       },
     ],
   },
@@ -220,13 +171,13 @@ export const cbcPathways: CBCPathway[] = [
     id: 'social-sciences',
     name: 'Social Sciences',
     summary:
-      'Inquiry into society, governance, economics, commerce, and world languages for future jurists, economists, communicators, and public leaders.',
+      'Humanities, business, and language tracks preparing Grade 10–12 learners for degrees in law, economics, commerce, education, and media.',
     tracks: [
       {
         id: 'humanities',
         name: 'Humanities',
         description:
-          'Critical thinking through History, Geography, Religious Education, and Social Studies.',
+          'Study of Kenyan and world history, physical and human geography, religious education, and civic life.',
         subjects: [
           'History & Government',
           'Geography',
@@ -241,13 +192,12 @@ export const cbcPathways: CBCPathway[] = [
           'Social Work',
           'Journalism',
         ],
-        icon: 'Globe',
       },
       {
         id: 'business-studies',
         name: 'Business Studies',
         description:
-          'Foundation in business, commerce, accounting, and entrepreneurship.',
+          'Coursework in commerce, accounting, economics, and enterprise management.',
         subjects: [
           'Business Studies',
           'Economics',
@@ -262,13 +212,12 @@ export const cbcPathways: CBCPathway[] = [
           'Marketing',
           'Accounting',
         ],
-        icon: 'TrendingUp',
       },
       {
         id: 'languages-literature',
         name: 'Languages & Literature',
         description:
-          'Mastery of English, Kiswahili, and foreign languages with literary analysis.',
+          'Written and spoken proficiency in English, Kiswahili, and foreign languages alongside set-book literary study.',
         subjects: [
           'English Language',
           'Kiswahili',
@@ -283,7 +232,6 @@ export const cbcPathways: CBCPathway[] = [
           'Teaching',
           'Creative Writing',
         ],
-        icon: 'BookOpen',
       },
     ],
   },
@@ -291,13 +239,13 @@ export const cbcPathways: CBCPathway[] = [
     id: 'arts-sports',
     name: 'Arts & Sports Science',
     summary:
-      'Structured creative arts, design, and sports science training that turns artistic and athletic talent into recognised academic and career qualifications.',
+      'Structured coursework in performing arts, visual design, and physical education for learners pursuing creative and sports science qualifications.',
     tracks: [
       {
         id: 'performing-arts',
         name: 'Performing Arts',
         description:
-          'Creative expression through music, drama, dance, and film production.',
+          'Practical and theoretical training in choral and instrumental music, drama, dance, and film studies.',
         subjects: ['Music', 'Drama', 'Dance', 'Film Studies', 'Theatre Arts'],
         careers: [
           'Performing Arts',
@@ -306,13 +254,12 @@ export const cbcPathways: CBCPathway[] = [
           'Broadcasting',
           'Event Management',
         ],
-        icon: 'Music',
       },
       {
         id: 'visual-arts',
         name: 'Visual Arts',
         description:
-          'Visual creativity through fine art, design, photography, and digital media.',
+          'Studio work in drawing, painting, textile design, graphic design, photography, and digital media.',
         subjects: [
           'Art & Design',
           'Photography',
@@ -327,13 +274,12 @@ export const cbcPathways: CBCPathway[] = [
           'Photography',
           'UI/UX Design',
         ],
-        icon: 'Palette',
       },
       {
         id: 'sports-science',
         name: 'Sports Science',
         description:
-          'Science of sports, physical education, coaching, and sports management.',
+          'Physical education, human fitness, nutrition, coaching principles, and sports administration.',
         subjects: [
           'Physical Education',
           'Sports Science',
@@ -348,13 +294,12 @@ export const cbcPathways: CBCPathway[] = [
           'Sports Administration',
           'Recreation Management',
         ],
-        icon: 'Trophy',
       },
     ],
   },
 ];
 
-// ── Top Students (KCSE Wall of Fame) ────────────────────────
+// ── Top Students (KCSE Roll of Honour) ──────────────────────
 export const topStudents: TopStudent[] = [
   {
     id: 1,
@@ -438,11 +383,11 @@ export const newsItems: NewsItem[] = [
     date: '20/03/2025',
     category: 'Event',
     excerpt:
-      'Mumbi Girls records strong KCSE results with a 78% university transition rate across science, humanities, and creative degree programmes.',
+      'Summary of the 2024 KCSE examination results, with a 78% university transition rate and result-slip collection guidance.',
     body: [
-      'Mumbi Girls Senior School celebrates the achievements of the 2024 KCSE graduating cohort, sustaining a 78% direct university transition rate across public and private universities in Kenya.',
-      'Top scholars earned placements in competitive degree programmes including Medicine and Surgery, Pharmacy, Computer Science, Law, and Commerce — reflecting consistent preparation by our teaching departments and strong boarding study routines.',
-      'Parents, guardians, and alumnae can view highlighted top scholars on the KCSE Wall of Fame under the Academics section or contact the examinations office during official working hours for result-slip collection guidance.',
+      'Mumbi Girls Senior School recorded a 78% direct university transition rate in the 2024 KCSE examinations, with candidates admitted to public and private universities across Kenya.',
+      'Graduating candidates secured places in degree programmes including Medicine and Surgery, Pharmacy, Computer Science, Law, and Commerce.',
+      'Candidates, parents, and guardians can review the KCSE list on the Academics page or visit the examinations office on weekdays between 08:00 and 17:00 for guidance on collecting official result slips.',
     ],
     slug: '2024-kcse-results',
   },
@@ -452,11 +397,11 @@ export const newsItems: NewsItem[] = [
     date: '02/01/2025',
     category: 'Circular',
     excerpt:
-      'Important reporting schedules, fee payment reminders, boarding requirements, and new student orientation details for Term 1.',
+      'Reporting hours, fee payment verification, boarding requirements, and Grade 10 orientation schedule for Term 1.',
     body: [
-      'All continuing and incoming learners are expected to report strictly within official daytime hours in complete, neat school uniform accompanied by cleared holiday assignment booklets.',
-      'Parents and guardians are reminded to review the official Fee Structure and ensure banking slips or official payment confirmations are presented at the accounts desk upon arrival.',
-      'New Grade 10 learners will take part in a structured campus orientation covering dormitory allocation, academic pathway mentorship, chaplaincy fellowship, and co-curricular club registration.',
+      'Continuing and newly admitted students are required to report within official daytime hours in full school uniform, bringing their completed holiday assignment booklets.',
+      'Parents and guardians should consult the 2025 Fee Structure and present official bank deposit slips or payment confirmations at the accounts office on reporting day.',
+      'Incoming Grade 10 students will attend orientation covering dormitory allocation, CBC pathway selection, chaplaincy groups, and club registration.',
     ],
     slug: 'term-1-opening-circular-2025',
   },
@@ -466,11 +411,11 @@ export const newsItems: NewsItem[] = [
     date: '10/12/2024',
     category: 'Download',
     excerpt:
-      'Complete joining instructions, boarding checklist, uniform specifications, and pathway selection guidance for newly admitted learners.',
+      'Admission documents, boarding items list, uniform specifications, and Senior School pathway information for incoming Grade 10 students.',
     body: [
-      'Congratulations to all learners placed at Mumbi Girls Senior School (KNEC Centre 10204102). The joining instructions package outlines admission documentation, medical and boarding essentials, and official uniform guidelines.',
-      'Incoming Senior School learners and their parents will also receive guidance from the Academics & Curriculum office on selecting tracks across STEM, Social Sciences, and Arts & Sports Science.',
-      'Download the admission package from the Downloads Hub or reach out to our administration office Monday to Friday between 08:00 and 17:00 for any clarification.',
+      'Students placed at Mumbi Girls Senior School (KNEC Centre 10204102, MoE Registration F2030609) should download the joining instructions booklet ahead of reporting day. It lists required admission forms, medical certificates, boarding items, and official uniform details.',
+      'During admission, the Academics & Curriculum office advises incoming Grade 10 students and parents on subject combinations under STEM, Social Sciences, and Arts & Sports Science.',
+      "Download the booklet from the Downloads page or contact the administration office at P.O. Box 115 - 10200, Murang'a (Monday to Friday, 08:00 – 17:00) for assistance.",
     ],
     slug: 'admission-joining-instructions-2025',
   },
@@ -480,11 +425,11 @@ export const newsItems: NewsItem[] = [
     date: '01/11/2024',
     category: 'Download',
     excerpt:
-      'Comprehensive holiday revision and research assignment packs for all Senior School grades and forms across every department.',
+      'Departmental holiday revision papers for Grades 10–12 and Forms 3–4 across Mathematics, Sciences, Languages, and Humanities.',
     body: [
-      'Academic departments have compiled structured December holiday assignments covering Mathematics, Sciences, Languages, Humanities, and Technical & Applied subjects.',
-      'Each learner should download and complete all papers assigned to her class level. Subject teachers will review completed work during the opening week of the new term as part of continuous academic follow-up.',
-      'Use the class-level and subject filters in the Downloads Hub to locate the exact assignment files for your grade or form.',
+      'Subject departments have uploaded December holiday assignment booklets covering Mathematics, Sciences, Languages, and Humanities.',
+      'Every student is expected to download and complete the papers for her class. Subject teachers collect and mark the booklets during the first week of term.',
+      'Use the class-level and subject filters on the Downloads page to find the files for each grade or form.',
     ],
     slug: 'december-holiday-assignment-2024',
   },
@@ -494,11 +439,11 @@ export const newsItems: NewsItem[] = [
     date: '15/09/2024',
     category: 'Newsletter',
     excerpt:
-      'Updates on academic progress, CBC Senior School readiness, chaplaincy events, and upcoming cultural activities.',
+      'Term 3 report covering syllabus coverage, internal assessments, Prayer Day, inter-house games, and closing dates.',
     body: [
-      'The Term 3 Mid-Term Newsletter highlights syllabus milestones, internal assessment feedback, and ongoing laboratory and library upgrades supporting Senior School pathways.',
-      'The edition also recaps Prayer Day, inter-house sports competitions, Girl Guides and St. John Ambulance service initiatives, and key dates for the remainder of the academic calendar.',
-      'Parents and guardians are encouraged to download the full newsletter from the Downloads Hub and keep in close communication with class teachers.',
+      'The Term 3 Mid-Term Newsletter reports on syllabus progress, internal examination dates, and laboratory and library preparations for Senior School classes.',
+      'It also covers Prayer Day, inter-house sports fixtures, Girl Guides and St. John Ambulance activities, and key calendar dates for the close of term.',
+      'Parents and guardians can download the full PDF copy from the Downloads page.',
     ],
     slug: 'term-3-mid-term-newsletter-2024',
   },
@@ -508,11 +453,11 @@ export const newsItems: NewsItem[] = [
     date: '25/08/2024',
     category: 'Event',
     excerpt:
-      "Mumbi Girls student innovators earn top honours at the Murang'a County STEM Innovation Fair.",
+      "Student project entries from the Sciences, Mathematics, and Technical & Applied departments at the 2024 Murang'a County STEM Innovation Fair.",
     body: [
-      "Learners from the Sciences, Mathematics, and Technical & Applied departments represented Mumbi Girls Senior School with distinction at the 2024 Murang'a County STEM Innovation Fair.",
-      'Student teams showcased practical projects in sustainable agriculture, environmental conservation, applied chemistry, and computing, demonstrating strong research and presentation skills.',
-      'Visit our Photo & Media Gallery to browse highlights from the STEM Innovation Fair album and explore our STEM pathway tracks on the Academics page.',
+      "Students from the Sciences, Mathematics, and Technical & Applied departments represented Mumbi Girls Senior School at the 2024 Murang'a County STEM Innovation Fair.",
+      'Entries covered agriculture, environmental conservation, applied chemistry, and computing, prepared during afternoon laboratory and club sessions.',
+      'Details of our STEM tracks are listed on the Academics page, and the STEM Innovation Fair album is catalogued in the Photo Gallery.',
     ],
     slug: 'stem-fair-2024-champions',
   },
@@ -530,7 +475,7 @@ export const principals: Principal[] = [
     name: 'Mrs. Eunice Wangari Muturi',
     period: '2021 – Present',
     isCurrent: true,
-    image: '/images/principal-placeholder.webp',
+    image: '/images/principal.jpg',
   },
 ];
 
@@ -555,11 +500,11 @@ export const governanceRoles: GovernanceRole[] = [
     role: 'Office of the Deputy Principal',
     title: 'Academics & Curriculum',
     description:
-      'Leads CBC Senior School pathway delivery, departmental coordination, internal assessments, and KNEC examination preparedness.',
+      'Oversees Senior School pathway teaching, departmental coordination, internal examinations, and KNEC registration.',
     responsibilities: [
-      'Timetabling & syllabus supervision across all 5 departments',
-      'CBC Grade 10–12 pathway placement & career guidance',
-      'Continuous assessment tracking & KCSE readiness',
+      'Timetabling and syllabus supervision across all five departments',
+      'CBC Grade 10–12 pathway placement and subject advisory',
+      'Continuous assessment records and KCSE examination readiness',
     ],
   },
   {
@@ -567,23 +512,23 @@ export const governanceRoles: GovernanceRole[] = [
     role: 'Office of the Deputy Principal',
     title: 'Administration & Student Welfare',
     description:
-      'Coordinates daily campus operations, boarding standards, student discipline, health and safety, and facility stewardship.',
+      'Manages day-to-day school operations, boarding houses, student conduct, sanatorium coordination, and grounds maintenance.',
     responsibilities: [
-      'Dormitory welfare, catering quality & campus security',
-      'Student conduct, guidance & pastoral support coordination',
-      'Co-curricular calendar & parent visitation logistics',
+      'Dormitory supervision, dining hall standards, and gate security',
+      'Student discipline, guidance and counselling, and pastoral care',
+      'Co-curricular calendar and official parent visiting days',
     ],
   },
   {
     id: 'student-council',
     role: 'Student Council',
-    title: 'Democratic Student Governance',
+    title: 'Elected Student Governance',
     description:
-      'Elected annually by fellow learners and headed by the School President and Deputy President to champion student voice and peer leadership.',
+      'Elected annually by students and led by the School President and Deputy President to represent classes and boarding houses.',
     responsibilities: [
-      'Academics, Library & Prep Time Secretaries',
-      'Boarding, Dining Hall, Health & Environment Captains',
-      'Games, Clubs, Entertainment & Chaplaincy Representatives',
+      'Academics, Library, and Prep Time Secretaries',
+      'Boarding, Dining Hall, Health, and Environment Captains',
+      'Games, Clubs, and Chaplaincy Representatives',
     ],
   },
 ];
@@ -595,7 +540,7 @@ export const departments: Department[] = [
     name: 'Mathematics',
     hod: 'Mr. James Mwangi',
     description:
-      'Building strong numerical, logical, and analytical foundations across STEM and Business pathways.',
+      'Core and elective mathematics instruction supporting STEM, Business Studies, and national examination classes.',
     subjects: ['Mathematics', 'Additional Mathematics', 'Statistics'],
     icon: 'Calculator',
   },
@@ -604,7 +549,7 @@ export const departments: Department[] = [
     name: 'Sciences',
     hod: 'Dr. Susan Wanjiru',
     description:
-      'Hands-on experimental science instruction supported by dedicated Physics, Chemistry, Biology, and computing laboratories.',
+      'Theory and scheduled practical lessons in Physics, Chemistry, Biology, and Computer Science laboratories.',
     subjects: ['Physics', 'Chemistry', 'Biology', 'Computer Science'],
     icon: 'FlaskConical',
   },
@@ -613,7 +558,7 @@ export const departments: Department[] = [
     name: 'Languages',
     hod: 'Mrs. Janet Njoki',
     description:
-      'Cultivating articulate communication, literary appreciation, and multilingual fluency in English, Kiswahili, and French.',
+      'Language, composition, and set-book literature teaching in English, Kiswahili, and French.',
     subjects: ['English', 'Kiswahili', 'Literature', 'Fasihi', 'French'],
     icon: 'Languages',
   },
@@ -622,7 +567,7 @@ export const departments: Department[] = [
     name: 'Humanities',
     hod: 'Mr. Patrick Githinji',
     description:
-      'Deepening understanding of history, geography, ethics, enterprise, and civic governance for informed leadership.',
+      'Instruction in History and Government, Geography, Religious Education, and Business Studies.',
     subjects: [
       'History & Government',
       'Geography',
@@ -637,7 +582,7 @@ export const departments: Department[] = [
     name: 'Technical & Applied',
     hod: 'Mrs. Esther Wambui',
     description:
-      'Equipping learners with practical, creative, and technological competencies across applied sciences and the arts.',
+      'Practical and project-based classes in Agriculture, Home Science, Art and Design, Music, and Computer Studies.',
     subjects: [
       'Agriculture',
       'Home Science',
@@ -656,9 +601,9 @@ export const clubs: Club[] = [
     name: 'Girl Guides',
     category: 'Movement',
     patron: 'Mrs. Sarah Kimani',
-    meetingDay: 'Saturday • 14:00',
+    meetingDay: 'Saturday, 14:00',
     description:
-      'Character building, outdoor skills, community service, and scouting leadership programmes.',
+      'Parade drills, campcraft, outdoor skills, and community service under the Kenya Girl Guides programme.',
     icon: 'Compass',
   },
   {
@@ -666,9 +611,9 @@ export const clubs: Club[] = [
     name: 'St. John Ambulance',
     category: 'Movement',
     patron: 'Mr. David Maina',
-    meetingDay: 'Saturday • 14:00',
+    meetingDay: 'Saturday, 14:00',
     description:
-      'First aid training, emergency preparedness, campus event coverage, and community health outreach.',
+      'First-aid certification, emergency response drills, and duty cover during school sports and assemblies.',
     icon: 'HeartPulse',
   },
   {
@@ -676,9 +621,9 @@ export const clubs: Club[] = [
     name: 'Red Cross',
     category: 'Movement',
     patron: 'Mrs. Agnes Njeri',
-    meetingDay: 'Wednesday • 16:30',
+    meetingDay: 'Wednesday, 16:30',
     description:
-      'Humanitarian service, disaster awareness, peer health education, and community outreach initiatives.',
+      'First-aid awareness, peer health education, disaster preparedness, and local welfare drives.',
     icon: 'Cross',
   },
   {
@@ -686,9 +631,9 @@ export const clubs: Club[] = [
     name: 'Journalism Club',
     category: 'Club',
     patron: 'Mr. Peter Ochieng',
-    meetingDay: 'Tuesday • 16:30',
+    meetingDay: 'Tuesday, 16:30',
     description:
-      'School newsletter reporting, public speaking, creative writing, event photography, and media literacy.',
+      'Term newsletter reporting, assembly news briefs, debating, writing practice, and event photography.',
     icon: 'Newspaper',
   },
   {
@@ -696,9 +641,9 @@ export const clubs: Club[] = [
     name: 'Drama & Theatre',
     category: 'Club',
     patron: 'Mrs. Lucy Waithera',
-    meetingDay: 'Monday • 16:30',
+    meetingDay: 'Monday, 16:30',
     description:
-      'Acting, spoken word, scriptwriting, and stage productions for Kenya Music and Drama Festivals.',
+      'Stage plays, spoken word, choral verse, and rehearsals for the Kenya Schools and Colleges Drama and Music Festivals.',
     icon: 'Theater',
   },
   {
@@ -706,9 +651,9 @@ export const clubs: Club[] = [
     name: 'Wildlife Club',
     category: 'Club',
     patron: 'Mr. Joseph Kamau',
-    meetingDay: 'Thursday • 16:30',
+    meetingDay: 'Thursday, 16:30',
     description:
-      'Environmental conservation, campus tree planting, ecological excursions, and biodiversity stewardship.',
+      'Tree planting on school grounds, environmental conservation projects, and field study trips.',
     icon: 'TreePine',
   },
   {
@@ -716,9 +661,9 @@ export const clubs: Club[] = [
     name: 'Integrity Club',
     category: 'Club',
     patron: 'Mrs. Beatrice Muthoni',
-    meetingDay: 'Friday • 16:30',
+    meetingDay: 'Friday, 16:30',
     description:
-      'Values-based leadership, honesty campaigns, peer accountability, and civic education.',
+      'Peer discussions on honesty, school rules, ethical conduct, and civic responsibility.',
     icon: 'Shield',
   },
 ];
@@ -730,9 +675,9 @@ export const sports: Club[] = [
     name: 'Volleyball',
     category: 'Sport',
     patron: 'Mr. Stephen Gitau',
-    meetingDay: 'Daily • 16:00',
+    meetingDay: 'Daily, 16:00',
     description:
-      'Competitive volleyball squads participating in sub-county, county, and regional KSSSA championships.',
+      'School volleyball teams competing in inter-house matches and sub-county, county, and regional KSSSA fixtures.',
     icon: 'CircleDot',
   },
   {
@@ -740,9 +685,9 @@ export const sports: Club[] = [
     name: 'Netball',
     category: 'Sport',
     patron: 'Mrs. Mary Njoroge',
-    meetingDay: 'Daily • 16:00',
+    meetingDay: 'Daily, 16:00',
     description:
-      "Fast-paced team netball with structured drills, inter-house leagues, and consistent county tournament play.",
+      "Afternoon court training, inter-house competitions, and Murang'a County secondary school tournaments.",
     icon: 'Target',
   },
   {
@@ -750,9 +695,9 @@ export const sports: Club[] = [
     name: 'Basketball',
     category: 'Sport',
     patron: 'Mr. John Omondi',
-    meetingDay: 'Daily • 16:00',
+    meetingDay: 'Daily, 16:00',
     description:
-      'Court conditioning, tactical teamwork, and regular inter-school basketball fixtures.',
+      'Court fundamentals, fitness conditioning, and scheduled inter-school fixtures.',
     icon: 'Circle',
   },
   {
@@ -760,9 +705,9 @@ export const sports: Club[] = [
     name: 'Hockey',
     category: 'Sport',
     patron: 'Mrs. Ann Wangari',
-    meetingDay: 'Daily • 16:00',
+    meetingDay: 'Daily, 16:00',
     description:
-      'Field hockey training focusing on stick skills, endurance, sportsmanship, and tournament readiness.',
+      'Field hockey stickwork, positional play, and preparation for KSSSA term games.',
     icon: 'Trophy',
   },
   {
@@ -770,9 +715,9 @@ export const sports: Club[] = [
     name: 'Athletics',
     category: 'Sport',
     patron: 'Mr. Elijah Kipchoge',
-    meetingDay: 'Daily • 05:30 & 16:00',
+    meetingDay: 'Daily, 05:30 & 16:00',
     description:
-      'Track and field events spanning sprints, middle- and long-distance running, relays, jumps, and throws.',
+      'Track and field training across sprints, middle- and long-distance races, relays, jumps, and throws.',
     icon: 'Footprints',
   },
   {
@@ -780,30 +725,30 @@ export const sports: Club[] = [
     name: 'Handball',
     category: 'Sport',
     patron: 'Mrs. Faith Wanjiku',
-    meetingDay: 'Daily • 16:00',
+    meetingDay: 'Daily, 16:00',
     description:
-      'Agile team handball coaching, inter-class competitions, and KSSSA fixture representation.',
+      'Team handball coaching, inter-class matches, and KSSSA tournament participation.',
     icon: 'Hand',
   },
 ];
 
 // ── Daily Routine (05:00 – 22:00) ───────────────────────────
 export const dailyRoutine: DailyRoutineItem[] = [
-  { time: '05:00', activity: 'Wake Up & Personal Preparation' },
-  { time: '05:30', activity: 'Morning Preps & Personal Study' },
-  { time: '06:30', activity: 'Breakfast in the Dining Hall' },
-  { time: '07:00', activity: 'Morning Assembly, Inspection & Parade' },
-  { time: '07:30', activity: 'Morning Lessons Begin (Period 1)' },
-  { time: '10:00', activity: 'Short Tea Break' },
-  { time: '10:20', activity: 'Mid-Morning Lessons Continue' },
-  { time: '12:40', activity: 'Lunch Break & Rest' },
-  { time: '14:00', activity: 'Afternoon Lessons & Lab Practicals' },
-  { time: '16:00', activity: 'Games, Clubs & Co-Curricular Activities' },
-  { time: '17:30', activity: 'Evening Freshening Up & Supper Prep' },
+  { time: '05:00', activity: 'Wake up and dormitory preparation' },
+  { time: '05:30', activity: 'Morning preps and personal study' },
+  { time: '06:30', activity: 'Breakfast in the dining hall' },
+  { time: '07:00', activity: 'Morning assembly, inspection, and parade' },
+  { time: '07:30', activity: 'Morning lessons begin (Period 1)' },
+  { time: '10:00', activity: 'Short tea break' },
+  { time: '10:20', activity: 'Mid-morning lessons' },
+  { time: '12:40', activity: 'Lunch break' },
+  { time: '14:00', activity: 'Afternoon lessons and laboratory practicals' },
+  { time: '16:00', activity: 'Games, clubs, and co-curricular activities' },
+  { time: '17:30', activity: 'Freshening up and preparation for supper' },
   { time: '18:30', activity: 'Supper' },
-  { time: '19:00', activity: 'Supervised Evening Preps & Revision' },
-  { time: '21:30', activity: 'Dormitory Roll Call & Evening Devotions' },
-  { time: '22:00', activity: 'Lights Out' },
+  { time: '19:00', activity: 'Supervised evening preps' },
+  { time: '21:30', activity: 'Dormitory roll call and evening prayers' },
+  { time: '22:00', activity: 'Lights out' },
 ];
 
 // ── Faith Groups ────────────────────────────────────────────
@@ -815,7 +760,7 @@ export const faithGroups: Club[] = [
     patron: 'Mrs. Rachael Mukami',
     meetingDay: 'Sunday 09:00 & Wednesday 17:00',
     description:
-      'Interdenominational Christian fellowship, praise and worship, Bible study, and peer mentorship.',
+      'Interdenominational Christian worship, Bible study, choir practice, and peer fellowship.',
     icon: 'Cross',
   },
   {
@@ -825,7 +770,7 @@ export const faithGroups: Club[] = [
     patron: 'Sr. Cecilia Wangeci',
     meetingDay: 'Sunday 09:00 & Thursday 17:00',
     description:
-      'Catholic student movement centred on prayer, liturgy, compassionate service, and moral formation.',
+      'Catholic student fellowship holding weekly prayer, liturgy preparation, and service activities.',
     icon: 'Heart',
   },
   {
@@ -835,7 +780,7 @@ export const faithGroups: Club[] = [
     patron: 'Mrs. Naomi Njiru',
     meetingDay: 'Saturday 09:00',
     description:
-      'Seventh-Day Adventist fellowship, Sabbath worship, choir ministry, and community service.',
+      'Seventh-Day Adventist Sabbath worship, Scripture study, and choir fellowship.',
     icon: 'Sun',
   },
   {
@@ -845,7 +790,7 @@ export const faithGroups: Club[] = [
     patron: 'Mrs. Fatma Hassan',
     meetingDay: 'Friday 13:00',
     description:
-      'Dedicated prayer observance, Quran study, moral reflection, and Muslim student fellowship.',
+      'Scheduled prayer observance, Quran study, and fellowship for Muslim students.',
     icon: 'Moon',
   },
 ];
@@ -854,13 +799,13 @@ export const faithGroups: Club[] = [
 export const boardingSections: BoardingSection[] = [
   {
     id: 'meals',
-    title: 'Boarding Dining & Nutrition',
+    title: 'Dining Hall & Meals',
     description:
-      'Balanced, freshly prepared meals are served in a clean communal dining hall on a structured weekly menu supporting active adolescent learners.',
+      'Meals are prepared on campus and served in the school dining hall according to a fixed weekly menu.',
     highlights: [
-      'Daily breakfast, 10:00 tea break, hot lunch, and evening supper',
-      'Balanced rotation of cereals, legumes, vegetables, fruits, beef, and milk',
-      'Clean drinking water points and strict kitchen hygiene supervision',
+      'Breakfast, 10:00 tea, hot lunch, and supper served daily',
+      'Weekly menu of cereals, legumes, seasonal vegetables, fruit, meat, and milk',
+      'Drinking water points and routine kitchen hygiene inspection',
     ],
     icon: 'Utensils',
   },
@@ -868,11 +813,11 @@ export const boardingSections: BoardingSection[] = [
     id: 'uniform',
     title: 'Official School Uniform',
     description:
-      "Our uniform reflects the pride, modesty, and identity of Mumbi Girls Senior School in the school's official blue and crisp white colours.",
+      'Students wear the official Mumbi Girls Senior School uniform in school blue and white during classes and official functions. Full item lists are issued in the joining instructions.',
     highlights: [
-      'Official school blazer bearing the Mumbi Girls Senior School crest',
-      'Pleated school skirt, white collared blouse, and official school tie',
-      'Black lace-up leather shoes, approved socks, and official PE/games kit',
+      'School blazer bearing the Mumbi Girls Senior School crest',
+      'Pleated school skirt, white collared blouse, and school tie',
+      'Black lace-up leather shoes, approved socks, and games kit',
     ],
     icon: 'Shirt',
   },
@@ -880,11 +825,11 @@ export const boardingSections: BoardingSection[] = [
     id: 'welfare',
     title: 'Dormitories, Health & Safety',
     description:
-      'A supportive, well-supervised boarding environment designed to be a safe, orderly home away from home throughout the school term.',
+      'All students reside in supervised boarding houses on the Mukuyu compound throughout the school term.',
     highlights: [
-      'Round-the-clock campus security and supervised dormitory houses',
-      'School sanatorium with nursing care and hospital referral procedures',
-      'Active Guidance & Counselling department and teacher-mentor families',
+      '24-hour gate security and house-mistress supervision in dormitories',
+      'On-site school sanatorium with hospital referral procedures when required',
+      'Guidance and Counselling office and teacher-mentor groups',
     ],
     icon: 'Shield',
   },
@@ -1016,18 +961,21 @@ export const downloads: DownloadItem[] = [
 ];
 
 // ── Gallery Albums ──────────────────────────────────────────
+// Place real school photographs at the matching `public/images/gallery/*.jpg`
+// file paths below; GalleryBrowser will display them automatically.
 export const galleryAlbums: GalleryAlbum[] = [
   {
     id: 'prayer-day-2024',
     name: 'Prayer Day 2024',
-    description: 'Thanksgiving worship, candidate dedication, and choral presentations.',
-    coverImage: '/images/gallery/prayer-1.webp',
+    description:
+      'Annual thanksgiving service, candidate dedication, and school choir presentations.',
+    coverImage: '/images/gallery/prayer-1.jpg',
     year: 2024,
     images: [
       {
         id: 1,
-        src: '/images/gallery/prayer-1.webp',
-        alt: 'Morning thanksgiving prayers and assembly dedication during Prayer Day 2024',
+        src: '/images/gallery/prayer-1.jpg',
+        alt: 'Morning thanksgiving service and assembly dedication, Prayer Day 2024',
         event: 'Prayer Day 2024',
         year: 2024,
         width: 960,
@@ -1035,8 +983,8 @@ export const galleryAlbums: GalleryAlbum[] = [
       },
       {
         id: 2,
-        src: '/images/gallery/prayer-2.webp',
-        alt: 'Guest speaker keynote and candidate blessing during Prayer Day 2024',
+        src: '/images/gallery/prayer-2.jpg',
+        alt: 'Guest sermon and candidate dedication, Prayer Day 2024',
         event: 'Prayer Day 2024',
         year: 2024,
         width: 960,
@@ -1044,8 +992,8 @@ export const galleryAlbums: GalleryAlbum[] = [
       },
       {
         id: 3,
-        src: '/images/gallery/prayer-3.webp',
-        alt: 'Mumbi Girls Senior School choir performing during Prayer Day 2024',
+        src: '/images/gallery/prayer-3.jpg',
+        alt: 'School choir presentation during Prayer Day 2024',
         event: 'Prayer Day 2024',
         year: 2024,
         width: 960,
@@ -1056,14 +1004,15 @@ export const galleryAlbums: GalleryAlbum[] = [
   {
     id: 'agm-prize-giving-2024',
     name: 'AGM & Prize Giving 2024',
-    description: 'Celebrating top scholars, subject awards, and parent-school partnership.',
-    coverImage: '/images/gallery/agm-1.webp',
+    description:
+      'Annual General Meeting of parents and the Board of Management, with subject and merit awards.',
+    coverImage: '/images/gallery/agm-1.jpg',
     year: 2024,
     images: [
       {
         id: 4,
-        src: '/images/gallery/agm-1.webp',
-        alt: 'Annual Prize Giving ceremony honouring academic and leadership excellence',
+        src: '/images/gallery/agm-1.jpg',
+        alt: 'Annual Prize Giving assembly, 2024',
         event: 'AGM & Prize Giving 2024',
         year: 2024,
         width: 960,
@@ -1071,8 +1020,8 @@ export const galleryAlbums: GalleryAlbum[] = [
       },
       {
         id: 5,
-        src: '/images/gallery/agm-2.webp',
-        alt: 'Top performing students receiving academic merit certificates and trophies',
+        src: '/images/gallery/agm-2.jpg',
+        alt: 'Presentation of subject and academic merit certificates, 2024',
         event: 'AGM & Prize Giving 2024',
         year: 2024,
         width: 960,
@@ -1080,8 +1029,8 @@ export const galleryAlbums: GalleryAlbum[] = [
       },
       {
         id: 6,
-        src: '/images/gallery/agm-3.webp',
-        alt: 'Parents, teachers, and Board of Management plenary session during the 2024 AGM',
+        src: '/images/gallery/agm-3.jpg',
+        alt: 'Parents, teachers, and Board of Management session at the 2024 AGM',
         event: 'AGM & Prize Giving 2024',
         year: 2024,
         width: 960,
@@ -1092,14 +1041,15 @@ export const galleryAlbums: GalleryAlbum[] = [
   {
     id: 'stem-fair-2024',
     name: 'STEM Innovation Fair 2024',
-    description: 'Student science exhibitions, robotics prototypes, and county fair honours.',
-    coverImage: '/images/gallery/stem-1.webp',
+    description:
+      "Student science, agriculture, and computing exhibits entered at the 2024 Murang'a County STEM Fair.",
+    coverImage: '/images/gallery/stem-1.jpg',
     year: 2024,
     images: [
       {
         id: 7,
-        src: '/images/gallery/stem-1.webp',
-        alt: 'Student science project exhibitions at the 2024 STEM Innovation Fair',
+        src: '/images/gallery/stem-1.jpg',
+        alt: 'Science and agriculture project stands, STEM Innovation Fair 2024',
         event: 'STEM Innovation Fair 2024',
         year: 2024,
         width: 960,
@@ -1107,8 +1057,8 @@ export const galleryAlbums: GalleryAlbum[] = [
       },
       {
         id: 8,
-        src: '/images/gallery/stem-2.webp',
-        alt: 'Computing and robotics prototype showcase by STEM pathway learners',
+        src: '/images/gallery/stem-2.jpg',
+        alt: 'Computing and applied science demonstration by STEM students, 2024',
         event: 'STEM Innovation Fair 2024',
         year: 2024,
         width: 960,
@@ -1116,8 +1066,8 @@ export const galleryAlbums: GalleryAlbum[] = [
       },
       {
         id: 9,
-        src: '/images/gallery/stem-3.webp',
-        alt: 'Regional STEM Innovation Fair award presentation to Mumbi Girls team',
+        src: '/images/gallery/stem-3.jpg',
+        alt: 'Certificate and trophy presentation at the 2024 STEM Innovation Fair',
         event: 'STEM Innovation Fair 2024',
         year: 2024,
         width: 960,
@@ -1128,14 +1078,15 @@ export const galleryAlbums: GalleryAlbum[] = [
   {
     id: 'ksssa-sports-2024',
     name: 'KSSSA Sports 2024',
-    description: 'Track and field athletics, volleyball finals, and championship medals.',
-    coverImage: '/images/gallery/sports-1.webp',
+    description:
+      'Inter-school athletics, volleyball fixtures, and awards from the 2024 KSSSA term games.',
+    coverImage: '/images/gallery/sports-1.jpg',
     year: 2024,
     images: [
       {
         id: 10,
-        src: '/images/gallery/sports-1.webp',
-        alt: 'Mumbi Girls athletes competing at the 2024 KSSSA track and field meet',
+        src: '/images/gallery/sports-1.jpg',
+        alt: 'Track and field events during the 2024 KSSSA games',
         event: 'KSSSA Sports 2024',
         year: 2024,
         width: 960,
@@ -1143,8 +1094,8 @@ export const galleryAlbums: GalleryAlbum[] = [
       },
       {
         id: 11,
-        src: '/images/gallery/sports-2.webp',
-        alt: 'Mumbi Girls volleyball team in action during the 2024 KSSSA finals',
+        src: '/images/gallery/sports-2.jpg',
+        alt: 'School volleyball fixture during the 2024 KSSSA tournament',
         event: 'KSSSA Sports 2024',
         year: 2024,
         width: 960,
@@ -1152,8 +1103,8 @@ export const galleryAlbums: GalleryAlbum[] = [
       },
       {
         id: 12,
-        src: '/images/gallery/sports-3.webp',
-        alt: 'Medal and trophy presentation ceremony at the 2024 KSSSA games',
+        src: '/images/gallery/sports-3.jpg',
+        alt: 'Awards presentation at the close of the 2024 KSSSA games',
         event: 'KSSSA Sports 2024',
         year: 2024,
         width: 960,

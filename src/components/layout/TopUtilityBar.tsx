@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Clock, Download, LogIn, MapPin, ShieldCheck, User } from 'lucide-react';
+import { Download } from 'lucide-react';
 import { schoolInfo } from '@/data/mock-school-data';
 import { usePwa } from '@/components/pwa/PwaProvider';
 
@@ -10,70 +10,63 @@ export default function TopUtilityBar() {
 
   return (
     <div className="bg-primary-dark text-white text-xs border-b border-white/15">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-1.5 flex items-center justify-between gap-2">
-        {/* Left: Official school identifiers */}
-        <div className="flex items-center gap-3 min-w-0">
-          <span className="inline-flex items-center gap-1.5 text-white font-semibold shrink-0">
-            <ShieldCheck
-              className="w-3.5 h-3.5 text-blue-100 shrink-0"
-              aria-hidden="true"
-            />
-            <span>KNEC: {schoolInfo.knecCode}</span>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-1.5 flex items-center justify-between gap-3">
+        {/* Left: Official school registry details */}
+        <div className="flex items-center gap-2.5 min-w-0 text-white/90 tabular-nums">
+          <span className="font-medium text-white shrink-0">
+            KNEC {schoolInfo.knecCode}
           </span>
+          <span className="text-white/35" aria-hidden="true">
+            ·
+          </span>
+          <span className="shrink-0">MoE {schoolInfo.moeReg}</span>
 
           <span className="hidden md:inline text-white/35" aria-hidden="true">
-            |
+            ·
           </span>
-          <span className="hidden md:inline-flex items-center gap-1.5 text-white/90 truncate">
-            <MapPin
-              className="w-3.5 h-3.5 text-blue-100 shrink-0"
-              aria-hidden="true"
-            />
-            <span>{schoolInfo.postalAddress}</span>
+          <span className="hidden md:inline truncate">
+            {schoolInfo.postalAddress}
           </span>
 
           <span className="hidden xl:inline text-white/35" aria-hidden="true">
-            |
+            ·
           </span>
-          <span className="hidden xl:inline-flex items-center gap-1.5 text-white/90 shrink-0">
-            <Clock
-              className="w-3.5 h-3.5 text-blue-100 shrink-0"
-              aria-hidden="true"
-            />
-            <span>{schoolInfo.officeHoursShort}</span>
+          <span className="hidden xl:inline shrink-0">
+            {schoolInfo.officeHoursShort}
           </span>
         </div>
 
-        {/* Right: Portal links & PWA install */}
-        <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+        {/* Right: Portal links & optional PWA install */}
+        <div className="flex items-center gap-1 sm:gap-3 shrink-0">
           <Link
             href="/portal"
-            className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1.5 min-h-9 rounded-md text-white hover:bg-white/15 transition-colors font-semibold"
+            className="hidden sm:inline-flex items-center px-2 py-1 min-h-8 text-white/90 hover:text-white hover:underline underline-offset-4 transition-colors font-medium"
           >
-            <User className="w-3.5 h-3.5 text-blue-100" aria-hidden="true" />
-            <span>Student Login</span>
+            Student Portal
           </Link>
+          <span
+            className="hidden sm:inline text-white/30"
+            aria-hidden="true"
+          >
+            /
+          </span>
           <Link
             href="/portal"
-            className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1.5 min-h-9 rounded-md text-white hover:bg-white/15 transition-colors font-semibold"
+            className="hidden sm:inline-flex items-center px-2 py-1 min-h-8 text-white/90 hover:text-white hover:underline underline-offset-4 transition-colors font-medium"
           >
-            <LogIn className="w-3.5 h-3.5 text-blue-100" aria-hidden="true" />
-            <span>Staff Login</span>
+            Staff Portal
           </Link>
           {canNativeInstall && (
             <button
               type="button"
               onClick={triggerNativeInstall}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 min-h-9 rounded-md bg-white text-primary hover:bg-blue-50 transition-colors font-bold shadow-xs"
+              className="inline-flex items-center gap-1.5 px-2.5 py-1 min-h-8 rounded-sm bg-white text-primary hover:bg-blue-50 transition-colors font-semibold"
             >
-              <Download className="w-3.5 h-3.5" aria-hidden="true" />
+              <Download className="w-3.5 h-3.5 stroke-[1.75]" aria-hidden="true" />
               <span className="hidden sm:inline">Install App</span>
               <span className="sm:hidden">Install</span>
             </button>
           )}
-          <span className="sm:hidden text-[11px] text-white/90 font-medium">
-            MoE: {schoolInfo.moeReg}
-          </span>
         </div>
       </div>
     </div>

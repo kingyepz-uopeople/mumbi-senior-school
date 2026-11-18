@@ -3,17 +3,28 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import Image from 'next/image';
-import { ChevronLeft, ChevronRight, Maximize2, X } from 'lucide-react';
+import { Camera, ChevronLeft, ChevronRight, X } from 'lucide-react';
 import { galleryAlbums } from '@/data/mock-school-data';
 import type { GalleryImage } from '@/types';
 
-export default function GalleryBrowser() {
+interface GalleryBrowserProps {
+  /**
+   * Root-relative `/images/gallery/*.jpg` paths that currently exist in
+   * `public/`. Frames without a matching file on disk display a clean neutral
+   * "Photo coming soon" card rather than a placeholder illustration.
+   */
+  availableSrcs: string[];
+}
+
+export default function GalleryBrowser({ availableSrcs }: GalleryBrowserProps) {
   const [selectedAlbumId, setSelectedAlbumId] = useState<string>('all');
-  const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const [activeImageId, setActiveImageId] = useState<number | null>(null);
 
   const dialogRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const lastTriggerRef = useRef<HTMLButtonElement | null>(null);
+
+  const availableSet = useMemo(() => new Set(availableSrcs), [availableSrcs]);
 
   const allImages: GalleryImage[] = useMemo(
     () => galleryAlbums.flatMap((album) => album.images),
@@ -27,34 +38,44 @@ export default function GalleryBrowser() {
 
   const displayedImages = selectedAlbum ? selectedAlbum.images : allImages;
 
+  // Only real photographs that exist on disk can be opened in the lightbox
+  const viewableImages = useMemo(
+    () => displayedImages.filter((img) => availableSet.has(img.src)),
+    [displayedImages, availableSet]
+  );
+
+  const activeViewIndex = useMemo(
+    () =>
+      activeImageId === null
+        ? -1
+        : viewableImages.findIndex((img) => img.id === activeImageId),
+    [activeImageId, viewableImages]
+  );
+
   const activeImage =
-    activeIndex !== null && displayedImages[activeIndex]
-      ? displayedImages[activeIndex]
-      : null;
+    activeViewIndex >= 0 ? viewableImages[activeViewIndex] : null;
 
   const closeLightbox = useCallback(() => {
-    setActiveIndex(null);
+    setActiveImageId(null);
   }, []);
 
   const showNext = useCallback(() => {
-    if (displayedImages.length === 0) return;
-    setActiveIndex((prev) =>
-      prev === null ? null : (prev + 1) % displayedImages.length
-    );
-  }, [displayedImages.length]);
+    if (viewableImages.length === 0 || activeViewIndex < 0) return;
+    const next = viewableImages[(activeViewIndex + 1) % viewableImages.length];
+    setActiveImageId(next.id);
+  }, [viewableImages, activeViewIndex]);
 
   const showPrev = useCallback(() => {
-    if (displayedImages.length === 0) return;
-    setActiveIndex((prev) =>
-      prev === null
-        ? null
-        : (prev - 1 + displayedImages.length) % displayedImages.length
-    );
-  }, [displayedImages.length]);
+    if (viewableImages.length === 0 || activeViewIndex < 0) return;
+    const prev =
+      viewableImages[
+        (activeViewIndex - 1 + viewableImages.length) % viewableImages.length
+      ];
+    setActiveImageId(prev.id);
+  }, [viewableImages, activeViewIndex]);
 
-  const isLightboxOpen = activeIndex !== null;
+  const isLightboxOpen = activeImage !== null;
 
-  // Focus management, keyboard shortcuts (Esc, Arrows, Tab trap), and body scroll lock
   useEffect(() => {
     if (!isLightboxOpen) return;
 
@@ -108,26 +129,29 @@ export default function GalleryBrowser() {
     };
   }, [isLightboxOpen, closeLightbox, showNext, showPrev]);
 
+  const filterBtnClass = (active: boolean) =>
+    `min-h-11 px-4 py-2 rounded-sm text-xs sm:text-sm font-semibold border transition-colors ${
+      active
+        ? 'bg-primary border-primary text-white'
+        : 'bg-white border-slate-300 text-slate-700 hover:border-primary hover:text-primary'
+    }`;
+
   return (
     <div className="space-y-10">
-      {/* Album Filter Buttons */}
+      {/* Left-Aligned Album Filter Controls */}
       <div
         role="group"
         aria-label="Filter gallery by event album"
-        className="flex justify-center flex-wrap gap-2"
+        className="flex flex-wrap gap-2"
       >
         <button
           type="button"
           aria-pressed={selectedAlbumId === 'all'}
           onClick={() => {
             setSelectedAlbumId('all');
-            setActiveIndex(null);
+            setActiveImageId(null);
           }}
-          className={`min-h-11 px-4 sm:px-5 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition-colors ${
-            selectedAlbumId === 'all'
-              ? 'bg-primary text-white shadow-xs'
-              : 'bg-white border border-slate-300 text-slate-700 hover:border-primary hover:text-primary'
-          }`}
+          className={filterBtnClass(selectedAlbumId === 'all')}
         >
           All Albums ({allImages.length})
         </button>
@@ -141,13 +165,9 @@ export default function GalleryBrowser() {
               aria-pressed={active}
               onClick={() => {
                 setSelectedAlbumId(album.id);
-                setActiveIndex(null);
+                setActiveImageId(null);
               }}
-              className={`min-h-11 px-4 sm:px-5 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition-colors ${
-                active
-                  ? 'bg-primary text-white shadow-xs'
-                  : 'bg-white border border-slate-300 text-slate-700 hover:border-primary hover:text-primary'
-              }`}
+              className={filterBtnClass(active)}
             >
               {album.name} ({album.images.length})
             </button>
@@ -155,88 +175,115 @@ export default function GalleryBrowser() {
         })}
       </div>
 
-      {/* Album Heading & Description (proper h2 before card h3s) */}
+      {/* Album Heading & Grid */}
       <section aria-labelledby="gallery-album-heading" className="space-y-6">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2 border-b border-slate-200 pb-4">
-          <div>
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2 pb-4 border-b border-slate-300">
+          <div className="max-w-2xl">
             <h2
               id="gallery-album-heading"
-              className="text-xl sm:text-2xl font-bold text-slate-900"
+              className="font-serif text-2xl sm:text-3xl font-bold text-slate-900"
             >
-              {selectedAlbum ? selectedAlbum.name : 'All Campus Albums'}
+              {selectedAlbum ? selectedAlbum.name : 'All Event Albums'}
             </h2>
-            <p className="text-sm text-slate-600 mt-0.5">
+            <p className="text-sm text-slate-600 mt-1 leading-relaxed">
               {selectedAlbum
                 ? selectedAlbum.description
-                : 'Select any card below to inspect in the fullscreen viewer. Official campus photographs will replace illustrated placeholders.'}
+                : viewableImages.length > 0
+                  ? 'Select any photograph to view it at full size.'
+                  : 'Verified photographs from the school office are being prepared for publication in each album below.'}
             </p>
           </div>
           <p
             role="status"
             aria-live="polite"
-            className="text-xs font-semibold text-slate-600 shrink-0"
+            className="text-xs font-medium text-slate-600 tabular-nums shrink-0"
           >
             {displayedImages.length}{' '}
-            {displayedImages.length === 1 ? 'item' : 'items'}
+            {displayedImages.length === 1 ? 'frame' : 'frames'}
+            {viewableImages.length > 0
+              ? ` · ${viewableImages.length} published`
+              : ''}
           </p>
         </div>
 
-        {/* Keyboard-Accessible Gallery Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {displayedImages.map((img, index) => (
-            <article
-              key={img.id}
-              className="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-xs hover:border-primary hover:shadow-md transition-all flex flex-col"
-            >
-              <button
-                type="button"
-                onClick={(e) => {
-                  lastTriggerRef.current = e.currentTarget;
-                  setActiveIndex(index);
-                }}
-                aria-label={`Open full view: ${img.alt}`}
-                className="group text-left flex flex-col flex-1 w-full rounded-2xl"
-              >
-                <div className="relative w-full aspect-3/2 overflow-hidden bg-primary">
-                  <Image
-                    src={img.src}
-                    alt={img.alt}
-                    width={img.width}
-                    height={img.height}
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <span
-                    aria-hidden="true"
-                    className="absolute inset-0 bg-gradient-to-t from-primary-dark/90 via-primary/75 to-primary-dark/65 opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity flex items-center justify-center gap-2 text-white"
-                  >
-                    <Maximize2 className="w-5 h-5 text-white" />
-                    <span className="text-xs font-bold uppercase tracking-wider">
-                      Open Lightbox
-                    </span>
-                  </span>
-                </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-8">
+          {displayedImages.map((img) => {
+            const hasPhoto = availableSet.has(img.src);
 
-                <div className="p-4 flex-1 flex flex-col justify-between w-full">
-                  <h3 className="font-bold text-sm text-slate-900 group-hover:text-primary transition-colors leading-snug">
-                    {img.alt}
-                  </h3>
-                  <div className="flex items-center justify-between gap-2 text-xs text-slate-600 mt-3 pt-2.5 border-t border-slate-100">
-                    <span className="truncate">{img.event}</span>
-                    <span className="font-bold text-primary shrink-0">
-                      {img.year}
+            if (hasPhoto) {
+              return (
+                <article key={img.id} className="flex flex-col">
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      lastTriggerRef.current = e.currentTarget;
+                      setActiveImageId(img.id);
+                    }}
+                    aria-label={`View full size: ${img.alt}`}
+                    className="group text-left flex flex-col w-full rounded-xs"
+                  >
+                    <div className="relative w-full aspect-3/2 overflow-hidden bg-slate-100 border border-slate-300 group-hover:border-primary transition-colors">
+                      <Image
+                        src={img.src}
+                        alt={img.alt}
+                        width={img.width}
+                        height={img.height}
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <div className="pt-3 space-y-1">
+                      <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-primary tabular-nums">
+                        {img.event} · {img.year}
+                      </p>
+                      <h3 className="font-serif text-base font-bold text-slate-900 group-hover:text-primary leading-snug">
+                        {img.alt}
+                      </h3>
+                    </div>
+                  </button>
+                </article>
+              );
+            }
+
+            return (
+              <article key={img.id} className="flex flex-col">
+                <figure className="m-0 flex flex-col flex-1">
+                  <div
+                    role="img"
+                    aria-label={`Photo coming soon — ${img.alt}`}
+                    className="relative w-full aspect-3/2 bg-slate-100 border border-slate-300 flex flex-col items-center justify-center p-6 text-center"
+                  >
+                    <div
+                      aria-hidden="true"
+                      className="absolute inset-2.5 border border-slate-200 pointer-events-none"
+                    />
+                    <Camera
+                      className="w-5 h-5 text-slate-500 mb-2 stroke-[1.5]"
+                      aria-hidden="true"
+                    />
+                    <span className="text-xs font-medium uppercase tracking-[0.14em] text-slate-600">
+                      Photo coming soon
                     </span>
                   </div>
-                </div>
-              </button>
-            </article>
-          ))}
+
+                  <figcaption className="pt-3 space-y-1">
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-primary tabular-nums">
+                      {img.event} · {img.year}
+                    </p>
+                    <h3 className="font-serif text-base font-bold text-slate-900 leading-snug">
+                      {img.alt}
+                    </h3>
+                  </figcaption>
+                </figure>
+              </article>
+            );
+          })}
         </div>
       </section>
 
-      {/* Accessible Lightbox Modal Dialog */}
+      {/* Accessible Lightbox Modal (renders when a real photograph is opened) */}
       {activeImage &&
-        activeIndex !== null &&
+        activeViewIndex >= 0 &&
         typeof document !== 'undefined' &&
         createPortal(
           <div
@@ -246,24 +293,23 @@ export default function GalleryBrowser() {
             aria-modal="true"
             aria-labelledby="gallery-lightbox-title"
             aria-describedby="gallery-lightbox-meta"
-            className="fixed inset-0 z-[70] bg-slate-950/90 backdrop-blur-sm flex items-center justify-center p-3 sm:p-6"
+            className="fixed inset-0 z-[70] bg-slate-950/92 flex items-center justify-center p-3 sm:p-6"
             onClick={(e) => {
               if (e.target === e.currentTarget) closeLightbox();
             }}
           >
-            <div className="max-w-4xl w-full bg-slate-900 rounded-2xl overflow-hidden border border-white/15 shadow-2xl flex flex-col max-h-[92vh]">
-              {/* Top Bar */}
-              <div className="flex items-center justify-between gap-3 px-4 sm:px-5 py-3 bg-slate-950/70 border-b border-white/10">
+            <div className="max-w-4xl w-full bg-slate-900 rounded-sm overflow-hidden border border-white/20 flex flex-col max-h-[92vh]">
+              <div className="flex items-center justify-between gap-3 px-4 sm:px-5 py-3 bg-slate-950 border-b border-white/15">
                 <p
                   id="gallery-lightbox-meta"
                   role="status"
                   aria-live="polite"
-                  className="text-xs sm:text-sm font-semibold text-slate-200 truncate"
+                  className="text-xs sm:text-sm text-slate-200 truncate tabular-nums"
                 >
-                  <span className="text-white font-bold">
-                    {activeIndex + 1} / {displayedImages.length}
-                  </span>{' '}
-                  • {activeImage.event} ({activeImage.year})
+                  <strong className="text-white">
+                    {activeViewIndex + 1} / {viewableImages.length}
+                  </strong>{' '}
+                  · {activeImage.event} ({activeImage.year})
                 </p>
 
                 <button
@@ -271,13 +317,12 @@ export default function GalleryBrowser() {
                   type="button"
                   onClick={closeLightbox}
                   aria-label="Close photo lightbox"
-                  className="inline-flex items-center justify-center w-11 h-11 rounded-xl bg-white/10 hover:bg-white/20 text-white transition-colors shrink-0"
+                  className="inline-flex items-center justify-center w-11 h-11 rounded-sm hover:bg-white/15 text-white transition-colors shrink-0"
                 >
                   <X className="w-5 h-5" aria-hidden="true" />
                 </button>
               </div>
 
-              {/* Image Viewport */}
               <div className="relative bg-black flex items-center justify-center overflow-hidden">
                 <Image
                   src={activeImage.src}
@@ -285,39 +330,40 @@ export default function GalleryBrowser() {
                   width={activeImage.width}
                   height={activeImage.height}
                   sizes="(max-width: 896px) 100vw, 896px"
-                  className="w-full h-auto max-h-[60vh] object-contain"
+                  className="w-full h-auto max-h-[62vh] object-contain"
                 />
               </div>
 
-              {/* Caption & Accessible Prev/Next Controls */}
-              <div className="p-4 sm:p-5 bg-slate-900 border-t border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div className="p-4 sm:p-5 bg-slate-900 border-t border-white/15 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <h2
                   id="gallery-lightbox-title"
-                  className="text-sm sm:text-base font-bold text-white leading-snug"
+                  className="font-serif text-base font-bold text-white leading-snug"
                 >
                   {activeImage.alt}
                 </h2>
 
-                <div className="flex items-center gap-2 shrink-0">
-                  <button
-                    type="button"
-                    onClick={showPrev}
-                    aria-label="Previous photo"
-                    className="flex-1 sm:flex-none min-h-11 px-4 py-2 rounded-xl bg-white/12 hover:bg-white/22 text-white text-xs font-bold inline-flex items-center justify-center gap-1.5 transition-colors"
-                  >
-                    <ChevronLeft className="w-4 h-4" aria-hidden="true" />
-                    <span>Previous</span>
-                  </button>
-                  <button
-                    type="button"
-                    onClick={showNext}
-                    aria-label="Next photo"
-                    className="flex-1 sm:flex-none min-h-11 px-4 py-2 rounded-xl bg-white hover:bg-blue-50 text-primary text-xs font-bold inline-flex items-center justify-center gap-1.5 transition-colors"
-                  >
-                    <span>Next</span>
-                    <ChevronRight className="w-4 h-4" aria-hidden="true" />
-                  </button>
-                </div>
+                {viewableImages.length > 1 && (
+                  <div className="flex items-center gap-2 shrink-0">
+                    <button
+                      type="button"
+                      onClick={showPrev}
+                      aria-label="Previous photo"
+                      className="flex-1 sm:flex-none min-h-11 px-4 py-2 rounded-sm border border-white/30 hover:bg-white/15 text-white text-xs font-semibold inline-flex items-center justify-center gap-1.5 transition-colors"
+                    >
+                      <ChevronLeft className="w-4 h-4" aria-hidden="true" />
+                      <span>Previous</span>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={showNext}
+                      aria-label="Next photo"
+                      className="flex-1 sm:flex-none min-h-11 px-4 py-2 rounded-sm bg-white hover:bg-blue-50 text-primary text-xs font-semibold inline-flex items-center justify-center gap-1.5 transition-colors"
+                    >
+                      <span>Next</span>
+                      <ChevronRight className="w-4 h-4" aria-hidden="true" />
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
           </div>,

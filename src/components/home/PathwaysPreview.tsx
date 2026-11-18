@@ -2,33 +2,8 @@
 
 import { useRef, useState } from 'react';
 import Link from 'next/link';
-import {
-  ArrowRight,
-  BookOpen,
-  Briefcase,
-  Cpu,
-  FlaskConical,
-  Globe,
-  Microscope,
-  Music,
-  Palette,
-  TrendingUp,
-  Trophy,
-  type LucideIcon,
-} from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { cbcPathways } from '@/data/mock-school-data';
-
-export const pathwayTrackIconMap: Record<string, LucideIcon> = {
-  FlaskConical,
-  Microscope,
-  Cpu,
-  Globe,
-  TrendingUp,
-  BookOpen,
-  Music,
-  Palette,
-  Trophy,
-};
 
 interface PathwaysTabsProps {
   idPrefix?: string;
@@ -63,40 +38,38 @@ export function PathwaysTabs({ idPrefix = 'home-pathway' }: PathwaysTabsProps) {
 
   return (
     <div>
-      {/* Accessible Mobile-First Tablist */}
-      <div className="flex justify-center mb-8">
-        <div
-          role="tablist"
-          aria-label="CBC Senior School Pathways"
-          className="grid grid-cols-1 sm:inline-flex w-full sm:w-auto gap-1.5 p-1.5 rounded-2xl bg-slate-200/80 border border-slate-300"
-        >
-          {cbcPathways.map((pathway, index) => {
-            const selected = index === activeIndex;
-            return (
-              <button
-                key={pathway.id}
-                ref={(el) => {
-                  tabRefs.current[index] = el;
-                }}
-                id={`${idPrefix}-tab-${pathway.id}`}
-                type="button"
-                role="tab"
-                aria-selected={selected}
-                aria-controls={`${idPrefix}-panel-${pathway.id}`}
-                tabIndex={selected ? 0 : -1}
-                onClick={() => setActiveIndex(index)}
-                onKeyDown={(e) => handleTabKeyDown(e, index)}
-                className={`min-h-11 px-5 py-2.5 rounded-xl text-sm font-bold transition-all ${
-                  selected
-                    ? 'bg-primary text-white shadow-sm'
-                    : 'text-slate-700 hover:text-primary hover:bg-white/80'
-                }`}
-              >
-                {pathway.name}
-              </button>
-            );
-          })}
-        </div>
+      {/* Underlined Editorial WAI-ARIA Tablist */}
+      <div
+        role="tablist"
+        aria-label="CBC Senior School Pathways"
+        className="flex flex-col sm:flex-row border-b border-slate-300 gap-0 sm:gap-8 mb-6"
+      >
+        {cbcPathways.map((pathway, index) => {
+          const selected = index === activeIndex;
+          return (
+            <button
+              key={pathway.id}
+              ref={(el) => {
+                tabRefs.current[index] = el;
+              }}
+              id={`${idPrefix}-tab-${pathway.id}`}
+              type="button"
+              role="tab"
+              aria-selected={selected}
+              aria-controls={`${idPrefix}-panel-${pathway.id}`}
+              tabIndex={selected ? 0 : -1}
+              onClick={() => setActiveIndex(index)}
+              onKeyDown={(e) => handleTabKeyDown(e, index)}
+              className={`min-h-11 py-3 px-1 text-left text-sm sm:text-base font-semibold border-b-2 -mb-px transition-colors ${
+                selected
+                  ? 'border-accent text-primary'
+                  : 'border-transparent text-slate-600 hover:text-slate-900 hover:border-slate-400'
+              }`}
+            >
+              {pathway.name}
+            </button>
+          );
+        })}
       </div>
 
       {/* Active Pathway Tabpanel */}
@@ -105,76 +78,56 @@ export function PathwaysTabs({ idPrefix = 'home-pathway' }: PathwaysTabsProps) {
         role="tabpanel"
         aria-labelledby={activeTabId}
         tabIndex={0}
-        className="animate-fadeIn rounded-2xl"
+        className="animate-fadeIn"
       >
-        <p className="text-center text-sm text-slate-600 max-w-2xl mx-auto mb-8 leading-relaxed">
+        <p className="text-sm sm:text-base text-slate-700 max-w-2xl mb-8 leading-relaxed">
           {activePathway.summary}
         </p>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {activePathway.tracks.map((track) => {
-            const Icon = pathwayTrackIconMap[track.icon] ?? FlaskConical;
-            return (
-              <article
-                key={track.id}
-                className="bg-white rounded-2xl border border-slate-200 border-t-4 border-t-primary shadow-xs hover:shadow-md transition-shadow p-6 flex flex-col justify-between"
-              >
+        <div className="bg-white border-t-2 border-t-primary border-x border-b border-slate-200 grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-slate-200">
+          {activePathway.tracks.map((track) => (
+            <article
+              key={track.id}
+              className="p-6 sm:p-7 flex flex-col justify-between gap-6"
+            >
+              <div>
+                <h3 className="font-serif text-xl font-bold text-slate-900 mb-2">
+                  {track.name}
+                </h3>
+                <p className="text-slate-600 text-sm leading-relaxed mb-5">
+                  {track.description}
+                </p>
+
                 <div>
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="w-11 h-11 rounded-xl bg-primary/10 text-primary flex items-center justify-center shrink-0">
-                      <Icon className="w-5 h-5" aria-hidden="true" />
-                    </div>
-                    <h3 className="text-lg font-bold text-slate-900">
-                      {track.name}
-                    </h3>
-                  </div>
-
-                  <p className="text-slate-600 text-sm mb-5 leading-relaxed">
-                    {track.description}
-                  </p>
-
-                  {/* Subjects */}
-                  <div className="mb-5">
-                    <h4 className="text-xs font-bold text-primary uppercase tracking-wider mb-2 flex items-center gap-1.5">
-                      <BookOpen className="w-3.5 h-3.5" aria-hidden="true" />
-                      <span>Key Subjects</span>
-                    </h4>
-                    <ul className="flex flex-wrap gap-1.5">
-                      {track.subjects.map((subject) => (
-                        <li
-                          key={subject}
-                          className="text-xs font-medium px-2.5 py-1 rounded-md bg-slate-bg border border-slate-200 text-slate-800"
-                        >
-                          {subject}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-
-                {/* Career Prospects */}
-                <div className="pt-4 border-t border-slate-100">
-                  <h4 className="text-xs font-bold text-slate-700 uppercase tracking-wider mb-2 flex items-center gap-1.5">
-                    <Briefcase
-                      className="w-3.5 h-3.5 text-primary"
-                      aria-hidden="true"
-                    />
-                    <span>Career Prospects</span>
+                  <h4 className="font-sans text-[11px] font-semibold uppercase tracking-[0.12em] text-primary mb-2">
+                    Subjects Taught
                   </h4>
-                  <ul className="flex flex-wrap gap-1.5">
-                    {track.careers.map((career) => (
-                      <li
-                        key={career}
-                        className="text-xs font-semibold px-2.5 py-1 rounded-full bg-primary/10 text-primary"
-                      >
-                        {career}
+                  <ul className="space-y-1 text-sm text-slate-800">
+                    {track.subjects.map((subject) => (
+                      <li key={subject} className="flex items-baseline gap-2">
+                        <span
+                          className="text-slate-400 select-none"
+                          aria-hidden="true"
+                        >
+                          –
+                        </span>
+                        <span>{subject}</span>
                       </li>
                     ))}
                   </ul>
                 </div>
-              </article>
-            );
-          })}
+              </div>
+
+              <div className="pt-4 border-t border-slate-200">
+                <h4 className="font-sans text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-600 mb-1.5">
+                  Related University Fields
+                </h4>
+                <p className="text-xs text-slate-700 leading-relaxed">
+                  {track.careers.join(' · ')}
+                </p>
+              </div>
+            </article>
+          ))}
         </div>
       </div>
     </div>
@@ -185,40 +138,35 @@ export default function PathwaysPreview() {
   return (
     <section
       aria-labelledby="cbc-pathways-heading"
-      className="py-14 sm:py-20 bg-slate-bg"
+      className="py-16 sm:py-24 bg-slate-bg"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="text-center mb-10">
-          <span className="text-xs font-bold uppercase tracking-wider text-primary">
-            Senior School Curriculum (Grades 10–12)
-          </span>
-          <h2
-            id="cbc-pathways-heading"
-            className="text-2xl sm:text-3xl font-bold text-slate-900 mt-1 mb-3"
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+          <div className="max-w-2xl">
+            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary mb-2">
+              Senior School Curriculum · Grades 10 – 12
+            </p>
+            <h2
+              id="cbc-pathways-heading"
+              className="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-900 leading-tight"
+            >
+              CBC Senior School Pathways
+            </h2>
+          </div>
+
+          <Link
+            href="/academics#departments"
+            className="min-h-11 inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:text-primary-dark hover:underline underline-offset-4 transition-colors shrink-0"
           >
-            CBC Senior School Pathways
-          </h2>
-          <p className="text-slate-600 text-sm sm:text-base max-w-2xl mx-auto mb-3">
-            Explore our three accredited pathways designed to nurture every
-            learner&apos;s strengths, talents, and university aspirations.
-          </p>
-          <div
-            className="w-16 h-1 rounded-full bg-accent mx-auto"
-            aria-hidden="true"
-          />
+            <span>View all five academic departments</span>
+            <ArrowRight
+              className="w-4 h-4 shrink-0 stroke-[1.75]"
+              aria-hidden="true"
+            />
+          </Link>
         </div>
 
         <PathwaysTabs idPrefix="home-pathway" />
-
-        <div className="mt-10 text-center">
-          <Link
-            href="/academics#departments"
-            className="min-h-11 inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl border-2 border-primary text-primary hover:bg-primary hover:text-white font-bold text-sm transition-colors"
-          >
-            <span>Explore Academic Departments</span>
-            <ArrowRight className="w-4 h-4 shrink-0" aria-hidden="true" />
-          </Link>
-        </div>
       </div>
     </section>
   );

@@ -2,30 +2,6 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import {
-  Activity,
-  CheckCircle2,
-  Circle,
-  CircleDot,
-  Clock,
-  Compass,
-  Cross,
-  Footprints,
-  Hand,
-  Heart,
-  HeartPulse,
-  Moon,
-  Newspaper,
-  Shield,
-  Shirt,
-  Sun,
-  Target,
-  Theater,
-  TreePine,
-  Trophy,
-  Utensils,
-  type LucideIcon,
-} from 'lucide-react';
-import {
   boardingSections,
   clubs,
   dailyRoutine,
@@ -35,36 +11,15 @@ import {
 
 type ExploreTabId = 'clubs' | 'sports' | 'routine' | 'faith' | 'boarding';
 
-const TABS: { id: ExploreTabId; label: string; icon: LucideIcon }[] = [
-  { id: 'clubs', label: 'Clubs & Movements', icon: Compass },
-  { id: 'sports', label: 'Sports & Games', icon: Trophy },
-  { id: 'routine', label: 'Daily Routine', icon: Clock },
-  { id: 'faith', label: 'Chaplaincy & Faith', icon: Heart },
-  { id: 'boarding', label: 'Boarding & Uniform', icon: Utensils },
+const TABS: { id: ExploreTabId; label: string }[] = [
+  { id: 'clubs', label: 'Clubs & Movements' },
+  { id: 'sports', label: 'Sports & Games' },
+  { id: 'routine', label: 'Daily Routine' },
+  { id: 'faith', label: 'Chaplaincy & Faith' },
+  { id: 'boarding', label: 'Boarding & Uniform' },
 ];
 
 const VALID_TAB_IDS = new Set<string>(TABS.map((t) => t.id));
-
-const iconMap: Record<string, LucideIcon> = {
-  Compass,
-  HeartPulse,
-  Cross,
-  Newspaper,
-  Theater,
-  TreePine,
-  Shield,
-  CircleDot,
-  Circle,
-  Target,
-  Trophy,
-  Footprints,
-  Hand,
-  Heart,
-  Sun,
-  Moon,
-  Utensils,
-  Shirt,
-};
 
 function parseHashToTab(hash: string): ExploreTabId | null {
   const clean = hash.replace(/^#/, '').trim();
@@ -83,7 +38,7 @@ export default function ExploreTabs() {
     }
   }, []);
 
-  // Sync with URL hash on initial load, hashchange, and same-page navbar dropdown clicks
+  // Sync with URL hash on initial load, hashchange, and navbar dropdown clicks
   useEffect(() => {
     const syncFromHash = (scrollIntoView: boolean) => {
       const parsed = parseHashToTab(window.location.hash);
@@ -156,16 +111,15 @@ export default function ExploreTabs() {
 
   return (
     <div className="space-y-12">
-      {/* Accessible WAI-ARIA Tablist */}
+      {/* Left-Aligned Underlined WAI-ARIA Tablist */}
       <div
         ref={tablistRef}
         id={activeTab}
         role="tablist"
         aria-label="Student life and boarding sections"
-        className="scroll-mt-28 grid grid-cols-1 sm:grid-cols-2 lg:flex lg:flex-wrap justify-center gap-2"
+        className="scroll-mt-28 flex flex-col sm:flex-row sm:flex-wrap border-b border-slate-300 gap-0 sm:gap-x-7"
       >
         {TABS.map((tab, index) => {
-          const Icon = tab.icon;
           const selected = activeTab === tab.id;
           return (
             <button
@@ -181,90 +135,76 @@ export default function ExploreTabs() {
               tabIndex={selected ? 0 : -1}
               onClick={() => selectTab(tab.id)}
               onKeyDown={(e) => handleKeyDown(e, index)}
-              className={`min-h-11 px-5 py-2.5 rounded-xl font-bold text-sm transition-all inline-flex items-center justify-center gap-2 ${
+              className={`min-h-11 py-3 px-1 text-left text-sm font-semibold border-b-2 -mb-px transition-colors ${
                 selected
-                  ? 'bg-primary text-white shadow-sm'
-                  : 'bg-white border border-slate-300 text-slate-700 hover:border-primary hover:text-primary'
+                  ? 'border-accent text-primary'
+                  : 'border-transparent text-slate-600 hover:text-slate-900 hover:border-slate-400'
               }`}
             >
-              <Icon
-                className={`w-4 h-4 shrink-0 ${
-                  selected ? 'text-white' : 'text-primary'
-                }`}
-                aria-hidden="true"
-              />
-              <span>{tab.label}</span>
+              {tab.label}
             </button>
           );
         })}
       </div>
 
-      {/* Panel 1: Clubs & Societies */}
+      {/* Panel 1: Clubs & Uniformed Movements */}
       {activeTab === 'clubs' && (
         <div
           id="explore-panel-clubs"
           role="tabpanel"
           aria-labelledby="explore-tab-clubs"
           tabIndex={0}
-          className="space-y-8 animate-fadeIn rounded-2xl"
+          className="space-y-8 animate-fadeIn"
         >
-          <div className="text-center">
-            <span className="text-xs font-bold uppercase tracking-wider text-primary">
-              Leadership &amp; Service
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mt-1 mb-2">
-              Clubs, Societies &amp; Uniformed Movements
-            </h2>
-            <p className="text-sm sm:text-base text-slate-600 max-w-2xl mx-auto mb-3">
-              Equipping young women with civic responsibility, first-aid
-              readiness, environmental stewardship, and creative expression.
+          <div className="max-w-2xl">
+            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary mb-2">
+              Afternoon &amp; Weekend Societies
             </p>
-            <div
-              className="w-16 h-1 bg-accent mx-auto rounded-full"
-              aria-hidden="true"
-            />
+            <h2 className="font-serif text-2xl sm:text-3xl font-bold text-slate-900">
+              Clubs &amp; Uniformed Movements
+            </h2>
+            <p className="text-sm sm:text-base text-slate-600 mt-2 leading-relaxed">
+              Students join clubs and uniformed movements that meet after
+              afternoon lessons and on Saturday afternoons under teacher
+              patrons.
+            </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {clubs.map((club) => {
-              const Icon = iconMap[club.icon] ?? Activity;
-              return (
-                <article
-                  key={club.id}
-                  className="bg-white rounded-2xl border border-slate-200 border-t-4 border-t-primary p-6 shadow-xs hover:shadow-md transition-shadow flex flex-col justify-between"
-                >
-                  <div>
-                    <div className="flex items-center gap-3.5 mb-4">
-                      <div className="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center shrink-0">
-                        <Icon className="w-5 h-5" aria-hidden="true" />
-                      </div>
-                      <div>
-                        <h3 className="font-bold text-lg text-slate-900 leading-snug">
-                          {club.name}
-                        </h3>
-                        <span className="inline-block text-xs px-2.5 py-0.5 rounded-full bg-primary/10 text-primary font-semibold mt-0.5">
-                          {club.category}
-                        </span>
-                      </div>
-                    </div>
-                    <p className="text-sm text-slate-600 mb-5 leading-relaxed">
-                      {club.description}
-                    </p>
-                  </div>
+          <div className="bg-white border-t-2 border-t-primary border-x border-b border-slate-200 divide-y divide-slate-200">
+            {clubs.map((club) => (
+              <article
+                key={club.id}
+                className="p-5 sm:p-6 grid grid-cols-1 md:grid-cols-12 gap-3 md:gap-8 items-start"
+              >
+                <div className="md:col-span-4">
+                  <span className="block text-[11px] font-semibold uppercase tracking-[0.12em] text-primary mb-0.5">
+                    {club.category}
+                  </span>
+                  <h3 className="font-serif text-lg font-bold text-slate-900">
+                    {club.name}
+                  </h3>
+                </div>
 
-                  <dl className="pt-3.5 border-t border-slate-100 text-xs space-y-1.5 text-slate-600">
-                    <div className="flex gap-1.5">
-                      <dt className="font-bold text-slate-800">Patron:</dt>
-                      <dd>{club.patron}</dd>
-                    </div>
-                    <div className="flex gap-1.5">
-                      <dt className="font-bold text-slate-800">Schedule:</dt>
-                      <dd>{club.meetingDay}</dd>
-                    </div>
-                  </dl>
-                </article>
-              );
-            })}
+                <p className="md:col-span-5 text-sm text-slate-700 leading-relaxed">
+                  {club.description}
+                </p>
+
+                <dl className="md:col-span-3 text-xs text-slate-600 space-y-1">
+                  <div>
+                    <dt className="inline font-semibold text-slate-800">
+                      Patron:{' '}
+                    </dt>
+                    <dd className="inline">{club.patron}</dd>
+                  </div>
+                  <div>
+                    <dt className="inline font-semibold text-slate-800">
+                      Meets:{' '}
+                    </dt>
+                    <dd className="inline tabular-nums">{club.meetingDay}</dd>
+                  </div>
+                </dl>
+              </article>
+            ))}
           </div>
         </div>
       )}
@@ -276,67 +216,57 @@ export default function ExploreTabs() {
           role="tabpanel"
           aria-labelledby="explore-tab-sports"
           tabIndex={0}
-          className="space-y-8 animate-fadeIn rounded-2xl"
+          className="space-y-8 animate-fadeIn"
         >
-          <div className="text-center">
-            <span className="text-xs font-bold uppercase tracking-wider text-primary">
-              Athletics &amp; Teamwork
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mt-1 mb-2">
-              Competitive Sports &amp; Games
-            </h2>
-            <p className="text-sm sm:text-base text-slate-600 max-w-2xl mx-auto mb-3">
-              Active participation in inter-house leagues as well as
-              Murang&apos;a County and KSSSA secondary school championships.
+          <div className="max-w-2xl">
+            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary mb-2">
+              KSSSA &amp; Inter-House Games
             </p>
-            <div
-              className="w-16 h-1 bg-accent mx-auto rounded-full"
-              aria-hidden="true"
-            />
+            <h2 className="font-serif text-2xl sm:text-3xl font-bold text-slate-900">
+              Sports &amp; Games
+            </h2>
+            <p className="text-sm sm:text-base text-slate-600 mt-2 leading-relaxed">
+              Games run daily from 16:00, with school teams entered in
+              inter-house leagues and Murang&apos;a County KSSSA secondary
+              school championships.
+            </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {sports.map((sport) => {
-              const Icon = iconMap[sport.icon] ?? Activity;
-              return (
-                <article
-                  key={sport.id}
-                  className="bg-white rounded-2xl border border-slate-200 border-t-4 border-t-primary p-6 shadow-xs hover:shadow-md transition-shadow flex flex-col justify-between"
-                >
-                  <div>
-                    <div className="flex items-center gap-3.5 mb-4">
-                      <div className="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center shrink-0">
-                        <Icon className="w-5 h-5" aria-hidden="true" />
-                      </div>
-                      <div>
-                        <h3 className="font-bold text-lg text-slate-900 leading-snug">
-                          {sport.name}
-                        </h3>
-                        <span className="inline-block text-xs px-2.5 py-0.5 rounded-full bg-accent/10 text-accent font-semibold mt-0.5">
-                          Competitive Sport
-                        </span>
-                      </div>
-                    </div>
-                    <p className="text-sm text-slate-600 mb-5 leading-relaxed">
-                      {sport.description}
-                    </p>
-                  </div>
+          <div className="bg-white border-t-2 border-t-primary border-x border-b border-slate-200 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 divide-y md:divide-y-0 divide-slate-200">
+            {sports.map((sport, index) => (
+              <article
+                key={sport.id}
+                className={`p-6 flex flex-col justify-between gap-5 border-slate-200 ${
+                  index % 2 === 1 ? 'md:border-l lg:border-l-0' : ''
+                } ${index >= 2 ? 'md:border-t lg:border-t-0' : ''} ${
+                  index % 3 !== 0 ? 'lg:border-l' : ''
+                } ${index >= 3 ? 'lg:border-t' : ''}`}
+              >
+                <div>
+                  <h3 className="font-serif text-xl font-bold text-slate-900 mb-2">
+                    {sport.name}
+                  </h3>
+                  <p className="text-sm text-slate-600 leading-relaxed">
+                    {sport.description}
+                  </p>
+                </div>
 
-                  <dl className="pt-3.5 border-t border-slate-100 text-xs space-y-1.5 text-slate-600">
-                    <div className="flex gap-1.5">
-                      <dt className="font-bold text-slate-800">
-                        Coach / Patron:
-                      </dt>
-                      <dd>{sport.patron}</dd>
-                    </div>
-                    <div className="flex gap-1.5">
-                      <dt className="font-bold text-slate-800">Training:</dt>
-                      <dd>{sport.meetingDay}</dd>
-                    </div>
-                  </dl>
-                </article>
-              );
-            })}
+                <dl className="pt-4 border-t border-slate-200 text-xs text-slate-600 space-y-1">
+                  <div>
+                    <dt className="inline font-semibold text-slate-800">
+                      Coach / Patron:{' '}
+                    </dt>
+                    <dd className="inline">{sport.patron}</dd>
+                  </div>
+                  <div>
+                    <dt className="inline font-semibold text-slate-800">
+                      Training:{' '}
+                    </dt>
+                    <dd className="inline tabular-nums">{sport.meetingDay}</dd>
+                  </div>
+                </dl>
+              </article>
+            ))}
           </div>
         </div>
       )}
@@ -348,41 +278,34 @@ export default function ExploreTabs() {
           role="tabpanel"
           aria-labelledby="explore-tab-routine"
           tabIndex={0}
-          className="space-y-8 animate-fadeIn rounded-2xl"
+          className="space-y-8 animate-fadeIn"
         >
-          <div className="text-center">
-            <span className="text-xs font-bold uppercase tracking-wider text-primary">
-              05:00 – 22:00 Weekday Schedule
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mt-1 mb-2">
-              Structured Daily Boarding Routine
-            </h2>
-            <p className="text-sm sm:text-base text-slate-600 max-w-2xl mx-auto mb-3">
-              Purposeful time management balancing academic lessons, personal
-              study, nutritious meals, sports, devotion, and rest.
+          <div className="max-w-2xl">
+            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary mb-2 tabular-nums">
+              Weekday Bell Schedule · 05:00 – 22:00
             </p>
-            <div
-              className="w-16 h-1 bg-accent mx-auto rounded-full"
-              aria-hidden="true"
-            />
+            <h2 className="font-serif text-2xl sm:text-3xl font-bold text-slate-900">
+              Daily Boarding Timetable
+            </h2>
+            <p className="text-sm sm:text-base text-slate-600 mt-2 leading-relaxed">
+              The standard weekday schedule observed during the school term,
+              from morning preps through evening roll call and lights out.
+            </p>
           </div>
 
-          <div className="max-w-3xl mx-auto bg-white rounded-2xl border border-slate-200 border-t-4 border-t-primary shadow-xs p-5 sm:p-8">
-            <ol className="relative border-l-2 border-primary ml-3 sm:ml-5 pl-5 sm:pl-7 space-y-4">
+          <div className="max-w-3xl bg-white border-t-2 border-t-primary border-x border-b border-slate-200">
+            <ol className="divide-y divide-slate-200">
               {dailyRoutine.map((item) => (
-                <li key={item.time} className="relative">
-                  <span
-                    aria-hidden="true"
-                    className="absolute -left-[29px] sm:-left-[37px] top-3 w-4 h-4 rounded-full bg-white border-4 border-primary"
-                  />
-                  <div className="bg-slate-bg p-3.5 sm:p-4 rounded-xl border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                    <span className="text-xs font-black text-primary tracking-wider uppercase px-2.5 py-1 rounded-md bg-primary/10 w-fit">
-                      {item.time} hrs
-                    </span>
-                    <span className="text-sm font-semibold text-slate-900 sm:text-right">
-                      {item.activity}
-                    </span>
-                  </div>
+                <li
+                  key={item.time}
+                  className="px-5 sm:px-6 py-3.5 grid grid-cols-12 gap-4 items-baseline"
+                >
+                  <span className="col-span-4 sm:col-span-3 text-sm font-bold text-primary tabular-nums">
+                    {item.time} hrs
+                  </span>
+                  <span className="col-span-8 sm:col-span-9 text-sm sm:text-base text-slate-800">
+                    {item.activity}
+                  </span>
                 </li>
               ))}
             </ol>
@@ -397,59 +320,49 @@ export default function ExploreTabs() {
           role="tabpanel"
           aria-labelledby="explore-tab-faith"
           tabIndex={0}
-          className="space-y-8 animate-fadeIn rounded-2xl"
+          className="space-y-8 animate-fadeIn"
         >
-          <div className="text-center">
-            <span className="text-xs font-bold uppercase tracking-wider text-primary">
-              Pastoral Care &amp; Fellowship
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mt-1 mb-2">
-              Chaplaincy &amp; Spiritual Life
-            </h2>
-            <p className="text-sm sm:text-base text-slate-600 max-w-2xl mx-auto mb-3">
-              Nurturing moral uprightness, compassion, and spiritual well-being
-              with respect for every student&apos;s faith tradition.
+          <div className="max-w-2xl">
+            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary mb-2">
+              Pastoral Care
             </p>
-            <div
-              className="w-16 h-1 bg-accent mx-auto rounded-full"
-              aria-hidden="true"
-            />
+            <h2 className="font-serif text-2xl sm:text-3xl font-bold text-slate-900">
+              Chaplaincy &amp; Faith Fellowships
+            </h2>
+            <p className="text-sm sm:text-base text-slate-600 mt-2 leading-relaxed">
+              Weekly services and student faith societies operate under staff
+              patrons, with scheduled worship times for each group.
+            </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-            {faithGroups.map((group) => {
-              const Icon = iconMap[group.icon] ?? Heart;
-              return (
-                <article
-                  key={group.id}
-                  className="bg-white rounded-2xl border border-slate-200 border-t-4 border-t-primary p-6 shadow-xs hover:shadow-md transition-shadow flex flex-col justify-between"
-                >
-                  <div>
-                    <div className="flex items-center gap-3.5 mb-4">
-                      <div className="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center shrink-0">
-                        <Icon className="w-5 h-5" aria-hidden="true" />
-                      </div>
-                      <div>
-                        <h3 className="font-bold text-lg text-slate-900 leading-snug">
-                          {group.name}
-                        </h3>
-                        <p className="text-xs text-slate-600 font-medium mt-0.5">
-                          {group.meetingDay}
-                        </p>
-                      </div>
-                    </div>
-                    <p className="text-sm text-slate-600 mb-5 leading-relaxed">
-                      {group.description}
-                    </p>
-                  </div>
+          <div className="bg-white border-t-2 border-t-primary border-x border-b border-slate-200 grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 divide-slate-200">
+            {faithGroups.map((group, index) => (
+              <article
+                key={group.id}
+                className={`p-6 sm:p-7 flex flex-col justify-between gap-5 border-slate-200 ${
+                  index % 2 === 1 ? 'md:border-l' : ''
+                } ${index >= 2 ? 'md:border-t' : ''}`}
+              >
+                <div>
+                  <h3 className="font-serif text-xl font-bold text-slate-900 mb-1">
+                    {group.name}
+                  </h3>
+                  <p className="text-xs font-semibold text-primary tabular-nums mb-3">
+                    {group.meetingDay}
+                  </p>
+                  <p className="text-sm text-slate-600 leading-relaxed">
+                    {group.description}
+                  </p>
+                </div>
 
-                  <div className="pt-3.5 border-t border-slate-100 text-xs text-slate-600">
-                    <strong className="text-slate-800">Patron:</strong>{' '}
-                    {group.patron}
-                  </div>
-                </article>
-              );
-            })}
+                <p className="pt-4 border-t border-slate-200 text-xs text-slate-600">
+                  <strong className="font-semibold text-slate-800">
+                    Patron:
+                  </strong>{' '}
+                  {group.patron}
+                </p>
+              </article>
+            ))}
           </div>
         </div>
       )}
@@ -461,56 +374,45 @@ export default function ExploreTabs() {
           role="tabpanel"
           aria-labelledby="explore-tab-boarding"
           tabIndex={0}
-          className="space-y-8 animate-fadeIn rounded-2xl"
+          className="space-y-8 animate-fadeIn"
         >
-          <div className="text-center">
-            <span className="text-xs font-bold uppercase tracking-wider text-primary">
-              Home Away From Home
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mt-1 mb-2">
-              Boarding, Meals &amp; School Uniform
-            </h2>
-            <p className="text-sm sm:text-base text-slate-600 max-w-2xl mx-auto mb-3">
-              A safe, caring, and well-organised boarding environment supporting
-              health, dignity, and focused academic life.
+          <div className="max-w-2xl">
+            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary mb-2">
+              Residential Life
             </p>
-            <div
-              className="w-16 h-1 bg-accent mx-auto rounded-full"
-              aria-hidden="true"
-            />
+            <h2 className="font-serif text-2xl sm:text-3xl font-bold text-slate-900">
+              Boarding, Dining &amp; School Uniform
+            </h2>
+            <p className="text-sm sm:text-base text-slate-600 mt-2 leading-relaxed">
+              Practical arrangements for meals, official school dress, dormitory
+              supervision, and student health during the term.
+            </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {boardingSections.map((section) => {
-              const Icon = iconMap[section.icon] ?? Shield;
-              return (
-                <article
-                  key={section.id}
-                  className="bg-white rounded-2xl border border-slate-200 border-t-4 border-t-primary p-6 shadow-xs flex flex-col"
-                >
-                  <div className="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center mb-4">
-                    <Icon className="w-5 h-5" aria-hidden="true" />
-                  </div>
-                  <h3 className="font-bold text-lg text-slate-900 mb-2">
-                    {section.title}
-                  </h3>
-                  <p className="text-sm text-slate-600 leading-relaxed mb-5">
-                    {section.description}
-                  </p>
-                  <ul className="mt-auto pt-4 border-t border-slate-100 space-y-2 text-xs text-slate-700">
-                    {section.highlights.map((point) => (
-                      <li key={point} className="flex items-start gap-2">
-                        <CheckCircle2
-                          className="w-4 h-4 text-primary shrink-0 mt-0.5"
-                          aria-hidden="true"
-                        />
-                        <span>{point}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </article>
-              );
-            })}
+          <div className="bg-white border-t-2 border-t-primary border-x border-b border-slate-200 grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-slate-200">
+            {boardingSections.map((section) => (
+              <article key={section.id} className="p-6 sm:p-7 flex flex-col">
+                <h3 className="font-serif text-xl font-bold text-slate-900 mb-2">
+                  {section.title}
+                </h3>
+                <p className="text-sm text-slate-600 leading-relaxed mb-5">
+                  {section.description}
+                </p>
+                <ul className="mt-auto pt-4 border-t border-slate-200 space-y-2 text-xs sm:text-sm text-slate-700">
+                  {section.highlights.map((point) => (
+                    <li key={point} className="flex items-baseline gap-2">
+                      <span
+                        className="text-primary font-bold select-none"
+                        aria-hidden="true"
+                      >
+                        –
+                      </span>
+                      <span>{point}</span>
+                    </li>
+                  ))}
+                </ul>
+              </article>
+            ))}
           </div>
         </div>
       )}

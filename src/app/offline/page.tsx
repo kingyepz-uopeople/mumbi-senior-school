@@ -1,15 +1,14 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Home, WifiOff } from 'lucide-react';
 import OfflineRetryButton from '@/components/pwa/OfflineRetryButton';
 import { schoolInfo } from '@/data/mock-school-data';
 import { buildPageMetadata } from '@/lib/site';
 
 export const metadata: Metadata = buildPageMetadata({
-  title: 'You Are Offline',
+  title: 'Offline',
   description:
-    'Offline fallback page for Mumbi Girls Senior School with essential official contact and registration details.',
+    'Offline fallback page for Mumbi Girls Senior School with official address, office hours, and registration details.',
   path: '/offline',
   noIndex: true,
 });
@@ -17,73 +16,81 @@ export const metadata: Metadata = buildPageMetadata({
 export default function OfflinePage() {
   return (
     <div className="bg-slate-bg py-14 sm:py-20 px-4 sm:px-6">
-      <div className="max-w-2xl mx-auto bg-white rounded-3xl border border-slate-200 border-t-4 border-t-primary p-6 sm:p-10 shadow-sm text-center space-y-6">
-        <div className="flex items-center justify-center gap-3">
+      <div className="max-w-2xl mx-auto bg-white border border-slate-200 border-t-2 border-t-primary p-6 sm:p-10 space-y-6">
+        <div className="flex items-start gap-4">
           <Image
             src="/images/mumbi-logo.png"
             alt="Mumbi Girls' Senior School crest"
-            width={60}
-            height={61}
-            sizes="60px"
-            className="w-15 h-15 rounded-xl bg-white border border-slate-200 p-1 object-contain"
+            width={56}
+            height={57}
+            sizes="56px"
+            className="w-14 h-14 rounded-xs bg-[#f7f7f7] border border-slate-200 p-1 object-contain shrink-0"
           />
-          <div className="w-14 h-14 rounded-2xl bg-accent/10 text-accent flex items-center justify-center">
-            <WifiOff className="w-7 h-7" aria-hidden="true" />
+          <div>
+            <p className="text-xs font-bold uppercase tracking-[0.14em] text-accent mb-1">
+              No Internet Connection
+            </p>
+            <h1 className="font-serif text-2xl sm:text-3xl font-bold text-slate-900">
+              You are offline
+            </h1>
           </div>
         </div>
 
-        <div className="space-y-2">
-          <span className="text-xs font-bold uppercase tracking-wider text-accent">
-            No Internet Connection
-          </span>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900">
-            You Are Currently Offline
-          </h1>
-          <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
-            This page could not be loaded because your device appears to be
-            disconnected from the internet. Check your mobile data or Wi-Fi
-            connection and try again.
-          </p>
-        </div>
+        <p className="text-sm sm:text-base text-slate-700 leading-relaxed">
+          This page could not be loaded because your device is not connected to
+          the internet. Check your mobile data or Wi-Fi connection and try
+          again.
+        </p>
 
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-1">
+        <div className="flex flex-col sm:flex-row gap-3">
           <OfflineRetryButton />
           <Link
             href="/"
-            className="w-full sm:w-auto min-h-12 inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl border-2 border-primary text-primary hover:bg-primary hover:text-white text-sm font-bold transition-colors"
+            className="w-full sm:w-auto min-h-11 inline-flex items-center justify-center px-5 py-2.5 rounded-sm border border-primary text-primary hover:bg-primary hover:text-white text-sm font-semibold transition-colors"
           >
-            <Home className="w-4 h-4 shrink-0" aria-hidden="true" />
-            <span>Return to Home</span>
+            Return to home
           </Link>
         </div>
 
-        {/* Essential Offline Reference Card */}
+        {/* School Office Quick Reference */}
         <section
           aria-labelledby="offline-school-details"
-          className="text-left bg-slate-bg rounded-2xl border border-slate-200 p-5 space-y-2 text-xs sm:text-sm text-slate-700"
+          className="pt-6 border-t border-slate-200 space-y-3"
         >
           <h2
             id="offline-school-details"
-            className="font-bold text-sm sm:text-base text-slate-900"
+            className="font-serif text-lg font-bold text-slate-900"
           >
-            {schoolInfo.name} — Quick Reference
+            {schoolInfo.name} — Office Details
           </h2>
-          <p>
-            <strong className="text-slate-900">Codes:</strong> KNEC{' '}
-            {schoolInfo.knecCode} • MoE {schoolInfo.moeReg}
-          </p>
-          <p>
-            <strong className="text-slate-900">Postal Address:</strong>{' '}
-            {schoolInfo.postalAddress}
-          </p>
-          <p>
-            <strong className="text-slate-900">Location:</strong>{' '}
-            {schoolInfo.physicalLocation}
-          </p>
-          <p>
-            <strong className="text-slate-900">Office Hours:</strong>{' '}
-            {schoolInfo.officeHours}
-          </p>
+          <dl className="divide-y divide-slate-200 text-xs sm:text-sm text-slate-700">
+            <div className="py-2 tabular-nums">
+              <dt className="inline font-semibold text-slate-900">
+                Registration:{' '}
+              </dt>
+              <dd className="inline">
+                KNEC {schoolInfo.knecCode} · MoE {schoolInfo.moeReg}
+              </dd>
+            </div>
+            <div className="py-2">
+              <dt className="inline font-semibold text-slate-900">
+                Postal Address:{' '}
+              </dt>
+              <dd className="inline">{schoolInfo.postalAddress}</dd>
+            </div>
+            <div className="py-2">
+              <dt className="inline font-semibold text-slate-900">
+                Location:{' '}
+              </dt>
+              <dd className="inline">{schoolInfo.physicalLocation}</dd>
+            </div>
+            <div className="py-2">
+              <dt className="inline font-semibold text-slate-900">
+                Office Hours:{' '}
+              </dt>
+              <dd className="inline">{schoolInfo.officeHours}</dd>
+            </div>
+          </dl>
         </section>
       </div>
     </div>
