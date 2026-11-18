@@ -120,8 +120,13 @@
     outline-color: var(--color-white);
   }
 
-  [data-light-surface] :focus-visible {
+  [data-light-surface] :focus-visible,
+  [data-dark-surface] [data-light-surface] :focus-visible {
     outline-color: var(--color-primary);
+  }
+
+  [data-light-surface] [data-dark-surface] :focus-visible {
+    outline-color: var(--color-white);
   }
 
   /* Selection */

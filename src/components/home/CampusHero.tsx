@@ -103,7 +103,7 @@ export default function CampusHero() {
               <Link
                 href="/contact#admissions"
                 data-hero-step="6"
-                className="hero-rise min-h-11 inline-flex items-center justify-center gap-2 px-6 py-3 rounded-sm bg-white hover:bg-blue-50 text-primary font-semibold text-sm transition-colors"
+                className="hero-rise min-h-11 inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-white hover:bg-blue-50 text-primary font-semibold text-sm transition-colors"
               >
                 <span>Admissions</span>
                 <ArrowRight
@@ -114,7 +114,7 @@ export default function CampusHero() {
               <Link
                 href="/explore"
                 data-hero-step="7"
-                className="hero-rise min-h-11 inline-flex items-center justify-center px-6 py-3 rounded-sm border border-white/75 hover:bg-primary-dark text-white font-semibold text-sm transition-colors"
+                className="hero-rise min-h-11 inline-flex items-center justify-center px-6 py-3 rounded-full border border-white/75 hover:bg-primary-dark text-white font-semibold text-sm transition-colors"
               >
                 Explore the school
               </Link>

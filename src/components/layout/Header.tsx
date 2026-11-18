@@ -89,7 +89,7 @@ function DesktopDropdown({
       <Link
         href={item.href}
         aria-current={isActive ? 'page' : undefined}
-        className={`relative px-3 py-2 text-sm font-medium transition-colors text-white ${
+        className={`relative px-3 py-2 rounded-full text-sm font-medium transition-colors text-white ${
           isActive
             ? 'after:content-[""] after:absolute after:left-3 after:right-3 after:bottom-0.5 after:h-0.5 after:bg-white'
             : 'text-white/90 hover:text-white hover:bg-primary-dark/60'
@@ -109,7 +109,7 @@ function DesktopDropdown({
       onBlur={handleBlur}
     >
       <div
-        className={`relative inline-flex items-center transition-colors ${
+        className={`relative inline-flex items-center rounded-full transition-colors ${
           isActive
             ? 'after:content-[""] after:absolute after:left-3 after:right-2.5 after:bottom-0.5 after:h-0.5 after:bg-white'
             : 'hover:bg-primary-dark/60'
@@ -119,7 +119,7 @@ function DesktopDropdown({
           href={item.href}
           aria-current={isActive ? 'page' : undefined}
           onClick={() => setOpen(false)}
-          className={`pl-3 pr-1 py-2 text-sm font-medium transition-colors ${
+          className={`pl-3 pr-1 py-2 rounded-full text-sm font-medium transition-colors ${
             isActive ? 'text-white' : 'text-white/90 hover:text-white'
           }`}
         >
@@ -146,7 +146,7 @@ function DesktopDropdown({
               });
             }
           }}
-          className="px-1.5 py-2 text-white/90 hover:text-white transition-colors"
+          className="px-1.5 py-2 rounded-full text-white/90 hover:text-white transition-colors"
         >
           <ChevronDown
             className={`w-3.5 h-3.5 transition-transform duration-150 ${
@@ -303,7 +303,7 @@ function MobileNavDrawer({
             ref={closeBtnRef}
             type="button"
             onClick={onClose}
-            className="inline-flex items-center justify-center w-11 h-11 rounded-sm text-white hover:bg-primary-dark transition-colors shrink-0"
+            className="inline-flex items-center justify-center w-11 h-11 rounded-full text-white hover:bg-primary-dark transition-colors shrink-0"
             aria-label="Close navigation menu"
           >
             <X className="w-5 h-5" aria-hidden="true" />
@@ -327,16 +327,22 @@ function MobileNavDrawer({
                     aria-expanded={isExpanded}
                     aria-controls={sectionId}
                     onClick={() => toggleExpand(item.label)}
-                    className={`w-full min-h-11 flex items-center justify-between px-2 py-2.5 text-sm font-medium transition-colors ${
+                    className={`w-full min-h-11 flex items-center justify-between px-3.5 py-2.5 rounded-full text-sm font-medium transition-colors ${
                       isActive
-                        ? 'text-primary font-semibold border-l-2 border-accent pl-3'
-                        : 'text-slate-800 hover:text-primary'
+                        ? 'bg-primary text-white font-semibold'
+                        : 'text-slate-800 hover:text-primary hover:bg-slate-100'
                     }`}
                   >
                     <span>{item.label}</span>
                     <ChevronDown
                       className={`w-4 h-4 shrink-0 transition-transform duration-150 ${
-                        isExpanded ? 'rotate-180 text-primary' : 'text-slate-500'
+                        isExpanded ? 'rotate-180' : ''
+                      } ${
+                        isActive
+                          ? 'text-white'
+                          : isExpanded
+                            ? 'text-primary'
+                            : 'text-slate-500'
                       }`}
                       aria-hidden="true"
                     />
@@ -345,7 +351,7 @@ function MobileNavDrawer({
                   {isExpanded && (
                     <ul
                       id={sectionId}
-                      className="mb-2 ml-2 pl-3 border-l border-slate-300 space-y-0.5"
+                      className="mt-1 mb-2 ml-3 pl-3 border-l border-slate-300 space-y-0.5"
                     >
                       <li>
                         <Link
@@ -380,10 +386,10 @@ function MobileNavDrawer({
                   href={item.href}
                   aria-current={isActive ? 'page' : undefined}
                   onClick={onClose}
-                  className={`flex items-center min-h-11 px-2 py-2.5 text-sm font-medium transition-colors ${
+                  className={`flex items-center min-h-11 px-3.5 py-2.5 rounded-full text-sm font-medium transition-colors ${
                     isActive
-                      ? 'text-primary font-semibold border-l-2 border-accent pl-3'
-                      : 'text-slate-800 hover:text-primary'
+                      ? 'bg-primary text-white font-semibold'
+                      : 'text-slate-800 hover:text-primary hover:bg-slate-100'
                   }`}
                 >
                   {item.label}
@@ -402,7 +408,7 @@ function MobileNavDrawer({
                 await triggerNativeInstall();
                 onClose();
               }}
-              className="w-full min-h-11 px-4 py-2.5 rounded-sm bg-primary-dark text-white font-semibold text-sm inline-flex items-center justify-center gap-2 hover:bg-primary transition-colors"
+              className="w-full min-h-11 px-4 py-2.5 rounded-full bg-primary-dark text-white font-semibold text-sm inline-flex items-center justify-center gap-2 hover:bg-primary transition-colors"
             >
               <Download className="w-4 h-4 stroke-[1.75]" aria-hidden="true" />
               <span>Install Mumbi Portal App</span>
@@ -412,14 +418,14 @@ function MobileNavDrawer({
             <Link
               href="/portal"
               onClick={onClose}
-              className="min-h-11 px-3 py-2.5 inline-flex items-center justify-center text-sm font-semibold text-white bg-primary rounded-sm hover:bg-primary-dark transition-colors"
+              className="min-h-11 px-3 py-2.5 inline-flex items-center justify-center text-sm font-semibold text-white bg-primary rounded-full hover:bg-primary-dark transition-colors"
             >
               Student Portal
             </Link>
             <Link
               href="/portal"
               onClick={onClose}
-              className="min-h-11 px-3 py-2.5 inline-flex items-center justify-center text-sm font-semibold text-primary bg-white border border-primary rounded-sm hover:bg-slate-50 transition-colors"
+              className="min-h-11 px-3 py-2.5 inline-flex items-center justify-center text-sm font-semibold text-primary bg-white border border-primary rounded-full hover:bg-slate-50 transition-colors"
             >
               Staff Portal
             </Link>
@@ -497,7 +503,7 @@ export default function Header() {
               ref={hamburgerRef}
               type="button"
               onClick={() => setMobileOpen(true)}
-              className="lg:hidden inline-flex items-center justify-center w-11 h-11 rounded-sm text-white hover:bg-primary-dark transition-colors shrink-0"
+              className="lg:hidden inline-flex items-center justify-center w-11 h-11 rounded-full text-white hover:bg-primary-dark transition-colors shrink-0"
               aria-label="Open navigation menu"
               aria-expanded={mobileOpen}
               aria-controls="mobile-nav-drawer"

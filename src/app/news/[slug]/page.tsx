@@ -141,7 +141,7 @@ export default async function NewsArticlePage({
           <div className="mt-8 flex flex-col sm:flex-row flex-wrap gap-3">
             <Link
               href="/downloads"
-              className="min-h-11 inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-sm bg-primary hover:bg-primary-dark text-white text-sm font-semibold transition-colors"
+              className="min-h-11 inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full bg-primary hover:bg-primary-dark text-white text-sm font-semibold transition-colors"
             >
               <span>Downloads &amp; circulars</span>
               <ArrowRight
@@ -151,7 +151,7 @@ export default async function NewsArticlePage({
             </Link>
             <Link
               href="/contact"
-              className="min-h-11 inline-flex items-center justify-center px-5 py-2.5 rounded-sm border border-primary text-primary hover:bg-primary hover:text-white text-sm font-semibold transition-colors"
+              className="min-h-11 inline-flex items-center justify-center px-5 py-2.5 rounded-full border border-primary text-primary hover:bg-primary hover:text-white text-sm font-semibold transition-colors"
             >
               Contact administration
             </Link>

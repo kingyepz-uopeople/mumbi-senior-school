@@ -26,7 +26,7 @@ export default function WallOfFameGrid() {
           type="button"
           aria-pressed={selectedYear === 'all'}
           onClick={() => setSelectedYear('all')}
-          className={`min-h-11 px-4 py-2 rounded-sm text-xs sm:text-sm font-semibold border transition-colors ${
+          className={`min-h-11 px-4 py-2 rounded-full text-xs sm:text-sm font-semibold border transition-colors ${
             selectedYear === 'all'
               ? 'bg-primary border-primary text-white'
               : 'bg-white border-slate-300 text-slate-700 hover:border-primary hover:text-primary'
@@ -43,7 +43,7 @@ export default function WallOfFameGrid() {
               type="button"
               aria-pressed={active}
               onClick={() => setSelectedYear(year)}
-              className={`min-h-11 px-4 py-2 rounded-sm text-xs sm:text-sm font-semibold border tabular-nums transition-colors ${
+              className={`min-h-11 px-4 py-2 rounded-full text-xs sm:text-sm font-semibold border tabular-nums transition-colors ${
                 active
                   ? 'bg-primary border-primary text-white'
                   : 'bg-white border-slate-300 text-slate-700 hover:border-primary hover:text-primary'

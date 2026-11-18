@@ -240,7 +240,7 @@ export default function ContactForm() {
           <button
             type="button"
             onClick={() => setReceipt(null)}
-            className="min-h-11 inline-flex items-center justify-center px-5 py-2.5 rounded-sm bg-primary hover:bg-primary-dark text-white text-sm font-semibold transition-colors"
+            className="min-h-11 inline-flex items-center justify-center px-5 py-2.5 rounded-full bg-primary hover:bg-primary-dark text-white text-sm font-semibold transition-colors"
           >
             Send another enquiry
           </button>
@@ -518,7 +518,7 @@ export default function ContactForm() {
       <button
         type="submit"
         disabled={isSubmitting}
-        className="w-full sm:w-auto min-h-12 py-3 px-7 rounded-sm bg-primary hover:bg-primary-dark disabled:opacity-60 disabled:cursor-not-allowed text-white font-semibold text-sm inline-flex items-center justify-center gap-2 transition-colors"
+        className="w-full sm:w-auto min-h-12 py-3 px-7 rounded-full bg-primary hover:bg-primary-dark disabled:opacity-60 disabled:cursor-not-allowed text-white font-semibold text-sm inline-flex items-center justify-center gap-2 transition-colors"
       >
         {isSubmitting ? (
           <>

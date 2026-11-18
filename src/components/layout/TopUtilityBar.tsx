@@ -40,7 +40,7 @@ export default function TopUtilityBar() {
         <div className="flex items-center gap-1 sm:gap-3 shrink-0">
           <Link
             href="/portal"
-            className="hidden sm:inline-flex items-center px-2 py-1 min-h-8 text-white/90 hover:text-white hover:underline underline-offset-4 transition-colors font-medium"
+            className="hidden sm:inline-flex items-center px-2 py-1 min-h-8 rounded-full text-white/90 hover:text-white hover:underline underline-offset-4 transition-colors font-medium"
           >
             Student Portal
           </Link>
@@ -52,7 +52,7 @@ export default function TopUtilityBar() {
           </span>
           <Link
             href="/portal"
-            className="hidden sm:inline-flex items-center px-2 py-1 min-h-8 text-white/90 hover:text-white hover:underline underline-offset-4 transition-colors font-medium"
+            className="hidden sm:inline-flex items-center px-2 py-1 min-h-8 rounded-full text-white/90 hover:text-white hover:underline underline-offset-4 transition-colors font-medium"
           >
             Staff Portal
           </Link>
@@ -60,7 +60,7 @@ export default function TopUtilityBar() {
             <button
               type="button"
               onClick={triggerNativeInstall}
-              className="inline-flex items-center gap-1.5 px-2.5 py-1 min-h-8 rounded-sm bg-white text-primary hover:bg-blue-50 transition-colors font-semibold"
+              className="inline-flex items-center gap-1.5 px-2.5 py-1 min-h-8 rounded-full bg-white text-primary hover:bg-blue-50 transition-colors font-semibold"
             >
               <Download className="w-3.5 h-3.5 stroke-[1.75]" aria-hidden="true" />
               <span className="hidden sm:inline">Install App</span>

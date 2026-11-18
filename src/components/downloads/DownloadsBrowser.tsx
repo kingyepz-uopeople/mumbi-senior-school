@@ -131,7 +131,7 @@ export default function DownloadsBrowser() {
   };
 
   const filterBtnClass = (active: boolean) =>
-    `min-h-11 px-3.5 py-2 rounded-sm text-xs font-semibold border transition-colors ${
+    `min-h-11 px-3.5 py-2 rounded-full text-xs font-semibold border transition-colors ${
       active
         ? 'bg-primary border-primary text-white'
         : 'bg-white border-slate-300 text-slate-700 hover:border-primary hover:text-primary'
@@ -156,7 +156,7 @@ export default function DownloadsBrowser() {
             <button
               type="button"
               onClick={resetFilters}
-              className="min-h-11 inline-flex items-center gap-1.5 px-3.5 py-2 rounded-sm text-xs font-semibold text-accent border border-accent/40 hover:bg-accent hover:text-white transition-colors"
+              className="min-h-11 inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full text-xs font-semibold text-accent border border-accent/40 hover:bg-accent hover:text-white transition-colors"
             >
               <RotateCcw className="w-3.5 h-3.5 stroke-[1.75]" aria-hidden="true" />
               <span>Clear filters</span>
@@ -190,7 +190,7 @@ export default function DownloadsBrowser() {
                 type="button"
                 onClick={() => setSearchTerm('')}
                 aria-label="Clear search query"
-                className="absolute right-0.5 top-1/2 -translate-y-1/2 inline-flex items-center justify-center w-11 h-11 rounded-sm text-slate-600 hover:text-primary"
+                className="absolute right-0.5 top-1/2 -translate-y-1/2 inline-flex items-center justify-center w-11 h-11 rounded-full text-slate-600 hover:text-primary"
               >
                 <X className="w-4 h-4" aria-hidden="true" />
               </button>
@@ -299,7 +299,7 @@ export default function DownloadsBrowser() {
             type="button"
             onClick={() => setDownloadedNotice(null)}
             aria-label="Dismiss download notification"
-            className="inline-flex items-center justify-center w-11 h-11 -my-2 -mr-2 rounded-sm text-slate-600 hover:text-primary shrink-0"
+            className="inline-flex items-center justify-center w-11 h-11 -my-2 -mr-2 rounded-full text-slate-600 hover:text-primary shrink-0"
           >
             <X className="w-4 h-4" aria-hidden="true" />
           </button>
@@ -378,7 +378,7 @@ export default function DownloadsBrowser() {
                 <button
                   type="button"
                   onClick={() => handleDownload(item)}
-                  className="w-full md:w-auto shrink-0 min-h-11 py-2.5 px-4 rounded-sm bg-primary hover:bg-primary-dark text-white text-xs sm:text-sm font-semibold inline-flex items-center justify-center gap-2 transition-colors tabular-nums"
+                  className="w-full md:w-auto shrink-0 min-h-11 py-2.5 px-4 rounded-full bg-primary hover:bg-primary-dark text-white text-xs sm:text-sm font-semibold inline-flex items-center justify-center gap-2 transition-colors tabular-nums"
                 >
                   <Download
                     className="w-4 h-4 shrink-0 stroke-[1.75]"
@@ -402,7 +402,7 @@ export default function DownloadsBrowser() {
               <button
                 type="button"
                 onClick={resetFilters}
-                className="min-h-11 inline-flex items-center gap-2 px-4 py-2.5 rounded-sm bg-primary text-white text-sm font-semibold hover:bg-primary-dark transition-colors"
+                className="min-h-11 inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-primary text-white text-sm font-semibold hover:bg-primary-dark transition-colors"
               >
                 <RotateCcw className="w-4 h-4 stroke-[1.75]" aria-hidden="true" />
                 <span>Show all documents</span>

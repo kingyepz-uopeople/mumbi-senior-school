@@ -111,13 +111,13 @@ export default function ExploreTabs() {
 
   return (
     <div className="space-y-12">
-      {/* Left-Aligned Underlined WAI-ARIA Tablist */}
+      {/* Left-Aligned Pill WAI-ARIA Tablist */}
       <div
         ref={tablistRef}
         id={activeTab}
         role="tablist"
         aria-label="Student life and boarding sections"
-        className="scroll-mt-28 flex flex-col sm:flex-row sm:flex-wrap border-b border-slate-300 gap-0 sm:gap-x-7"
+        className="scroll-mt-28 flex flex-wrap items-center gap-2"
       >
         {TABS.map((tab, index) => {
           const selected = activeTab === tab.id;
@@ -135,10 +135,10 @@ export default function ExploreTabs() {
               tabIndex={selected ? 0 : -1}
               onClick={() => selectTab(tab.id)}
               onKeyDown={(e) => handleKeyDown(e, index)}
-              className={`min-h-11 py-3 px-1 text-left text-sm font-semibold border-b-2 -mb-px transition-colors ${
+              className={`min-h-11 px-4 py-2 rounded-full text-xs sm:text-sm font-semibold border transition-colors ${
                 selected
-                  ? 'border-accent text-primary'
-                  : 'border-transparent text-slate-600 hover:text-slate-900 hover:border-slate-400'
+                  ? 'bg-primary border-primary text-white'
+                  : 'bg-white border-slate-300 text-slate-700 hover:border-primary hover:text-primary'
               }`}
             >
               {tab.label}

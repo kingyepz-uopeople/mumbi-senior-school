@@ -40,7 +40,7 @@ export default function MobileInstallBanner() {
           <button
             type="button"
             onClick={dismissBanner}
-            className="inline-flex items-center justify-center w-11 h-11 -mr-2 -mt-2 rounded-sm text-slate-600 hover:text-primary transition-colors shrink-0"
+            className="inline-flex items-center justify-center w-11 h-11 -mr-2 -mt-2 rounded-full text-slate-600 hover:text-primary transition-colors shrink-0"
             aria-label="Dismiss install app banner"
           >
             <X className="w-4 h-4" aria-hidden="true" />
@@ -74,7 +74,7 @@ export default function MobileInstallBanner() {
             <button
               type="button"
               onClick={dismissBanner}
-              className="w-full min-h-11 px-4 py-2.5 rounded-sm bg-primary text-white font-semibold text-xs hover:bg-primary-dark transition-colors"
+              className="w-full min-h-11 px-4 py-2.5 rounded-full bg-primary text-white font-semibold text-xs hover:bg-primary-dark transition-colors"
             >
               Close &amp; Don&apos;t Show Again
             </button>
@@ -84,7 +84,7 @@ export default function MobileInstallBanner() {
             <button
               type="button"
               onClick={handleBannerInstall}
-              className="flex-1 min-h-11 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-sm bg-primary hover:bg-primary-dark text-white text-xs font-semibold transition-colors"
+              className="flex-1 min-h-11 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-full bg-primary hover:bg-primary-dark text-white text-xs font-semibold transition-colors"
             >
               <Download className="w-4 h-4 stroke-[1.75]" aria-hidden="true" />
               <span>Install App</span>
@@ -92,7 +92,7 @@ export default function MobileInstallBanner() {
             <button
               type="button"
               onClick={dismissBanner}
-              className="min-h-11 px-3.5 py-2.5 rounded-sm border border-slate-300 text-slate-700 hover:text-primary hover:border-primary text-xs font-medium transition-colors"
+              className="min-h-11 px-3.5 py-2.5 rounded-full border border-slate-300 text-slate-700 hover:text-primary hover:border-primary text-xs font-medium transition-colors"
             >
               Not Now
             </button>

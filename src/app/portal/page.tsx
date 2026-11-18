@@ -82,7 +82,7 @@ export default function PortalComingSoonPage() {
               <div className="pt-2 flex flex-col sm:flex-row flex-wrap gap-3">
                 <Link
                   href="/downloads"
-                  className="min-h-11 inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-sm bg-primary hover:bg-primary-dark text-white text-sm font-semibold transition-colors"
+                  className="min-h-11 inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full bg-primary hover:bg-primary-dark text-white text-sm font-semibold transition-colors"
                 >
                   <span>Downloads &amp; circulars</span>
                   <ArrowRight
@@ -92,13 +92,13 @@ export default function PortalComingSoonPage() {
                 </Link>
                 <Link
                   href="/contact"
-                  className="min-h-11 inline-flex items-center justify-center px-5 py-2.5 rounded-sm border border-primary text-primary hover:bg-primary hover:text-white text-sm font-semibold transition-colors"
+                  className="min-h-11 inline-flex items-center justify-center px-5 py-2.5 rounded-full border border-primary text-primary hover:bg-primary hover:text-white text-sm font-semibold transition-colors"
                 >
                   Contact administration
                 </Link>
                 <Link
                   href="/"
-                  className="min-h-11 inline-flex items-center justify-center px-4 py-2.5 rounded-sm text-slate-700 hover:text-primary hover:underline underline-offset-4 text-sm font-medium transition-colors"
+                  className="min-h-11 inline-flex items-center justify-center px-4 py-2.5 rounded-full text-slate-700 hover:text-primary hover:underline underline-offset-4 text-sm font-medium transition-colors"
                 >
                   Return to home
                 </Link>
