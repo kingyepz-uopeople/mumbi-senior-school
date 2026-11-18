@@ -241,6 +241,31 @@
   }
 }
 
+@keyframes prospectus-card-lift {
+  0%,
+  8%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  22%,
+  76% {
+    transform: translate3d(0, -5px, 0);
+  }
+}
+
+@keyframes prospectus-card-highlight {
+  0%,
+  14%,
+  84%,
+  100% {
+    opacity: 0;
+  }
+  26%,
+  72% {
+    opacity: 1;
+  }
+}
+
 @keyframes hero-rule-draw {
   from {
     opacity: 0;
@@ -658,6 +683,41 @@
     transition:
       opacity 520ms var(--ease-editorial) var(--reveal-delay, 0ms),
       transform 520ms var(--ease-editorial) var(--reveal-delay, 0ms);
+  }
+
+  [data-card-cycle] {
+    position: relative;
+  }
+
+  [data-card-cycle]::after {
+    position: absolute;
+    inset: 0;
+    border: 1.5px solid rgb(17 81 145 / 0.45);
+    border-radius: inherit;
+    content: '';
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  [data-card-spotlight-group][data-card-cycle-state='running']
+    [data-card-cycle][data-cycle-active='true'],
+  [data-card-spotlight-group][data-card-cycle-state='paused']
+    [data-card-cycle][data-cycle-active='true'] {
+    animation: prospectus-card-lift 3s var(--ease-editorial) both;
+  }
+
+  [data-card-spotlight-group][data-card-cycle-state='running']
+    [data-card-cycle][data-cycle-active='true']::after,
+  [data-card-spotlight-group][data-card-cycle-state='paused']
+    [data-card-cycle][data-cycle-active='true']::after {
+    animation: prospectus-card-highlight 3s ease-in-out both;
+  }
+
+  [data-card-spotlight-group][data-card-cycle-state='paused']
+    [data-card-cycle][data-cycle-active='true'],
+  [data-card-spotlight-group][data-card-cycle-state='paused']
+    [data-card-cycle][data-cycle-active='true']::after {
+    animation-play-state: paused;
   }
 
   [data-reveal][data-reveal-state='pending']:is(
