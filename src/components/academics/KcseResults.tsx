@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import KcsePerformance from '@/components/academics/KcsePerformance';
+import KcseMultiYearTable from '@/components/academics/KcseMultiYearTable';
 import BlurRevealHeading from '@/components/shared/BlurRevealHeading';
 import SectionStemBackdrop from '@/components/shared/SectionStemBackdrop';
 import WallOfFameGrid, { type HonourYear } from '@/components/shared/WallOfFameGrid';
@@ -27,6 +28,14 @@ export default function KcseResults({ knecCode }: { knecCode: string }) {
         report={report}
         onYearChange={selectYear}
         onViewPerformers={() => setShowAllHonourees(false)}
+      />
+
+      <KcseMultiYearTable
+        selectedYear={report.year}
+        onSelectYear={(year) => {
+          setReportYear(year);
+          setShowAllHonourees(false);
+        }}
       />
 
       <section
