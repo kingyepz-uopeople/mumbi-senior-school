@@ -1,7 +1,8 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowDown, ArrowRight, ArrowUpRight, CalendarDays, MapPin, ReceiptText } from 'lucide-react';
+import { ArrowUpRight, MapPin, ReceiptText } from 'lucide-react';
+import { ArrowDown, ArrowRight, CalendarDays } from '@/components/icons';
 import { grade10Intake } from '@/data/admissions';
 import ReportingDayTimeline from '@/components/admissions/ReportingDayTimeline';
 import { schoolInfo } from '@/data/mock-school-data';
@@ -81,7 +82,7 @@ export default function AdmissionsPage() {
               className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-white/60 px-5 py-2.5 text-sm font-semibold text-white hover:bg-white/10"
             >
               Check placement
-              <ArrowUpRight className="size-4 shrink-0" aria-hidden="true" />
+              <ArrowUpRight strokeWidth={1.75} className="size-4 shrink-0" aria-hidden="true" />
             </a>
           </div>
         </div>
@@ -203,6 +204,7 @@ export default function AdmissionsPage() {
                       </span>
                     </span>
                     <ArrowUpRight
+                      strokeWidth={1.75}
                       className="editorial-arrow size-5 shrink-0 text-white"
                       aria-hidden="true"
                     />
@@ -240,7 +242,7 @@ export default function AdmissionsPage() {
         >
           <div className="flex items-center gap-3">
             <span className="grid size-10 shrink-0 place-items-center rounded-md bg-blue-50 text-primary">
-              <ReceiptText className="size-5" aria-hidden="true" />
+              <ReceiptText strokeWidth={1.75} className="size-5" aria-hidden="true" />
             </span>
             <h2
               id="fees-heading"
@@ -327,7 +329,7 @@ export default function AdmissionsPage() {
               >
                 Full-size photo
                 <span className="sr-only">(opens in a new tab)</span>
-                <ArrowUpRight className="size-4 shrink-0" aria-hidden="true" />
+                <ArrowUpRight strokeWidth={1.75} className="size-4 shrink-0" aria-hidden="true" />
               </a>
             </figcaption>
           </figure>
@@ -348,7 +350,7 @@ export default function AdmissionsPage() {
               Questions about joining?
             </h2>
             <p className="mt-2 flex items-start gap-2 text-sm leading-relaxed text-slate-700">
-              <MapPin className="mt-0.5 size-4 shrink-0 text-primary" aria-hidden="true" />
+              <MapPin strokeWidth={1.75} className="mt-0.5 size-4 shrink-0 text-primary" aria-hidden="true" />
               <span>
                 {schoolInfo.physicalLocation} · {schoolInfo.officeHoursShort}
               </span>

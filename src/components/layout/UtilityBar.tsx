@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Download } from 'lucide-react';
+import { Download } from '@/components/icons';
 import RegistryLogo from '@/components/shared/RegistryLogo';
 import OfficeHoursStatus from '@/components/shared/OfficeHoursStatus';
 import { schoolInfo } from '@/data/mock-school-data';

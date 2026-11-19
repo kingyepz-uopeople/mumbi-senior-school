@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { Camera } from 'lucide-react';
+import { Camera } from '@/components/icons';
 
 interface PhotoSlotProps {
   /** Root-relative path under `public/`, e.g. `/images/principal.jpg` */

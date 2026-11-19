@@ -1,7 +1,8 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { AlertCircle, Check, Loader2 } from 'lucide-react';
+import { AlertCircle } from 'lucide-react';
+import { Check, Loader2 } from '@/components/icons';
 import { formatDateKE } from '@/lib/utils';
 import type { ContactInquiry } from '@/types';
 
@@ -275,7 +276,8 @@ export default function ContactForm() {
           className="p-4 rounded-sm bg-accent/5 border border-accent/40 border-l-4 border-l-accent text-slate-900 flex items-start gap-2.5 text-xs sm:text-sm"
         >
           <AlertCircle
-            className="w-4 h-4 text-accent shrink-0 mt-0.5 stroke-[2]"
+            strokeWidth={1.75}
+            className="w-4 h-4 text-accent shrink-0 mt-0.5"
             aria-hidden="true"
           />
           <div>
@@ -335,6 +337,7 @@ export default function ContactForm() {
               className="mt-1.5 text-xs font-semibold text-accent flex items-start gap-1.5"
             >
               <AlertCircle
+                strokeWidth={1.75}
                 className="w-3.5 h-3.5 shrink-0 mt-0.5"
                 aria-hidden="true"
               />
@@ -374,6 +377,7 @@ export default function ContactForm() {
               className="mt-1.5 text-xs font-semibold text-accent flex items-start gap-1.5"
             >
               <AlertCircle
+                strokeWidth={1.75}
                 className="w-3.5 h-3.5 shrink-0 mt-0.5"
                 aria-hidden="true"
               />
@@ -416,6 +420,7 @@ export default function ContactForm() {
               className="mt-1.5 text-xs font-semibold text-accent flex items-start gap-1.5"
             >
               <AlertCircle
+                strokeWidth={1.75}
                 className="w-3.5 h-3.5 shrink-0 mt-0.5"
                 aria-hidden="true"
               />
@@ -457,6 +462,7 @@ export default function ContactForm() {
               className="mt-1.5 text-xs font-semibold text-accent flex items-start gap-1.5"
             >
               <AlertCircle
+                strokeWidth={1.75}
                 className="w-3.5 h-3.5 shrink-0 mt-0.5"
                 aria-hidden="true"
               />
@@ -507,6 +513,7 @@ export default function ContactForm() {
             className="mt-1.5 text-xs font-semibold text-accent flex items-start gap-1.5"
           >
             <AlertCircle
+              strokeWidth={1.75}
               className="w-3.5 h-3.5 shrink-0 mt-0.5"
               aria-hidden="true"
             />

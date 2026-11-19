@@ -1,4 +1,4 @@
-import { Phone, MessageCircle } from 'lucide-react';
+import { Phone, MessageCircle } from '@/components/icons';
 
 interface PhoneActionsProps {
   /** E.164-style number, e.g. `+254711461192`. */

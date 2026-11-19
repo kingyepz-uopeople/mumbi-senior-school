@@ -7,7 +7,7 @@ import type {
   RefObject,
 } from 'react';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { ArrowRight, Pause, Play, X } from 'lucide-react';
+import { ArrowRight, Pause, Play, X } from '@/components/icons';
 import CountUpStat from '@/components/shared/CountUpStat';
 import HeroScrambleTitle from '@/components/shared/HeroScrambleTitle';
 import HeroTypewriterText from '@/components/shared/HeroTypewriterText';

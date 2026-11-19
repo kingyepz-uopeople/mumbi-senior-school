@@ -1,6 +1,6 @@
 'use client';
 
-import { RotateCw } from 'lucide-react';
+import { RotateCw } from '@/components/icons';
 
 export default function OfflineRetryButton() {
   return (

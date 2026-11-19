@@ -1,4 +1,4 @@
-import { ArrowDown } from 'lucide-react';
+import { ArrowDown } from '@/components/icons';
 import { formatCPlusShare, kcseReports, type KcseReport } from '@/data/kcse';
 
 interface KcsePerformanceProps {

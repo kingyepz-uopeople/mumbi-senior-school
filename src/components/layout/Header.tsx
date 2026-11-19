@@ -5,7 +5,7 @@ import { createPortal } from 'react-dom';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { ChevronDown, Download, Menu, X } from 'lucide-react';
+import { ChevronDown, Download, Menu, X } from '@/components/icons';
 import { navigation } from '@/data/navigation';
 import { schoolInfo } from '@/data/mock-school-data';
 import { usePwa } from '@/components/pwa/PwaProvider';

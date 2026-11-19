@@ -1,7 +1,7 @@
 'use client';
 
 import { useMemo, useState } from 'react';
-import { Check, Download, RotateCcw, Search, X } from 'lucide-react';
+import { Check, Download, RotateCcw, Search, X } from '@/components/icons';
 import { downloads, schoolInfo } from '@/data/mock-school-data';
 import { parseDateKE } from '@/lib/utils';
 import type { DownloadItem } from '@/types';
