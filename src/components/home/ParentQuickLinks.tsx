@@ -1,117 +1,117 @@
 import Link from 'next/link';
-import {
-  ArrowRight,
-  Award,
-  Banknote,
-  BookOpen,
-  ClipboardCheck,
-  FileText,
-  Phone,
-} from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
+import ProspectusIndexReveal from '@/components/home/ProspectusIndexReveal';
+import { grade10Intake } from '@/data/admissions';
+import { kcseReports } from '@/data/kcse';
+import { downloads, schoolInfo } from '@/data/mock-school-data';
+import { parseDateKE } from '@/lib/utils';
 
+// The newest circular on /downloads, used for the index line and the dot.
+const latestCircular = [...downloads]
+  .filter(({ category }) => category === 'Circular')
+  .sort(
+    (a, b) => parseDateKE(b.uploadDate).getTime() - parseDateKE(a.uploadDate).getTime()
+  )[0];
+
+const kcseYears = kcseReports.map(({ year }) => year);
+const firstKcseYear = Math.min(...kcseYears);
+const lastKcseYear = Math.max(...kcseYears);
+
+// Every line below restates something the linked page actually shows.
+// Keep titles and details short and plain — this reads like a contents page.
 const parentLinks = [
   {
-    title: 'Joining Instructions & Reporting',
-    description: 'Reporting day checklist, required documents, and boarding items.',
+    title: 'Joining & reporting',
+    detail: 'Reporting date, placement check and what to bring.',
     href: '/admissions#reporting',
-    icon: ClipboardCheck,
+    isLatestCircular: false,
   },
   {
-    title: 'Fee Structure',
-    description: 'Termly fee breakdown, payment details, and accounts guidance.',
+    title: 'School fees',
+    detail: `${grade10Intake.year} amounts are not published yet. Ask the school office for fees and instalments.`,
     href: '/admissions#fees',
-    icon: Banknote,
+    isLatestCircular: false,
   },
   {
-    title: 'Holiday Assignments',
-    description: 'Departmental revision papers for Grades 10–12 and Forms 3–4.',
+    title: 'Holiday assignments',
+    detail: 'Papers for Grade 10–12 and Form 3–4, filtered by class and subject.',
     href: '/downloads',
-    icon: BookOpen,
+    isLatestCircular: false,
   },
   {
-    title: 'Latest Circular',
-    description: 'Termly circulars, newsletters, and official parent notices.',
+    title: 'Latest circular',
+    detail: latestCircular
+      ? `${latestCircular.title} — ${latestCircular.uploadDate}`
+      : 'Term circulars and newsletters.',
     href: '/downloads',
-    icon: FileText,
+    isLatestCircular: true,
   },
   {
-    title: 'KCSE Results',
-    description: '2022–2025 KCSE performance, grade spread, and roll of honour.',
+    title: 'KCSE results',
+    detail: `School mean, grade spread and top performers for ${firstKcseYear}–${lastKcseYear}.`,
     href: '/academics#kcse-results',
-    icon: Award,
+    isLatestCircular: false,
   },
   {
-    title: 'Contact & Location',
-    description: "Office hours, phone numbers, email, and directions to Murang'a.",
+    title: 'Contact & location',
+    detail: `Phone, email, office hours and the ${schoolInfo.locationShort} campus.`,
     href: '/contact',
-    icon: Phone,
+    isLatestCircular: false,
   },
-] as const;
+];
 
 export default function ParentQuickLinks() {
   return (
     <section
       aria-labelledby="parent-quick-links-heading"
-      className="bg-surface border-b border-slate-200 py-10 sm:py-12"
+      data-dark-surface
+      className="bg-primary-dark py-14 text-white sm:py-20 lg:py-24"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 mb-6">
-          <div>
-            <p className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.14em] text-primary mb-1.5">
-              <span
-                className="w-1.5 h-1.5 rounded-full bg-[#C22F2F]"
-                aria-hidden="true"
-              />
-              Parent &amp; Guardian Quick Links
-            </p>
-            <h2
-              id="parent-quick-links-heading"
-              className="font-serif text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight"
-            >
-              Essential School Information
-            </h2>
-          </div>
-          <Link
-            href="/admissions"
-            className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:text-primary-dark hover:underline underline-offset-4 transition-colors shrink-0"
-          >
-            <span>Admissions &amp; reporting guide</span>
-            <ArrowRight className="w-4 h-4 shrink-0 stroke-[1.75]" aria-hidden="true" />
-          </Link>
-        </div>
+      <div className="mx-auto max-w-7xl px-4 sm:px-6">
+        <h2
+          id="parent-quick-links-heading"
+          className="font-serif text-4xl leading-[1.05] font-bold tracking-tight text-white sm:text-5xl lg:text-[3.5rem]"
+        >
+          For parents
+        </h2>
+        <p className="mt-4 max-w-xl text-sm leading-relaxed text-blue-100/85 sm:text-lg">
+          Reporting, fees, circulars, holiday work, KCSE results and the school
+          office.
+        </p>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {parentLinks.map((item, idx) => {
-            const Icon = item.icon;
-            return (
-              <Link
-                key={item.title}
-                href={item.href}
-                data-reveal=""
-                data-reveal-delay={idx > 0 ? String(Math.min(idx, 3)) : undefined}
-                className="group flex items-start gap-4 rounded-sm border border-slate-200 bg-white p-4 sm:p-5 transition-colors hover:border-primary hover:bg-blue-50/30 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
-              >
-                <div className="w-10 h-10 rounded-sm bg-blue-50 border border-blue-100 flex items-center justify-center shrink-0 text-primary group-hover:bg-primary group-hover:text-white transition-colors">
-                  <Icon className="w-5 h-5 stroke-[1.75]" aria-hidden="true" />
-                </div>
-                <div className="min-w-0 flex-1">
-                  <div className="flex items-center justify-between gap-2">
-                    <h3 className="font-serif text-base font-bold text-slate-900 group-hover:text-primary transition-colors leading-snug">
+        <ol
+          className="prospectus-index mt-10 sm:mt-12"
+          data-prospectus-index=""
+        >
+          {parentLinks.map((item, index) => (
+            <li key={item.title} className="prospectus-cell">
+              <Link href={item.href} className="prospectus-row">
+                <span className="prospectus-numeral" aria-hidden="true">
+                  {String(index + 1).padStart(2, '0')}
+                </span>
+                <span className="min-w-0">
+                  <span className="flex items-baseline gap-2">
+                    <span className="font-serif text-lg leading-snug font-semibold text-white sm:text-xl">
                       {item.title}
-                    </h3>
-                    <ArrowRight
-                      className="w-4 h-4 shrink-0 text-slate-400 group-hover:text-primary transition-colors"
-                      aria-hidden="true"
-                    />
-                  </div>
-                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed mt-1">
-                    {item.description}
-                  </p>
-                </div>
+                    </span>
+                    {item.isLatestCircular && (
+                      <span className="dot-latest shrink-0" aria-hidden="true" />
+                    )}
+                  </span>
+                  <span className="mt-1 block text-[0.82rem] leading-relaxed text-blue-100/80 sm:text-sm">
+                    {item.detail}
+                  </span>
+                </span>
+                <ArrowRight
+                  className="prospectus-arrow size-5 shrink-0 text-white"
+                  aria-hidden="true"
+                />
               </Link>
-            );
-          })}
-        </div>
+            </li>
+          ))}
+        </ol>
+
+        <ProspectusIndexReveal />
       </div>
     </section>
   );
