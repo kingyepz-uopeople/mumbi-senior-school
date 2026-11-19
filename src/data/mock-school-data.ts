@@ -310,7 +310,7 @@ export const newsItems: NewsItem[] = [
     body: [
       'The percentage reflects the grades awarded in the 2024 examinations, not university enrolment.',
       'Select KCSE 2024 on the Academics page to see the full grade distribution, results by stream, and ranked top performers.',
-      'For guidance on collecting official result slips, contact the school office.',
+      'To collect official result slips, contact the school office.',
     ],
     slug: '2024-kcse-results',
   },

@@ -3,17 +3,12 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import Image from 'next/image';
-import { Camera, ChevronLeft, ChevronRight, X } from 'lucide-react';
-import BlurRevealHeading from '@/components/shared/BlurRevealHeading';
+import { ChevronLeft, ChevronRight, X } from 'lucide-react';
 import { galleryAlbums } from '@/data/mock-school-data';
 import type { GalleryImage } from '@/types';
 
 interface GalleryBrowserProps {
-  /**
-   * Root-relative `/images/school/gallery-*.jpg` paths that currently exist
-   * in `public/`. Frames without a matching file on disk display a clean neutral
-   * "Photo coming soon" card rather than a placeholder illustration.
-   */
+  /** Root-relative `/images/school/...` paths that currently exist in `public/`. */
   availableSrcs: string[];
 }
 
@@ -39,7 +34,7 @@ export default function GalleryBrowser({ availableSrcs }: GalleryBrowserProps) {
 
   const displayedImages = selectedAlbum ? selectedAlbum.images : allImages;
 
-  // Only real photographs that exist on disk can be opened in the lightbox
+  // Only real photographs that exist on disk are shown or opened in the lightbox.
   const viewableImages = useMemo(
     () => displayedImages.filter((img) => availableSet.has(img.src)),
     [displayedImages, availableSet]
@@ -62,7 +57,8 @@ export default function GalleryBrowser({ availableSrcs }: GalleryBrowserProps) {
 
   const showNext = useCallback(() => {
     if (viewableImages.length === 0 || activeViewIndex < 0) return;
-    const next = viewableImages[(activeViewIndex + 1) % viewableImages.length];
+    const next =
+      viewableImages[(activeViewIndex + 1) % viewableImages.length];
     setActiveImageId(next.id);
   }, [viewableImages, activeViewIndex]);
 
@@ -139,7 +135,7 @@ export default function GalleryBrowser({ availableSrcs }: GalleryBrowserProps) {
 
   return (
     <div className="space-y-10">
-      {/* Left-Aligned Album Filter Controls */}
+      {/* Album filter */}
       <div
         role="group"
         aria-label="Filter gallery by album"
@@ -176,24 +172,20 @@ export default function GalleryBrowser({ availableSrcs }: GalleryBrowserProps) {
         })}
       </div>
 
-      {/* Album Heading & Grid */}
+      {/* Album heading & masonry */}
       <section aria-labelledby="gallery-album-heading" className="space-y-6">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2 pb-4 border-b border-slate-300">
           <div className="max-w-2xl">
-            <BlurRevealHeading
-              key={selectedAlbum ? selectedAlbum.id : 'all-albums'}
+            <h2
               id="gallery-album-heading"
-              seed={`gallery-${selectedAlbum ? selectedAlbum.id : 'all'}`}
               className="font-serif text-2xl sm:text-3xl font-bold text-slate-900"
             >
               {selectedAlbum ? selectedAlbum.name : 'All Albums'}
-            </BlurRevealHeading>
+            </h2>
             <p className="text-sm text-slate-600 mt-1 leading-relaxed">
               {selectedAlbum
                 ? selectedAlbum.description
-                : viewableImages.length > 0
-                  ? 'Select any photograph to view it at full size.'
-                  : 'Verified photographs from the school office are being prepared for publication in each album below.'}
+                : 'Photographs of the campus and school events.'}
             </p>
           </div>
           <p
@@ -201,102 +193,60 @@ export default function GalleryBrowser({ availableSrcs }: GalleryBrowserProps) {
             aria-live="polite"
             className="text-xs font-medium text-slate-600 tabular-nums shrink-0"
           >
-            {displayedImages.length}{' '}
-            {displayedImages.length === 1 ? 'frame' : 'frames'}
-            {viewableImages.length > 0
-              ? ` · ${viewableImages.length} published`
-              : ''}
+            {viewableImages.length}{' '}
+            {viewableImages.length === 1 ? 'photograph' : 'photographs'}
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-8">
-          {displayedImages.map((img, index) => {
-            const hasPhoto = availableSet.has(img.src);
-            const staggerDelay =
-              index % 3 > 0 ? String(index % 3) : undefined;
-
-            if (hasPhoto) {
-              return (
-                <article
-                  key={img.id}
-                  data-reveal=""
-                  data-reveal-delay={staggerDelay}
-                  className="flex flex-col"
+        {viewableImages.length > 0 ? (
+          <div className="editorial-masonry">
+            {viewableImages.map((img, index) => (
+              <figure key={img.id} className="m-0" data-reveal="" data-reveal-delay={(index % 6) + 1}>
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    lastTriggerRef.current = e.currentTarget;
+                    setActiveImageId(img.id);
+                  }}
+                  aria-label={`View photo: ${img.caption ?? img.alt}`}
+                  className="group block w-full text-left rounded-xs overflow-hidden focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2"
                 >
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      lastTriggerRef.current = e.currentTarget;
-                      setActiveImageId(img.id);
-                    }}
-                    aria-label={`View photo: ${img.caption ?? img.alt}`}
-                    className="group text-left flex flex-col w-full rounded-xs"
-                  >
-                    <div className="relative w-full aspect-3/2 overflow-hidden bg-slate-100 border border-slate-300 group-hover:border-primary transition-colors">
-                      <Image
-                        src={img.src}
-                        alt={img.alt}
-                        width={img.width}
-                        height={img.height}
-                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                    <div className="pt-3 space-y-1">
-                      <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-primary tabular-nums">
-                        {img.event}{img.year ? ` · ${img.year}` : ''}
-                      </p>
-                      <h3 className="font-serif text-base font-bold text-slate-900 group-hover:text-primary leading-snug">
-                        {img.caption ?? img.alt}
-                      </h3>
-                    </div>
-                  </button>
-                </article>
-              );
-            }
-
-            return (
-              <article
-                key={img.id}
-                data-reveal=""
-                data-reveal-delay={staggerDelay}
-                className="flex flex-col"
-              >
-                <figure className="m-0 flex flex-col flex-1">
-                  <div
-                    role="img"
-                    aria-label={`Photo coming soon — ${img.alt}`}
-                    className="relative w-full aspect-3/2 bg-slate-100/65 border border-slate-300 flex flex-col items-center justify-center p-6 text-center"
-                  >
-                    <div
-                      aria-hidden="true"
-                      className="absolute inset-2.5 border border-slate-200 pointer-events-none"
+                  <div className="relative w-full overflow-hidden bg-slate-100 border border-slate-300 group-hover:border-primary transition-colors">
+                    <Image
+                      src={img.src}
+                      alt={img.alt}
+                      width={img.width}
+                      height={img.height}
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      className="w-full h-auto"
                     />
-                    <Camera
-                      className="w-5 h-5 text-slate-500 mb-2 stroke-[1.5]"
-                      aria-hidden="true"
-                    />
-                    <span className="text-xs font-medium uppercase tracking-[0.14em] text-slate-600">
-                      Photo coming soon
-                    </span>
                   </div>
-
                   <figcaption className="pt-3 space-y-1">
                     <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-primary tabular-nums">
-                      {img.event}{img.year ? ` · ${img.year}` : ''}
+                      {img.event}
+                      {img.year ? ` · ${img.year}` : ''}
                     </p>
-                    <h3 className="font-serif text-base font-bold text-slate-900 leading-snug">
-                      {img.alt}
+                    <h3 className="font-serif text-base font-bold text-slate-900 group-hover:text-primary leading-snug">
+                      {img.caption ?? img.alt}
                     </h3>
                   </figcaption>
-                </figure>
-              </article>
-            );
-          })}
-        </div>
+                </button>
+              </figure>
+            ))}
+          </div>
+        ) : (
+          <div className="py-12 px-6 bg-white border border-slate-200">
+            <h3 className="font-serif text-lg font-bold text-slate-900">
+              Photographs coming to this album
+            </h3>
+            <p className="mt-1 text-sm text-slate-600">
+              Verified photographs will be added here by the school office.
+            </p>
+          </div>
+        )}
       </section>
 
-      {/* Accessible Lightbox Modal (renders when a real photograph is opened) */}
+      {/* Accessible lightbox modal */}
       {activeImage &&
         activeViewIndex >= 0 &&
         typeof document !== 'undefined' &&
@@ -324,7 +274,8 @@ export default function GalleryBrowser({ availableSrcs }: GalleryBrowserProps) {
                   <strong className="text-white">
                     {activeViewIndex + 1} / {viewableImages.length}
                   </strong>{' '}
-                  · {activeImage.event}{activeImage.year ? ` (${activeImage.year})` : ''}
+                  · {activeImage.event}
+                  {activeImage.year ? ` (${activeImage.year})` : ''}
                 </p>
 
                 <button
