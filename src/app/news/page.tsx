@@ -1,7 +1,11 @@
 import type { Metadata } from 'next';
-import NewsIndexClient from '@/components/news/NewsIndexClient';
-import { newsItems } from '@/data/mock-school-data';
+import NewsIndexClient, {
+  type FeaturedImage,
+} from '@/components/news/NewsIndexClient';
+import { galleryAlbums, newsItems } from '@/data/mock-school-data';
+import { getAvailablePublicAssets } from '@/lib/media';
 import { buildPageMetadata } from '@/lib/site';
+import { parseDateKE } from '@/lib/utils';
 
 export const metadata: Metadata = buildPageMetadata({
   title: 'News & Events',
@@ -9,6 +13,38 @@ export const metadata: Metadata = buildPageMetadata({
     'Official school notices, term circulars, newsletters, and announcements from Mumbi Girls Senior School.',
   path: '/news',
 });
+
+// Photographs already catalogued in the gallery data, offered to the newest
+// notice as its lead image. Only files that exist in `public/` are used, so no
+// content is invented for the page.
+const leadPhotoCandidates = galleryAlbums
+  .flatMap((album) => album.images)
+  .filter((image) => Boolean(image.caption));
+
+const availableLeadPhotos = getAvailablePublicAssets(
+  leadPhotoCandidates.map((image) => image.src)
+);
+
+function buildFeaturedImages(): Record<string, FeaturedImage> {
+  const available = new Set(availableLeadPhotos);
+  const photos = leadPhotoCandidates.filter((image) => available.has(image.src));
+  if (photos.length === 0) return {};
+
+  const newest = [...newsItems].sort(
+    (a, b) =>
+      parseDateKE(b.date).getTime() - parseDateKE(a.date).getTime()
+  )[0];
+
+  const photo = photos[0];
+  return {
+    [newest.slug]: {
+      src: photo.src,
+      alt: photo.alt,
+      width: photo.width,
+      height: photo.height,
+    },
+  };
+}
 
 export default function NewsPage() {
   return (
@@ -31,7 +67,7 @@ export default function NewsPage() {
           </p>
 
           <div className="mt-10 sm:mt-12">
-            <NewsIndexClient items={newsItems} />
+            <NewsIndexClient items={newsItems} featuredImages={buildFeaturedImages()} />
           </div>
         </div>
       </section>

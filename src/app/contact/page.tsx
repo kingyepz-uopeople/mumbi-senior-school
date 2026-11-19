@@ -6,6 +6,8 @@ import PhotoSlot from '@/components/shared/PhotoSlot';
 import RegistryLogo from '@/components/shared/RegistryLogo';
 import EmailLink from '@/components/shared/EmailLink';
 import PhoneActions from '@/components/shared/PhoneActions';
+import CopyValueButton from '@/components/shared/CopyValueButton';
+import OfficeHoursStatus from '@/components/shared/OfficeHoursStatus';
 import ContactForm from '@/components/contact/ContactForm';
 import { schoolInfo } from '@/data/mock-school-data';
 import { PHOTO_SLOTS, publicAssetExists } from '@/lib/media';
@@ -38,6 +40,9 @@ export default function ContactPage() {
             Enquiries on Grade 10 admissions, joining instructions, fee payments,
             examination records, and boarding matters.
           </p>
+          <div className="mt-6 border-t border-white/15 pt-5">
+            <OfficeHoursStatus variant="hero" />
+          </div>
         </div>
       </section>
 
@@ -158,10 +163,15 @@ export default function ContactPage() {
                     <dd className="mt-0.5 text-blue-100/85">
                       {schoolInfo.postalAddress}
                     </dd>
-                    <dd className="mt-1">
+                    <dd className="mt-1 flex flex-wrap items-center gap-2">
                       <EmailLink
                         email={schoolInfo.email}
-                        className="text-white hover:text-blue-100"
+                        className="text-white hover:text-blue-100 break-all"
+                      />
+                      <CopyValueButton
+                        value={schoolInfo.email}
+                        label="email address"
+                        tone="dark"
                       />
                     </dd>
                   </div>
@@ -174,8 +184,13 @@ export default function ContactPage() {
                   />
                   <div>
                     <dt className="font-semibold text-white">Telephone</dt>
-                    <dd className="mt-1">
+                    <dd className="mt-1 flex flex-wrap items-center gap-2">
                       <PhoneActions phone={schoolInfo.phone} tone="dark" />
+                      <CopyValueButton
+                        value={schoolInfo.phone}
+                        label="phone number"
+                        tone="dark"
+                      />
                     </dd>
                   </div>
                 </div>
@@ -189,6 +204,9 @@ export default function ContactPage() {
                     <dt className="font-semibold text-white">Office Hours</dt>
                     <dd className="mt-0.5 text-blue-100/85">
                       {schoolInfo.officeHours}
+                    </dd>
+                    <dd className="mt-2">
+                      <OfficeHoursStatus variant="bar" />
                     </dd>
                   </div>
                 </div>
