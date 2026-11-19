@@ -71,6 +71,16 @@ interface SelectedTrack {
   trackIndex: number;
 }
 
+type PathwayViewMode = 'loop' | 'grid';
+
+const CAROUSEL_SPEEDS = [
+  { id: 'slow', label: 'Slow', duration: 72 },
+  { id: 'normal', label: 'Normal', duration: 54 },
+  { id: 'fast', label: 'Fast', duration: 36 },
+] as const;
+
+type CarouselSpeed = (typeof CAROUSEL_SPEEDS)[number]['id'];
+
 interface TrackCardProps {
   pathway: CBCPathway;
   track: PathwayTrack;
@@ -142,7 +152,7 @@ function TrackCard({
             {track.subjects.map((subject, index) => (
               <li
                 key={subject}
-                className="pathway-subject-chip"
+                className="subject-chip"
                 style={{ '--chip-delay': `${index * 35}ms` } as CSSProperties}
               >
                 {subject}
@@ -153,7 +163,7 @@ function TrackCard({
 
         <button
           type="button"
-          className="pathway-track-open"
+          className="pill-3d-secondary pathway-track-open"
           aria-label={`Explore ${track.name} track details`}
           tabIndex={duplicate ? -1 : undefined}
           onClick={(event) =>
@@ -243,7 +253,7 @@ function TrackDetailDialog({
           <button
             ref={closeButtonRef}
             type="button"
-            className="pathway-dialog-close"
+            className="pill-3d-secondary pathway-dialog-close"
             onClick={onClose}
             aria-label="Close track details"
           >
@@ -269,7 +279,7 @@ function TrackDetailDialog({
               {selected.track.subjects.map((subject, index) => (
                 <li
                   key={subject}
-                  className="pathway-subject-chip"
+                  className="subject-chip"
                   style={{ '--chip-delay': `${index * 35}ms` } as CSSProperties}
                 >
                   {subject}
@@ -288,7 +298,7 @@ function TrackDetailDialog({
           <div className="pathway-dialog-actions">
             <button
               type="button"
-              className="pathway-tab-3d pathway-dialog-done"
+              className="pill-3d-primary pathway-dialog-done"
               onClick={onClose}
             >
               Done
@@ -303,6 +313,8 @@ function TrackDetailDialog({
 export default function PathwaysDetails() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [userPaused, setUserPaused] = useState(false);
+  const [viewMode, setViewMode] = useState<PathwayViewMode>('loop');
+  const [carouselSpeed, setCarouselSpeed] = useState<CarouselSpeed>('normal');
   const [selectedTrack, setSelectedTrack] = useState<SelectedTrack | null>(null);
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const sectionRef = useRef<HTMLElement>(null);
@@ -315,6 +327,9 @@ export default function PathwaysDetails() {
     disabled: reducedMotion,
   });
 
+  const activeViewMode: PathwayViewMode = reducedMotion ? 'grid' : viewMode;
+  const carouselDuration =
+    CAROUSEL_SPEEDS.find((speed) => speed.id === carouselSpeed)?.duration ?? 54;
   const activePathway = cbcPathways[activeIndex];
   const activeTabId = `academics-detail-tab-${activePathway.id}`;
   const trackCount = activePathway.tracks.length;
@@ -414,12 +429,14 @@ export default function PathwaysDetails() {
     }
   };
 
-  const carouselRunning = sectionActive && !userPaused && !reducedMotion;
+  const carouselRunning =
+    activeViewMode === 'loop' && sectionActive && !userPaused && !reducedMotion;
 
   return (
     <section
       ref={sectionRef}
       id="pathway-details"
+      data-pathway-motion-active={sectionActive && !reducedMotion ? 'true' : 'false'}
       aria-labelledby="academics-pathway-details-heading"
       className="relative scroll-mt-28 border-y border-slate-200 bg-white py-16 sm:py-20"
     >
@@ -508,7 +525,7 @@ export default function PathwaysDetails() {
                   tabIndex={selected ? 0 : -1}
                   onClick={() => setActiveIndex(index)}
                   onKeyDown={(event) => handleTabKeyDown(event, index)}
-                  className="pathway-tab-3d"
+                  className={`pathway-tab-control ${selected ? 'pill-3d-primary' : 'pill-3d-secondary'}`}
                 >
                   {pathway.name}
                 </button>
@@ -516,20 +533,69 @@ export default function PathwaysDetails() {
             })}
           </div>
 
-          <button
-            type="button"
-            className="pathway-carousel-control"
-            aria-pressed={userPaused}
-            aria-label={userPaused ? 'Resume track carousel' : 'Pause track carousel'}
-            onClick={() => setUserPaused((paused) => !paused)}
-          >
-            {userPaused ? (
-              <Play className="h-3.5 w-3.5" aria-hidden="true" />
-            ) : (
-              <Pause className="h-3.5 w-3.5" aria-hidden="true" />
-            )}
-            <span>{userPaused ? 'Resume carousel' : 'Pause carousel'}</span>
-          </button>
+          <div className="pathway-carousel-controls">
+            <div
+              className="pathway-carousel-control-group"
+              role="group"
+              aria-label="Track display mode"
+            >
+              <button
+                type="button"
+                className={`pathway-carousel-option ${activeViewMode === 'loop' ? 'pill-3d-primary' : 'pill-3d-secondary'}`}
+                aria-pressed={activeViewMode === 'loop'}
+                disabled={reducedMotion}
+                onClick={() => setViewMode('loop')}
+              >
+                Loop
+              </button>
+              <button
+                type="button"
+                className={`pathway-carousel-option ${activeViewMode === 'grid' ? 'pill-3d-primary' : 'pill-3d-secondary'}`}
+                aria-pressed={activeViewMode === 'grid'}
+                onClick={() => setViewMode('grid')}
+              >
+                Grid
+              </button>
+            </div>
+
+            <div
+              className="pathway-carousel-control-group"
+              role="group"
+              aria-label="Carousel speed"
+            >
+              {CAROUSEL_SPEEDS.map((speed) => {
+                const selected = carouselSpeed === speed.id;
+                return (
+                  <button
+                    key={speed.id}
+                    type="button"
+                    className={`pathway-carousel-option ${selected ? 'pill-3d-primary' : 'pill-3d-secondary'}`}
+                    aria-pressed={selected}
+                    disabled={activeViewMode !== 'loop' || reducedMotion}
+                    onClick={() => setCarouselSpeed(speed.id)}
+                  >
+                    {speed.label}
+                  </button>
+                );
+              })}
+            </div>
+
+            <button
+              type="button"
+              className="pill-3d-secondary pathway-carousel-control"
+              aria-pressed={userPaused}
+              aria-label={userPaused ? 'Resume track carousel' : 'Pause track carousel'}
+              disabled={activeViewMode !== 'loop' || reducedMotion}
+              onClick={() => setUserPaused((paused) => !paused)}
+            >
+              {userPaused ? (
+                <Play className="h-3.5 w-3.5" aria-hidden="true" />
+              ) : (
+                <Pause className="h-3.5 w-3.5" aria-hidden="true" />
+              )}
+              <span>{userPaused ? 'Resume carousel' : 'Pause carousel'}</span>
+            </button>
+          </div>
         </div>
 
         <div
@@ -553,14 +619,15 @@ export default function PathwaysDetails() {
           </div>
 
           <div
-            className="pathways-carousel-desktop pathways-carousel"
+            className={`pathways-carousel-desktop pathways-carousel marquee-viewport${activeViewMode === 'grid' ? ' pathways-carousel--grid' : ''}`}
             role="region"
-            aria-roledescription="carousel"
-            aria-label={`${activePathway.name} track carousel`}
+            aria-roledescription={activeViewMode === 'loop' ? 'carousel' : undefined}
+            aria-label={`${activePathway.name} tracks`}
           >
             <div
-              className="pathways-carousel-track"
+              className="pathways-carousel-track marquee-track"
               data-running={carouselRunning ? 'true' : 'false'}
+              style={{ '--loop-duration': `${carouselDuration}s` } as CSSProperties}
             >
               {[false, true].map((duplicate) => (
                 <div
