@@ -196,10 +196,10 @@
 @layer base {
   html {
     scroll-behavior: smooth;
-    /* Reserve space for the sticky TopUtilityBar + Header on anchor jumps and
-       Next.js App Router route transitions so the hero crest never sits behind
-       the sticky header on mobile or desktop. */
-    scroll-padding-top: 6.75rem;
+    /* Reserve space for the sticky header (crest + navigation only) on anchor
+       jumps and Next.js App Router route transitions so section headings never
+       sit behind it on mobile or desktop. */
+    scroll-padding-top: 4.75rem;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -2057,6 +2057,482 @@ button.editorial-row {
   .editorial-row:hover .editorial-arrow,
   .editorial-row:focus-visible .editorial-arrow,
   .editorial-arrow {
+    transform: none !important;
+  }
+}
+
+/* ── Live office-hours status dot ──────────────────────────
+ * A 7px dot carries the state alongside the text: green when the office is
+ * open, amber in the "soon" window, grey when closed. The gentle pulse is an
+ * opacity-only animation so it never triggers layout or paint work beyond the
+ * compositor, and it stops entirely under `prefers-reduced-motion: reduce`.
+ */
+.office-status-dot {
+  display: inline-block;
+  width: 0.44rem;
+  height: 0.44rem;
+  flex: 0 0 auto;
+  border-radius: 9999px;
+  box-shadow: 0 0 0 3px rgb(255 255 255 / 12%);
+}
+
+.office-status-dot--lg {
+  width: 0.6rem;
+  height: 0.6rem;
+  box-shadow: 0 0 0 4px rgb(255 255 255 / 14%);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .office-status-dot--open {
+    animation: office-status-pulse 2.6s ease-in-out infinite;
+  }
+}
+
+@keyframes office-status-pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.65;
+    transform: scale(0.86);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .office-status-dot {
+    animation: none !important;
+  }
+}
+
+/* ── Reporting-day timeline (/admissions) ───────────────────
+ * A vertical hairline in --color-primary whose fill is scaled from the top
+ * as the timeline scrolls into view, so the line appears to draw itself.
+ * Each step ticks in behind a circular marker that flips to the solid crest
+ * blue once its line arrives. Only transform and opacity animate.
+ */
+.reporting-timeline {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.reporting-step {
+  position: relative;
+  padding: 0 0 1.85rem 3.15rem;
+}
+
+.reporting-step:last-child {
+  padding-bottom: 0;
+}
+
+/* The unfilled rail (::before) and the drawing fill (::after) share geometry. */
+.reporting-timeline::before,
+.reporting-timeline::after {
+  position: absolute;
+  top: 0.6rem;
+  bottom: 0.6rem;
+  left: 0.9rem;
+  width: 2px;
+  border-radius: 9999px;
+  content: '';
+}
+
+.reporting-timeline::before {
+  background: rgb(17 81 145 / 16%);
+}
+
+.reporting-timeline::after {
+  background: linear-gradient(
+    180deg,
+    var(--color-primary) 0%,
+    var(--color-primary-dark) 100%
+  );
+  transform: scaleY(var(--timeline-progress, 0));
+  transform-origin: top center;
+  transition: transform 220ms linear;
+}
+
+.reporting-timeline[data-drawn='true']::after {
+  transition: transform 1.15s var(--ease-editorial);
+}
+
+.reporting-marker {
+  position: absolute;
+  top: 0.1rem;
+  left: 0;
+  display: grid;
+  width: 1.9rem;
+  height: 1.9rem;
+  place-items: center;
+  border: 1.5px solid rgb(17 81 145 / 32%);
+  border-radius: 9999px;
+  background: #fff;
+  color: var(--color-primary);
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-size: 0.63rem;
+  font-weight: 750;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+  transition:
+    border-color 320ms var(--ease-editorial),
+    background-color 320ms var(--ease-editorial),
+    color 320ms var(--ease-editorial),
+    transform 320ms var(--ease-editorial);
+}
+
+.reporting-step[data-ticked='true'] .reporting-marker {
+  border-color: var(--color-primary);
+  background: var(--color-primary);
+  color: #fff;
+}
+
+.reporting-step-body {
+  transition:
+    opacity 480ms var(--ease-editorial),
+    transform 480ms var(--ease-editorial);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .reporting-step[data-ticked='false'] .reporting-marker {
+    opacity: 0.55;
+  }
+
+  .reporting-step[data-ticked='false'] .reporting-step-body {
+    opacity: 0.38;
+    transform: translate3d(0, 6px, 0);
+  }
+
+  .reporting-step[data-ticked='true'] .reporting-marker {
+    animation: reporting-marker-pop 420ms var(--ease-editorial) both;
+  }
+}
+
+@keyframes reporting-marker-pop {
+  from {
+    transform: scale(0.82);
+  }
+  60% {
+    transform: scale(1.06);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reporting-timeline::before,
+  .reporting-timeline::after {
+    display: none;
+  }
+
+  .reporting-step,
+  .reporting-marker,
+  .reporting-step-body {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+    animation: none !important;
+  }
+
+  .reporting-step {
+    padding-left: 2.6rem;
+  }
+
+  .reporting-step::before {
+    position: absolute;
+    top: 0.55rem;
+    left: 0;
+    width: 0.55rem;
+    height: 0.55rem;
+    border-radius: 9999px;
+    background: var(--color-primary);
+    content: '';
+  }
+
+  .reporting-marker {
+    display: none;
+  }
+}
+
+.editorial-row--doc {
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+
+/* Hide the browser's native search clear button; the row has its own. */
+input[type='search']::-webkit-search-cancel-button,
+input[type='search']::-webkit-search-decoration {
+  display: none;
+  appearance: none;
+}
+
+/* ── Document monograms & hover sweep (/downloads) ──────────
+ * A large serif file-type monogram (PDF / DOC) sits before each title; on
+ * hover or keyboard focus a thin crest-blue progress bar sweeps across the
+ * row's baseline. Both effects are transform/opacity only.
+ */
+.doc-monogram {
+  display: grid;
+  width: 2.9rem;
+  height: 3.4rem;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 1px solid rgb(255 255 255 / 34%);
+  border-radius: 0.3rem;
+  background: rgb(255 255 255 / 8%);
+  color: #fff;
+  font-family: var(--font-source-serif), Georgia, serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  transition:
+    transform 320ms var(--ease-editorial),
+    background-color 320ms var(--ease-editorial),
+    border-color 320ms var(--ease-editorial);
+}
+
+.editorial-row:hover .doc-monogram,
+.editorial-row:focus-visible .doc-monogram {
+  border-color: rgb(255 255 255 / 70%);
+  background: rgb(255 255 255 / 16%);
+  transform: translate3d(0, -2px, 0) rotate(-1.5deg);
+}
+
+.doc-sweep {
+  position: absolute;
+  z-index: 1;
+  right: 0;
+  bottom: 0.55rem;
+  left: 0;
+  height: 2px;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.doc-sweep::after {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgb(255 255 255 / 0%) 0%,
+    rgb(255 255 255 / 72%) 45%,
+    rgb(255 255 255 / 0%) 100%
+  );
+  content: '';
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 620ms var(--ease-editorial);
+}
+
+.editorial-row:hover .doc-sweep::after,
+.editorial-row:focus-visible .doc-sweep::after {
+  transform: scaleX(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .doc-monogram,
+  .doc-sweep::after {
+    transition: none !important;
+    transform: none !important;
+  }
+
+  .doc-sweep {
+    display: none;
+  }
+}
+
+/* ── "Copied" toast (/contact) ─────────────────────────────
+ * Fades and lifts into place above the copy button; nothing reflows because
+ * the chip keeps its box and only opacity/transform change.
+ */
+.copied-toast {
+  opacity: 0;
+  transform: translate3d(0, 4px, 0);
+  transition:
+    opacity 180ms var(--ease-editorial),
+    transform 180ms var(--ease-editorial);
+}
+
+.copied-toast[data-copied='true'] {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .copied-toast {
+    transition: none !important;
+    transform: none !important;
+  }
+}
+
+/* ── Featured lead story (/news) ───────────────────────────
+ * The newest notice gets a photograph that drifts almost imperceptibly
+ * (Ken Burns) behind its headline. Only `transform` and `opacity` animate, the
+ * image is paused whenever the browser tab is hidden, and the drift is removed
+ * entirely under `prefers-reduced-motion: reduce`.
+ */
+.kenburns-frame {
+  position: relative;
+  overflow: hidden;
+  background: var(--color-primary-dark);
+}
+
+.kenburns-image {
+  transform: scale(1);
+  transform-origin: 52% 46%;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .kenburns-image {
+    animation: kenburns-drift 32s ease-in-out infinite alternate;
+  }
+
+  .news-lead:hover .kenburns-image {
+    animation-play-state: paused;
+  }
+}
+
+@keyframes kenburns-drift {
+  from {
+    transform: scale(1.02) translate3d(-0.6%, 0.4%, 0);
+  }
+  to {
+    transform: scale(1.12) translate3d(0.8%, -1%, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kenburns-image {
+    animation: none !important;
+    transform: none !important;
+  }
+}
+
+/* ── Gallery: opening photograph drift & lightbox crossfade ──
+ * 1. `gallery-drift` slides a strip of real campus photographs slowly to the
+ *    left. The track holds two identical passes so the loop is seamless; the
+ *    clone is hidden from assistive technology. Hovering or focusing the strip
+ *    pauses the drift. Reduced motion turns the strip into a still, swipeable
+ *    row with no animation at all.
+ * 2. `lightbox-layer--current` fades the incoming photograph in above the
+ *    previous frame, giving a crossfade without any layout change.
+ */
+.gallery-drift-viewport {
+  position: relative;
+  overflow: hidden;
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    #000 4%,
+    #000 96%,
+    transparent 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    #000 4%,
+    #000 96%,
+    transparent 100%
+  );
+}
+
+.gallery-drift-track {
+  display: flex;
+  width: max-content;
+}
+
+.gallery-drift-frame {
+  position: relative;
+  display: block;
+  width: clamp(200px, 30vw, 320px);
+  aspect-ratio: 16 / 10;
+  flex: 0 0 auto;
+  overflow: hidden;
+  border: 1px solid rgb(255 255 255 / 22%);
+  border-radius: 0.25rem;
+  background: var(--color-primary-dark);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .gallery-drift-track {
+    animation: gallery-drift-scroll var(--drift-duration, 64s) linear infinite;
+  }
+
+  .gallery-drift-viewport:hover .gallery-drift-track,
+  .gallery-drift-viewport:focus-within .gallery-drift-track,
+  .gallery-drift-track[data-paused='true'] {
+    animation-play-state: paused;
+  }
+}
+
+@keyframes gallery-drift-scroll {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gallery-drift-viewport {
+    overflow-x: auto;
+    mask-image: none;
+    -webkit-mask-image: none;
+  }
+
+  .gallery-drift-track {
+    animation: none !important;
+    transform: none !important;
+  }
+
+  .gallery-drift-track[data-clone='true'] {
+    display: none;
+  }
+}
+
+.lightbox-stage {
+  position: relative;
+  overflow: hidden;
+  background: #000;
+}
+
+.lightbox-layer {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .lightbox-layer--current {
+    animation: lightbox-crossfade 420ms var(--ease-editorial) both;
+  }
+}
+
+@keyframes lightbox-crossfade {
+  from {
+    opacity: 0;
+    transform: scale(1.012);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lightbox-layer--current {
+    animation: none !important;
+    opacity: 1 !important;
     transform: none !important;
   }
 }

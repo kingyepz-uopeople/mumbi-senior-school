@@ -3,7 +3,7 @@ import localFont from 'next/font/local';
 import './globals.css';
 
 import { PwaProvider } from '@/components/pwa/PwaProvider';
-import TopUtilityBar from '@/components/layout/TopUtilityBar';
+import UtilityBar from '@/components/layout/UtilityBar';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import MobileInstallBanner from '@/components/layout/MobileInstallBanner';
@@ -128,12 +128,11 @@ export default function RootLayout({
             Skip to main content
           </a>
 
-          {/* Unified Sticky Utility Bar + Primary Header */}
+          {/* Sticky primary header: crest + navigation only */}
           <header
             data-dark-surface
             className="sticky top-0 z-40 shrink-0 w-full bg-primary border-b border-primary-dark"
           >
-            <TopUtilityBar />
             <Header />
           </header>
 
@@ -145,6 +144,8 @@ export default function RootLayout({
             {children}
           </main>
 
+          {/* Slim registry & contact strip, directly above the footer */}
+          <UtilityBar />
           <Footer />
           <MobileInstallBanner />
           <ScrollRevealObserver />

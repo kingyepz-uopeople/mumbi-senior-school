@@ -451,7 +451,8 @@ export default function Header() {
 
   return (
     <>
-      <div className="bg-primary">
+      {/* Safe-area padding keeps the crest clear of the status bar in standalone mode */}
+      <div className="bg-primary pt-[env(safe-area-inset-top)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="flex items-center justify-between h-16 gap-3">
             {/* Official Crest + School Name */}

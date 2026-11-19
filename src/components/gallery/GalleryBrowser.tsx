@@ -10,15 +10,25 @@ import type { GalleryImage } from '@/types';
 interface GalleryBrowserProps {
   /** Root-relative `/images/school/...` paths that currently exist in `public/`. */
   availableSrcs: string[];
+  /** Campus photographs for the opening drift strip. */
+  driftImages?: GalleryImage[];
 }
 
-export default function GalleryBrowser({ availableSrcs }: GalleryBrowserProps) {
+/** Short touch gesture that advances or rewinds the lightbox. */
+const SWIPE_THRESHOLD_PX = 48;
+
+export default function GalleryBrowser({
+  availableSrcs,
+  driftImages = [],
+}: GalleryBrowserProps) {
   const [selectedAlbumId, setSelectedAlbumId] = useState<string>('all');
   const [activeImageId, setActiveImageId] = useState<number | null>(null);
 
   const dialogRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const lastTriggerRef = useRef<HTMLButtonElement | null>(null);
+  const touchStartRef = useRef<{ x: number; y: number } | null>(null);
+  const suppressClickRef = useRef(false);
 
   const availableSet = useMemo(() => new Set(availableSrcs), [availableSrcs]);
 
@@ -70,6 +80,47 @@ export default function GalleryBrowser({ availableSrcs }: GalleryBrowserProps) {
       ];
     setActiveImageId(prev.id);
   }, [viewableImages, activeViewIndex]);
+
+  // Campus photographs that exist on disk, used by the opening drift strip.
+  const driftFrames = useMemo(
+    () => driftImages.filter((img) => availableSet.has(img.src)).slice(0, 8),
+    [driftImages, availableSet]
+  );
+
+  const openLightbox = useCallback(
+    (imageId: number, trigger: HTMLButtonElement) => {
+      lastTriggerRef.current = trigger;
+      setActiveImageId(imageId);
+    },
+    []
+  );
+
+  const onTouchStart = useCallback((event: React.TouchEvent) => {
+    const touch = event.touches[0];
+    if (!touch) return;
+    touchStartRef.current = { x: touch.clientX, y: touch.clientY };
+  }, []);
+
+  const onTouchEnd = useCallback(
+    (event: React.TouchEvent) => {
+      const start = touchStartRef.current;
+      const touch = event.changedTouches[0];
+      touchStartRef.current = null;
+      if (!start || !touch) return;
+
+      const dx = touch.clientX - start.x;
+      const dy = touch.clientY - start.y;
+      if (Math.abs(dx) < SWIPE_THRESHOLD_PX || Math.abs(dx) < Math.abs(dy)) {
+        return;
+      }
+
+      // Stop the trailing synthetic click from closing the lightbox.
+      suppressClickRef.current = true;
+      if (dx < 0) showNext();
+      else showPrev();
+    },
+    [showNext, showPrev]
+  );
 
   const isLightboxOpen = activeImage !== null;
 
@@ -133,8 +184,46 @@ export default function GalleryBrowser({ availableSrcs }: GalleryBrowserProps) {
         : 'bg-white border-slate-300 text-slate-700 hover:border-primary hover:text-primary'
     }`;
 
+  const driftStrip =
+    driftFrames.length > 0 ? (
+      <div className="gallery-drift-viewport -mx-1 px-1" aria-hidden="true">
+        <div className="gallery-drift-track">
+          {[0, 1].map((pass) => (
+            <div
+              key={pass}
+              className="flex gap-3.5 pr-3.5"
+              data-clone={pass === 1 ? 'true' : 'false'}
+            >
+              {driftFrames.map((img) => (
+                <span key={`${pass}-${img.id}`} className="gallery-drift-frame">
+                  <Image
+                    src={img.src}
+                    alt=""
+                    width={img.width}
+                    height={img.height}
+                    sizes="(max-width: 768px) 55vw, 320px"
+                    className="h-full w-full object-cover"
+                  />
+                </span>
+              ))}
+            </div>
+          ))}
+        </div>
+      </div>
+    ) : null;
+
   return (
     <div className="space-y-10">
+      {/* Opening drift of real campus photographs */}
+      {driftStrip && (
+        <section aria-label="Recent campus photographs" className="space-y-3">
+          {driftStrip}
+          <p className="text-xs font-medium tracking-wide text-slate-500">
+            Recent photographs from the campus and school events.
+          </p>
+        </section>
+      )}
+
       {/* Album filter */}
       <div
         role="group"
@@ -204,10 +293,7 @@ export default function GalleryBrowser({ availableSrcs }: GalleryBrowserProps) {
               <figure key={img.id} className="m-0" data-reveal="" data-reveal-delay={(index % 6) + 1}>
                 <button
                   type="button"
-                  onClick={(e) => {
-                    lastTriggerRef.current = e.currentTarget;
-                    setActiveImageId(img.id);
-                  }}
+                  onClick={(e) => openLightbox(img.id, e.currentTarget)}
                   aria-label={`View photo: ${img.caption ?? img.alt}`}
                   className="group block w-full text-left rounded-xs overflow-hidden focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2"
                 >
@@ -260,6 +346,10 @@ export default function GalleryBrowser({ availableSrcs }: GalleryBrowserProps) {
             aria-describedby="gallery-lightbox-meta"
             className="fixed inset-0 z-[70] bg-slate-950/92 flex items-center justify-center p-3 sm:p-6"
             onClick={(e) => {
+              if (suppressClickRef.current) {
+                suppressClickRef.current = false;
+                return;
+              }
               if (e.target === e.currentTarget) closeLightbox();
             }}
           >
@@ -289,14 +379,29 @@ export default function GalleryBrowser({ availableSrcs }: GalleryBrowserProps) {
                 </button>
               </div>
 
-              <div className="relative bg-black flex items-center justify-center overflow-hidden">
+              <div
+                className="lightbox-stage mx-auto h-[52vh] w-full sm:h-[62vh]"
+                onTouchStart={onTouchStart}
+                onTouchEnd={onTouchEnd}
+              >
                 <Image
+                  key="previous-frame"
+                  src={activeImage.src}
+                  alt=""
+                  aria-hidden="true"
+                  width={activeImage.width}
+                  height={activeImage.height}
+                  sizes="(max-width: 896px) 100vw, 896px"
+                  className="lightbox-layer"
+                />
+                <Image
+                  key={`current-${activeImage.id}`}
                   src={activeImage.src}
                   alt={activeImage.alt}
                   width={activeImage.width}
                   height={activeImage.height}
                   sizes="(max-width: 896px) 100vw, 896px"
-                  className="w-full h-auto max-h-[62vh] object-contain"
+                  className="lightbox-layer lightbox-layer--current"
                 />
               </div>
 

@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowDown, ArrowRight, ArrowUpRight, CalendarDays, MapPin, ReceiptText } from 'lucide-react';
 import { grade10Intake } from '@/data/admissions';
+import ReportingDayTimeline from '@/components/admissions/ReportingDayTimeline';
 import { schoolInfo } from '@/data/mock-school-data';
 import { buildPageMetadata } from '@/lib/site';
 
@@ -140,50 +141,27 @@ export default function AdmissionsPage() {
             >
               What to prepare
             </h2>
-            <ul className="mt-5 divide-y divide-slate-200 border-y border-slate-200">
-              <li className="flex items-start gap-4 py-4">
-                <span className="grid size-8 shrink-0 place-items-center rounded-full bg-blue-100 text-xs font-bold text-primary-dark" aria-hidden="true">
-                  01
-                </span>
-                <div>
-                  <h3 className="font-serif text-lg font-bold text-slate-900">
-                    Your placement letter
-                  </h3>
-                  <p className="mt-1 text-sm leading-relaxed text-slate-700">
-                    Bring the admission letter from the Ministry of Education
-                    Grade 10 placement portal.
-                  </p>
-                </div>
-              </li>
-              <li className="flex items-start gap-4 py-4">
-                <span className="grid size-8 shrink-0 place-items-center rounded-full bg-blue-100 text-xs font-bold text-primary-dark" aria-hidden="true">
-                  02
-                </span>
-                <div>
-                  <h3 className="font-serif text-lg font-bold text-slate-900">
-                    Documents and forms
-                  </h3>
-                  <p className="mt-1 text-sm leading-relaxed text-slate-700">
-                    Pack the forms named in your joining instructions and what you
-                    need for boarding.
-                  </p>
-                </div>
-              </li>
-              <li className="flex items-start gap-4 py-4">
-                <span className="grid size-8 shrink-0 place-items-center rounded-full bg-blue-100 text-xs font-bold text-primary-dark" aria-hidden="true">
-                  03
-                </span>
-                <div>
-                  <h3 className="font-serif text-lg font-bold text-slate-900">
-                    Uniform and arrival time
-                  </h3>
-                  <p className="mt-1 text-sm leading-relaxed text-slate-700">
-                    Buy the uniform items listed by the school and confirm your
-                    arrival time before travelling.
-                  </p>
-                </div>
-              </li>
-            </ul>
+            <div className="mt-5">
+              <ReportingDayTimeline
+                steps={[
+                  {
+                    title: 'Your placement letter',
+                    detail:
+                      'Bring the admission letter from the Ministry of Education Grade 10 placement portal.',
+                  },
+                  {
+                    title: 'Documents and forms',
+                    detail:
+                      'Pack the forms named in your joining instructions and what you need for boarding.',
+                  },
+                  {
+                    title: 'Uniform and arrival time',
+                    detail:
+                      'Buy the uniform items listed by the school and confirm your arrival time before travelling.',
+                  },
+                ]}
+              />
+            </div>
           </div>
         </section>
 

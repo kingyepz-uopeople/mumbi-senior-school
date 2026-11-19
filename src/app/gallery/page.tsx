@@ -17,6 +17,10 @@ export default function GalleryPage() {
   );
   const availableSrcs = getAvailablePublicAssets(allPaths);
 
+  // The opening drift uses the campus album, in the order it is catalogued.
+  const campusAlbum = galleryAlbums.find((album) => album.id === 'school-campus');
+  const driftImages = campusAlbum ? campusAlbum.images : [];
+
   return (
     <div className="bg-slate-bg">
       <section
@@ -41,7 +45,10 @@ export default function GalleryPage() {
 
       <div className="relative">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 py-12 sm:py-16">
-          <GalleryBrowser availableSrcs={availableSrcs} />
+          <GalleryBrowser
+            availableSrcs={availableSrcs}
+            driftImages={driftImages}
+          />
         </div>
       </div>
     </div>

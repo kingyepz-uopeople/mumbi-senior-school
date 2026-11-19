@@ -26,8 +26,9 @@ A production-ready, modern web platform for **Mumbi Girls Senior School**, built
 
 ## Key Features & Site Architecture
 
-1. **Top Utility Bar & Sticky Navigation:**
-   - Displays KNEC Centre Code `10204102`, postal address, office hours, student/staff login shortcuts, and mobile PWA install trigger.
+1. **Sticky Navigation & Bottom Utility Bar:**
+   - The sticky header carries only the crest and primary navigation; a slim utility strip sits directly above the footer on every page.
+   - The strip displays KNEC Centre Code `10204102`, MoE registration `F2030609`, the postal address, a live open/closed office-hours line (Africa/Nairobi), student/staff portal shortcuts, and the PWA install trigger, and it wraps cleanly on narrow screens.
 2. **Home (`/`):**
    - Static crest hero with the official school crest, serif display heading, motto, provenance (`Murang'a Township · Est. 1960`), and automatic real photo slot (`public/images/hero/campus.jpg`).
    - Key school figures (Established 1960, 1,200+ students, 2025 KCSE mean of 7.1926 (C+), 3 CBC Senior School pathways).
