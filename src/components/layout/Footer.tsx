@@ -2,6 +2,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowUpRight, Clock, Mail, MapPin, Phone } from 'lucide-react';
 import RegistryLogo from '@/components/shared/RegistryLogo';
+import EmailLink from '@/components/shared/EmailLink';
+import PhoneActions from '@/components/shared/PhoneActions';
+import CopyrightYear from '@/components/shared/CopyrightYear';
 import { schoolInfo } from '@/data/mock-school-data';
 
 const quickLinks = [
@@ -130,12 +133,10 @@ export default function Footer() {
                   />
                   <div className="min-w-0 space-y-0.5">
                     <span className="block">{schoolInfo.postalAddress}</span>
-                    <a
-                      href={`mailto:${schoolInfo.email}`}
+                    <EmailLink
+                      email={schoolInfo.email}
                       className="block text-xs text-white hover:underline underline-offset-4 break-all"
-                    >
-                      {schoolInfo.email}
-                    </a>
+                    />
                   </div>
                 </li>
                 <li className="flex items-start gap-2.5">
@@ -143,12 +144,11 @@ export default function Footer() {
                     className="w-4 h-4 text-blue-100 shrink-0 mt-1 stroke-[1.5]"
                     aria-hidden="true"
                   />
-                  <a
-                    href={`tel:${schoolInfo.phone}`}
-                    className="text-xs leading-relaxed text-white hover:underline underline-offset-4 tabular-nums"
-                  >
-                    {schoolInfo.phone}
-                  </a>
+                  <PhoneActions
+                    phone={schoolInfo.phone}
+                    tone="dark"
+                    className="text-xs leading-relaxed"
+                  />
                 </li>
                 <li className="flex items-start gap-2.5">
                   <Clock
@@ -192,8 +192,7 @@ export default function Footer() {
       <div className="border-t border-white/15 text-xs py-4">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-white/80">
           <p>
-            © 2026 {schoolInfo.name}, {schoolInfo.locationShort}. Ministry of
-            Education registered public senior school.
+            © <CopyrightYear /> Mumbi Girls Senior School
           </p>
           <p className="tabular-nums text-white/85">
             KNEC {schoolInfo.knecCode} · MoE {schoolInfo.moeReg}
