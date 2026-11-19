@@ -1,47 +1,52 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import PageHero from '@/components/shared/PageHero';
-import SectionStemBackdrop from '@/components/shared/SectionStemBackdrop';
 import DownloadsBrowser from '@/components/downloads/DownloadsBrowser';
-import { schoolInfo } from '@/data/mock-school-data';
 import { buildPageMetadata } from '@/lib/site';
 
 export const metadata: Metadata = buildPageMetadata({
   title: 'Downloads & Circulars',
   description:
-    'Official term circulars, school newsletters, holiday assignments, Grade 10 joining instructions, examination timetables, and fee structures from Mumbi Girls Senior School.',
+    'Term circulars, Grade 10 joining instructions, the fee structure, examination timetables, newsletters, and departmental holiday assignments from Mumbi Girls Senior School.',
   path: '/downloads',
 });
 
 export default function DownloadsPage() {
   return (
     <div className="bg-slate-bg">
-      <PageHero
-        variant="downloads"
-        kicker="School Documents"
-        title="Downloads & Circulars"
-        subtitle="Term opening circulars, Grade 10 joining instructions, the annual fee structure, examination timetables, newsletters, and departmental holiday assignments."
-        meta={[
-          `KNEC ${schoolInfo.knecCode}`,
-          'Grades 10 – 12 & Forms 3 – 4',
-          'Dates in DD/MM/YYYY',
-        ]}
-      />
+      <section
+        data-dark-surface
+        className="bg-primary-dark py-14 text-white sm:py-20 lg:py-24"
+      >
+        <div className="mx-auto max-w-7xl px-4 sm:px-6">
+          <p className="mb-3 flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.16em] text-blue-100">
+            <span className="h-0.5 w-7 bg-accent" aria-hidden="true" />
+            School Documents
+          </p>
+          <h1 className="font-serif text-4xl leading-tight font-bold sm:text-5xl lg:text-6xl">
+            Downloads &amp; Circulars
+          </h1>
+          <p className="mt-4 max-w-xl text-base leading-relaxed text-blue-50 sm:text-lg">
+            Term opening circulars, Grade 10 joining instructions, the annual fee
+            structure, examination timetables, newsletters, and departmental
+            holiday assignments. Filter by type, then open a file to download it.
+          </p>
 
-      <div className="relative">
-        <SectionStemBackdrop variant="downloads" />
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
-          <p className="mb-6 border border-blue-100 bg-blue-50 px-4 py-3 text-sm leading-relaxed text-slate-700">
-            <strong>Joining Grade 10?</strong> Use the{' '}
-            <Link href="/admissions" className="font-semibold text-primary underline underline-offset-4">
+          <div className="mt-10 sm:mt-12">
+            <DownloadsBrowser />
+          </div>
+
+          <p className="mt-10 border-t border-white/15 pt-6 text-sm leading-relaxed text-blue-100/85">
+            Joining Grade 10? Read the{' '}
+            <Link
+              href="/admissions"
+              className="font-semibold text-white underline underline-offset-4 hover:text-blue-100"
+            >
               admissions guide
             </Link>{' '}
-            for reporting and school fee information. Sample documents below are
-            not current joining instructions.
+            for reporting and school fees.
           </p>
-          <DownloadsBrowser />
         </div>
-      </div>
+      </section>
     </div>
   );
 }

@@ -18,6 +18,16 @@ Place each photograph at the exact path below (keep filenames lowercase) and reb
 | `public/images/school/about-prize-1.jpg` and `about-prize-2.jpg` | Prize-giving photographs on `/about` | Portrait JPGs |
 | `public/images/principal.jpg` | Mrs. Florence Wahito Thumbi, Chief Principal, on `/` | `514 × 528 px` portrait JPG |
 
+### Temporary pathway track images (Gemini-generated)
+
+These three images are temporary Gemini-generated artwork for the `/academics` pathway track cards. Replace them with suitable school photographs when those are available.
+
+| File path | Track card | Supplied size |
+| --- | --- | --- |
+| `public/images/pathways/gemini-stem-technical-engineering.jpg` | STEM — Technical & Engineering | `720 × 402 px` landscape JPG |
+| `public/images/pathways/gemini-social-business-studies.jpg` | Social Sciences — Business Studies | `720 × 402 px` landscape JPG |
+| `public/images/pathways/gemini-arts-visual-arts.jpg` | Arts & Sports Science — Visual Arts | `720 × 402 px` landscape JPG |
+
 ### Gallery photographs (`/gallery`)
 
 The supplied photographs and captions are assigned to albums in `src/data/mock-school-data.ts`. Gallery cards and the lightbox use responsive `next/image` sizes.

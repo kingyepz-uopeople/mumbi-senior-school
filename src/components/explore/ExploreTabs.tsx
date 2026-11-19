@@ -130,7 +130,7 @@ function JumpLink({
   count: number;
 }) {
   return (
-    <a href={href} className="student-life-jump-pill">
+    <a href={href} className="pill-3d-secondary student-life-jump-link">
       <span>{label}</span>
       <span className="student-life-jump-count">{count}</span>
     </a>
@@ -209,17 +209,13 @@ export default function ExploreTabs() {
                   </p>
                 </div>
                 <dl className="mt-5 space-y-2 border-t border-slate-200 pt-4 text-xs text-slate-600">
-                  <div>
-                    <dt className="inline font-semibold text-slate-800">
-                      Coach / Patron:{' '}
-                    </dt>
-                    <dd className="inline">{sport.patron}</dd>
+                  <div className="flex flex-wrap items-center gap-2">
+                    <dt className="font-semibold text-slate-800">Coach / Patron:</dt>
+                    <dd className="subject-chip">{sport.patron}</dd>
                   </div>
-                  <div>
-                    <dt className="inline font-semibold text-slate-800">
-                      Training:{' '}
-                    </dt>
-                    <dd className="inline tabular-nums">{sport.meetingDay}</dd>
+                  <div className="flex flex-wrap items-center gap-2">
+                    <dt className="font-semibold text-slate-800">Training:</dt>
+                    <dd className="subject-chip tabular-nums">{sport.meetingDay}</dd>
                   </div>
                 </dl>
               </div>
@@ -259,10 +255,8 @@ export default function ExploreTabs() {
                 className="student-life-card flex h-full min-h-[480px] flex-col rounded-3xl border border-t-2 border-slate-200 border-t-primary bg-white p-5 sm:min-h-[500px] sm:p-6"
               >
                 <StudentLifeArtwork kind={FAITH_ART[group.id]} index={index} />
-                <div className="mt-5">
-                  <p className="mb-1 text-xs font-semibold tabular-nums text-primary">
-                    {group.meetingDay}
-                  </p>
+                <div className="mt-5 flex flex-col items-start gap-2">
+                  <p className="subject-chip tabular-nums">{group.meetingDay}</p>
                   <h3 className="font-serif text-xl font-bold text-primary-dark sm:text-2xl">
                     {group.name}
                   </h3>
@@ -270,9 +264,9 @@ export default function ExploreTabs() {
                 <p className="mt-4 flex-1 text-sm leading-relaxed text-slate-700">
                   {group.description}
                 </p>
-                <p className="mt-5 border-t border-slate-200 pt-4 text-xs text-slate-600">
-                  <strong className="font-semibold text-slate-800">Patron:</strong>{' '}
-                  {group.patron}
+                <p className="mt-5 flex flex-wrap items-center gap-2 border-t border-slate-200 pt-4 text-xs text-slate-600">
+                  <strong className="font-semibold text-slate-800">Patron:</strong>
+                  <span className="subject-chip">{group.patron}</span>
                 </p>
               </div>
             </article>
@@ -397,7 +391,7 @@ export default function ExploreTabs() {
                   <button
                     key={filter.id}
                     type="button"
-                    className="student-life-filter-pill"
+                    className={`student-life-filter-control ${selected ? 'pill-3d-primary' : 'pill-3d-secondary'}`}
                     aria-pressed={selected}
                     aria-label={`${filter.label}, ${filter.range}`}
                     aria-controls="daily-routine-list"
@@ -418,10 +412,10 @@ export default function ExploreTabs() {
           >
             {filteredRoutine.map((item) => (
               <li key={item.time} className="student-life-schedule-row">
-                <time className="student-life-schedule-time" dateTime={item.time}>
+                <time className="student-life-schedule-time subject-chip" dateTime={item.time}>
                   {item.time} <span>hrs</span>
                 </time>
-                <span className="student-life-schedule-activity">
+                <span className="student-life-schedule-activity subject-chip">
                   {item.activity}
                 </span>
               </li>
@@ -473,13 +467,13 @@ export default function ExploreTabs() {
                   </p>
                 </div>
                 <dl className="mt-5 space-y-2 border-t border-slate-200 pt-4 text-xs text-slate-600">
-                  <div>
-                    <dt className="inline font-semibold text-slate-800">Patron:</dt>{' '}
-                    <dd className="inline">{club.patron}</dd>
+                  <div className="flex flex-wrap items-center gap-2">
+                    <dt className="font-semibold text-slate-800">Patron:</dt>
+                    <dd className="subject-chip">{club.patron}</dd>
                   </div>
-                  <div>
-                    <dt className="inline font-semibold text-slate-800">Meets:</dt>{' '}
-                    <dd className="inline tabular-nums">{club.meetingDay}</dd>
+                  <div className="flex flex-wrap items-center gap-2">
+                    <dt className="font-semibold text-slate-800">Meets:</dt>
+                    <dd className="subject-chip tabular-nums">{club.meetingDay}</dd>
                   </div>
                 </dl>
               </div>
