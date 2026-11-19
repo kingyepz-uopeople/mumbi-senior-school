@@ -1,7 +1,15 @@
 # Mumbi Girls Senior School (`mumbiseniorschool.sc.ke`)
 ### Official School Website, CBC Senior School Pathways Hub & PWA Student/Staff Portal
 
-A production-ready, modern web platform for **Mumbi Girls Senior School**, built with Next.js 16 (App Router), TypeScript, Tailwind CSS, Lucide Icons, and Supabase.
+A production-ready, modern web platform for **Mumbi Girls Senior School**, built with Next.js 16 (App Router), TypeScript, Tailwind CSS, UXWing and Lucide icons, and Supabase.
+
+### Icons
+
+Most UI icons use the supplied **[UXWing](https://uxwing.com/)** SVGs, rendered as local React components in `src/components/icons/`. Their original paths and viewBoxes are preserved; they inherit `currentColor`, accept `size` (default `24`) and `className`, and are decorative (`aria-hidden`). Keep accessible labels on the surrounding links/buttons. Existing utility sizes and the loading spinner's `animate-spin` are retained.
+
+Only these 12 holdovers use `lucide-react` (stroke width `1.75`): **BookOpenCheck, ClipboardCheck, HandHeart, BriefcaseBusiness, Target, Lightbulb, Leaf, Eye, ArrowUpRight, MapPin, AlertCircle, ReceiptText**. These have no exact UXWing match in the supplied set.
+
+UXWing credit: icons by UXWing, used under the [UXWing license](https://uxwing.com/license/) (attribution optional).
 
 ---
 
@@ -40,7 +48,7 @@ A production-ready, modern web platform for **Mumbi Girls Senior School**, built
    - School office notices, circulars, and downloads register.
 3. **About Us (`/about`):**
    - Historical background and transition to Mumbi Girls Senior School.
-   - Core Values descriptions in a responsive grid.
+   - All 12 Core Values with their existing descriptions in editorial rows, serif names, blue icons, and hairline separators. Staggered scroll reveals use only opacity/transform via `ScrollRevealObserver`, with a static reduced-motion fallback.
    - Dual School Anthems card (English *School Anthem* & Kiswahili *Wimbo wa Shule*).
    - Roll of Principals timeline (1960 to Present).
    - Board of Management (BOM) Chairpersons timeline.

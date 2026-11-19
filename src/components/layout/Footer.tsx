@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowUpRight, Clock, Mail, MapPin, Phone } from 'lucide-react';
+import { ArrowUpRight, MapPin } from 'lucide-react';
+import { Clock, Mail, Phone } from '@/components/icons';
 import RegistryLogo from '@/components/shared/RegistryLogo';
 import EmailLink from '@/components/shared/EmailLink';
 import PhoneActions from '@/components/shared/PhoneActions';
@@ -121,7 +122,8 @@ export default function Footer() {
               <ul className="space-y-3 text-sm text-white/85">
                 <li className="flex items-start gap-2.5">
                   <MapPin
-                    className="w-4 h-4 text-blue-100 shrink-0 mt-1 stroke-[1.5]"
+                    strokeWidth={1.75}
+                    className="w-4 h-4 text-blue-100 shrink-0 mt-1"
                     aria-hidden="true"
                   />
                   <span>{schoolInfo.physicalLocation}</span>
@@ -177,7 +179,8 @@ export default function Footer() {
                   >
                     <span>{item.label}</span>
                     <ArrowUpRight
-                      className="w-3.5 h-3.5 text-blue-100 shrink-0 stroke-[1.75]"
+                      strokeWidth={1.75}
+                      className="w-3.5 h-3.5 text-blue-100 shrink-0"
                       aria-hidden="true"
                     />
                   </Link>

@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight } from '@/components/icons';
 import BlurRevealHeading from '@/components/shared/BlurRevealHeading';
 import PhotoSlot from '@/components/shared/PhotoSlot';
 import ScrollHighlightText from '@/components/shared/ScrollHighlightText';

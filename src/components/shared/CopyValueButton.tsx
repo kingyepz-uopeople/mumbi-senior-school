@@ -1,7 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { Check, Copy } from 'lucide-react';
+import { Check, Copy } from '@/components/icons';
 
 interface CopyValueButtonProps {
   /** Exact text placed on the clipboard, e.g. the email address or phone number. */

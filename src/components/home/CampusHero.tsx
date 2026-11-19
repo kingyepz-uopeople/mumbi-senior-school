@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowDown, ArrowRight } from 'lucide-react';
+import { ArrowDown, ArrowRight } from '@/components/icons';
 import HeroPathwaysRotator from '@/components/home/HeroPathwaysRotator';
 import HeroMaskedTitle from '@/components/shared/HeroMaskedTitle';
 import HeroStemBackdrop from '@/components/shared/HeroStemBackdrop';

@@ -1,27 +1,23 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
+import type { ComponentType } from 'react';
 import {
-  BadgeCheck,
   BookOpenCheck,
   BriefcaseBusiness,
   ClipboardCheck,
-  Clock,
   Eye,
   HandHeart,
   Leaf,
   Lightbulb,
-  MessagesSquare,
-  ShieldCheck,
   Target,
-  UsersRound,
-  type LucideIcon,
 } from 'lucide-react';
+import type { IconProps } from '@/components/icons';
+import { Clock, MessagesSquare, ShieldCheck, UsersRound } from '@/components/icons';
 import BlurRevealHeading from '@/components/shared/BlurRevealHeading';
 import PageHero from '@/components/shared/PageHero';
 import RegistryLogo from '@/components/shared/RegistryLogo';
 import ScrollHighlightText from '@/components/shared/ScrollHighlightText';
 import SectionStemBackdrop from '@/components/shared/SectionStemBackdrop';
-import SpotlightCardGroup from '@/components/shared/SpotlightCardGroup';
 import {
   bomChairpersons,
   governanceRoles,
@@ -40,7 +36,7 @@ export const metadata: Metadata = buildPageMetadata({
 
 const ROMAN = ['I', 'II', 'III'] as const;
 
-const CORE_VALUE_ICONS: Partial<Record<string, LucideIcon>> = {
+const CORE_VALUE_ICONS: Record<string, ComponentType<IconProps>> = {
   hardwork: BookOpenCheck,
   honesty: ShieldCheck,
   accountability: ClipboardCheck,
@@ -270,42 +266,35 @@ export default function AboutPage() {
             </div>
           </div>
 
-          <section id="core-values" aria-labelledby="core-values-heading" className="scroll-mt-4">
-            <h3 id="core-values-heading" className="mb-6 border-b border-slate-300 pb-3 font-serif text-xl font-bold text-slate-900 sm:text-2xl">
+          <section
+            id="core-values"
+            aria-labelledby="core-values-heading"
+            className="scroll-mt-4 bg-[#F8FAFC] text-[#0C3D6E]"
+          >
+            <h3 id="core-values-heading" className="mb-6 font-serif text-xl font-bold sm:text-2xl">
               Core Values
             </h3>
-            <SpotlightCardGroup cardCount={schoolInfo.coreValues.length}>
-              <ol role="list" className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                {schoolInfo.coreValues.map((value, idx) => {
-                  const Icon = CORE_VALUE_ICONS[value.id] ?? BadgeCheck;
-                  return (
-                    <li
-                      key={value.id}
-                      data-reveal=""
-                      data-reveal-delay={idx % 4 > 0 ? String(idx % 4) : undefined}
-                      className="min-w-0"
-                    >
-                      <article data-card-cycle className="h-full rounded-xl border border-slate-200 border-t-2 border-t-primary bg-white p-5">
-                        <div className="mb-3 flex items-center justify-between" aria-hidden="true">
-                          <span className="text-xs font-semibold text-primary tabular-nums">
-                            {String(idx + 1).padStart(2, '0')}
-                          </span>
-                          <span className="grid size-9 place-items-center rounded-md bg-blue-50 text-primary">
-                            <Icon className="size-5" />
-                          </span>
-                        </div>
-                        <h4 className="font-serif text-lg font-bold text-primary-dark">
-                          {value.title}
-                        </h4>
-                        <p className="mt-2 text-sm leading-relaxed text-slate-600">
-                          {value.description}
-                        </p>
-                      </article>
-                    </li>
-                  );
-                })}
-              </ol>
-            </SpotlightCardGroup>
+            <ol role="list" className="border-t border-[#115191]/20">
+              {schoolInfo.coreValues.map((value, idx) => {
+                const Icon = CORE_VALUE_ICONS[value.id];
+                return (
+                  <li
+                    key={value.id}
+                    data-reveal=""
+                    data-reveal-delay={String(idx % 4)}
+                    className="grid min-w-0 grid-cols-[1.25rem_minmax(0,1fr)] items-start gap-x-4 gap-y-2 border-b border-[#115191]/20 py-6 sm:grid-cols-[1.25rem_minmax(12rem,1fr)_minmax(0,2fr)] sm:gap-x-6 sm:py-7"
+                  >
+                    <Icon className="mt-1 size-5 text-[#115191]" strokeWidth={1.75} aria-hidden="true" />
+                    <h4 className="font-serif text-lg font-bold">
+                      {value.title}
+                    </h4>
+                    <p className="col-start-2 text-sm leading-relaxed sm:col-start-3 sm:text-base">
+                      {value.description}
+                    </p>
+                  </li>
+                );
+              })}
+            </ol>
           </section>
         </div>
       </section>

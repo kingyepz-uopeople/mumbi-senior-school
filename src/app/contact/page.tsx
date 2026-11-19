@@ -1,7 +1,8 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowRight, Clock, Mail, MapPin, Phone } from 'lucide-react';
+import { MapPin } from 'lucide-react';
+import { ArrowRight, Clock, Mail, Phone } from '@/components/icons';
 import PhotoSlot from '@/components/shared/PhotoSlot';
 import RegistryLogo from '@/components/shared/RegistryLogo';
 import EmailLink from '@/components/shared/EmailLink';
@@ -140,6 +141,7 @@ export default function ContactPage() {
 
                 <div className="flex items-start gap-3 py-3.5">
                   <MapPin
+                    strokeWidth={1.75}
                     className="mt-1 size-4 shrink-0 text-blue-100"
                     aria-hidden="true"
                   />

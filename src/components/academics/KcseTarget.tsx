@@ -1,5 +1,6 @@
 import Image from 'next/image';
-import { ArrowRight, Target } from 'lucide-react';
+import { Target } from 'lucide-react';
+import { ArrowRight } from '@/components/icons';
 import { kcse2026Target } from '@/data/kcse';
 
 export default function KcseTarget() {
@@ -19,7 +20,7 @@ export default function KcseTarget() {
           >
             <Target
               className="pointer-events-none absolute -right-20 -bottom-24 size-80 text-white/10 sm:size-96"
-              strokeWidth={0.6}
+              strokeWidth={1.75}
               aria-hidden="true"
             />
             <div className="relative max-w-md">

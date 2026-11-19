@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight } from '@/components/icons';
 import ProspectusIndexReveal from '@/components/home/ProspectusIndexReveal';
 import { grade10Intake } from '@/data/admissions';
 import { kcseReports } from '@/data/kcse';

@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { Download, Share, X } from 'lucide-react';
+import { Download, Share, X } from '@/components/icons';
 import { usePwa } from '@/components/pwa/PwaProvider';
 
 export default function MobileInstallBanner() {

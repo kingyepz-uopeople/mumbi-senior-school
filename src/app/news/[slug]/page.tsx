@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { ArrowLeft, ArrowRight } from '@/components/icons';
 import BlurRevealHeading from '@/components/shared/BlurRevealHeading';
 import PageHero from '@/components/shared/PageHero';
 import SectionStemBackdrop from '@/components/shared/SectionStemBackdrop';
