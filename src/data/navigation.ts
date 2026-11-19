@@ -39,6 +39,7 @@ export const navigation: NavItem[] = [
     ],
   },
   { label: 'Downloads', href: '/downloads' },
+  { label: 'News', href: '/news' },
   { label: 'Gallery', href: '/gallery' },
   { label: 'Contact', href: '/contact' },
 ];

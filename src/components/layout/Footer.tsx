@@ -10,6 +10,7 @@ const quickLinks = [
   { label: 'Academics & Pathways', href: '/academics' },
   { label: 'Student Life', href: '/explore' },
   { label: 'Downloads & Circulars', href: '/downloads' },
+  { label: 'News & Events', href: '/news' },
   { label: 'Photo Gallery', href: '/gallery' },
   { label: 'Contact & Location', href: '/contact' },
 ];
