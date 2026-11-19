@@ -93,7 +93,7 @@ const SECTION_VARIANT_MOTIFS: Record<
     ['ruler', '44%', '87%', 142, -7, 0.166, 'c', 39, -32, ['8%', '92%', 0.74]],
     ['graduationCap', '81%', '80%', 120, -6, 0.184, 'a', 36, -23],
   ],
-  /* About #mission: Motto, Mission & Vision card + Six Core Values (#F8FAFC) */
+  /* About #mission: Motto, Mission & Vision card + Core Values (#F8FAFC) */
   'about-ethos': [
     ['openBook', '83%', '4%', 128, -7, 0.193, 'b', 38, -6, ['66%', '2%', 0.74]],
     ['graduationCap', '56%', '5%', 124, 6, 0.184, 'a', 34, -18, ['70%', '22%', 0.72]],

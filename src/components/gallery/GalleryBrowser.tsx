@@ -212,6 +212,13 @@ export default function GalleryBrowser({ availableSrcs }: GalleryBrowserProps) {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-8">
           {displayedImages.map((img, index) => {
             const hasPhoto = availableSet.has(img.src);
+            const caption = img.caption ?? img.alt;
+            const albumLabel = [img.event === caption ? null : img.event, img.year]
+              .filter(Boolean)
+              .join(' · ');
+            const photoLabel = caption === img.event && caption !== img.alt
+              ? `${caption} — ${img.alt}`
+              : caption;
             const staggerDelay =
               index % 3 > 0 ? String(index % 3) : undefined;
 
@@ -229,7 +236,7 @@ export default function GalleryBrowser({ availableSrcs }: GalleryBrowserProps) {
                       lastTriggerRef.current = e.currentTarget;
                       setActiveImageId(img.id);
                     }}
-                    aria-label={`View photo: ${img.caption ?? img.alt}`}
+                    aria-label={`View photo: ${photoLabel}`}
                     className="group text-left flex flex-col w-full rounded-xs"
                   >
                     <div className="relative w-full aspect-3/2 overflow-hidden bg-slate-100 border border-slate-300 group-hover:border-primary transition-colors">
@@ -243,11 +250,13 @@ export default function GalleryBrowser({ availableSrcs }: GalleryBrowserProps) {
                       />
                     </div>
                     <div className="pt-3 space-y-1">
-                      <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-primary tabular-nums">
-                        {img.event}{img.year ? ` · ${img.year}` : ''}
-                      </p>
+                      {albumLabel && (
+                        <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-primary tabular-nums">
+                          {albumLabel}
+                        </p>
+                      )}
                       <h3 className="font-serif text-base font-bold text-slate-900 group-hover:text-primary leading-snug">
-                        {img.caption ?? img.alt}
+                        {caption}
                       </h3>
                     </div>
                   </button>
@@ -282,11 +291,13 @@ export default function GalleryBrowser({ availableSrcs }: GalleryBrowserProps) {
                   </div>
 
                   <figcaption className="pt-3 space-y-1">
-                    <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-primary tabular-nums">
-                      {img.event}{img.year ? ` · ${img.year}` : ''}
-                    </p>
+                    {albumLabel && (
+                      <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-primary tabular-nums">
+                        {albumLabel}
+                      </p>
+                    )}
                     <h3 className="font-serif text-base font-bold text-slate-900 leading-snug">
-                      {img.alt}
+                      {caption}
                     </h3>
                   </figcaption>
                 </figure>
@@ -323,8 +334,9 @@ export default function GalleryBrowser({ availableSrcs }: GalleryBrowserProps) {
                 >
                   <strong className="text-white">
                     {activeViewIndex + 1} / {viewableImages.length}
-                  </strong>{' '}
-                  · {activeImage.event}{activeImage.year ? ` (${activeImage.year})` : ''}
+                  </strong>
+                  {activeImage.event !== (activeImage.caption ?? activeImage.alt) && ` · ${activeImage.event}`}
+                  {activeImage.year ? ` (${activeImage.year})` : ''}
                 </p>
 
                 <button

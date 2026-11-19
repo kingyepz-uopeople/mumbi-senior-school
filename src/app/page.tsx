@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import CampusHero from '@/components/home/CampusHero';
+import FamilyQuickLinks from '@/components/home/FamilyQuickLinks';
 import QuickStats from '@/components/home/QuickStats';
 import PrincipalWelcome from '@/components/home/PrincipalWelcome';
 import FoundationalPillars from '@/components/home/FoundationalPillars';
@@ -20,6 +21,7 @@ export default function HomePage() {
   return (
     <>
       <CampusHero />
+      <FamilyQuickLinks />
       <QuickStats />
       <PrincipalWelcome />
       <FoundationalPillars />
