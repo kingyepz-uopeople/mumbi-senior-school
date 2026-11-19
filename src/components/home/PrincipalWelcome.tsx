@@ -26,10 +26,10 @@ export default function PrincipalWelcome() {
               src={PHOTO_SLOTS.principalPortrait}
               exists={hasPortrait}
               alt={`Portrait of ${currentPrincipal.name}, Chief Principal of ${schoolInfo.name}`}
-              width={800}
-              height={1000}
-              sizes="(max-width: 768px) 320px, 340px"
-              aspectClassName="aspect-4/5"
+              width={514}
+              height={528}
+              sizes="(max-width: 351px) calc(100vw - 2rem), 320px"
+              aspectClassName="aspect-[514/528]"
               caption={`${currentPrincipal.name} — Chief Principal (${currentPrincipal.period})`}
             />
           </div>

@@ -30,15 +30,17 @@ A production-ready, modern web platform for **Mumbi Girls Senior School**, built
    - The sticky header carries only the crest and primary navigation; a slim utility strip sits directly above the footer on every page.
    - The strip displays KNEC Centre Code `10204102`, MoE registration `F2030609`, the postal address, a live open/closed office-hours line (Africa/Nairobi), student/staff portal shortcuts, and the PWA install trigger, and it wraps cleanly on narrow screens.
 2. **Home (`/`):**
-   - Static crest hero with the official school crest, serif display heading, motto, provenance (`Murang'a Township · Est. 1960`), and automatic real photo slot (`public/images/hero/campus.jpg`).
+   - Homepage hero with the school crest, motto, provenance (`Murang'a Township · Est. 1960`), school particulars, and a campus photo background (`public/images/school/hero-assembly.jpg`).
+   - A hero shortcut to the For parents index, with links to Grade 10 reporting, the uniform guide, fees, resources, KCSE results, and school contacts.
    - Key school figures (Established 1960, 1,200+ students, 2025 KCSE mean of 7.1926 (C+), 3 CBC Senior School pathways).
-   - Chief Principal's welcome message with portrait photo slot (`public/images/principal.jpg`).
-   - Motto, Mission, Vision, and six Core Values.
+   - Chief Principal's welcome message and portrait of Mrs. Florence Wahito Thumbi (`public/images/principal.jpg`).
+   - Motto, Mission, Vision, and the school’s 12 Core Values, with a link to their full descriptions.
    - 3-tab CBC Senior School Pathways overview (Grades 10–12).
    - Filterable KCSE Roll of Honour table.
    - School office notices, circulars, and downloads register.
 3. **About Us (`/about`):**
    - Historical background and transition to Mumbi Girls Senior School.
+   - Core Values descriptions in a responsive grid.
    - Dual School Anthems card (English *School Anthem* & Kiswahili *Wimbo wa Shule*).
    - Roll of Principals timeline (1960 to Present).
    - Board of Management (BOM) Chairpersons timeline.
@@ -90,10 +92,10 @@ A production-ready, modern web platform for **Mumbi Girls Senior School**, built
 
 Drop JPG files at the paths below and rebuild/redeploy — pages detect them automatically without code changes (see [`public/images/README.md`](public/images/README.md) for recommended dimensions):
 
-- **Homepage hero:** `public/images/hero/campus.jpg`
+- **Homepage campus hero:** `public/images/school/hero-assembly.jpg`
 - **Chief Principal portrait:** `public/images/principal.jpg`
-- **Campus location (`/contact`):** `public/images/campus-location.jpg`
-- **Event gallery (`/gallery`):** `public/images/gallery/prayer-{1,2,3}.jpg`, `agm-{1,2,3}.jpg`, `stem-{1,2,3}.jpg`, `sports-{1,2,3}.jpg`
+- **Campus location (`/contact`):** `public/images/school/gallery-campus-gate.jpg`
+- **Photo gallery (`/gallery`):** See the [photo guide](public/images/README.md#gallery-photographs-gallery) for the current campus and event album files.
 
 ---
 

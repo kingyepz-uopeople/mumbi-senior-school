@@ -1,3 +1,5 @@
+import Link from 'next/link';
+import { ArrowRight } from 'lucide-react';
 import BlurRevealHeading from '@/components/shared/BlurRevealHeading';
 import SectionStemBackdrop from '@/components/shared/SectionStemBackdrop';
 import { schoolInfo } from '@/data/mock-school-data';
@@ -53,38 +55,41 @@ export default function FoundationalPillars() {
             </dl>
           </div>
 
-          {/* Right Column: Ruled Core Values Ledger */}
-          <div className="lg:col-span-7 lg:border-l lg:border-slate-200 lg:pl-14">
-            <p
+          <section aria-labelledby="home-core-values-heading" className="lg:col-span-7 lg:border-l lg:border-slate-200 lg:pl-14">
+            <h3
+              id="home-core-values-heading"
               data-reveal=""
-              className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-600 pb-3 border-b border-slate-300 mb-2"
+              className="border-b border-slate-300 pb-3 text-xs font-semibold uppercase tracking-[0.14em] text-slate-600"
             >
               Core Values
-            </p>
+            </h3>
 
-            <ol className="grid grid-cols-1 sm:grid-cols-2 gap-x-10 divide-y divide-slate-200">
+            <ol role="list" className="grid gap-x-6 sm:grid-cols-2">
               {schoolInfo.coreValues.map((value, idx) => (
                 <li
-                  key={value.title}
+                  key={value.id}
                   data-reveal=""
                   data-reveal-delay={idx % 2 === 1 ? '1' : undefined}
-                  className={`py-6 ${
-                    idx === 1 ? 'sm:border-t-0' : ''
-                  }`}
+                  className="flex min-w-0 items-baseline gap-3 border-b border-slate-200 py-3"
                 >
-                  <span className="block text-xs font-semibold text-primary tabular-nums mb-1.5">
-                    0{idx + 1}
+                  <span aria-hidden="true" className="shrink-0 text-xs font-semibold text-primary tabular-nums">
+                    {String(idx + 1).padStart(2, '0')}
                   </span>
-                  <h3 className="font-serif text-lg font-bold text-slate-900 mb-1.5">
+                  <span className="font-serif text-base font-bold text-slate-900">
                     {value.title}
-                  </h3>
-                  <p className="text-sm text-slate-600 leading-relaxed">
-                    {value.description}
-                  </p>
+                  </span>
                 </li>
               ))}
             </ol>
-          </div>
+
+            <Link
+              href="/about#core-values"
+              className="mt-3 inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-primary underline-offset-4 hover:text-primary-dark hover:underline"
+            >
+              Read more about our core values
+              <ArrowRight className="size-4 shrink-0" aria-hidden="true" />
+            </Link>
+          </section>
         </div>
       </div>
     </section>

@@ -1,12 +1,25 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
+import {
+  BadgeCheck,
+  BookOpenCheck,
+  BriefcaseBusiness,
+  ClipboardCheck,
+  Clock,
+  Eye,
+  HandHeart,
+  Leaf,
+  Lightbulb,
+  MessagesSquare,
+  ShieldCheck,
+  Target,
+  UsersRound,
+  type LucideIcon,
+} from 'lucide-react';
 import BlurRevealHeading from '@/components/shared/BlurRevealHeading';
 import PageHero from '@/components/shared/PageHero';
 import RegistryLogo from '@/components/shared/RegistryLogo';
 import ScrollHighlightText from '@/components/shared/ScrollHighlightText';
-import ProspectusCardArt, {
-  type ProspectusArtKey,
-} from '@/components/shared/ProspectusCardArt';
 import SectionStemBackdrop from '@/components/shared/SectionStemBackdrop';
 import SpotlightCardGroup from '@/components/shared/SpotlightCardGroup';
 import {
@@ -27,14 +40,20 @@ export const metadata: Metadata = buildPageMetadata({
 
 const ROMAN = ['I', 'II', 'III'] as const;
 
-const CORE_VALUE_ART: ProspectusArtKey[] = [
-  'academic-excellence',
-  'integrity-accountability',
-  'discipline-governance',
-  'innovation-creativity',
-  'faith-morality',
-  'inclusivity-respect',
-];
+const CORE_VALUE_ICONS: Partial<Record<string, LucideIcon>> = {
+  hardwork: BookOpenCheck,
+  honesty: ShieldCheck,
+  accountability: ClipboardCheck,
+  respect: HandHeart,
+  professionalism: BriefcaseBusiness,
+  teamwork: UsersRound,
+  effectiveness: Target,
+  creativity: Lightbulb,
+  peace: Leaf,
+  'time-conscientiousness': Clock,
+  transparency: Eye,
+  'customer-focus': MessagesSquare,
+};
 
 export default function AboutPage() {
   return (
@@ -251,46 +270,43 @@ export default function AboutPage() {
             </div>
           </div>
 
-          <div>
-            <h3 className="font-sans text-xs font-semibold uppercase tracking-[0.14em] text-slate-600 pb-3 border-b border-slate-300 mb-6">
-              Six Core Values
+          <section id="core-values" aria-labelledby="core-values-heading" className="scroll-mt-4">
+            <h3 id="core-values-heading" className="mb-6 border-b border-slate-300 pb-3 font-serif text-xl font-bold text-slate-900 sm:text-2xl">
+              Core Values
             </h3>
             <SpotlightCardGroup cardCount={schoolInfo.coreValues.length}>
-              <ol className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
-                {schoolInfo.coreValues.map((val, idx) => (
-                  <li
-                    key={val.title}
-                    data-reveal=""
-                    data-reveal-delay={
-                      idx % 3 > 0 ? String(idx % 3) : undefined
-                    }
-                    className="min-w-0"
-                  >
-                    <article
-                      data-card-cycle
-                      className="flex h-full min-h-[380px] flex-col rounded-3xl border border-t-2 border-t-primary bg-white p-5 sm:min-h-[400px] sm:p-6"
+              <ol role="list" className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                {schoolInfo.coreValues.map((value, idx) => {
+                  const Icon = CORE_VALUE_ICONS[value.id] ?? BadgeCheck;
+                  return (
+                    <li
+                      key={value.id}
+                      data-reveal=""
+                      data-reveal-delay={idx % 4 > 0 ? String(idx % 4) : undefined}
+                      className="min-w-0"
                     >
-                      <span className="mb-1 block text-xs font-semibold tabular-nums text-primary">
-                        0{idx + 1}
-                      </span>
-                      <h4 className="font-serif text-lg font-bold text-primary-dark sm:text-xl">
-                        {val.title}
-                      </h4>
-                      <div className="flex flex-1 items-center justify-center py-5">
-                        <ProspectusCardArt
-                          kind={CORE_VALUE_ART[idx]}
-                          className="h-28 w-36 sm:h-32 sm:w-40"
-                        />
-                      </div>
-                      <p className="mt-auto border-t border-slate-200 pt-4 text-sm leading-relaxed text-slate-600">
-                        {val.description}
-                      </p>
-                    </article>
-                  </li>
-                ))}
+                      <article data-card-cycle className="h-full rounded-xl border border-slate-200 border-t-2 border-t-primary bg-white p-5">
+                        <div className="mb-3 flex items-center justify-between" aria-hidden="true">
+                          <span className="text-xs font-semibold text-primary tabular-nums">
+                            {String(idx + 1).padStart(2, '0')}
+                          </span>
+                          <span className="grid size-9 place-items-center rounded-md bg-blue-50 text-primary">
+                            <Icon className="size-5" />
+                          </span>
+                        </div>
+                        <h4 className="font-serif text-lg font-bold text-primary-dark">
+                          {value.title}
+                        </h4>
+                        <p className="mt-2 text-sm leading-relaxed text-slate-600">
+                          {value.description}
+                        </p>
+                      </article>
+                    </li>
+                  );
+                })}
               </ol>
             </SpotlightCardGroup>
-          </div>
+          </section>
         </div>
       </section>
 

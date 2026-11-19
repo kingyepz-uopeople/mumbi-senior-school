@@ -146,7 +146,7 @@ export interface SchoolInfo {
   motto: string;
   mission: string;
   vision: string;
-  coreValues: { title: string; description: string }[];
+  coreValues: { id: string; title: string; description: string }[];
   knecCode: string;
   moeReg: string;
   postalAddress: string;

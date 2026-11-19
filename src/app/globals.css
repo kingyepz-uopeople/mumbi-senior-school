@@ -1762,8 +1762,8 @@
     column-gap: clamp(2rem, 5vw, 4.5rem);
   }
 
-  /* Flow by row: 01–03 hold the left column, 04–06 the right. */
-  .prospectus-index > .prospectus-cell:nth-child(3) {
+  /* Finish the second column's last row even when the final item is unpaired. */
+  .prospectus-index > .prospectus-cell:nth-last-child(2) {
     border-bottom: 1px solid rgb(255 255 255 / 24%);
   }
 
@@ -1783,7 +1783,7 @@
   /* On arrival each row fades and rises in, held back by a short stagger.
      `both` keeps a row hidden during its delay and settled afterwards, and
      animations do not delay hover, so the fill, numeral and arrow respond
-     immediately. Stagger follows reading order: 01, 02, 03, 04, 05, 06. */
+     immediately. Stagger follows reading order. */
   [data-pq-state='shown'] .prospectus-row {
     animation: prospectus-in 520ms var(--ease-editorial) both;
   }
@@ -1806,6 +1806,10 @@
 
   [data-pq-state='shown'] .prospectus-cell:nth-child(6) .prospectus-row {
     animation-delay: 300ms;
+  }
+
+  [data-pq-state='shown'] .prospectus-cell:nth-child(7) .prospectus-row {
+    animation-delay: 360ms;
   }
 }
 

@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowRight } from 'lucide-react';
+import { ArrowDown, ArrowRight } from 'lucide-react';
 import HeroPathwaysRotator from '@/components/home/HeroPathwaysRotator';
 import HeroMaskedTitle from '@/components/shared/HeroMaskedTitle';
 import HeroStemBackdrop from '@/components/shared/HeroStemBackdrop';
@@ -133,13 +133,14 @@ export default function CampusHero() {
                   aria-hidden="true"
                 />
               </Link>
-              <Link
-                href="/explore"
+              <a
+                href="#family-quick-links"
                 data-hero-step="cta-2"
-                className="hero-rise min-h-11 inline-flex items-center justify-center px-6 py-3 rounded-full border border-white/75 hover:bg-primary-dark text-white font-semibold text-sm transition-colors"
+                className="hero-rise min-h-11 inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full border border-white/75 hover:bg-primary-dark text-white font-semibold text-sm transition-colors"
               >
-                Explore the school
-              </Link>
+                <span>Quick links for families</span>
+                <ArrowDown className="size-4 shrink-0" aria-hidden="true" />
+              </a>
             </div>
           </div>
 

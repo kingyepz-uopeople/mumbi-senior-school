@@ -289,14 +289,16 @@ export default function GalleryBrowser({
 
         {viewableImages.length > 0 ? (
           <div className="editorial-masonry">
-            {viewableImages.map((img, index) => (
-              <figure key={img.id} className="m-0" data-reveal="" data-reveal-delay={(index % 6) + 1}>
-                <button
-                  type="button"
-                  onClick={(e) => openLightbox(img.id, e.currentTarget)}
-                  aria-label={`View photo: ${img.caption ?? img.alt}`}
-                  className="group block w-full text-left rounded-xs overflow-hidden focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2"
-                >
+            {viewableImages.map((img, index) => {
+              const caption = img.caption ?? img.alt;
+              const event = img.event === caption ? null : img.event;
+              const albumLabel = [event, img.year].filter(Boolean).join(' · ');
+              const photoLabel = event === null && caption !== img.alt
+                ? `${caption} — ${img.alt}`
+                : caption;
+
+              return (
+                <figure key={img.id} className="group relative m-0" data-reveal="" data-reveal-delay={(index % 6) + 1}>
                   <div className="relative w-full overflow-hidden bg-slate-100 border border-slate-300 group-hover:border-primary transition-colors">
                     <Image
                       src={img.src}
@@ -307,18 +309,25 @@ export default function GalleryBrowser({
                       className="w-full h-auto"
                     />
                   </div>
+                  <button
+                    type="button"
+                    onClick={(e) => openLightbox(img.id, e.currentTarget)}
+                    aria-label={`View photo: ${photoLabel}`}
+                    className="absolute inset-0 z-10 rounded-xs focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2"
+                  />
                   <figcaption className="pt-3 space-y-1">
-                    <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-primary tabular-nums">
-                      {img.event}
-                      {img.year ? ` · ${img.year}` : ''}
-                    </p>
+                    {albumLabel && (
+                      <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-primary tabular-nums">
+                        {albumLabel}
+                      </p>
+                    )}
                     <h3 className="font-serif text-base font-bold text-slate-900 group-hover:text-primary leading-snug">
-                      {img.caption ?? img.alt}
+                      {caption}
                     </h3>
                   </figcaption>
-                </button>
-              </figure>
-            ))}
+                </figure>
+              );
+            })}
           </div>
         ) : (
           <div className="py-12 px-6 bg-white border border-slate-200">
@@ -363,8 +372,8 @@ export default function GalleryBrowser({
                 >
                   <strong className="text-white">
                     {activeViewIndex + 1} / {viewableImages.length}
-                  </strong>{' '}
-                  · {activeImage.event}
+                  </strong>
+                  {activeImage.event !== (activeImage.caption ?? activeImage.alt) && ` · ${activeImage.event}`}
                   {activeImage.year ? ` (${activeImage.year})` : ''}
                 </p>
 

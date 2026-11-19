@@ -10,7 +10,7 @@ import path from 'node:path';
 export const PHOTO_SLOTS = {
   /** Homepage hero photograph supplied with the school photo collection. */
   heroCampus: '/images/school/hero-assembly.jpg',
-  /** Chief Principal portrait on the homepage (recommended: 800x1000 portrait JPG) */
+  /** Chief Principal portrait on the homepage. */
   principalPortrait: '/images/principal.jpg',
   /** Campus entrance photograph shown on /contact. */
   campusLocation: '/images/school/gallery-campus-gate.jpg',

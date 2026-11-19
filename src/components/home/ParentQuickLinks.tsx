@@ -27,6 +27,12 @@ const parentLinks = [
     isLatestCircular: false,
   },
   {
+    title: 'Uniform guide',
+    detail: 'Check the uniform colours before you shop.',
+    href: '/admissions#uniform',
+    isLatestCircular: false,
+  },
+  {
     title: 'School fees',
     detail: `${grade10Intake.year} amounts are not published yet. Ask the school office for fees and instalments.`,
     href: '/admissions#fees',
@@ -63,9 +69,11 @@ const parentLinks = [
 export default function ParentQuickLinks() {
   return (
     <section
+      id="family-quick-links"
+      tabIndex={-1}
       aria-labelledby="parent-quick-links-heading"
       data-dark-surface
-      className="bg-primary-dark py-14 text-white sm:py-20 lg:py-24"
+      className="scroll-mt-4 bg-primary-dark py-14 text-white sm:py-20 lg:py-24"
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <h2
@@ -75,8 +83,8 @@ export default function ParentQuickLinks() {
           For parents
         </h2>
         <p className="mt-4 max-w-xl text-sm leading-relaxed text-blue-100/85 sm:text-lg">
-          Reporting, fees, circulars, holiday work, KCSE results and the school
-          office.
+          Reporting, uniform guidance, fees, circulars, holiday work, KCSE
+          results and the school office.
         </p>
 
         <ol
