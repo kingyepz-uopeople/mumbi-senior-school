@@ -10,6 +10,7 @@ import PhoneActions from '@/components/shared/PhoneActions';
 import CopyValueButton from '@/components/shared/CopyValueButton';
 import OfficeHoursStatus from '@/components/shared/OfficeHoursStatus';
 import ContactForm from '@/components/contact/ContactForm';
+import DirectionsLink from '@/components/shared/DirectionsLink';
 import { schoolInfo } from '@/data/mock-school-data';
 import { PHOTO_SLOTS, publicAssetExists } from '@/lib/media';
 import { buildPageMetadata } from '@/lib/site';
@@ -150,6 +151,9 @@ export default function ContactPage() {
                     <dd className="mt-0.5 text-blue-100/85">
                       {schoolInfo.physicalLocation}
                     </dd>
+                    <dd className="mt-1">
+                      <DirectionsLink tone="dark" />
+                    </dd>
                   </div>
                 </div>
 
@@ -243,6 +247,17 @@ export default function ContactPage() {
                   sign in at the main gate and report to the administration
                   office during weekday working hours (08:00 – 17:00).
                 </p>
+                <div className="mt-4 overflow-hidden rounded-md border border-slate-200 bg-white">
+                  <iframe
+                    title="Google Map of Mumbi Girls Senior School"
+                    src={schoolInfo.mapsEmbedUrl}
+                    className="block aspect-16/9 w-full border-0"
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    allowFullScreen
+                  />
+                </div>
+                <DirectionsLink variant="button" className="mt-4" />
               </div>
             </section>
           </div>

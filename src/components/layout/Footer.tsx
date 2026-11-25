@@ -6,6 +6,7 @@ import RegistryLogo from '@/components/shared/RegistryLogo';
 import EmailLink from '@/components/shared/EmailLink';
 import PhoneActions from '@/components/shared/PhoneActions';
 import CopyrightYear from '@/components/shared/CopyrightYear';
+import DirectionsLink from '@/components/shared/DirectionsLink';
 import { schoolInfo } from '@/data/mock-school-data';
 
 const quickLinks = [
@@ -126,7 +127,10 @@ export default function Footer() {
                     className="w-4 h-4 text-blue-100 shrink-0 mt-1"
                     aria-hidden="true"
                   />
-                  <span>{schoolInfo.physicalLocation}</span>
+                  <span>
+                    <span className="block">{schoolInfo.physicalLocation}</span>
+                    <DirectionsLink tone="dark" className="mt-1" />
+                  </span>
                 </li>
                 <li className="flex items-start gap-2.5">
                   <Mail

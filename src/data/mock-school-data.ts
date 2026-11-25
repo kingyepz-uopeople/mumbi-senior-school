@@ -98,6 +98,9 @@ export const schoolInfo: SchoolInfo = {
   postalAddress: "P.O. Box 115 - 10200, Murang'a",
   locationShort: campusTownship,
   physicalLocation: `${campusTownship}, Mumbi area, near Mjini Primary School`,
+  mapsUrl: 'https://maps.app.goo.gl/7SSJtUB44ymCsicA7',
+  mapsEmbedUrl:
+    'https://www.google.com/maps?output=embed&q=-0.7272997%2C37.1577828&z=16',
   officeHours: 'Monday – Friday: 08:00 – 17:00 | Weekends: Closed',
   officeHoursShort: 'Mon–Fri: 08:00 – 17:00',
   email: 'mumbigirls1968@gmail.com',
