@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import CampusHero from '@/components/home/CampusHero';
 import QuickStats from '@/components/home/QuickStats';
 import ParentQuickLinks from '@/components/home/ParentQuickLinks';
-import PrincipalWelcome from '@/components/home/PrincipalWelcome';
+import WelcomeMessages from '@/components/home/WelcomeMessages';
 import FoundationalPillars from '@/components/home/FoundationalPillars';
 import PathwaysPreview from '@/components/home/PathwaysPreview';
 import WallOfFame from '@/components/home/WallOfFame';
@@ -23,7 +23,7 @@ export default function HomePage() {
       <CampusHero />
       <QuickStats />
       <ParentQuickLinks />
-      <PrincipalWelcome />
+      <WelcomeMessages />
       <FoundationalPillars />
       <PathwaysPreview />
       <WallOfFame />

@@ -2,16 +2,14 @@
 
 import Link from 'next/link';
 import { Download } from '@/components/icons';
-import RegistryLogo from '@/components/shared/RegistryLogo';
 import OfficeHoursStatus from '@/components/shared/OfficeHoursStatus';
-import { schoolInfo } from '@/data/mock-school-data';
 import { usePwa } from '@/components/pwa/PwaProvider';
 
 /**
- * Slim utility strip that sits directly above the footer: official registry
- * codes, postal address, the live office-hours line, portal shortcuts, and
- * the PWA install button. It lives at the bottom of every page so the sticky
- * header stays focused on the crest and primary navigation.
+ * Slim utility strip that sits directly above the footer: the live
+ * office-hours line, portal shortcuts, and the PWA install button. It lives
+ * at the bottom of every page so the sticky header stays focused on the
+ * crest and primary navigation.
  */
 export default function UtilityBar() {
   const { canNativeInstall, triggerNativeInstall } = usePwa();
@@ -23,31 +21,7 @@ export default function UtilityBar() {
     >
       <div className="mx-auto max-w-7xl px-4 py-2.5 sm:px-6">
         <div className="flex flex-wrap items-center justify-between gap-x-5 gap-y-2">
-          {/* Left: registry details, postal address, live office hours */}
-          <div className="flex min-w-0 flex-wrap items-center gap-x-2.5 gap-y-1.5 text-white/90 tabular-nums sm:gap-x-2">
-            <span className="inline-flex shrink-0 items-center gap-1.5 font-medium text-white">
-              <RegistryLogo agency="knec" size="bar" surface="dark" />
-              <span>KNEC {schoolInfo.knecCode}</span>
-            </span>
-            <span className="hidden text-white/35 sm:inline" aria-hidden="true">
-              ·
-            </span>
-            <span className="inline-flex shrink-0 items-center gap-1.5">
-              <RegistryLogo agency="moe" size="bar" surface="dark" />
-              <span>MoE {schoolInfo.moeReg}</span>
-            </span>
-            <span className="hidden text-white/35 sm:inline" aria-hidden="true">
-              ·
-            </span>
-            <span className="min-w-0 basis-full sm:basis-auto">
-              <span className="sr-only">Postal address: </span>
-              {schoolInfo.postalAddress}
-            </span>
-            <span className="hidden text-white/35 sm:inline" aria-hidden="true">
-              ·
-            </span>
-            <OfficeHoursStatus variant="bar" className="shrink-0" />
-          </div>
+          <OfficeHoursStatus variant="bar" className="shrink-0" />
 
           {/* Right: portal links & optional PWA install */}
           <div className="flex flex-wrap items-center gap-x-1.5 gap-y-1 shrink-0 sm:gap-x-3">
