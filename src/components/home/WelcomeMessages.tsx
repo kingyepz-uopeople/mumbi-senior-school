@@ -119,24 +119,6 @@ export default function WelcomeMessages() {
       <SectionStemBackdrop variant="welcome" />
       <div className="relative mx-auto max-w-7xl space-y-16 px-4 sm:space-y-20 sm:px-6">
         <WelcomeLetter
-          id="dean-welcome-heading"
-          seed="home-dean-welcome"
-          kicker="Dean's Welcome Message"
-          title="Academic Excellence & Senior School Pathways"
-          paragraphs={deanParagraphs}
-          name="Mr. Kiruri"
-          role={`Dean of Studies, ${schoolInfo.name}`}
-          photo={{
-            src: '/images/school/dean-of-studies.jpg',
-            alt: 'Mr. Kiruri, Dean of Studies, holding a trophy beside the school KCSE target banner',
-            width: 900,
-            height: 1600,
-            className: 'object-[center_18%]',
-          }}
-          action={{ href: '/academics', label: 'Academic pathways & results' }}
-        />
-        <div className="border-t border-slate-200" aria-hidden="true" />
-        <WelcomeLetter
           id="principal-welcome-heading"
           seed="home-principal-welcome"
           kicker="Chief Principal's Welcome Message"
@@ -152,6 +134,24 @@ export default function WelcomeMessages() {
             className: 'object-center',
           }}
           action={{ href: '/about', label: 'School history & leadership' }}
+        />
+        <div className="border-t border-slate-200" aria-hidden="true" />
+        <WelcomeLetter
+          id="dean-welcome-heading"
+          seed="home-dean-welcome"
+          kicker="Dean's Welcome Message"
+          title="Academic Excellence & Senior School Pathways"
+          paragraphs={deanParagraphs}
+          name="Mr. Kiruri"
+          role={`Dean of Studies, ${schoolInfo.name}`}
+          photo={{
+            src: '/images/school/dean-of-studies.jpg',
+            alt: 'Mr. Kiruri, Dean of Studies, holding a trophy beside the school KCSE target banner',
+            width: 900,
+            height: 1600,
+            className: 'object-[center_18%]',
+          }}
+          action={{ href: '/academics', label: 'Academic pathways & results' }}
         />
       </div>
     </section>
