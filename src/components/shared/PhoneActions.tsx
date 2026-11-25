@@ -1,4 +1,4 @@
-import { Phone, MessageCircle } from '@/components/icons';
+import { MessageCircle } from '@/components/icons';
 
 interface PhoneActionsProps {
   /** E.164-style number, e.g. `+254711461192`. */
@@ -40,7 +40,6 @@ export default function PhoneActions({
         className={`inline-flex items-center gap-1.5 font-semibold underline underline-offset-4 ${linkTone}`}
         aria-label={`Call the school office on ${phone}`}
       >
-        <Phone className={`size-4 shrink-0 ${iconTone}`} aria-hidden="true" />
         <span>
           Call{showNumber ? ` ${phone}` : ''}
         </span>

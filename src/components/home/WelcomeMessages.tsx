@@ -129,8 +129,8 @@ export default function WelcomeMessages() {
           photo={{
             src: '/images/principal.jpg',
             alt: `Portrait of Mrs. Florence Wahito Thumbi, Chief Principal of ${schoolInfo.name}`,
-            width: 514,
-            height: 528,
+            width: 1024,
+            height: 1052,
             className: 'object-center',
           }}
           action={{ href: '/about', label: 'School history & leadership' }}
