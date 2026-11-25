@@ -6,7 +6,6 @@ import HeroPhotoLoop from '@/components/home/HeroPhotoLoop';
 import HeroMaskedTitle from '@/components/shared/HeroMaskedTitle';
 import HeroStemBackdrop from '@/components/shared/HeroStemBackdrop';
 import HeroTypewriterText from '@/components/shared/HeroTypewriterText';
-import RegistryLogo from '@/components/shared/RegistryLogo';
 import { schoolInfo } from '@/data/mock-school-data';
 
 export default function CampusHero() {
@@ -108,45 +107,6 @@ export default function CampusHero() {
                 <ArrowDown className="size-4 shrink-0" aria-hidden="true" />
               </a>
             </div>
-
-            <dl className="hero-rise mt-8 grid grid-cols-1 gap-x-6 border-t border-white/20 pt-5 text-sm sm:grid-cols-2">
-              <div className="border-b border-white/15 py-2.5 sm:col-span-2">
-                <dt className="text-xs text-blue-100">Classification</dt>
-                <dd className="mt-0.5 font-medium text-white">
-                  {schoolInfo.category}
-                </dd>
-              </div>
-              <div className="flex items-center justify-between gap-3 border-b border-white/15 py-2.5 tabular-nums">
-                <div>
-                  <dt className="text-xs text-blue-100">KNEC Code</dt>
-                  <dd className="mt-0.5 font-semibold text-white">
-                    {schoolInfo.knecCode}
-                  </dd>
-                </div>
-                <RegistryLogo agency="knec" size="card" surface="dark" />
-              </div>
-              <div className="flex items-center justify-between gap-3 border-b border-white/15 py-2.5 tabular-nums">
-                <div>
-                  <dt className="text-xs text-blue-100">MoE Registration</dt>
-                  <dd className="mt-0.5 font-semibold text-white">
-                    {schoolInfo.moeReg}
-                  </dd>
-                </div>
-                <RegistryLogo agency="moe" size="card" surface="dark" />
-              </div>
-              <div className="border-b border-white/15 py-2.5 sm:border-b-0">
-                <dt className="text-xs text-blue-100">Postal Address</dt>
-                <dd className="mt-0.5 font-medium text-white">
-                  {schoolInfo.postalAddress}
-                </dd>
-              </div>
-              <div className="py-2.5">
-                <dt className="text-xs text-blue-100">Office Hours</dt>
-                <dd className="mt-0.5 font-medium text-white">
-                  {schoolInfo.officeHours}
-                </dd>
-              </div>
-            </dl>
           </div>
         </div>
 
