@@ -152,6 +152,10 @@ export interface SchoolInfo {
   postalAddress: string;
   locationShort: string;
   physicalLocation: string;
+  /** School-shared Google Maps pin, opened for directions. */
+  mapsUrl: string;
+  /** Embed of the same pin shown on the contact page. */
+  mapsEmbedUrl: string;
   officeHours: string;
   officeHoursShort: string;
   email: string;

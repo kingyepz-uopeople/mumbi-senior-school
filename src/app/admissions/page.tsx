@@ -6,6 +6,7 @@ import { ArrowDown, ArrowRight, CalendarDays } from '@/components/icons';
 import { grade10Intake } from '@/data/admissions';
 import ReportingDayTimeline from '@/components/admissions/ReportingDayTimeline';
 import { schoolInfo } from '@/data/mock-school-data';
+import DirectionsLink from '@/components/shared/DirectionsLink';
 import { buildPageMetadata } from '@/lib/site';
 
 const placementPortalUrl = 'https://placement.education.go.ke/';
@@ -352,7 +353,10 @@ export default function AdmissionsPage() {
             <p className="mt-2 flex items-start gap-2 text-sm leading-relaxed text-slate-700">
               <MapPin strokeWidth={1.75} className="mt-0.5 size-4 shrink-0 text-primary" aria-hidden="true" />
               <span>
-                {schoolInfo.physicalLocation} · {schoolInfo.officeHoursShort}
+                <span className="block">
+                  {schoolInfo.physicalLocation} · {schoolInfo.officeHoursShort}
+                </span>
+                <DirectionsLink />
               </span>
             </p>
           </div>
