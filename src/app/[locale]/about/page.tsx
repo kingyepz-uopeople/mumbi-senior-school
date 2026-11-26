@@ -13,6 +13,7 @@ import {
 } from 'lucide-react';
 import type { IconProps } from '@/components/icons';
 import { Clock, MessagesSquare, ShieldCheck, UsersRound } from '@/components/icons';
+import CoreValuesReveal from '@/components/about/CoreValuesReveal';
 import BlurRevealHeading from '@/components/shared/BlurRevealHeading';
 import PageHero from '@/components/shared/PageHero';
 import RegistryLogo from '@/components/shared/RegistryLogo';
@@ -290,40 +291,22 @@ export default async function AboutPage({
             </div>
           </div>
 
-          <section
-            id="core-values"
-            aria-labelledby="core-values-heading"
-            className="scroll-mt-4 bg-[#F8FAFC] text-[#0C3D6E]"
-          >
-            <h3 id="core-values-heading" className="mb-6 font-serif text-xl font-bold sm:text-2xl">
-              {dict.home.coreValues}
-            </h3>
-            <ol role="list" className="border-t border-[#115191]/20">
-              {schoolInfo.coreValues.map((value, idx) => {
-                const Icon = CORE_VALUE_ICONS[value.id];
-                const localized =
-                  dict.school.coreValues[
-                    value.id as keyof typeof dict.school.coreValues
-                  ];
-                return (
-                  <li
-                    key={value.id}
-                    data-reveal=""
-                    data-reveal-delay={String(idx % 4)}
-                    className="grid min-w-0 grid-cols-[1.25rem_minmax(0,1fr)] items-start gap-x-4 gap-y-2 border-b border-[#115191]/20 py-6 sm:grid-cols-[1.25rem_minmax(12rem,1fr)_minmax(0,2fr)] sm:gap-x-6 sm:py-7"
-                  >
-                    <Icon className="mt-1 size-5 text-[#115191]" strokeWidth={1.75} aria-hidden="true" />
-                    <h4 className="font-serif text-lg font-bold">
-                      {localized.title}
-                    </h4>
-                    <p className="col-start-2 text-sm leading-relaxed sm:col-start-3 sm:text-base">
-                      {localized.description}
-                    </p>
-                  </li>
-                );
-              })}
-            </ol>
-          </section>
+          <CoreValuesReveal
+            headingId="core-values-heading"
+            heading={dict.home.coreValues}
+            items={schoolInfo.coreValues.map((value) => {
+              const localized =
+                dict.school.coreValues[
+                  value.id as keyof typeof dict.school.coreValues
+                ];
+              return {
+                id: value.id,
+                title: localized.title,
+                description: localized.description,
+                Icon: CORE_VALUE_ICONS[value.id],
+              };
+            })}
+          />
         </div>
       </section>
 

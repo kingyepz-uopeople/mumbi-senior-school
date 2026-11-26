@@ -237,7 +237,7 @@ const boardingSw: Record<string, LocalizedBoardingFields> = {
       'Wanafunzi huvaa sare rasmi ya Mumbi Girls Senior School wakati wa darasa na shughuli rasmi. Wanafunzi wa Gredi 10 huvaa shati jeupe lenye mikono mifupi na nembo ya shule iliyoshonwa. Orodha kamili hutolewa katika maelekezo ya kujiunga.',
     highlights: [
       'Shati jeupe lenye mikono mifupi na kola, lenye nembo ya Mumbi Girls kwenye mfuko wa kifua',
-      'Skirti, soksi, na viatu vyeusi vya ngozi vyenye kamba vilivyoidhinishwa',
+      'Skirti yenye mikunjo na mistari ya bluu na nyeupe, soksi zilizoidhinishwa, na viatu vyeusi vya ngozi vyenye kamba',
       'Kitanda cha michezo na vitu vingine vilivyotajwa katika maelekezo ya kujiunga',
     ],
   },

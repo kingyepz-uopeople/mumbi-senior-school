@@ -375,7 +375,7 @@ const sw: Dictionary = {
       'Jedwali la kina la ada hutolewa na ofisi ya shule. Wasiliana na utawala kwa waraka wa sasa.',
     officeContact: 'Maelezo ya mawasiliano ya ofisi ya shule',
     uniformHeading: 'Nini cha kununua',
-    uniformPhoto: 'Shati la shule la Gredi 10',
+    uniformPhoto: 'Sare ya shule ya Gredi 10',
     beforeBuy: 'Kabla ya kununua',
     boardingUniform: 'Muhtasari wa bweni na sare',
     questions: 'Maswali kuhusu kujiunga?',
@@ -404,13 +404,16 @@ const sw: Dictionary = {
     step3Detail:
       'Shule iko {location}. Thibitisha muda wako wa kufika na mahali pa kujisajili kabla ya kusafiri.',
     uniformBody:
-      'Wanafunzi wa Gredi 10 huvaa shati jeupe lenye mikono mifupi na kola, lenye nembo ya Mumbi Girls Senior School iliyoshonwa kwenye mfuko wa kushoto wa kifua. Tumia picha hii unaponunua ili upate shati na beji sahihi.',
+      'Wanafunzi wa Gredi 10 huvaa shati jeupe lenye mikono mifupi na kola, lenye nembo ya Mumbi Girls Senior School, pamoja na skirti yenye mistari ya bluu na nyeupe. Tumia picha hizi unaponunua ili upate shati, beji, na muundo sahihi wa skirti.',
     uniformConfirm:
       'Thibitisha orodha kamili ya sare ya {year} na ofisi ya shule kabla ya kununua vitu vingine. Skrini zinaweza kubadilisha rangi na kivuli cha kitambaa.',
-    uniformCaption: 'Shati la Gredi 10 lenye nembo ya shule',
+    uniformShirtCaption: 'Shati lenye nembo ya shule',
+    uniformSkirtCaption: 'Skirti yenye mistari ya bluu na nyeupe',
     uniformFullSize: 'Picha kamili',
-    uniformAlt:
+    uniformShirtAlt:
       'Shati jeupe la shule la Gredi 10 lenye mikono mifupi na nembo ya Mumbi Girls Senior School iliyoshonwa kwenye mfuko wa kushoto wa kifua',
+    uniformSkirtAlt:
+      'Skirti ya Gredi 10 yenye mikunjo na mistari ya bluu na nyeupe, yenye ukanda wa kiuno uliolainishwa',
   },
   explore: {
     kicker: 'Bweni na Maisha ya Ziada',

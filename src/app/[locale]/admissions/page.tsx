@@ -12,7 +12,8 @@ import { buildPageMetadata } from '@/lib/site';
 
 const placementPortalUrl = 'https://placement.education.go.ke/';
 const schoolOfficeHref = '/contact#school-office';
-const uniformPhoto = '/images/school/grade-10-uniform-shirt.jpg';
+const uniformShirtPhoto = '/images/school/grade-10-uniform-shirt.jpg';
+const uniformSkirtPhoto = '/images/school/grade-10-uniform-skirt.jpg';
 
 export const metadata: Metadata = buildPageMetadata({
   title: `Grade 10 Admissions ${grade10Intake.year}`,
@@ -303,30 +304,61 @@ export default async function AdmissionsPage({
             </LocaleLink>
           </div>
 
-          <figure className="m-0 w-full max-w-sm justify-self-center overflow-hidden rounded-md border border-slate-200 bg-slate-bg">
-            <Image
-              src={uniformPhoto}
-              alt={a.uniformAlt}
-              width={960}
-              height={1280}
-              quality={95}
-              sizes="(max-width: 430px) calc(100vw - 74px), 384px"
-              className="block h-auto w-full"
-            />
-            <figcaption className="flex items-center justify-between gap-3 border-t border-slate-200 px-3 text-sm sm:px-4">
-              <span className="text-xs text-slate-600">{a.uniformCaption}</span>
-              <a
-                href={uniformPhoto}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center gap-1 text-sm font-semibold text-primary underline underline-offset-4 hover:text-primary-dark"
-              >
-                {a.uniformFullSize}
-                <span className="sr-only">{dict.common.opensNewTab}</span>
-                <ArrowUpRight strokeWidth={1.75} className="size-4 shrink-0" aria-hidden="true" />
-              </a>
-            </figcaption>
-          </figure>
+          <div className="grid w-full grid-cols-2 gap-3 justify-self-center sm:gap-4">
+            <figure className="m-0 overflow-hidden rounded-md border border-slate-200 bg-slate-bg">
+              <Image
+                src={uniformShirtPhoto}
+                alt={a.uniformShirtAlt}
+                width={768}
+                height={1024}
+                quality={95}
+                sizes="(max-width: 768px) 42vw, 220px"
+                className="block h-auto w-full"
+              />
+              <figcaption className="border-t border-slate-200 px-2 py-2 sm:px-3">
+                <span className="block text-[0.7rem] leading-snug text-slate-600 sm:text-xs">
+                  {a.uniformShirtCaption}
+                </span>
+                <a
+                  href={uniformShirtPhoto}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="mt-1 inline-flex items-center gap-1 text-xs font-semibold text-primary underline underline-offset-4 hover:text-primary-dark sm:text-sm"
+                >
+                  {a.uniformFullSize}
+                  <span className="sr-only">{dict.common.opensNewTab}</span>
+                  <ArrowUpRight strokeWidth={1.75} className="size-3.5 shrink-0" aria-hidden="true" />
+                </a>
+              </figcaption>
+            </figure>
+
+            <figure className="m-0 overflow-hidden rounded-md border border-slate-200 bg-slate-bg">
+              <Image
+                src={uniformSkirtPhoto}
+                alt={a.uniformSkirtAlt}
+                width={768}
+                height={1024}
+                quality={95}
+                sizes="(max-width: 768px) 42vw, 220px"
+                className="block h-auto w-full"
+              />
+              <figcaption className="border-t border-slate-200 px-2 py-2 sm:px-3">
+                <span className="block text-[0.7rem] leading-snug text-slate-600 sm:text-xs">
+                  {a.uniformSkirtCaption}
+                </span>
+                <a
+                  href={uniformSkirtPhoto}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="mt-1 inline-flex items-center gap-1 text-xs font-semibold text-primary underline underline-offset-4 hover:text-primary-dark sm:text-sm"
+                >
+                  {a.uniformFullSize}
+                  <span className="sr-only">{dict.common.opensNewTab}</span>
+                  <ArrowUpRight strokeWidth={1.75} className="size-3.5 shrink-0" aria-hidden="true" />
+                </a>
+              </figcaption>
+            </figure>
+          </div>
         </section>
 
         {/* Questions */}
