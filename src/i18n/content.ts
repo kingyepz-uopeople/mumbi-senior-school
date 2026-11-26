@@ -300,6 +300,7 @@ function localizeClub(
     mediaNote: localized.mediaNote ?? base.mediaNote,
     videoSrc: base.videoSrc,
     imageSrc: base.imageSrc,
+    gallerySrcs: base.gallerySrcs,
     patronMessage: localized.patronMessage ?? base.patronMessage,
   };
 }

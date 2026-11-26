@@ -17,6 +17,26 @@ const HERO_PHOTOS = [
     position: 'object-center',
   },
   {
+    src: '/images/school/hero-assembly-students.jpg',
+    alt: 'Mumbi Girls learners gathered at morning assembly',
+    position: 'object-center',
+  },
+  {
+    src: '/images/school/hero-assembly-grounds.jpg',
+    alt: 'Wide view of assembly on the school grounds with the school bus',
+    position: 'object-center',
+  },
+  {
+    src: '/images/school/hero-prize-giving-1.jpg',
+    alt: 'Students and staff at a prize-giving ceremony on campus',
+    position: 'object-center',
+  },
+  {
+    src: '/images/school/hero-prize-giving-2.jpg',
+    alt: 'Award recipients with staff outside a school building',
+    position: 'object-center',
+  },
+  {
     src: '/images/school/gallery-campus-gate.jpg',
     alt: 'Blue main gate with the school motto Determined to Excel',
     position: 'object-center',

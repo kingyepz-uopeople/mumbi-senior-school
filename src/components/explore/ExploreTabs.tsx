@@ -60,8 +60,8 @@ const SPORT_ART: Record<string, ProspectusArtKey> = {
 /** Campus / activity photos for pathway-style sport cards. */
 const SPORT_PHOTOS: Record<string, { src: string; alt: string }> = {
   volleyball: {
-    src: '/images/sports/volleyball.jpg',
-    alt: 'Volleyball training session at Mumbi Girls',
+    src: '/images/sports/volleyball-team-1.jpg',
+    alt: 'Mumbi Girls volleyball team with their patron on the school grounds',
   },
   netball: {
     src: '/images/school/hero-assembly.jpg',
@@ -430,6 +430,25 @@ export default function ExploreTabs() {
                               {sport.mediaNote || e.videoComingSoon}
                             </p>
                           </div>
+                        </div>
+                      ) : null}
+
+                      {sport.gallerySrcs && sport.gallerySrcs.length > 0 ? (
+                        <div className="mt-4 grid grid-cols-3 gap-2">
+                          {sport.gallerySrcs.map((src, galleryIndex) => (
+                            <div
+                              key={src}
+                              className="overflow-hidden rounded-xl border border-slate-200 bg-slate-bg"
+                            >
+                              <Image
+                                src={src}
+                                alt={`${sport.name} team photo ${galleryIndex + 1}`}
+                                width={480}
+                                height={360}
+                                className="aspect-[4/3] w-full object-cover"
+                              />
+                            </div>
+                          ))}
                         </div>
                       ) : null}
                     </>
