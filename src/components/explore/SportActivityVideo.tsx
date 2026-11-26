@@ -57,7 +57,6 @@ export default function SportActivityVideo({
         disablePictureInPicture
         playsInline
         muted
-        defaultMuted
         preload="metadata"
         aria-label={label}
         src={`${src}#t=0,${endSeconds}`}
