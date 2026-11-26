@@ -1,18 +1,5 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
-import type { ComponentType } from 'react';
-import {
-  BookOpenCheck,
-  BriefcaseBusiness,
-  ClipboardCheck,
-  Eye,
-  HandHeart,
-  Leaf,
-  Lightbulb,
-  Target,
-} from 'lucide-react';
-import type { IconProps } from '@/components/icons';
-import { Clock, MessagesSquare, ShieldCheck, UsersRound } from '@/components/icons';
 import CoreValuesReveal from '@/components/about/CoreValuesReveal';
 import BlurRevealHeading from '@/components/shared/BlurRevealHeading';
 import PageHero from '@/components/shared/PageHero';
@@ -46,21 +33,6 @@ export async function generateMetadata({
 }
 
 const ROMAN = ['I', 'II', 'III'] as const;
-
-const CORE_VALUE_ICONS: Record<string, ComponentType<IconProps>> = {
-  hardwork: BookOpenCheck,
-  honesty: ShieldCheck,
-  accountability: ClipboardCheck,
-  respect: HandHeart,
-  professionalism: BriefcaseBusiness,
-  teamwork: UsersRound,
-  effectiveness: Target,
-  creativity: Lightbulb,
-  peace: Leaf,
-  'time-conscientiousness': Clock,
-  transparency: Eye,
-  'customer-focus': MessagesSquare,
-};
 
 export default async function AboutPage({
   params,
@@ -303,7 +275,6 @@ export default async function AboutPage({
                 id: value.id,
                 title: localized.title,
                 description: localized.description,
-                Icon: CORE_VALUE_ICONS[value.id],
               };
             })}
           />

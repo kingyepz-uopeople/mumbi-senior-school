@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import DownloadsBrowser from '@/components/downloads/DownloadsBrowser';
 import LocaleLink from '@/i18n/LocaleLink';
-import { fill, getLocaleDictionary } from '@/i18n/server';
+import { getLocaleDictionary } from '@/i18n/server';
 import { buildPageMetadata } from '@/lib/site';
 
 export const metadata: Metadata = buildPageMetadata({
