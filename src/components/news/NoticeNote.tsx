@@ -25,8 +25,10 @@ import {
   noticeViewName,
   rememberOpenSlug,
   tapeHue,
+  tapeTilt,
   type NoteAttachment,
   type TapeHue,
+  type TapePlacement,
 } from '@/components/news/notice-theme';
 
 const OPEN_MS = 380;
@@ -48,9 +50,10 @@ function useFineHover() {
 function PushPin() {
   return (
     <span className="notice-pin" aria-hidden="true">
-      <span className="notice-pin__head" />
-      <span className="notice-pin__needle" />
       <span className="notice-pin__shadow" />
+      <span className="notice-pin__needle" />
+      <span className="notice-pin__collar" />
+      <span className="notice-pin__head" />
     </span>
   );
 }
@@ -58,13 +61,16 @@ function PushPin() {
 function Tape({
   placement,
   hue,
+  tilt,
 }: {
-  placement: 'center' | 'tl' | 'tr';
+  placement: TapePlacement;
   hue: TapeHue;
+  tilt: number;
 }) {
   return (
     <span
       className={`notice-tape notice-tape--${hue} notice-tape--${placement}`}
+      style={{ '--tape-tilt': `${tilt}deg` } as CSSProperties}
       aria-hidden="true"
     />
   );
@@ -72,19 +78,22 @@ function Tape({
 
 function Attachments({
   attachment,
-  hue,
+  item,
 }: {
   attachment: NoteAttachment;
-  hue: TapeHue;
+  item: NewsItem;
 }) {
+  const hue = tapeHue(item);
   if (attachment === 'pin') return <PushPin />;
   if (attachment === 'tape-center') {
-    return <Tape placement="center" hue={hue} />;
+    return (
+      <Tape placement="center" hue={hue} tilt={tapeTilt(item, 'center')} />
+    );
   }
   return (
     <>
-      <Tape placement="tl" hue={hue} />
-      <Tape placement="tr" hue={hue} />
+      <Tape placement="tl" hue={hue} tilt={tapeTilt(item, 'tl')} />
+      <Tape placement="tr" hue={hue} tilt={tapeTilt(item, 'tr')} />
     </>
   );
 }
@@ -119,7 +128,6 @@ export default function NoticeNote({
   const tone = noteTone(item);
   const tilt = expanded ? 0 : noteTilt(index);
   const attachment = noteAttachment(item);
-  const hue = tapeHue(item);
   const Heading = headingAs ?? (expanded ? 'h1' : compact ? 'h3' : 'h2');
   const href = `/news/${item.slug}`;
 
@@ -201,24 +209,21 @@ export default function NoticeNote({
     '--note-tilt': `${tilt}deg`,
   } as CSSProperties;
 
-  const inner = (
-    <>
-      {!expanded ? <Attachments attachment={attachment} hue={hue} /> : null}
-      <div className="notice-paper__body">
-        <span className="notice-pill">{item.category}</span>
-        <time dateTime={toIsoDate(item.date)} className="notice-date">
-          {item.date}
-        </time>
-        <Heading className="notice-title">{item.title}</Heading>
-        {item.excerpt ? <p className="notice-excerpt">{item.excerpt}</p> : null}
-        {children}
-        {!expanded && readMoreLabel ? (
-          <span className="notice-readmore" data-read-more="">
-            {readMoreLabel}
-          </span>
-        ) : null}
-      </div>
-    </>
+  const body = (
+    <div className="notice-paper__body">
+      <span className="notice-pill">{item.category}</span>
+      <time dateTime={toIsoDate(item.date)} className="notice-date">
+        {item.date}
+      </time>
+      <Heading className="notice-title">{item.title}</Heading>
+      {item.excerpt ? <p className="notice-excerpt">{item.excerpt}</p> : null}
+      {children}
+      {!expanded && readMoreLabel ? (
+        <span className="notice-readmore" data-read-more="">
+          {readMoreLabel}
+        </span>
+      ) : null}
+    </div>
   );
 
   if (expanded) {
@@ -229,7 +234,7 @@ export default function NoticeNote({
         default="none"
       >
         <article className={paperClass} style={paperStyle} data-light-surface="">
-          {inner}
+          {body}
         </article>
       </ViewTransition>
     );
@@ -248,23 +253,26 @@ export default function NoticeNote({
       data-lifted={lifted && !returning ? 'true' : undefined}
       data-returning={returning ? 'true' : undefined}
     >
-      <ViewTransition
-        name={noticeViewName(item.slug)}
-        share="news-note-morph"
-        default="none"
-      >
-        <LocaleLink
-          href={href}
-          className={paperClass}
-          style={paperStyle}
-          transitionTypes={['news-open']}
-          onPointerDown={handlePointerDown}
-          onClick={handleClick}
-          onBlur={() => setLifted(false)}
+      <div className="notice-cluster">
+        <Attachments attachment={attachment} item={item} />
+        <ViewTransition
+          name={noticeViewName(item.slug)}
+          share="news-note-morph"
+          default="none"
         >
-          {inner}
-        </LocaleLink>
-      </ViewTransition>
+          <LocaleLink
+            href={href}
+            className={paperClass}
+            style={paperStyle}
+            transitionTypes={['news-open']}
+            onPointerDown={handlePointerDown}
+            onClick={handleClick}
+            onBlur={() => setLifted(false)}
+          >
+            {body}
+          </LocaleLink>
+        </ViewTransition>
+      </div>
     </div>
   );
 }
