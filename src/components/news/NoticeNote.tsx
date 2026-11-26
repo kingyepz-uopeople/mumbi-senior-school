@@ -25,8 +25,10 @@ import {
   noticeViewName,
   rememberOpenSlug,
   tapeHue,
+  tapeTilt,
   type NoteAttachment,
   type TapeHue,
+  type TapePlacement,
 } from '@/components/news/notice-theme';
 
 const OPEN_MS = 380;
@@ -59,13 +61,16 @@ function PushPin() {
 function Tape({
   placement,
   hue,
+  tilt,
 }: {
-  placement: 'center' | 'tl' | 'tr';
+  placement: TapePlacement;
   hue: TapeHue;
+  tilt: number;
 }) {
   return (
     <span
       className={`notice-tape notice-tape--${hue} notice-tape--${placement}`}
+      style={{ '--tape-tilt': `${tilt}deg` } as CSSProperties}
       aria-hidden="true"
     />
   );
@@ -73,19 +78,22 @@ function Tape({
 
 function Attachments({
   attachment,
-  hue,
+  item,
 }: {
   attachment: NoteAttachment;
-  hue: TapeHue;
+  item: NewsItem;
 }) {
+  const hue = tapeHue(item);
   if (attachment === 'pin') return <PushPin />;
   if (attachment === 'tape-center') {
-    return <Tape placement="center" hue={hue} />;
+    return (
+      <Tape placement="center" hue={hue} tilt={tapeTilt(item, 'center')} />
+    );
   }
   return (
     <>
-      <Tape placement="tl" hue={hue} />
-      <Tape placement="tr" hue={hue} />
+      <Tape placement="tl" hue={hue} tilt={tapeTilt(item, 'tl')} />
+      <Tape placement="tr" hue={hue} tilt={tapeTilt(item, 'tr')} />
     </>
   );
 }
@@ -120,7 +128,6 @@ export default function NoticeNote({
   const tone = noteTone(item);
   const tilt = expanded ? 0 : noteTilt(index);
   const attachment = noteAttachment(item);
-  const hue = tapeHue(item);
   const Heading = headingAs ?? (expanded ? 'h1' : compact ? 'h3' : 'h2');
   const href = `/news/${item.slug}`;
 
@@ -247,7 +254,7 @@ export default function NoticeNote({
       data-returning={returning ? 'true' : undefined}
     >
       <div className="notice-cluster">
-        <Attachments attachment={attachment} hue={hue} />
+        <Attachments attachment={attachment} item={item} />
         <ViewTransition
           name={noticeViewName(item.slug)}
           share="news-note-morph"

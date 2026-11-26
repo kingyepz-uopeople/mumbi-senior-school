@@ -6,11 +6,13 @@ export const NOTE_TILTS = [-1.8, 1.4, -1, 1.8] as const;
 
 export type NoteTone = 'blue' | 'yellow' | 'mint' | 'pink' | 'lilac';
 export type NoteAttachment = 'pin' | 'tape-center' | 'tape-corners';
-export type TapeHue = 'pink' | 'teal' | 'yellow' | 'sky';
+export type TapeHue = 'pink' | 'mint' | 'yellow' | 'blue' | 'frost';
+export type TapePlacement = 'center' | 'tl' | 'tr';
 
 const TONES: NoteTone[] = ['blue', 'yellow', 'mint', 'pink', 'lilac'];
 const ATTACHMENTS: NoteAttachment[] = ['pin', 'tape-center', 'tape-corners'];
-const TAPE_HUES: TapeHue[] = ['pink', 'teal', 'yellow', 'sky'];
+const TAPE_HUES: TapeHue[] = ['pink', 'mint', 'yellow', 'blue', 'frost'];
+const TAPE_TILTS = [-7.5, 5, -3.5, 10.5, 8, -6, 12, -4] as const;
 
 export function noteTone(item: NewsItem): NoteTone {
   return TONES[Math.abs(item.id) % TONES.length];
@@ -26,6 +28,13 @@ export function noteAttachment(item: NewsItem): NoteAttachment {
 
 export function tapeHue(item: NewsItem): TapeHue {
   return TAPE_HUES[Math.abs(item.id + 2) % TAPE_HUES.length];
+}
+
+export function tapeTilt(item: NewsItem, placement: TapePlacement = 'center'): number {
+  const base = TAPE_TILTS[Math.abs(item.id) % TAPE_TILTS.length];
+  if (placement === 'tl') return Math.max(-8, Math.min(12, base - 3));
+  if (placement === 'tr') return Math.max(-8, Math.min(12, base + 4));
+  return base;
 }
 
 export function noticeViewName(slug: string): string {
