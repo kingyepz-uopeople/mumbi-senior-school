@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { Suspense } from 'react';
 import { cookies } from 'next/headers';
 import SectionStemBackdrop from '@/components/shared/SectionStemBackdrop';
 import { schoolInfo } from '@/data/mock-school-data';
@@ -13,10 +14,7 @@ import {
 import { getDictionary } from '@/i18n/get-dictionary';
 import { fill } from '@/i18n/fill';
 
-export default async function NotFound() {
-  const cookieStore = await cookies();
-  const raw = cookieStore.get(LOCALE_COOKIE)?.value;
-  const locale: Locale = raw && isLocale(raw) ? raw : defaultLocale;
+function NotFoundContent({ locale }: { locale: Locale }) {
   const dict = getDictionary(locale);
   const n = dict.notFound;
 
@@ -69,5 +67,20 @@ export default async function NotFound() {
         </div>
       </div>
     </div>
+  );
+}
+
+async function NotFoundFromCookie() {
+  const cookieStore = await cookies();
+  const raw = cookieStore.get(LOCALE_COOKIE)?.value;
+  const locale: Locale = raw && isLocale(raw) ? raw : defaultLocale;
+  return <NotFoundContent locale={locale} />;
+}
+
+export default function NotFound() {
+  return (
+    <Suspense fallback={<NotFoundContent locale={defaultLocale} />}>
+      <NotFoundFromCookie />
+    </Suspense>
   );
 }

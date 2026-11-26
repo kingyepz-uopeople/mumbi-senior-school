@@ -3,11 +3,12 @@
 import {
   createContext,
   useContext,
+  useEffect,
   useMemo,
   type ReactNode,
 } from 'react';
 import type { Locale } from '@/i18n/config';
-import { localizeHref } from '@/i18n/config';
+import { localeHtmlLang, localizeHref } from '@/i18n/config';
 import type { Dictionary } from '@/i18n/dictionaries/en';
 
 type LocaleContextValue = {
@@ -35,6 +36,10 @@ export function LocaleProvider({
     }),
     [locale, dict]
   );
+
+  useEffect(() => {
+    document.documentElement.lang = localeHtmlLang[locale];
+  }, [locale]);
 
   return (
     <LocaleContext.Provider value={value}>{children}</LocaleContext.Provider>
