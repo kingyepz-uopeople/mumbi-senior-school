@@ -48,9 +48,10 @@ function useFineHover() {
 function PushPin() {
   return (
     <span className="notice-pin" aria-hidden="true">
-      <span className="notice-pin__head" />
-      <span className="notice-pin__needle" />
       <span className="notice-pin__shadow" />
+      <span className="notice-pin__needle" />
+      <span className="notice-pin__collar" />
+      <span className="notice-pin__head" />
     </span>
   );
 }
@@ -201,24 +202,21 @@ export default function NoticeNote({
     '--note-tilt': `${tilt}deg`,
   } as CSSProperties;
 
-  const inner = (
-    <>
-      {!expanded ? <Attachments attachment={attachment} hue={hue} /> : null}
-      <div className="notice-paper__body">
-        <span className="notice-pill">{item.category}</span>
-        <time dateTime={toIsoDate(item.date)} className="notice-date">
-          {item.date}
-        </time>
-        <Heading className="notice-title">{item.title}</Heading>
-        {item.excerpt ? <p className="notice-excerpt">{item.excerpt}</p> : null}
-        {children}
-        {!expanded && readMoreLabel ? (
-          <span className="notice-readmore" data-read-more="">
-            {readMoreLabel}
-          </span>
-        ) : null}
-      </div>
-    </>
+  const body = (
+    <div className="notice-paper__body">
+      <span className="notice-pill">{item.category}</span>
+      <time dateTime={toIsoDate(item.date)} className="notice-date">
+        {item.date}
+      </time>
+      <Heading className="notice-title">{item.title}</Heading>
+      {item.excerpt ? <p className="notice-excerpt">{item.excerpt}</p> : null}
+      {children}
+      {!expanded && readMoreLabel ? (
+        <span className="notice-readmore" data-read-more="">
+          {readMoreLabel}
+        </span>
+      ) : null}
+    </div>
   );
 
   if (expanded) {
@@ -229,7 +227,7 @@ export default function NoticeNote({
         default="none"
       >
         <article className={paperClass} style={paperStyle} data-light-surface="">
-          {inner}
+          {body}
         </article>
       </ViewTransition>
     );
@@ -248,23 +246,26 @@ export default function NoticeNote({
       data-lifted={lifted && !returning ? 'true' : undefined}
       data-returning={returning ? 'true' : undefined}
     >
-      <ViewTransition
-        name={noticeViewName(item.slug)}
-        share="news-note-morph"
-        default="none"
-      >
-        <LocaleLink
-          href={href}
-          className={paperClass}
-          style={paperStyle}
-          transitionTypes={['news-open']}
-          onPointerDown={handlePointerDown}
-          onClick={handleClick}
-          onBlur={() => setLifted(false)}
+      <div className="notice-cluster">
+        <Attachments attachment={attachment} hue={hue} />
+        <ViewTransition
+          name={noticeViewName(item.slug)}
+          share="news-note-morph"
+          default="none"
         >
-          {inner}
-        </LocaleLink>
-      </ViewTransition>
+          <LocaleLink
+            href={href}
+            className={paperClass}
+            style={paperStyle}
+            transitionTypes={['news-open']}
+            onPointerDown={handlePointerDown}
+            onClick={handleClick}
+            onBlur={() => setLifted(false)}
+          >
+            {body}
+          </LocaleLink>
+        </ViewTransition>
+      </div>
     </div>
   );
 }
