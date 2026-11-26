@@ -60,8 +60,8 @@ const SPORT_ART: Record<string, ProspectusArtKey> = {
 /** Campus / activity photos for pathway-style sport cards. */
 const SPORT_PHOTOS: Record<string, { src: string; alt: string }> = {
   volleyball: {
-    src: '/images/school/gallery-campus-parade.jpg',
-    alt: 'Campus parade ground used for games and assemblies',
+    src: '/images/sports/volleyball.jpg',
+    alt: 'Volleyball training session at Mumbi Girls',
   },
   netball: {
     src: '/images/school/hero-assembly.jpg',

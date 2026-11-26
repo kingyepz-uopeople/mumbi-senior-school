@@ -645,11 +645,17 @@ export const sports: Club[] = [
     id: 'volleyball',
     name: 'Volleyball',
     category: 'Sport',
-    patron: 'Mr. Stephen Gitau',
+    patron: 'Mr. Mwangi G.',
     meetingDay: 'Daily, 16:00',
     description:
       'School volleyball teams competing in inter-house matches and sub-county, county, and regional KSSSA fixtures.',
     icon: 'CircleDot',
+    imageSrc: '/images/sports/volleyball.jpg',
+    videoSrc: '/videos/sports/volleyball.mp4',
+    patronMessage: [
+      'Volleyball teaches teamwork, timing, and resilience. Every afternoon our girls train to serve, set, and spike with discipline and joy.',
+      'I welcome learners who are ready to practise hard, support teammates, and represent Mumbi Girls with pride in every match.',
+    ],
   },
   {
     id: 'netball',

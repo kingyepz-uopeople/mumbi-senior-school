@@ -35,6 +35,10 @@ const sportSw: Record<string, LocalizedClubFields> = {
     meetingDay: 'Kila siku, 16:00',
     description:
       'Timu za volleyball za shule zinazoshindana katika mechi za nyumba kwa nyumba na mechi za KSSSA za kaunti ndogo, kaunti, na mkoa.',
+    patronMessage: [
+      'Volleyball hufundisha ushirikiano, timing, na uvumilivu. Kila alasiri wasichana wetu hufanya mazoezi ya serve, set, na spike kwa nidhamu na furaha.',
+      'Ninakaribisha wanafunzi walio tayari kufanya mazoezi kwa bidii, kuwaunga mkono wenzao, na kuiwakilisha Mumbi Girls kwa kiburi katika kila mechi.',
+    ],
   },
   netball: {
     name: 'Netball',
