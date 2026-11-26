@@ -11,7 +11,7 @@ export const navigation: NavItem[] = [
     children: [
       { label: 'School History', href: '/about#history' },
       { label: 'Motto, Mission & Vision', href: '/about#mission' },
-      { label: 'School Anthems', href: '/about#anthems' },
+      { label: 'School Anthem', href: '/about#anthems' },
       { label: 'Principals, BOM & Council', href: '/about#leadership' },
     ],
   },

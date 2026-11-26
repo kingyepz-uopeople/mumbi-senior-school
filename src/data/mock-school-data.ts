@@ -1257,12 +1257,4 @@ export const schoolAnthem = {
     refrain:
       "Mumbi's the gem that gleams so bright,\nMumbi's the star that gives much light (coz we are)\nDetermined to excel, (we are)\nDetermined to excel.",
   },
-  kiswahili: {
-    title: 'Wimbo wa Shule',
-    verses: [
-      'Mumbi Wasichana, fahari yetu,\nTwasimama imara kila wakati,\nKwa nuru ya hekima twasonga mbele,\nTukijitahidi daima kwa ubora.',
-      'Katika nyumba za elimu, twakua,\nImani na heshima ndiyo mwongozo wetu,\nBinti walioimarishwa wa nchi hii,\nTwabeba jina letu kwa kiburi.',
-      'Elimu inaangazia njia yetu,\nUwezo ndio wimbo wetu wa milele,\nMumbi Wasichana, nguvu daima,\nPamoja tutaendelea kusonga.',
-    ],
-  },
 };

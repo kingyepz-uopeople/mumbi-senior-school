@@ -164,7 +164,7 @@ const SECTION_VARIANT_MOTIFS: Record<
     ['pencil', '12%', '88%', 122, -12, 0.175, 'a', 33, -12],
     ['protractor', '80%', '84%', 128, -8, 0.184, 'd', 43, -34, ['62%', '92%', 0.72]],
   ],
-  /* About #anthems: School Anthem & Wimbo wa Shule (bg-white) */
+  /* About #anthems: School Anthem (bg-white) */
   anthems: [
     ['musicNotes', '85%', '5%', 82, -8, 0.193, 'a', 32, -7, ['74%', '2%', 0.76]],
     ['openBook', '60%', '5%', 124, 6, 0.184, 'c', 39, -20, ['66%', '24%', 0.72]],
