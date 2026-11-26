@@ -5,6 +5,7 @@ import {
   dailyRoutine as dailyRoutineEn,
   faithGroups as faithGroupsEn,
   headOfGames as headOfGamesEn,
+  newsItems as newsItemsEn,
   sports as sportsEn,
 } from '@/data/mock-school-data';
 import type {
@@ -12,6 +13,7 @@ import type {
   Club,
   DailyRoutineItem,
   GamesDepartmentMessage,
+  NewsItem,
 } from '@/types';
 
 type LocalizedClubFields = {
@@ -248,7 +250,7 @@ const boardingSw: Record<string, LocalizedBoardingFields> = {
 
 const welcomeSw = {
   principal: [
-    'Ni kwa fahari kubwa na ukarimu wa dhati ninawakaribisha kwenye nyumba rasmi ya kidijitali ya Mumbi Girls Senior School. Ikiyoko katika mazingira tulivu ya kujifunza ya Mukuyu katika Kiharu, Kaunti ya Murang\'a, taasisi yetu inasimama kama kituo cha ukali wa kielimu, uadilifu wa kimaadili, na uwezeshaji kamili wa mtoto wa kike.',
+    'Ni kwa fahari kubwa na ukarimu wa dhati ninawakaribisha kwenye nyumba rasmi ya kidijitali ya Mumbi Girls Senior School. Ikiyoko katika mazingira tulivu ya kujifunza ya Murang\'a Township, eneo la Mumbi, Kaunti ya Murang\'a, taasisi yetu inasimama kama kituo cha ukali wa kielimu, uadilifu wa kimaadili, na uwezeshaji kamili wa mtoto wa kike.',
     'Kwa miongo mingi, Mumbi Girls imelea wanawake vijana kuwa viongozi wenye kujiamini, nidhamu, na maono wanaofuzu katika mitihani ya kitaifa, uwekaji wa vyuo vikuu, na nyanja mbalimbali za jamii. Leo, tunapokumbatia mfumo wa Elimu ya Uwezo wa Shule ya Upili, tunaandaa wanafunzi wetu si tu kufaulu mitihani, bali kugundua na kuendeleza uwezo wao wa kipekee katika njia zetu za STEM, Sayansi za Jamii, na Sanaa na Sayansi ya Michezo.',
     'Katika Mumbi Girls Senior School, tunaamini kwamba elimu ya kweli inasawazisha akili kali na tabia thabiti. Pamoja na ufundishaji wa darasani kutoka kwa walimu wetu waliojitolea, tunaweka mkazo mkubwa katika lishe ya kiroho, ubora wa shughuli za ziada, uongozi, na uwajibikaji wa kibinafsi. Kila mwanafunzi anayeingia milangoni mwetu husimamiwa kufikiri kwa makini, kuhudumu bila ubinafsi, na kuongoza kwa ujasiri.',
     'Iwe wewe ni mzazi anayetarajia, mwanafunzi wa sasa, alumna mwenye fahari, au mshirika wa elimu, ninakualika uchunguze programu zetu, ufuatilie mafanikio yetu, na uunganishe na jamii yetu hai ya shule kupitia langisho hili. Pamoja, tuendelee kuunda wanawake wenye dhamana watakaobadilisha taifa letu na dunia.',
@@ -263,7 +265,7 @@ const welcomeSw = {
 
 const welcomeEn = {
   principal: [
-    'It is with immense pride and warm hospitality that I welcome you to the official digital home of Mumbi Girls Senior School. Located in the serene learning environment of Mukuyu in Kiharu, Murang\u2019a County, our institution stands as a center of academic rigor, moral integrity, and holistic girl-child empowerment.',
+    'It is with immense pride and warm hospitality that I welcome you to the official digital home of Mumbi Girls Senior School. Located in the serene learning environment of Murang\u2019a Township, Mumbi area, Murang\u2019a County, our institution stands as a center of academic rigor, moral integrity, and holistic girl-child empowerment.',
     'For decades, Mumbi Girls has nurtured young women into confident, disciplined, and visionary leaders who excel across national examinations, university placements, and diverse spheres of society. Today, as we embrace the Competency-Based Education Senior School framework, we are equipping our learners not just to pass exams, but to discover and master their unique potential across our STEM, Social Sciences, and Arts and Sports Science pathways.',
     'At Mumbi Girls Senior School, we believe that true education balances sharp intellect with strong character. Alongside dedicated classroom instruction from our committed teaching staff, we place deep emphasis on spiritual nourishment, co-curricular excellence, leadership, and personal responsibility. Every learner who walks through our gates is mentored to think critically, serve selflessly, and lead with courage.',
     'Whether you are a prospective parent, a current learner, a proud alumna, or an education partner, I invite you to explore our programs, track our achievements, and connect with our vibrant school community through this portal. Together, let us continue shaping women of substance who will transform our nation and the world.',
@@ -379,4 +381,43 @@ export function getWelcomeParagraphs(
   who: 'principal' | 'dean'
 ): string[] {
   return locale === 'sw' ? welcomeSw[who] : welcomeEn[who];
+}
+
+type LocalizedNewsFields = Pick<NewsItem, 'title' | 'excerpt' | 'body'>;
+
+const newsSw: Record<string, LocalizedNewsFields> = {
+  'december-2026-holiday-assignments': {
+    title: 'Kazi za Likizo za Desemba 2026',
+    excerpt:
+      'Wanafunzi wamepewa kazi zao za likizo ya Desemba 2026 kama karatasi zilizochapishwa. Wanafunzi wa ICT wanaofundishwa na Bw. Charagu wanaweza pia kupata kazi zao mtandaoni kupitia Zeraki.',
+    body: [
+      'Wanafunzi wamepewa kazi za likizo ya Desemba 2026 kama karatasi zilizochapishwa.',
+      'Pia, wanafunzi wa ICT wanaofundishwa na Bw. Charagu wanaweza kupata kazi zao za likizo mtandaoni kupitia Zeraki.',
+    ],
+  },
+  'moe-2027-academic-calendar': {
+    title: 'Kalenda ya Shule ya 2027 imetolewa na Wizara ya Elimu',
+    excerpt:
+      'Wizara ya Elimu imetoa kalenda ya kitaaluma ya 2027 kwa Shule za Upili na Secondary (waraka REF: MOE.HQS/3/13/3/VOL III, 19 Oktoba 2026).',
+    body: [
+      'Wizara ya Elimu, Idara ya Serikali ya Elimu ya Msingi, ilitoa waraka REF: MOE.HQS/3/13/3/VOL III tarehe 19 Oktoba 2026, uliosainiwa na Katibu Mkuu John L. Ololtuaa, CBS.',
+      'Tarehe za Shule za Upili na Secondary zimeorodheshwa hapa chini. Hizi ni tarehe za kitaifa za muhula. Saa za kuripoti, ada, na maelekezo ya bweni hutolewa kando na ofisi ya shule yanapochapishwa.',
+    ],
+  },
+};
+
+export function getNewsItems(locale: Locale): NewsItem[] {
+  if (locale !== 'sw') return newsItemsEn;
+  return newsItemsEn.map((item) => {
+    const localized = newsSw[item.slug];
+    if (!localized) return item;
+    return { ...item, ...localized };
+  });
+}
+
+export function getNewsItem(
+  locale: Locale,
+  slug: string
+): NewsItem | undefined {
+  return getNewsItems(locale).find((item) => item.slug === slug);
 }

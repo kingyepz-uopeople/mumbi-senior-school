@@ -4,13 +4,14 @@ import { locales } from '@/i18n/config';
 import { SITE_URL } from '@/lib/site';
 import { parseDateKE } from '@/lib/utils';
 
-const LATEST_CONTENT_DATE = new Date('2025-03-20T00:00:00.000Z');
+const LATEST_CONTENT_DATE = new Date('2026-11-26T00:00:00.000Z');
 
 const staticPaths = [
   '',
   '/about',
   '/academics',
   '/admissions',
+  '/student-life',
   '/explore',
   '/downloads',
   '/gallery',

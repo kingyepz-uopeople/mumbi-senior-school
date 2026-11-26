@@ -119,9 +119,10 @@ const sw: Dictionary = {
         'Kiasi cha {year} bado hakijachapishwa. Uliza ofisi ya shule kwa ada na malipo ya awamu.',
       holidayTitle: 'Kazi za likizo',
       holidayDetail:
-        'Karatasi za Gredi 10–12 na Form 3–4, zilizochujwa kwa darasa na somo.',
+        'Karatasi za Gredi 10–12 na Form 3–4, zilizochujwa kwa darasa na somo. Kazi za ICT zipo pia kwenye Zeraki.',
       circularTitle: 'Waraka wa hivi karibuni',
-      circularFallback: 'Waraka wa muhula na majarida.',
+      circularFallback:
+        'Waraka wa muhula na taarifa za ofisi ya shule.',
       kcseTitle: 'Matokeo ya KCSE',
       kcseDetail:
         'Wastani wa shule, mgawanyo wa grade na wanafunzi bora kwa {first}–{last}.',
@@ -480,11 +481,27 @@ const sw: Dictionary = {
     boardingPhoto3Alt:
       'Basi la shule la rangi ya njano la Mumbi Girls High School limeland katika kampasi',
   },
+  studentLifePage: {
+    kicker: 'Bweni na Maisha ya Ziada',
+    title: 'Maisha ya Wanafunzi katika Mumbi Girls',
+    subtitle:
+      'Vilabu, michezo, ratiba ya bweni ya siku za wiki, vikundi vya imani, na maisha ya makazi — anza hapa, kisha fungua sehemu yoyote.',
+    intro:
+      'Zaidi ya darasa, wanafunzi wa Mumbi Girls Senior School hushiriki vilabu na harakati zilizo na sare, hujizoeza michezo ya KSSSA, hufuata ratiba ya bweni ya wiki kutoka 05:00 hadi 22:00, hukutana katika vikundi vya chaplaincy, na wanaishi katika mabweni yaliyosimamiwa kwa kiwango kilicho wazi cha sare ya shule.',
+    indexKicker: 'Katika sura hii',
+    indexHeading: 'Fungua sehemu ya maisha ya wanafunzi',
+    indexBody:
+      'Kila kichwa kinaelekeza kwenye ukurasa kamili wa sehemu hiyo ya bweni na maisha ya ziada.',
+    photoAlt:
+      'Wanafunzi wamekusanyika kwenye uwanja wa gwaride wa Mumbi Girls Senior School',
+    photoCaption:
+      'Uwanja wa gwaride unaotumika kwa mkutano, michezo, na hafla za shule',
+  },
   downloads: {
     kicker: 'Nyaraka za Shule',
     title: 'Vipakuliwa na Waraka',
     subtitle:
-      'Waraka, ratiba, kazi za likizo, na nyaraka nyingine zilizotolewa na ofisi ya shule.',
+      'Waraka wa Wizara na wa shule, ratiba, kazi za likizo, na nyaraka nyingine kwa wazazi na wanafunzi.',
     joiningGrade10: 'Unaungana Gredi 10?',
     admissionsGuide: 'mwongozo wa udahili',
     searchLabel: 'Tafuta nyaraka za shule',
@@ -518,6 +535,19 @@ const sw: Dictionary = {
     otherNotices: 'Tangazo Nyingine za Shule',
     allDocuments: 'Nyaraka zote',
     notFound: 'Tangazo Halikupatikana',
+    calendarKicker: 'Wizara ya Elimu',
+    calendarCaption: 'Shule za Upili na Secondary, 2027',
+    calendarPeriod: 'Kipindi',
+    calendarOpens: 'Inafungua',
+    calendarCloses: 'Inafunga',
+    calendarDuration: 'Muda',
+    calendarRef: 'Rejea ya waraka',
+    calendarSigned: 'Imesainiwa',
+    calendarSource: 'Soma waraka kamili',
+    calendarSourceAlt: 'Muhtasari wa tarehe za muhula',
+    calendarNote:
+      'Hizi ni tarehe za kitaifa za Shule za Upili na Secondary kutoka Wizara ya Elimu. Saa za kuripoti, ada, na maelekezo ya bweni hutolewa kando na ofisi ya shule yanapochapishwa.',
+    readCircular: 'Soma waraka wa Wizara',
   },
   gallery: {
     kicker: 'Kumbukumbu za Shule',

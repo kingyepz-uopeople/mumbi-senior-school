@@ -2,27 +2,23 @@
 
 import { ArrowRight } from '@/components/icons';
 import ProspectusIndexReveal from '@/components/home/ProspectusIndexReveal';
+import { MOE_2027_CALENDAR } from '@/data/academic-calendar';
 import { grade10Intake } from '@/data/admissions';
 import { kcseReports } from '@/data/kcse';
-import { downloads, schoolInfo } from '@/data/mock-school-data';
+import { schoolInfo } from '@/data/mock-school-data';
+import { getNewsItem } from '@/i18n/content';
 import { fill } from '@/i18n/fill';
 import LocaleLink from '@/i18n/LocaleLink';
 import { useLocale } from '@/i18n/locale-context';
-import { parseDateKE } from '@/lib/utils';
-
-const latestCircular = [...downloads]
-  .filter(({ category }) => category === 'Circular')
-  .sort(
-    (a, b) => parseDateKE(b.uploadDate).getTime() - parseDateKE(a.uploadDate).getTime()
-  )[0];
 
 const kcseYears = kcseReports.map(({ year }) => year);
 const firstKcseYear = Math.min(...kcseYears);
 const lastKcseYear = Math.max(...kcseYears);
 
 export default function ParentQuickLinks() {
-  const { dict } = useLocale();
+  const { locale, dict } = useLocale();
   const p = dict.home.parents;
+  const calendarNotice = getNewsItem(locale, MOE_2027_CALENDAR.slug);
 
   const parentLinks = [
     {
@@ -51,10 +47,10 @@ export default function ParentQuickLinks() {
     },
     {
       title: p.circularTitle,
-      detail: latestCircular
-        ? `${latestCircular.title} — ${latestCircular.uploadDate}`
+      detail: calendarNotice
+        ? `${calendarNotice.title}, ${calendarNotice.date}`
         : p.circularFallback,
-      href: '/downloads',
+      href: `/news/${MOE_2027_CALENDAR.slug}`,
       isLatestCircular: true,
     },
     {

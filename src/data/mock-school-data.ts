@@ -20,6 +20,7 @@ import {
   GalleryAlbum,
   CBCPathway,
 } from '@/types';
+import { MOE_2027_CALENDAR } from '@/data/academic-calendar';
 import { formatCPlusShare, kcse2024, kcse2025 } from '@/data/kcse';
 
 // ── School Profile ──────────────────────────────────────────
@@ -342,6 +343,32 @@ export const cbcPathways: CBCPathway[] = [
 // ── News & Circulars ────────────────────────────────────────
 export const newsItems: NewsItem[] = [
   {
+    id: 8,
+    title: 'December 2026 Holiday Assignments',
+    date: '26/11/2026',
+    category: 'Download',
+    excerpt:
+      'Students have been given their December 2026 holiday assignments as printed handouts. ICT students taught by Mr. Charagu can also access their assignments online via Zeraki.',
+    body: [
+      'Students have been given their holiday assignments for the December 2026 holiday as printed handouts.',
+      'In addition, ICT students taught by Mr. Charagu can also access their holiday assignments online via Zeraki.',
+    ],
+    slug: 'december-2026-holiday-assignments',
+  },
+  {
+    id: 7,
+    title: MOE_2027_CALENDAR.newsTitle,
+    date: MOE_2027_CALENDAR.publishedOn,
+    category: 'Circular',
+    excerpt:
+      'The Ministry of Education has released the 2027 academic calendar for Senior and Secondary Schools (circular REF: MOE.HQS/3/13/3/VOL III, 19 October 2026).',
+    body: [
+      `The Ministry of Education, State Department for Basic Education, issued circular ${MOE_2027_CALENDAR.ref} on 19 October 2026, signed by Principal Secretary ${MOE_2027_CALENDAR.signedBy}.`,
+      'The Senior & Secondary School dates are listed below. These are national term dates. School reporting hours, fees, and boarding instructions are issued separately by the school office when published.',
+    ],
+    slug: MOE_2027_CALENDAR.slug,
+  },
+  {
     id: 3,
     title: '2024 KCSE Results Release',
     date: '20/03/2025',
@@ -356,15 +383,14 @@ export const newsItems: NewsItem[] = [
   },
   {
     id: 4,
-    title: 'Term 1 Opening Circular 2025',
+    title: 'Term 1 Opening Circular 2025 (Archived)',
     date: '02/01/2025',
     category: 'Circular',
     excerpt:
-      'Reporting hours, fee payment verification, boarding requirements, and Grade 10 orientation schedule for Term 1.',
+      'Archived school notice from January 2025. Use the Ministry of Education 2027 Academic Calendar for current national term dates.',
     body: [
-      'Continuing and newly admitted students are required to report within official daytime hours in full school uniform, bringing their completed holiday assignment booklets.',
-      'Parents and guardians should consult the 2025 Fee Structure and present official bank deposit slips or payment confirmations at the accounts office on reporting day.',
-      'Incoming Grade 10 students will attend orientation covering dormitory allocation, CBC pathway selection, chaplaincy groups, and club registration.',
+      'This notice is archived and is not current. It should not be used to plan reporting, fees, or boarding for 2026 or 2027.',
+      'For current national Senior and Secondary School term dates, read the Ministry of Education 2027 Academic Calendar.',
     ],
     slug: 'term-1-opening-circular-2025',
   },
@@ -856,6 +882,17 @@ export const boardingSections: BoardingSection[] = [
 // ── Downloads ───────────────────────────────────────────────
 export const downloads: DownloadItem[] = [
   {
+    id: 12,
+    title: MOE_2027_CALENDAR.title,
+    category: 'Circular',
+    level: 'All',
+    subject: 'General',
+    fileSize: 'Web',
+    uploadDate: MOE_2027_CALENDAR.issuedOn,
+    department: 'Ministry of Education',
+    fileUrl: MOE_2027_CALENDAR.sourceUrl,
+  },
+  {
     id: 6,
     title: 'Term 1 2025 Exam Timetable',
     category: 'Exam Timetable',
@@ -868,7 +905,7 @@ export const downloads: DownloadItem[] = [
   },
   {
     id: 9,
-    title: 'Term 1 2025 Opening & Reporting Circular',
+    title: 'Term 1 2025 Opening & Reporting Circular (Archived)',
     category: 'Circular',
     level: 'All',
     subject: 'General',
