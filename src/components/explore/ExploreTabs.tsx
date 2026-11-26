@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useMemo, useState, type ReactNode } from 'react';
 import Image from 'next/image';
 import BoardingPhotos from '@/components/explore/BoardingPhotos';
 import { fill } from '@/i18n/fill';
@@ -140,36 +140,96 @@ function SectionIntro({
   );
 }
 
-function StudentLifeArtwork({
-  kind,
+function LifePreviewCard({
   index,
+  code,
+  title,
+  description,
+  photo,
+  artKind,
   logo,
+  chipsLabel,
+  chips,
+  footer,
 }: {
-  kind?: ProspectusArtKey;
   index: number;
+  code: string;
+  title: string;
+  description: string;
+  photo?: { src: string; alt: string };
+  artKind?: ProspectusArtKey;
   logo?: { src: string; alt: string };
+  chipsLabel?: string;
+  chips?: string[];
+  footer?: ReactNode;
 }) {
   return (
-    <div
-      aria-hidden="true"
-      className="relative flex min-h-36 items-center justify-center overflow-hidden rounded-2xl border border-blue-100/80 bg-gradient-to-br from-blue-50 via-white to-slate-bg py-4"
-    >
-      <span className="absolute right-4 top-3 font-mono text-[11px] font-semibold tracking-[0.12em] text-primary/45">
-        {String(index + 1).padStart(2, '0')}
-      </span>
-      {logo ? (
-        // Official emblems are SVG assets; use img to avoid Next Image SVG limits.
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
-          src={logo.src}
-          alt={logo.alt}
-          width={128}
-          height={148}
-          className="h-28 w-auto object-contain sm:h-32"
+    <div data-card-cycle className="pathway-preview-card h-full">
+      <div className="pathway-preview-photo">
+        {photo ? (
+          <Image
+            src={photo.src}
+            alt={photo.alt}
+            fill
+            sizes="(max-width: 767px) 100vw, (max-width: 1279px) 50vw, 33vw"
+            className="pathway-preview-image object-cover"
+          />
+        ) : (
+          <span className="pathway-photo-placeholder" aria-hidden="true">
+            <span className="pathway-placeholder-orbit" />
+            <span className="pathway-placeholder-mark" />
+            {logo ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={logo.src}
+                alt=""
+                width={112}
+                height={128}
+                className="absolute inset-0 m-auto h-24 w-auto object-contain drop-shadow-md sm:h-28"
+              />
+            ) : artKind ? (
+              <ProspectusCardArt
+                kind={artKind}
+                className="absolute inset-0 m-auto h-24 w-32 opacity-90 brightness-0 invert"
+              />
+            ) : null}
+          </span>
+        )}
+        <span
+          className="absolute inset-0 bg-linear-to-t from-slate-950/75 via-slate-900/15 to-transparent"
+          aria-hidden="true"
         />
-      ) : kind ? (
-        <ProspectusCardArt kind={kind} className="h-28 w-36 sm:h-32 sm:w-40" />
-      ) : null}
+        <span className="absolute inset-x-3.5 top-3.5 flex items-center justify-between gap-2">
+          <span className="pathway-preview-code">
+            {String(index + 1).padStart(2, '0')} · {code}
+          </span>
+        </span>
+        <span className="absolute inset-x-5 bottom-3.5">
+          <span className="block font-serif text-xl font-bold leading-snug text-white drop-shadow-sm sm:text-[1.35rem]">
+            {title}
+          </span>
+          <span className="pathway-preview-underline mt-1.5" aria-hidden="true" />
+        </span>
+      </div>
+
+      <div className="pathway-preview-body">
+        <p className="text-sm leading-relaxed text-slate-600">{description}</p>
+        {footer}
+        {chipsLabel && chips && chips.length > 0 ? (
+          <div className="mt-4">
+            <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-primary">
+              {chipsLabel}
+            </p>
+            <div className="mt-2.5 flex flex-wrap gap-1.5">
+              {chips.map((chip) => (
+                <span key={chip} className="subject-chip">
+                  {chip}
+                </span>
+              ))}
+            </div>
+          </div>
+        ) : null}
+      </div>
     </div>
   );
 }
@@ -284,102 +344,49 @@ export default function ExploreTabs() {
           aria-label={e.sportsAria}
           className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3"
         >
-          {sports.map((sport, index) => {
-            const photo = SPORT_PHOTOS[sport.id];
-            const artKind = SPORT_ART[sport.id] ?? 'athletics';
-            return (
-              <article
-                key={sport.id}
-                role="listitem"
-                data-reveal=""
-                data-reveal-delay={index % 3 > 0 ? String(index % 3) : undefined}
-                className="h-full"
-              >
-                <div data-card-cycle className="pathway-preview-card">
-                  <div className="pathway-preview-photo">
-                    {photo ? (
-                      <Image
-                        src={photo.src}
-                        alt={photo.alt}
-                        fill
-                        sizes="(max-width: 767px) 100vw, (max-width: 1279px) 50vw, 33vw"
-                        className="pathway-preview-image object-cover"
-                      />
-                    ) : (
-                      <span className="pathway-photo-placeholder" aria-hidden="true">
-                        <span className="pathway-placeholder-orbit" />
-                        <span className="pathway-placeholder-mark" />
-                        <ProspectusCardArt
-                          kind={artKind}
-                          className="absolute inset-0 m-auto h-24 w-32 opacity-90 brightness-0 invert"
-                        />
-                      </span>
-                    )}
-                    <span
-                      className="absolute inset-0 bg-linear-to-t from-slate-950/75 via-slate-900/15 to-transparent"
-                      aria-hidden="true"
-                    />
-
-                    <span className="absolute inset-x-3.5 top-3.5 flex items-center justify-between gap-2">
-                      <span className="pathway-preview-code">
-                        {String(index + 1).padStart(2, '0')} · {sport.category}
-                      </span>
-                    </span>
-
-                    <span className="absolute inset-x-5 bottom-3.5">
-                      <span className="block font-serif text-xl font-bold leading-snug text-white drop-shadow-sm sm:text-[1.35rem]">
-                        {sport.name}
-                      </span>
-                      <span
-                        className="pathway-preview-underline mt-1.5"
-                        aria-hidden="true"
-                      />
-                    </span>
-                  </div>
-
-                  <div className="pathway-preview-body">
-                    <p className="text-sm leading-relaxed text-slate-600">
-                      {sport.description}
-                    </p>
-
-                    {sport.videoSrc ? (
-                      <div className="mt-4 overflow-hidden rounded-2xl border border-slate-200 bg-slate-950">
-                        <video
-                          className="aspect-video w-full bg-black object-cover"
-                          controls
-                          playsInline
-                          preload="metadata"
-                          aria-label={`${sport.name} activity video`}
-                        >
-                          <source src={sport.videoSrc} type="video/mp4" />
-                        </video>
-                      </div>
-                    ) : sport.mediaNote ? (
-                      <div className="mt-4 overflow-hidden rounded-2xl border border-dashed border-slate-300 bg-slate-bg/80">
-                        <div className="flex aspect-video items-center justify-center px-4 text-center">
-                          <p className="text-xs font-semibold uppercase tracking-[0.1em] text-slate-500">
-                            {sport.mediaNote || e.videoComingSoon}
-                          </p>
-                        </div>
-                      </div>
-                    ) : null}
-
-                    <div className="mt-4">
-                      <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-primary">
-                        {e.coachPatron}
-                      </p>
-                      <div className="mt-2.5 flex flex-wrap gap-1.5">
-                        <span className="subject-chip">{sport.patron}</span>
-                        <span className="subject-chip tabular-nums">
-                          {sport.meetingDay}
-                        </span>
+          {sports.map((sport, index) => (
+            <article
+              key={sport.id}
+              role="listitem"
+              data-reveal=""
+              data-reveal-delay={index % 3 > 0 ? String(index % 3) : undefined}
+              className="h-full"
+            >
+              <LifePreviewCard
+                index={index}
+                code={sport.category}
+                title={sport.name}
+                description={sport.description}
+                photo={SPORT_PHOTOS[sport.id]}
+                artKind={SPORT_ART[sport.id] ?? 'athletics'}
+                chipsLabel={e.coachPatron}
+                chips={[sport.patron, sport.meetingDay]}
+                footer={
+                  sport.videoSrc ? (
+                    <div className="mt-4 overflow-hidden rounded-2xl border border-slate-200 bg-slate-950">
+                      <video
+                        className="aspect-video w-full bg-black object-cover"
+                        controls
+                        playsInline
+                        preload="metadata"
+                        aria-label={`${sport.name} activity video`}
+                      >
+                        <source src={sport.videoSrc} type="video/mp4" />
+                      </video>
+                    </div>
+                  ) : sport.mediaNote ? (
+                    <div className="mt-4 overflow-hidden rounded-2xl border border-dashed border-slate-300 bg-slate-bg/80">
+                      <div className="flex aspect-video items-center justify-center px-4 text-center">
+                        <p className="text-xs font-semibold uppercase tracking-[0.1em] text-slate-500">
+                          {sport.mediaNote || e.videoComingSoon}
+                        </p>
                       </div>
                     </div>
-                  </div>
-                </div>
-              </article>
-            );
-          })}
+                  ) : null
+                }
+              />
+            </article>
+          ))}
         </SpotlightCardGroup>
       </section>
 
@@ -409,25 +416,15 @@ export default function ExploreTabs() {
               data-reveal-delay={index % 3 > 0 ? String(index % 3) : undefined}
               className="h-full"
             >
-              <div
-                data-card-cycle
-                className="student-life-card flex h-full min-h-[480px] flex-col rounded-3xl border border-t-2 border-slate-200 border-t-primary bg-white p-5 sm:min-h-[500px] sm:p-6"
-              >
-                <StudentLifeArtwork kind={FAITH_ART[group.id]} index={index} />
-                <div className="mt-5 flex flex-col items-start gap-2">
-                  <p className="subject-chip tabular-nums">{group.meetingDay}</p>
-                  <h3 className="font-serif text-xl font-bold text-primary-dark sm:text-2xl">
-                    {group.name}
-                  </h3>
-                </div>
-                <p className="mt-4 flex-1 text-sm leading-relaxed text-slate-700">
-                  {group.description}
-                </p>
-                <p className="mt-5 flex flex-wrap items-center gap-2 border-t border-slate-200 pt-4 text-xs text-slate-600">
-                  <strong className="font-semibold text-slate-800">{e.patron}</strong>
-                  <span className="subject-chip">{group.patron}</span>
-                </p>
-              </div>
+              <LifePreviewCard
+                index={index}
+                code={group.category}
+                title={group.name}
+                description={group.description}
+                artKind={FAITH_ART[group.id]}
+                chipsLabel={e.patron}
+                chips={[group.patron, group.meetingDay]}
+              />
             </article>
           ))}
         </SpotlightCardGroup>
@@ -463,36 +460,28 @@ export default function ExploreTabs() {
               data-reveal-delay={index % 3 > 0 ? String(index % 3) : undefined}
               className="h-full"
             >
-              <div
-                data-card-cycle
-                className="student-life-card flex h-full min-h-[540px] flex-col rounded-3xl border border-t-2 border-slate-200 border-t-primary bg-white p-5 sm:min-h-[560px] sm:p-6"
-              >
-                <StudentLifeArtwork kind={BOARDING_ART[section.id]} index={index} />
-                <div className="mt-5">
-                  <p className="mb-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-primary">
-                    {e.boardingWelfare}
-                  </p>
-                  <h3 className="font-serif text-xl font-bold text-primary-dark sm:text-2xl">
-                    {section.title}
-                  </h3>
-                </div>
-                <p className="mt-3 text-sm leading-relaxed text-slate-700">
-                  {section.description}
-                </p>
-                <ul className="mt-auto space-y-2 border-t border-slate-200 pt-4 text-xs text-slate-700 sm:text-sm">
-                  {section.highlights.map((point) => (
-                    <li key={point} className="flex items-baseline gap-2">
-                      <span
-                        className="select-none font-bold text-primary"
-                        aria-hidden="true"
-                      >
-                        –
-                      </span>
-                      <span>{point}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              <LifePreviewCard
+                index={index}
+                code={e.boardingWelfare}
+                title={section.title}
+                description={section.description}
+                artKind={BOARDING_ART[section.id]}
+                footer={
+                  <ul className="mt-4 space-y-2 text-xs text-slate-700 sm:text-sm">
+                    {section.highlights.map((point) => (
+                      <li key={point} className="flex items-baseline gap-2">
+                        <span
+                          className="select-none font-bold text-primary"
+                          aria-hidden="true"
+                        >
+                          –
+                        </span>
+                        <span>{point}</span>
+                      </li>
+                    ))}
+                  </ul>
+                }
+              />
             </article>
           ))}
         </SpotlightCardGroup>
@@ -612,37 +601,16 @@ export default function ExploreTabs() {
               data-reveal-delay={index % 3 > 0 ? String(index % 3) : undefined}
               className="h-full"
             >
-              <div
-                data-card-cycle
-                className="student-life-card flex h-full min-h-[490px] flex-col rounded-3xl border border-t-2 border-slate-200 border-t-primary bg-white p-5 sm:min-h-[510px] sm:p-6"
-              >
-                <StudentLifeArtwork
-                  kind={CLUB_ART[club.id]}
-                  logo={CLUB_LOGOS[club.id]}
-                  index={index}
-                />
-                <div className="mt-5 flex-1">
-                  <p className="mb-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-primary">
-                    {club.category}
-                  </p>
-                  <h3 className="font-serif text-xl font-bold text-primary-dark sm:text-2xl">
-                    {club.name}
-                  </h3>
-                  <p className="mt-3 text-sm leading-relaxed text-slate-700">
-                    {club.description}
-                  </p>
-                </div>
-                <dl className="mt-5 space-y-2 border-t border-slate-200 pt-4 text-xs text-slate-600">
-                  <div className="flex flex-wrap items-center gap-2">
-                    <dt className="font-semibold text-slate-800">{e.patron}</dt>
-                    <dd className="subject-chip">{club.patron}</dd>
-                  </div>
-                  <div className="flex flex-wrap items-center gap-2">
-                    <dt className="font-semibold text-slate-800">{e.meets}</dt>
-                    <dd className="subject-chip tabular-nums">{club.meetingDay}</dd>
-                  </div>
-                </dl>
-              </div>
+              <LifePreviewCard
+                index={index}
+                code={club.category}
+                title={club.name}
+                description={club.description}
+                artKind={CLUB_ART[club.id]}
+                logo={CLUB_LOGOS[club.id]}
+                chipsLabel={e.patron}
+                chips={[club.patron, club.meetingDay]}
+              />
             </article>
           ))}
         </SpotlightCardGroup>
