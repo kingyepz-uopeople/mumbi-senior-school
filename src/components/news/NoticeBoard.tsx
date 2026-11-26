@@ -78,7 +78,7 @@ export default function NoticeBoard({
       data-inview={inView ? 'true' : 'false'}
       data-pending={pending ? 'true' : undefined}
       data-returning={isReturning ? 'true' : undefined}
-      data-dark-surface=""
+      data-light-surface=""
       aria-labelledby={labelledBy}
     >
       <ul className="notice-board__grid">

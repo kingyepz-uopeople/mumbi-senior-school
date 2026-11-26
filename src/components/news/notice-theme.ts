@@ -4,22 +4,16 @@ export const NOTICE_OPEN_KEY = 'mumbi-notice-open-slug';
 
 export const NOTE_TILTS = [-1.8, 1.4, -1, 1.8] as const;
 
-export type NoteTone = 'blue' | 'yellow' | 'mint' | 'navy';
+export type NoteTone = 'blue' | 'yellow' | 'mint' | 'pink' | 'lilac';
 export type NoteAttachment = 'pin' | 'tape-center' | 'tape-corners';
-export type TapeHue = 'pink' | 'teal' | 'yellow';
+export type TapeHue = 'pink' | 'teal' | 'yellow' | 'sky';
 
-const TONE_BY_CATEGORY: Record<NewsItem['category'], NoteTone> = {
-  Event: 'blue',
-  Circular: 'yellow',
-  Newsletter: 'mint',
-  Download: 'navy',
-};
-
+const TONES: NoteTone[] = ['blue', 'yellow', 'mint', 'pink', 'lilac'];
 const ATTACHMENTS: NoteAttachment[] = ['pin', 'tape-center', 'tape-corners'];
-const TAPE_HUES: TapeHue[] = ['pink', 'teal', 'yellow'];
+const TAPE_HUES: TapeHue[] = ['pink', 'teal', 'yellow', 'sky'];
 
 export function noteTone(item: NewsItem): NoteTone {
-  return TONE_BY_CATEGORY[item.category] ?? 'blue';
+  return TONES[Math.abs(item.id) % TONES.length];
 }
 
 export function noteTilt(index = 0): number {
@@ -31,7 +25,7 @@ export function noteAttachment(item: NewsItem): NoteAttachment {
 }
 
 export function tapeHue(item: NewsItem): TapeHue {
-  return TAPE_HUES[Math.abs(item.id) % TAPE_HUES.length];
+  return TAPE_HUES[Math.abs(item.id + 2) % TAPE_HUES.length];
 }
 
 export function noticeViewName(slug: string): string {
