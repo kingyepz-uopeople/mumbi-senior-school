@@ -1,0 +1,172 @@
+const en = {
+  meta: {
+    languageName: 'English',
+    switchLanguage: 'Language',
+  },
+  a11y: {
+    skipToContent: 'Skip to main content',
+    primaryNav: 'Primary navigation',
+    footerNav: 'Footer navigation',
+    openMenu: 'Open navigation menu',
+    closeMenu: 'Close navigation menu',
+    studentPortal: 'Student Portal',
+    staffPortal: 'Staff Portal',
+    installApp: 'Install App',
+  },
+  nav: {
+    home: 'Home',
+    about: 'About',
+    aboutHistory: 'School History',
+    aboutMission: 'Motto, Mission & Vision',
+    aboutAnthems: 'School Anthems',
+    aboutLeadership: 'Principals, BOM & Council',
+    academics: 'Academics',
+    academicsPathways: 'CBC Senior School Pathways',
+    academicsDepartments: 'Academic Departments',
+    academicsKcseTarget: '2026 KCSE Target & Dean of Studies',
+    academicsKcseResults: 'KCSE Results by Year',
+    academicsWallOfFame: 'KCSE Roll of Honour',
+    admissions: 'Admissions',
+    studentLife: 'Student Life',
+    clubs: 'Clubs & Movements',
+    sports: 'Sports & Games',
+    routine: 'Daily Routine',
+    faith: 'Chaplaincy & Faith',
+    boarding: 'Boarding & Uniform',
+    downloads: 'Downloads',
+    news: 'News',
+    gallery: 'Gallery',
+    contact: 'Contact',
+    portal: 'Portal',
+  },
+  footer: {
+    quickLinks: 'Quick links',
+    resources: 'Resources',
+    contact: 'Contact',
+    aboutSchool: 'About the School',
+    academicsPathways: 'Academics & Pathways',
+    studentLife: 'Student Life',
+    downloadsCirculars: 'Downloads & Circulars',
+    newsEvents: 'News & Events',
+    photoGallery: 'Photo Gallery',
+    contactLocation: 'Contact & Location',
+    grade10Guide: 'Grade 10 Admissions Guide',
+    termCirculars: 'Term Circulars',
+    cbcPathways: 'CBC Senior School Pathways',
+    portalComingSoon: 'Student & Staff Portal (Coming Soon)',
+    directions: 'Get directions',
+    established: 'Established',
+    knecCode: 'KNEC Centre Code',
+    moeReg: 'MoE Registration',
+    allRights: 'All rights reserved.',
+  },
+  hero: {
+    intro:
+      "A {category} in {location}. We offer STEM, Social Sciences, and Arts & Sports Science under Kenya's Competency-Based Curriculum.",
+    admissionsCta: 'Grade 10 admissions',
+    exploreCta: 'Explore the school',
+  },
+  home: {
+    ethosKicker: 'School Ethos',
+    ethosHeading: 'Motto, Mission & Vision',
+    schoolMotto: 'School Motto',
+    mission: 'Mission',
+    vision: 'Vision',
+    coreValues: 'Core Values',
+    readCoreValues: 'Read more about our core values',
+    pathwaysKicker: 'Senior School Curriculum · Grades 10 – 12',
+    pathwaysHeading: 'CBC Senior School Pathways',
+    viewDepartments: 'View all five academic departments',
+    tracks: 'Tracks',
+    subjectsTaught: 'Subjects Taught',
+    relatedFields: 'Related University Fields',
+  },
+  school: {
+    motto: 'Determined to Excel',
+    mission:
+      'To provide a holistic, inclusive, and quality education that empowers girls to become competent, ethical, and transformative leaders in a dynamic global society.',
+    vision:
+      'A centre of excellence nurturing empowered girls who are innovative, morally upright, and globally competitive.',
+    category: "C2 Public Girls' Boarding Senior School",
+    foundedLabel: 'Est.',
+    coreValues: {
+      hardwork: {
+        title: 'Hardwork',
+        description: 'Put consistent effort into learning and see tasks through.',
+      },
+      honesty: {
+        title: 'Honesty',
+        description: 'Tell the truth and take pride in doing our own work.',
+      },
+      accountability: {
+        title: 'Accountability',
+        description:
+          'Take responsibility for our decisions, actions, and commitments.',
+      },
+      respect: {
+        title: 'Respect',
+        description: 'Treat every person with dignity, courtesy, and fairness.',
+      },
+      professionalism: {
+        title: 'Professionalism',
+        description: 'Work to a high standard with discipline and integrity.',
+      },
+      teamwork: {
+        title: 'Teamwork',
+        description: 'Cooperate, share responsibility, and support one another.',
+      },
+      effectiveness: {
+        title: 'Effectiveness',
+        description: 'Use time and resources well to achieve clear results.',
+      },
+      creativity: {
+        title: 'Creativity',
+        description: 'Think originally and solve problems with imagination.',
+      },
+      peace: {
+        title: 'Peace',
+        description: 'Promote harmony, dialogue, and calm in our community.',
+      },
+      'time-conscientiousness': {
+        title: 'Time conscientiousness',
+        description: 'Value punctuality and manage time with care.',
+      },
+      transparency: {
+        title: 'Transparency',
+        description: 'Communicate openly and account for what we do.',
+      },
+      'customer-focus': {
+        title: 'Customer focus',
+        description:
+          'Listen to learners, families, and visitors and respond to their needs.',
+      },
+    },
+  },
+  about: {
+    kicker: 'About the School',
+    historyKicker: 'School History',
+    historyHeading: 'Educating Girls Since {year}',
+    historyIntroLead: 'The foundation stone of Mumbi Girls Secondary School was laid on ',
+    historyIntroDate: '9 November 1968',
+    historyIntroBy: ' by ',
+    historyIntroTail:
+      ". The school was established to expand public secondary schooling for girls in Murang'a and the wider region, and carries the name ",
+    historyIntroMumbiNote: ', the matriarch of the Agikuyu people.',
+    foundationStone: 'Foundation Stone',
+    laidBy: 'Laid by',
+    officialRegistration: 'Official Registration',
+    officialName: 'Official Name',
+    category: 'Category',
+    physicalLocation: 'Physical Location',
+    postalAddress: 'Postal Address',
+    officeHours: 'Office Hours',
+  },
+  pathways: {
+    stem: 'STEM',
+    socialSciences: 'Social Sciences',
+    artsSports: 'Arts & Sports Science',
+  },
+} as const;
+
+export default en;
+export type Dictionary = typeof en;
