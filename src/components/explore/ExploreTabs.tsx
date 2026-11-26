@@ -3,6 +3,7 @@
 import { useMemo, useState, type ReactNode } from 'react';
 import Image from 'next/image';
 import BoardingPhotos from '@/components/explore/BoardingPhotos';
+import SportActivityVideo from '@/components/explore/SportActivityVideo';
 import { fill } from '@/i18n/fill';
 import { useLocale } from '@/i18n/locale-context';
 import ProspectusCardArt, {
@@ -363,17 +364,11 @@ export default function ExploreTabs() {
                 chips={[sport.patron, sport.meetingDay]}
                 footer={
                   sport.videoSrc ? (
-                    <div className="mt-4 overflow-hidden rounded-2xl border border-slate-200 bg-slate-950">
-                      <video
-                        className="aspect-video w-full bg-black object-cover"
-                        controls
-                        playsInline
-                        preload="metadata"
-                        aria-label={`${sport.name} activity video`}
-                      >
-                        <source src={sport.videoSrc} type="video/mp4" />
-                      </video>
-                    </div>
+                    <SportActivityVideo
+                      src={sport.videoSrc}
+                      label={`${sport.name} activity video`}
+                      endSeconds={32}
+                    />
                   ) : sport.mediaNote ? (
                     <div className="mt-4 overflow-hidden rounded-2xl border border-dashed border-slate-300 bg-slate-bg/80">
                       <div className="flex aspect-video items-center justify-center px-4 text-center">
