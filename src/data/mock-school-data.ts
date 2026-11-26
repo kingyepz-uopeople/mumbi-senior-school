@@ -997,7 +997,7 @@ export const galleryAlbums: GalleryAlbum[] = [
     id: 'school-campus',
     name: serenityAlbumName,
     description:
-      'A look around Mumbi Girls Senior School, from the parade ground and main gate to the Tahidi study area and academic buildings.',
+      'A look around Mumbi Girls Senior School — parade ground, main gate, classroom wings, courtyard lawns, gazebo, and the Tahidi study area.',
     coverImage: '/images/school/gallery-campus-serenity.jpg',
     images: [
       {
@@ -1027,6 +1027,69 @@ export const galleryAlbums: GalleryAlbum[] = [
         alt: 'Paved campus walkway with trees and lawns behind low blue walls',
         width: 1600,
         height: 900,
+      },
+      {
+        id: 24,
+        src: '/images/school/gallery-campus-chapel-canopy.jpg',
+        alt: 'Traveller palms above a campus roof with the chapel and school buildings beyond',
+        width: 768,
+        height: 1024,
+      },
+      {
+        id: 25,
+        src: '/images/school/gallery-campus-upper-wing.jpg',
+        alt: 'Cream and blue two-storey classroom wing seen from an upper corridor',
+        width: 1024,
+        height: 768,
+      },
+      {
+        id: 26,
+        src: '/images/school/gallery-campus-courtyard-lawn.jpg',
+        alt: 'Campus courtyard lawns and blue railings viewed from an upper walkway',
+        width: 1024,
+        height: 768,
+      },
+      {
+        id: 27,
+        src: '/images/school/gallery-campus-ramp-block.jpg',
+        alt: 'Covered ramp and blue railings beside a cream-and-blue classroom block',
+        width: 1024,
+        height: 768,
+      },
+      {
+        id: 28,
+        src: '/images/school/gallery-campus-blue-roof.jpg',
+        alt: 'Single-storey campus building with a light blue roof across the green lawn',
+        width: 1024,
+        height: 768,
+      },
+      {
+        id: 29,
+        src: '/images/school/gallery-campus-lawn-palms.jpg',
+        alt: 'Open lawn with a traveller palm, water tanks, and trees under a bright sky',
+        width: 1024,
+        height: 768,
+      },
+      {
+        id: 30,
+        src: '/images/school/gallery-campus-water-tanks.jpg',
+        alt: 'Curving campus path past water tanks, trees, and flowering shrubs',
+        width: 1024,
+        height: 768,
+      },
+      {
+        id: 31,
+        src: '/images/school/gallery-campus-gazebo.jpg',
+        alt: 'Blue-and-white striped gazebo beside a stone school building',
+        width: 768,
+        height: 1024,
+      },
+      {
+        id: 32,
+        src: '/images/school/gallery-campus-gazebo-slope.jpg',
+        alt: 'Striped gazebo on the grassy slope below a multi-storey stone block',
+        width: 1024,
+        height: 768,
       },
       {
         id: 18,

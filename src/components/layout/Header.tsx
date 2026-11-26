@@ -411,7 +411,6 @@ function MobileNavDrawer({
 
         {/* Mobile portal & install actions */}
         <div className="space-y-2.5 border-t border-slate-200 bg-slate-bg p-4">
-          <LanguageSwitcher />
           {canNativeInstall && (
             <button
               type="button"
@@ -498,33 +497,34 @@ export default function Header() {
               </div>
             </LocaleLink>
 
-            <nav
-              aria-label={dict.a11y.primaryNav}
-              className="hidden items-center gap-0.5 lg:flex"
-            >
-              {navigation.map((item) => (
-                <DesktopDropdown
-                  key={item.href}
-                  item={item}
-                  isActive={pathname === item.href}
-                />
-              ))}
-              <div className="ml-2">
-                <LanguageSwitcher compact />
-              </div>
-            </nav>
+            <div className="flex shrink-0 items-center gap-2 sm:gap-2.5">
+              <nav
+                aria-label={dict.a11y.primaryNav}
+                className="hidden items-center gap-0.5 lg:flex"
+              >
+                {navigation.map((item) => (
+                  <DesktopDropdown
+                    key={item.href}
+                    item={item}
+                    isActive={pathname === item.href}
+                  />
+                ))}
+              </nav>
 
-            <button
-              ref={hamburgerRef}
-              type="button"
-              onClick={() => setMobileOpen(true)}
-              className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-white transition-colors hover:bg-primary-dark lg:hidden"
-              aria-label={dict.a11y.openMenu}
-              aria-expanded={mobileOpen}
-              aria-controls="mobile-nav-drawer"
-            >
-              <Menu className="h-6 w-6 stroke-[1.75]" aria-hidden="true" />
-            </button>
+              <LanguageSwitcher compact />
+
+              <button
+                ref={hamburgerRef}
+                type="button"
+                onClick={() => setMobileOpen(true)}
+                className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-white transition-colors hover:bg-primary-dark lg:hidden"
+                aria-label={dict.a11y.openMenu}
+                aria-expanded={mobileOpen}
+                aria-controls="mobile-nav-drawer"
+              >
+                <Menu className="h-6 w-6 stroke-[1.75]" aria-hidden="true" />
+              </button>
+            </div>
           </div>
         </div>
       </div>

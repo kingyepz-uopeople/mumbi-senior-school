@@ -1,6 +1,13 @@
 'use client';
 
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type CSSProperties,
+} from 'react';
 import { createPortal } from 'react-dom';
 import Image from 'next/image';
 import { ChevronLeft, ChevronRight, X } from '@/components/icons';
@@ -188,9 +195,15 @@ export default function GalleryBrowser({
         : 'bg-white border-slate-300 text-slate-700 hover:border-primary hover:text-primary'
     }`;
 
+  const driftDurationSec = Math.max(64, driftFrames.length * 8);
+
   const driftStrip =
     driftFrames.length > 0 ? (
-      <div className="gallery-drift-viewport -mx-1 px-1" aria-hidden="true">
+      <div
+        className="gallery-drift-viewport -mx-1 px-1"
+        aria-hidden="true"
+        style={{ '--drift-duration': `${driftDurationSec}s` } as CSSProperties}
+      >
         <div className="gallery-drift-track">
           {[0, 1].map((pass) => (
             <div
