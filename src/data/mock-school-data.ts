@@ -13,6 +13,7 @@ import {
   GovernanceRole,
   Department,
   Club,
+  GamesDepartmentMessage,
   DailyRoutineItem,
   BoardingSection,
   DownloadItem,
@@ -630,6 +631,15 @@ export const clubs: Club[] = [
 ];
 
 // ── Sports ──────────────────────────────────────────────────
+export const headOfGames: GamesDepartmentMessage = {
+  role: 'Head of Games & Athletics',
+  name: 'Mr. Solomon Kamau',
+  message: [
+    'Games and athletics are a core part of boarding life at Mumbi Girls. Every afternoon our learners train with discipline, teamwork, and respect for one another on the court, field, and track.',
+    'We enter inter-house leagues and Murang’a County KSSSA championships so that every student who commits to training can represent the school with pride — and grow into a healthier, more confident young woman.',
+  ],
+};
+
 export const sports: Club[] = [
   {
     id: 'volleyball',
@@ -675,7 +685,7 @@ export const sports: Club[] = [
     id: 'athletics',
     name: 'Athletics',
     category: 'Sport',
-    patron: 'Mr. Elijah Kipchoge',
+    patron: 'Mr. Solomon Kamau',
     meetingDay: 'Daily, 05:30 & 16:00',
     description:
       'Track and field training across sprints, middle- and long-distance races, relays, jumps, and throws.',
@@ -690,6 +700,17 @@ export const sports: Club[] = [
     description:
       'Team handball coaching, inter-class matches, and KSSSA tournament participation.',
     icon: 'Hand',
+  },
+  {
+    id: 'badminton',
+    name: 'Badminton',
+    category: 'Sport',
+    patron: 'Mr. Charagu',
+    meetingDay: 'Daily, 16:00',
+    description:
+      'Racket skills, doubles and singles drills, and recreational-to-competitive play for Senior School learners.',
+    icon: 'Target',
+    mediaNote: 'Activity video coming soon.',
   },
 ];
 

@@ -2,6 +2,8 @@
 
 import { useMemo, useState } from 'react';
 import BoardingPhotos from '@/components/explore/BoardingPhotos';
+import { fill } from '@/i18n/fill';
+import { useLocale } from '@/i18n/locale-context';
 import ProspectusCardArt, {
   type ProspectusArtKey,
 } from '@/components/shared/ProspectusCardArt';
@@ -11,21 +13,18 @@ import {
   clubs,
   dailyRoutine,
   faithGroups,
+  headOfGames,
   sports,
 } from '@/data/mock-school-data';
 
 type RoutineFilterId = 'all' | 'morning' | 'school-day' | 'evening';
 
-const SCHEDULE_FILTERS: {
-  id: RoutineFilterId;
-  label: string;
-  range: string;
-}[] = [
-  { id: 'all', label: 'Full schedule', range: '05:00–22:00' },
-  { id: 'morning', label: 'Morning', range: '05:00–07:00' },
-  { id: 'school-day', label: 'School day', range: '07:30–16:00' },
-  { id: 'evening', label: 'Evening', range: '17:30–22:00' },
-];
+const SCHEDULE_FILTER_RANGES: Record<RoutineFilterId, string> = {
+  all: '05:00–22:00',
+  morning: '05:00–07:00',
+  'school-day': '07:30–16:00',
+  evening: '17:30–22:00',
+};
 
 const CLUB_ART: Record<string, ProspectusArtKey> = {
   'girl-guides': 'girl-guides',
@@ -44,6 +43,7 @@ const SPORT_ART: Record<string, ProspectusArtKey> = {
   hockey: 'hockey',
   athletics: 'athletics',
   handball: 'handball',
+  badminton: 'badminton',
 };
 
 const FAITH_ART: Record<string, ProspectusArtKey> = {
@@ -138,6 +138,24 @@ function JumpLink({
 }
 
 export default function ExploreTabs() {
+  const { dict } = useLocale();
+  const e = dict.explore;
+
+  const scheduleFilters: {
+    id: RoutineFilterId;
+    label: string;
+    range: string;
+  }[] = [
+    { id: 'all', label: e.fullSchedule, range: SCHEDULE_FILTER_RANGES.all },
+    { id: 'morning', label: e.morning, range: SCHEDULE_FILTER_RANGES.morning },
+    {
+      id: 'school-day',
+      label: e.schoolDay,
+      range: SCHEDULE_FILTER_RANGES['school-day'],
+    },
+    { id: 'evening', label: e.evening, range: SCHEDULE_FILTER_RANGES.evening },
+  ];
+
   const [routineFilter, setRoutineFilter] = useState<RoutineFilterId>('all');
   const filteredRoutine = useMemo(
     () =>
@@ -151,19 +169,19 @@ export default function ExploreTabs() {
   return (
     <div className="space-y-16 sm:space-y-20">
       <nav aria-label="Student life sections" className="student-life-jump-nav">
-        <JumpLink href="#sports" label="Sports & Games" count={sports.length} />
-        <JumpLink href="#faith" label="Chaplaincy" count={faithGroups.length} />
+        <JumpLink href="#sports" label={e.jumpSports} count={sports.length} />
+        <JumpLink href="#faith" label={e.jumpFaith} count={faithGroups.length} />
         <JumpLink
           href="#boarding"
-          label="Boarding"
+          label={e.jumpBoarding}
           count={boardingSections.length}
         />
         <JumpLink
           href="#routine"
-          label="Daily routine"
+          label={e.jumpRoutine}
           count={dailyRoutine.length}
         />
-        <JumpLink href="#clubs" label="Clubs & Movements" count={clubs.length} />
+        <JumpLink href="#clubs" label={e.jumpClubs} count={clubs.length} />
       </nav>
 
       <section
@@ -173,10 +191,28 @@ export default function ExploreTabs() {
       >
         <SectionIntro
           id="sports"
-          kicker="KSSSA & Inter-House Games"
-          title="Sports & Games"
-          description="Games run daily from 16:00, with school teams entered in inter-house leagues and Murang'a County KSSSA secondary school championships."
+          kicker={e.sportsKicker}
+          title={e.sportsHeading}
+          description={e.sportsIntro}
         />
+
+        <aside
+          data-reveal=""
+          aria-label={`${headOfGames.role}, ${headOfGames.name}`}
+          className="mb-8 border border-t-2 border-slate-200 border-t-primary bg-white/70 p-5 sm:p-7"
+        >
+          <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-primary">
+            Message from the {headOfGames.role}
+          </p>
+          <h3 className="mt-2 font-serif text-xl font-bold text-slate-900 sm:text-2xl">
+            {headOfGames.name}
+          </h3>
+          <div className="mt-4 space-y-3 text-sm leading-relaxed text-slate-700 sm:text-base">
+            {headOfGames.message.map((paragraph) => (
+              <p key={paragraph.slice(0, 48)}>{paragraph}</p>
+            ))}
+          </div>
+        </aside>
 
         <SpotlightCardGroup
           cardCount={sports.length}
@@ -196,7 +232,10 @@ export default function ExploreTabs() {
                 data-card-cycle
                 className="student-life-card flex h-full min-h-[450px] flex-col rounded-3xl border border-t-2 border-slate-200 border-t-primary bg-white p-5 sm:min-h-[470px] sm:p-6"
               >
-                <StudentLifeArtwork kind={SPORT_ART[sport.id]} index={index} />
+                <StudentLifeArtwork
+                  kind={SPORT_ART[sport.id] ?? 'athletics'}
+                  index={index}
+                />
                 <div className="mt-5 flex-1">
                   <p className="mb-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-primary">
                     {sport.category}
@@ -207,14 +246,23 @@ export default function ExploreTabs() {
                   <p className="mt-3 text-sm leading-relaxed text-slate-700">
                     {sport.description}
                   </p>
+                  {sport.mediaNote ? (
+                    <div className="mt-4 overflow-hidden rounded-2xl border border-dashed border-slate-300 bg-slate-bg/80">
+                      <div className="flex aspect-video items-center justify-center px-4 text-center">
+                        <p className="text-xs font-semibold uppercase tracking-[0.1em] text-slate-500">
+                          {sport.mediaNote}
+                        </p>
+                      </div>
+                    </div>
+                  ) : null}
                 </div>
                 <dl className="mt-5 space-y-2 border-t border-slate-200 pt-4 text-xs text-slate-600">
                   <div className="flex flex-wrap items-center gap-2">
-                    <dt className="font-semibold text-slate-800">Coach / Patron:</dt>
+                    <dt className="font-semibold text-slate-800">{e.coachPatron}</dt>
                     <dd className="subject-chip">{sport.patron}</dd>
                   </div>
                   <div className="flex flex-wrap items-center gap-2">
-                    <dt className="font-semibold text-slate-800">Training:</dt>
+                    <dt className="font-semibold text-slate-800">{e.training}</dt>
                     <dd className="subject-chip tabular-nums">{sport.meetingDay}</dd>
                   </div>
                 </dl>
@@ -231,9 +279,9 @@ export default function ExploreTabs() {
       >
         <SectionIntro
           id="faith"
-          kicker="Pastoral Care"
-          title="Chaplaincy & Faith Fellowships"
-          description="Weekly services and student faith societies operate under staff patrons, with scheduled worship times for each group."
+          kicker={e.faithKicker}
+          title={e.faithHeading}
+          description={e.faithIntro}
         />
 
         <SpotlightCardGroup
@@ -265,7 +313,7 @@ export default function ExploreTabs() {
                   {group.description}
                 </p>
                 <p className="mt-5 flex flex-wrap items-center gap-2 border-t border-slate-200 pt-4 text-xs text-slate-600">
-                  <strong className="font-semibold text-slate-800">Patron:</strong>
+                  <strong className="font-semibold text-slate-800">{e.patron}</strong>
                   <span className="subject-chip">{group.patron}</span>
                 </p>
               </div>
@@ -281,9 +329,9 @@ export default function ExploreTabs() {
       >
         <SectionIntro
           id="boarding"
-          kicker="Residential Life"
-          title="Boarding, Dining & School Uniform"
-          description="Practical arrangements for meals, official school dress, dormitory supervision, and student health during the term."
+          kicker={e.boardingKicker}
+          title={e.boardingHeading}
+          description={e.boardingIntro}
         />
 
         <div className="mb-8">
@@ -346,9 +394,9 @@ export default function ExploreTabs() {
       >
         <SectionIntro
           id="routine"
-          kicker="Weekday Bell Schedule · 05:00 – 22:00"
-          title="Daily Boarding Timetable"
-          description="The standard weekday schedule observed during the school term, from morning preps through evening roll call and lights out."
+          kicker={e.routineKicker}
+          title={e.routineHeading}
+          description={e.routineIntro}
         />
 
         <div className="student-life-schedule-card">
@@ -356,7 +404,7 @@ export default function ExploreTabs() {
             <div className="flex flex-wrap items-end justify-between gap-3">
               <div>
                 <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-primary">
-                  Daily routine
+                  {e.jumpRoutine}
                 </p>
                 <h3 className="mt-1 font-serif text-xl font-bold text-slate-900">
                   05:00 <span className="text-primary">—</span> 22:00
@@ -366,7 +414,10 @@ export default function ExploreTabs() {
                 className="text-xs font-medium tabular-nums text-slate-500"
                 aria-live="polite"
               >
-                Showing {filteredRoutine.length} of {dailyRoutine.length} activities
+                {fill(e.showingActivities, {
+                  shown: filteredRoutine.length,
+                  total: dailyRoutine.length,
+                })}
               </p>
             </div>
 
@@ -385,7 +436,7 @@ export default function ExploreTabs() {
               aria-label="Filter daily schedule by time of day"
               className="student-life-schedule-filters"
             >
-              {SCHEDULE_FILTERS.map((filter) => {
+              {scheduleFilters.map((filter) => {
                 const selected = routineFilter === filter.id;
                 return (
                   <button
@@ -431,9 +482,9 @@ export default function ExploreTabs() {
       >
         <SectionIntro
           id="clubs"
-          kicker="Afternoon & Weekend Societies"
-          title="Clubs & Uniformed Movements"
-          description="Students join clubs and uniformed movements that meet after afternoon lessons and on Saturday afternoons under teacher patrons."
+          kicker={e.clubsKicker}
+          title={e.clubsHeading}
+          description={e.clubsIntro}
         />
 
         <SpotlightCardGroup
@@ -468,11 +519,11 @@ export default function ExploreTabs() {
                 </div>
                 <dl className="mt-5 space-y-2 border-t border-slate-200 pt-4 text-xs text-slate-600">
                   <div className="flex flex-wrap items-center gap-2">
-                    <dt className="font-semibold text-slate-800">Patron:</dt>
+                    <dt className="font-semibold text-slate-800">{e.patron}</dt>
                     <dd className="subject-chip">{club.patron}</dd>
                   </div>
                   <div className="flex flex-wrap items-center gap-2">
-                    <dt className="font-semibold text-slate-800">Meets:</dt>
+                    <dt className="font-semibold text-slate-800">{e.meets}</dt>
                     <dd className="subject-chip tabular-nums">{club.meetingDay}</dd>
                   </div>
                 </dl>

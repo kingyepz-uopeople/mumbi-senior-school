@@ -5,6 +5,7 @@ import { createPortal } from 'react-dom';
 import Image from 'next/image';
 import { ChevronLeft, ChevronRight, X } from '@/components/icons';
 import { galleryAlbums } from '@/data/mock-school-data';
+import { useLocale } from '@/i18n/locale-context';
 import type { GalleryImage } from '@/types';
 
 interface GalleryBrowserProps {
@@ -21,6 +22,9 @@ export default function GalleryBrowser({
   availableSrcs,
   driftImages = [],
 }: GalleryBrowserProps) {
+  const { dict } = useLocale();
+  const g = dict.gallery;
+  const c = dict.common;
   const [selectedAlbumId, setSelectedAlbumId] = useState<string>('all');
   const [activeImageId, setActiveImageId] = useState<number | null>(null);
 
@@ -216,7 +220,7 @@ export default function GalleryBrowser({
     <div className="space-y-10">
       {/* Opening drift of real campus photographs */}
       {driftStrip && (
-        <section aria-label="Recent campus photographs" className="space-y-3">
+        <section aria-label={g.recent} className="space-y-3">
           {driftStrip}
           <p className="text-xs font-medium tracking-wide text-slate-500">
             Recent photographs from the campus and school events.
@@ -239,7 +243,7 @@ export default function GalleryBrowser({
           }}
           className={filterBtnClass(selectedAlbumId === 'all')}
         >
-          All Albums ({allImages.length})
+          {g.allAlbums} ({allImages.length})
         </button>
 
         {galleryAlbums.map((album) => {
@@ -269,12 +273,12 @@ export default function GalleryBrowser({
               id="gallery-album-heading"
               className="font-serif text-2xl sm:text-3xl font-bold text-slate-900"
             >
-              {selectedAlbum ? selectedAlbum.name : 'All Albums'}
+              {selectedAlbum ? selectedAlbum.name : g.allAlbums}
             </h2>
             <p className="text-sm text-slate-600 mt-1 leading-relaxed">
               {selectedAlbum
                 ? selectedAlbum.description
-                : 'Photographs of the campus and school events.'}
+                : g.campusIntro}
             </p>
           </div>
           <p
@@ -282,8 +286,7 @@ export default function GalleryBrowser({
             aria-live="polite"
             className="text-xs font-medium text-slate-600 tabular-nums shrink-0"
           >
-            {viewableImages.length}{' '}
-            {viewableImages.length === 1 ? 'photograph' : 'photographs'}
+            {viewableImages.length} {g.photographs}
           </p>
         </div>
 
@@ -332,7 +335,7 @@ export default function GalleryBrowser({
         ) : (
           <div className="py-12 px-6 bg-white border border-slate-200">
             <h3 className="font-serif text-lg font-bold text-slate-900">
-              Photographs coming to this album
+              {g.emptyAlbum}
             </h3>
             <p className="mt-1 text-sm text-slate-600">
               Verified photographs will be added here by the school office.
@@ -381,7 +384,7 @@ export default function GalleryBrowser({
                   ref={closeButtonRef}
                   type="button"
                   onClick={closeLightbox}
-                  aria-label="Close photo lightbox"
+                  aria-label={c.close}
                   className="inline-flex items-center justify-center w-11 h-11 rounded-full hover:bg-white/15 text-white transition-colors shrink-0"
                 >
                   <X className="w-5 h-5" aria-hidden="true" />
@@ -427,19 +430,19 @@ export default function GalleryBrowser({
                     <button
                       type="button"
                       onClick={showPrev}
-                      aria-label="Previous photo"
+                      aria-label={c.previous}
                       className="flex-1 sm:flex-none min-h-11 px-4 py-2 rounded-full border border-white/30 hover:bg-white/15 text-white text-xs font-semibold inline-flex items-center justify-center gap-1.5 transition-colors"
                     >
                       <ChevronLeft className="w-4 h-4" aria-hidden="true" />
-                      <span>Previous</span>
+                      <span>{c.previous}</span>
                     </button>
                     <button
                       type="button"
                       onClick={showNext}
-                      aria-label="Next photo"
+                      aria-label={c.next}
                       className="flex-1 sm:flex-none min-h-11 px-4 py-2 rounded-full bg-white hover:bg-blue-50 text-primary text-xs font-semibold inline-flex items-center justify-center gap-1.5 transition-colors"
                     >
-                      <span>Next</span>
+                      <span>{c.next}</span>
                       <ChevronRight className="w-4 h-4" aria-hidden="true" />
                     </button>
                   </div>

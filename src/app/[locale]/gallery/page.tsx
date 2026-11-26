@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import GalleryBrowser from '@/components/gallery/GalleryBrowser';
-import { galleryAlbums, schoolInfo } from '@/data/mock-school-data';
+import { galleryAlbums } from '@/data/mock-school-data';
+import { getLocaleDictionary } from '@/i18n/server';
 import { getAvailablePublicAssets } from '@/lib/media';
 import { buildPageMetadata } from '@/lib/site';
 
@@ -11,13 +12,19 @@ export const metadata: Metadata = buildPageMetadata({
   path: '/gallery',
 });
 
-export default function GalleryPage() {
+export default async function GalleryPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { dict } = await getLocaleDictionary(params);
+  const g = dict.gallery;
+
   const allPaths = galleryAlbums.flatMap((album) =>
     album.images.map((image) => image.src)
   );
   const availableSrcs = getAvailablePublicAssets(allPaths);
 
-  // The opening drift uses the campus album, in the order it is catalogued.
   const campusAlbum = galleryAlbums.find((album) => album.id === 'school-campus');
   const driftImages = campusAlbum ? campusAlbum.images : [];
 
@@ -30,15 +37,13 @@ export default function GalleryPage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
           <p className="mb-3 flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.16em] text-blue-100">
             <span className="h-0.5 w-7 bg-accent" aria-hidden="true" />
-            School Archives
+            {g.kicker}
           </p>
           <h1 className="font-serif text-4xl leading-tight font-bold sm:text-5xl lg:text-6xl">
-            Photo Gallery
+            {g.title}
           </h1>
           <p className="mt-4 max-w-xl text-base leading-relaxed text-blue-50 sm:text-lg">
-            The campus in {schoolInfo.locationShort} — the main gate, gardens,
-            study areas, and academic buildings — alongside photographs from
-            school events.
+            {g.subtitle}
           </p>
         </div>
       </section>

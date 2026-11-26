@@ -25,14 +25,23 @@ import {
   schoolAnthem,
   schoolInfo,
 } from '@/data/mock-school-data';
+import { fill } from '@/i18n/fill';
+import { getLocaleDictionary } from '@/i18n/server';
 import { buildPageMetadata } from '@/lib/site';
 
-export const metadata: Metadata = buildPageMetadata({
-  title: 'About the School',
-  description:
-    `Discover the history, values, anthems, and leadership of ${schoolInfo.name}, located in ${schoolInfo.physicalLocation}.`,
-  path: '/about',
-});
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale, dict } = await getLocaleDictionary(params);
+
+  return buildPageMetadata({
+    title: dict.about.title,
+    description: `Discover the history, values, anthems, and leadership of ${schoolInfo.name}, located in ${schoolInfo.physicalLocation}.`,
+    path: `/${locale}/about`,
+  });
+}
 
 const ROMAN = ['I', 'II', 'III'] as const;
 
@@ -51,18 +60,28 @@ const CORE_VALUE_ICONS: Record<string, ComponentType<IconProps>> = {
   'customer-focus': MessagesSquare,
 };
 
-export default function AboutPage() {
+export default async function AboutPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { dict } = await getLocaleDictionary(params);
+
   return (
     <div className="bg-slate-bg">
       <PageHero
         variant="about"
-        kicker="About the School"
+        kicker={dict.about.kicker}
         title={schoolInfo.name}
-        subtitle={`A ${schoolInfo.category} in ${schoolInfo.physicalLocation}. Foundation stone laid on ${schoolInfo.foundedOn}.`}
+        subtitle={fill(dict.about.subtitle, {
+          category: dict.school.category,
+          location: schoolInfo.physicalLocation,
+          foundedOn: schoolInfo.foundedOn,
+        })}
         meta={[
-          `Est. ${schoolInfo.founded}`,
-          `KNEC ${schoolInfo.knecCode}`,
-          `MoE ${schoolInfo.moeReg}`,
+          `${dict.school.foundedLabel} ${schoolInfo.founded}`,
+          `${dict.footer.knecCode} ${schoolInfo.knecCode}`,
+          `${dict.footer.moeReg} ${schoolInfo.moeReg}`,
           schoolInfo.postalAddress,
         ]}
       />
@@ -77,14 +96,14 @@ export default function AboutPage() {
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16">
           <div data-reveal="" className="lg:col-span-7 max-w-2xl">
             <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary mb-2">
-              School History
+              {dict.about.historyKicker}
             </p>
             <BlurRevealHeading
               id="about-history-heading"
               seed="about-history"
               className="font-serif text-2xl sm:text-3xl font-bold text-slate-900 mb-4"
             >
-              Educating Girls Since {schoolInfo.founded}
+              {fill(dict.about.historyHeading, { year: schoolInfo.founded })}
             </BlurRevealHeading>
             <div className="w-10 h-0.5 bg-accent mb-6" aria-hidden="true" />
 
@@ -92,33 +111,23 @@ export default function AboutPage() {
               <ScrollHighlightText
                 seed="about-history-intro"
                 segments={[
-                  `The foundation stone of Mumbi Girls Secondary School was laid on `,
-                  { text: '9 November 1968', strong: true },
-                  ' by ',
+                  dict.about.historyIntroLead,
+                  { text: dict.about.historyIntroDate, strong: true },
+                  dict.about.historyIntroBy,
                   { text: schoolInfo.founder, strong: true },
-                  ". The school was established to expand public secondary schooling for girls in Murang'a and the wider region, and carries the name ",
+                  dict.about.historyIntroTail,
                   { text: 'Mumbi', em: true },
-                  ', the matriarch of the Agikuyu people.',
+                  dict.about.historyIntroMumbiNote,
                 ]}
               />
               <p>
-                Supported for more than five decades by successive Boards of
-                Management, parents, teaching and non-teaching staff, and the
-                Ministry of Education, the institution operates today as a
-                registered <strong>{schoolInfo.category}</strong> (KNEC Centre
-                Code <strong>{schoolInfo.knecCode}</strong>, Ministry of
-                Education Registration <strong>{schoolInfo.moeReg}</strong>) with
-                a boarding enrolment of over 1,200 students.
+                {fill(dict.about.historySupport, {
+                  category: dict.school.category,
+                  knec: schoolInfo.knecCode,
+                  moe: schoolInfo.moeReg,
+                })}
               </p>
-              <p>
-                In line with Kenya&apos;s Competency-Based Curriculum (CBC), the
-                school admits Senior School students in Grades 10 to 12 across
-                three pathways — <strong>STEM</strong>,{' '}
-                <strong>Social Sciences</strong>, and{' '}
-                <strong>Arts &amp; Sports Science</strong> — alongside a full
-                boarding timetable of supervised study, sports, clubs, and
-                chaplaincy.
-              </p>
+              <p>{dict.about.historyCbc}</p>
             </div>
           </div>
 
@@ -130,33 +139,33 @@ export default function AboutPage() {
             className="lg:col-span-5 lg:border-l lg:border-slate-200 lg:pl-12"
           >
             <p className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-600 pb-3 border-b border-slate-300">
-              Official Registration
+              {dict.about.officialRegistration}
             </p>
             <dl className="divide-y divide-slate-200 text-sm">
               <div className="py-3.5">
-                <dt className="text-xs text-slate-600">Official Name</dt>
+                <dt className="text-xs text-slate-600">{dict.about.officialName}</dt>
                 <dd className="font-serif font-bold text-base text-slate-900 mt-0.5">
                   {schoolInfo.name}
                 </dd>
               </div>
               <div className="py-3.5">
-                <dt className="text-xs text-slate-600">Foundation Stone</dt>
+                <dt className="text-xs text-slate-600">{dict.about.foundationStone}</dt>
                 <dd className="font-medium text-slate-900 mt-0.5">
                   {schoolInfo.foundedOn}
                 </dd>
                 <dd className="text-slate-700 mt-1 text-xs leading-relaxed">
-                  Laid by {schoolInfo.founder}
+                  {dict.about.laidBy} {schoolInfo.founder}
                 </dd>
               </div>
               <div className="py-3.5">
-                <dt className="text-xs text-slate-600">Category</dt>
+                <dt className="text-xs text-slate-600">{dict.about.category}</dt>
                 <dd className="font-medium text-slate-900 mt-0.5">
-                  {schoolInfo.category}
+                  {dict.school.category}
                 </dd>
               </div>
               <div className="py-3.5 flex items-center justify-between gap-4 tabular-nums">
                 <div>
-                  <dt className="text-xs text-slate-600">KNEC Centre Code</dt>
+                  <dt className="text-xs text-slate-600">{dict.footer.knecCode}</dt>
                   <dd className="font-semibold text-slate-900 mt-0.5">
                     {schoolInfo.knecCode}
                   </dd>
@@ -165,7 +174,7 @@ export default function AboutPage() {
               </div>
               <div className="py-3.5 flex flex-wrap items-center justify-between gap-4 tabular-nums">
                 <div>
-                  <dt className="text-xs text-slate-600">MoE Registration</dt>
+                  <dt className="text-xs text-slate-600">{dict.footer.moeReg}</dt>
                   <dd className="font-semibold text-slate-900 mt-0.5">
                     {schoolInfo.moeReg}
                   </dd>
@@ -173,19 +182,19 @@ export default function AboutPage() {
                 <RegistryLogo agency="moe" size="card" surface="light" />
               </div>
               <div className="py-3.5">
-                <dt className="text-xs text-slate-600">Physical Location</dt>
+                <dt className="text-xs text-slate-600">{dict.about.physicalLocation}</dt>
                 <dd className="text-slate-800 mt-0.5">
                   {schoolInfo.physicalLocation}
                 </dd>
               </div>
               <div className="py-3.5">
-                <dt className="text-xs text-slate-600">Postal Address</dt>
+                <dt className="text-xs text-slate-600">{dict.about.postalAddress}</dt>
                 <dd className="text-slate-800 mt-0.5">
                   {schoolInfo.postalAddress}
                 </dd>
               </div>
               <div className="py-3.5">
-                <dt className="text-xs text-slate-600">Office Hours</dt>
+                <dt className="text-xs text-slate-600">{dict.about.officeHours}</dt>
                 <dd className="text-slate-800 mt-0.5">
                   {schoolInfo.officeHours}
                 </dd>
@@ -206,7 +215,7 @@ export default function AboutPage() {
                 />
               </div>
               <figcaption className="mt-2 text-xs text-slate-600">
-                Foundation stone · 9 November 1968 · Hon. Dr. J. G. Kiano
+                {dict.about.foundationCaption}
               </figcaption>
             </figure>
 
@@ -236,14 +245,14 @@ export default function AboutPage() {
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 space-y-12">
           <div data-reveal="" className="max-w-2xl">
             <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary mb-2">
-              Charter &amp; Values
+              {dict.about.ethosKicker}
             </p>
             <BlurRevealHeading
               id="about-mission-heading"
               seed="about-mission"
               className="font-serif text-2xl sm:text-3xl font-bold text-slate-900"
             >
-              Motto, Mission, Vision &amp; Core Values
+              {dict.about.ethosHeading}
             </BlurRevealHeading>
           </div>
 
@@ -254,28 +263,28 @@ export default function AboutPage() {
           >
             <div className="p-6 sm:p-8">
               <h3 className="font-sans text-xs font-semibold uppercase tracking-[0.12em] text-primary mb-3">
-                School Motto
+                {dict.home.schoolMotto}
               </h3>
               <p className="font-serif italic text-2xl font-bold text-slate-900 leading-snug">
-                &ldquo;{schoolInfo.motto}&rdquo;
+                &ldquo;{dict.school.motto}&rdquo;
               </p>
             </div>
 
             <div className="p-6 sm:p-8">
               <h3 className="font-sans text-xs font-semibold uppercase tracking-[0.12em] text-primary mb-3">
-                Mission
+                {dict.home.mission}
               </h3>
               <p className="text-sm sm:text-base text-slate-700 leading-relaxed">
-                {schoolInfo.mission}
+                {dict.school.mission}
               </p>
             </div>
 
             <div className="p-6 sm:p-8">
               <h3 className="font-sans text-xs font-semibold uppercase tracking-[0.12em] text-primary mb-3">
-                Vision
+                {dict.home.vision}
               </h3>
               <p className="text-sm sm:text-base text-slate-700 leading-relaxed">
-                {schoolInfo.vision}
+                {dict.school.vision}
               </p>
             </div>
           </div>
@@ -286,11 +295,15 @@ export default function AboutPage() {
             className="scroll-mt-4 bg-[#F8FAFC] text-[#0C3D6E]"
           >
             <h3 id="core-values-heading" className="mb-6 font-serif text-xl font-bold sm:text-2xl">
-              Core Values
+              {dict.home.coreValues}
             </h3>
             <ol role="list" className="border-t border-[#115191]/20">
               {schoolInfo.coreValues.map((value, idx) => {
                 const Icon = CORE_VALUE_ICONS[value.id];
+                const localized =
+                  dict.school.coreValues[
+                    value.id as keyof typeof dict.school.coreValues
+                  ];
                 return (
                   <li
                     key={value.id}
@@ -300,10 +313,10 @@ export default function AboutPage() {
                   >
                     <Icon className="mt-1 size-5 text-[#115191]" strokeWidth={1.75} aria-hidden="true" />
                     <h4 className="font-serif text-lg font-bold">
-                      {value.title}
+                      {localized.title}
                     </h4>
                     <p className="col-start-2 text-sm leading-relaxed sm:col-start-3 sm:text-base">
-                      {value.description}
+                      {localized.description}
                     </p>
                   </li>
                 );
@@ -323,18 +336,17 @@ export default function AboutPage() {
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
           <div data-reveal="" className="max-w-2xl mb-10">
             <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary mb-2">
-              Assembly Tradition
+              {dict.about.anthemsKicker}
             </p>
             <BlurRevealHeading
               id="about-anthems-heading"
               seed="about-anthems"
               className="font-serif text-2xl sm:text-3xl font-bold text-slate-900"
             >
-              School Anthem &amp; Wimbo wa Shule
+              {dict.about.anthemsHeading}
             </BlurRevealHeading>
             <p className="text-sm sm:text-base text-slate-600 mt-2 leading-relaxed">
-              Sung in English and Kiswahili at morning assemblies and official
-              school functions.
+              {dict.about.anthemsIntro}
             </p>
           </div>
 
@@ -349,7 +361,7 @@ export default function AboutPage() {
                   {schoolAnthem.english.title}
                 </h3>
                 <span className="text-xs font-semibold uppercase tracking-[0.12em] text-primary">
-                  English
+                  {dict.common.english}
                 </span>
               </div>
               <ol className="space-y-6">
@@ -381,7 +393,7 @@ export default function AboutPage() {
                   {schoolAnthem.kiswahili.title}
                 </h3>
                 <span className="text-xs font-semibold uppercase tracking-[0.12em] text-primary">
-                  Kiswahili
+                  {dict.common.kiswahili}
                 </span>
               </div>
               <ol className="space-y-6">
@@ -414,14 +426,14 @@ export default function AboutPage() {
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 space-y-14">
           <div data-reveal="" className="max-w-2xl">
             <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary mb-2">
-              Leadership &amp; Governance
+              {dict.about.leadershipKicker}
             </p>
             <BlurRevealHeading
               id="about-leadership-heading"
               seed="about-leadership"
               className="font-serif text-2xl sm:text-3xl font-bold text-slate-900"
             >
-              Principals, Board of Management &amp; Student Council
+              {dict.about.leadershipHeading}
             </BlurRevealHeading>
           </div>
 
@@ -430,10 +442,10 @@ export default function AboutPage() {
             <div data-reveal="">
               <div className="flex items-baseline justify-between gap-3 pb-3 border-b-2 border-primary">
                 <h3 className="font-serif text-xl font-bold text-slate-900">
-                  Roll of Principals
+                  {dict.about.rollOfPrincipals}
                 </h3>
                 <span className="text-xs text-slate-600 tabular-nums">
-                  {schoolInfo.founded} – Present
+                  {fill(dict.about.foundedPresent, { year: schoolInfo.founded })}
                 </span>
               </div>
               <ol className="bg-white/45 border-x border-b border-slate-200 divide-y divide-slate-200">
@@ -450,7 +462,7 @@ export default function AboutPage() {
                       </span>
                       {principal.isCurrent && (
                         <span className="px-2 py-0.5 rounded-xs text-[10px] font-bold uppercase tracking-wider bg-accent text-white">
-                          Current
+                          {dict.common.current}
                         </span>
                       )}
                     </div>
@@ -466,10 +478,10 @@ export default function AboutPage() {
             <div data-reveal="" data-reveal-delay="1">
               <div className="flex items-baseline justify-between gap-3 pb-3 border-b-2 border-primary">
                 <h3 className="font-serif text-xl font-bold text-slate-900">
-                  Board of Management Chairpersons
+                  {dict.about.bomChairs}
                 </h3>
                 <span className="text-xs text-slate-600 tabular-nums">
-                  {schoolInfo.founded} – Present
+                  {fill(dict.about.foundedPresent, { year: schoolInfo.founded })}
                 </span>
               </div>
               <ol className="bg-white/45 border-x border-b border-slate-200 divide-y divide-slate-200">
@@ -486,7 +498,7 @@ export default function AboutPage() {
                       </span>
                       {chair.isCurrent && (
                         <span className="px-2 py-0.5 rounded-xs text-[10px] font-bold uppercase tracking-wider bg-accent text-white">
-                          Incumbent
+                          {dict.common.incumbent}
                         </span>
                       )}
                     </div>
@@ -507,7 +519,7 @@ export default function AboutPage() {
           >
             <div className="px-6 sm:px-8 py-5 border-b border-white/15">
               <h3 className="font-serif text-xl font-bold text-white">
-                Administration &amp; Elected Student Council
+                {dict.about.adminCouncil}
               </h3>
             </div>
 

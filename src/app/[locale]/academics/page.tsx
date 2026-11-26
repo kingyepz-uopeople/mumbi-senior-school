@@ -7,28 +7,43 @@ import PageHero from '@/components/shared/PageHero';
 import SectionStemBackdrop from '@/components/shared/SectionStemBackdrop';
 import { PathwaysTabs } from '@/components/home/PathwaysPreview';
 import { departments, schoolInfo } from '@/data/mock-school-data';
+import { fill } from '@/i18n/fill';
+import { getLocaleDictionary } from '@/i18n/server';
 import { buildPageMetadata } from '@/lib/site';
 
-export const metadata: Metadata = buildPageMetadata({
-  title: 'Academics & CBC Pathways',
-  description:
-    'CBC Senior School pathways, academic departments, the Dean of Studies, the 2026 KCSE target, and KCSE results and top performers from 2022 to 2025 at Mumbi Girls Senior School.',
-  path: '/academics',
-});
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale, dict } = await getLocaleDictionary(params);
 
-export default function AcademicsPage() {
+  return buildPageMetadata({
+    title: dict.academics.title,
+    description: dict.academics.subtitle,
+    path: `/${locale}/academics`,
+  });
+}
+
+export default async function AcademicsPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { dict } = await getLocaleDictionary(params);
+
   return (
     <div className="bg-slate-bg">
       <PageHero
         variant="academics"
         titleEffect="scramble"
-        kicker="Curriculum & Examinations"
-        title="Academics & CBC Pathways"
-        subtitle="Senior School pathways for Grades 10 to 12 under Kenya's Competency-Based Curriculum, our five teaching departments, and the school’s KCSE target and results."
+        kicker={dict.academics.kicker}
+        title={dict.academics.title}
+        subtitle={dict.academics.subtitle}
         meta={[
-          `KNEC Centre ${schoolInfo.knecCode}`,
-          '3 Senior School Pathways',
-          '5 Academic Departments',
+          `${dict.footer.knecCode} ${schoolInfo.knecCode}`,
+          dict.academics.metaPathways,
+          dict.academics.metaDepartments,
         ]}
       />
 
@@ -44,18 +59,17 @@ export default function AcademicsPage() {
             <div className="lg:col-span-7">
               <div data-reveal="" className="max-w-2xl mb-8">
                 <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary mb-2">
-                  Grades 10 – 12
+                  {dict.academics.pathwaysKicker}
                 </p>
                 <BlurRevealHeading
                   id="academics-pathways-heading"
                   seed="academics-pathways"
                   className="font-serif text-2xl sm:text-3xl font-bold text-slate-900"
                 >
-                  CBC Senior School Pathways
+                  {dict.academics.pathwaysHeading}
                 </BlurRevealHeading>
                 <p className="text-sm sm:text-base text-slate-600 mt-2 leading-relaxed">
-                  Incoming Senior School students at {schoolInfo.name} select one of
-                  three pathways according to subject placement and career plans.
+                  {fill(dict.academics.pathwaysIntro, { name: schoolInfo.name })}
                 </p>
               </div>
 
@@ -90,18 +104,17 @@ export default function AcademicsPage() {
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
           <div data-reveal="" className="max-w-2xl mb-10">
             <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary mb-2">
-              Teaching Faculty
+              {dict.academics.departmentsKicker}
             </p>
             <BlurRevealHeading
               id="academics-departments-heading"
               seed="academics-departments"
               className="font-serif text-2xl sm:text-3xl font-bold text-slate-900"
             >
-              Academic Departments
+              {dict.academics.departmentsHeading}
             </BlurRevealHeading>
             <p className="text-sm sm:text-base text-slate-600 mt-2 leading-relaxed">
-              Subject teaching, laboratory practicals, and internal examinations
-              are organised under five departments.
+              {dict.academics.departmentsIntro}
             </p>
           </div>
 
@@ -117,7 +130,7 @@ export default function AcademicsPage() {
                     {dept.name}
                   </h3>
                   <p className="text-xs font-semibold text-primary mt-1">
-                    Head of Department: {dept.hod}
+                    {dict.academics.hod} {dept.hod}
                   </p>
                 </div>
 
@@ -129,7 +142,7 @@ export default function AcademicsPage() {
 
                 <div className="md:col-span-3">
                   <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-600 mb-1.5">
-                    Subjects
+                    {dict.academics.subjects}
                   </p>
                   <p className="text-xs sm:text-sm text-slate-800 leading-relaxed">
                     {dept.subjects.join(' · ')}

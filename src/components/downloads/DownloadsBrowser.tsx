@@ -3,19 +3,19 @@
 import { useMemo, useState } from 'react';
 import { Check, Download, RotateCcw, Search, X } from '@/components/icons';
 import { downloads, schoolInfo } from '@/data/mock-school-data';
+import { fill } from '@/i18n/fill';
+import { useLocale } from '@/i18n/locale-context';
 import { parseDateKE } from '@/lib/utils';
 import type { DownloadItem } from '@/types';
 
-/**
- * Short file-type monogram shown on the left of every document row. Circulars,
- * timetables, newsletters, and fee structures are distributed as PDFs; the
- * departmental holiday assignments are editable documents.
- */
 function fileTypeMonogram(item: DownloadItem): 'PDF' | 'DOC' {
   return item.category === 'Holiday Assignment' ? 'DOC' : 'PDF';
 }
 
 export default function DownloadsBrowser() {
+  const { dict } = useLocale();
+  const d = dict.downloads;
+  const c = dict.common;
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [query, setQuery] = useState('');
   const [downloadedNotice, setDownloadedNotice] = useState<string | null>(null);
@@ -63,8 +63,6 @@ export default function DownloadsBrowser() {
       return;
     }
 
-    // TODO(database-phase): Replace sample preview download with Supabase Storage
-    // `school-documents` public/signed URL once document uploads are wired.
     const blob = new Blob(
       [
         `${schoolInfo.name.toUpperCase()}\n` +
@@ -104,13 +102,15 @@ export default function DownloadsBrowser() {
         : 'bg-transparent text-white border-white/40 hover:border-white'
     }`;
 
+  const categoryLabel = (category: string) =>
+    category === 'All' ? c.all : category;
+
   return (
     <div className="space-y-8">
-      {/* Quick client-side search + category filter */}
       <div className="space-y-4">
         <div className="relative max-w-md">
           <label htmlFor="download-search" className="sr-only">
-            Search documents by title, subject, or department
+            {d.searchLabel}
           </label>
           <Search
             className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-white/60 stroke-[1.75]"
@@ -121,14 +121,14 @@ export default function DownloadsBrowser() {
             type="search"
             value={query}
             onChange={(event) => setQuery(event.target.value)}
-            placeholder="Search circulars, timetables, assignments"
+            placeholder={d.searchPlaceholder}
             className="min-h-11 w-full rounded-full border border-white/35 bg-white/5 py-2 pl-11 pr-11 text-sm text-white placeholder:text-white/55 transition-colors focus:border-white focus:bg-white/10 focus:outline-none"
           />
           {query && (
             <button
               type="button"
               onClick={() => setQuery('')}
-              aria-label="Clear search"
+              aria-label={d.clearSearch}
               className="absolute right-1.5 top-1/2 inline-flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full text-white/70 transition-colors hover:bg-white/15 hover:text-white"
             >
               <X className="h-4 w-4" aria-hidden="true" />
@@ -138,7 +138,7 @@ export default function DownloadsBrowser() {
 
         <div
           role="group"
-          aria-label="Filter documents by type"
+          aria-label={d.filterByType}
           className="flex flex-wrap items-center gap-2"
         >
           {categories.map((category) => {
@@ -151,7 +151,7 @@ export default function DownloadsBrowser() {
                 onClick={() => setSelectedCategory(category)}
                 className={filterBtnClass(isActive)}
               >
-                {category}
+                {categoryLabel(category)}
               </button>
             );
           })}
@@ -162,13 +162,13 @@ export default function DownloadsBrowser() {
           aria-live="polite"
           className="text-xs font-medium text-blue-100/80 tabular-nums"
         >
-          {filteredDownloads.length}{' '}
-          {filteredDownloads.length === 1 ? 'document' : 'documents'}
-          {query.trim() ? ` matching “${query.trim()}”` : ''}
+          {filteredDownloads.length} {d.documents}
+          {query.trim()
+            ? ` ${fill(d.matching, { query: query.trim() })}`
+            : ''}
         </p>
       </div>
 
-      {/* Download feedback banner */}
       {downloadedNotice && (
         <div
           role="status"
@@ -185,7 +185,7 @@ export default function DownloadsBrowser() {
           <button
             type="button"
             onClick={() => setDownloadedNotice(null)}
-            aria-label="Dismiss download notification"
+            aria-label={c.close}
             className="inline-flex items-center justify-center w-11 h-11 -my-2 -mr-2 rounded-full text-white/80 hover:text-white hover:bg-white/15 shrink-0"
           >
             <X className="w-4 h-4" aria-hidden="true" />
@@ -193,8 +193,7 @@ export default function DownloadsBrowser() {
         </div>
       )}
 
-      {/* Dated file list */}
-      <ol className="editorial-index" aria-label="School documents">
+      <ol className="editorial-index" aria-label={d.listAria}>
         {filteredDownloads.map((item, index) => (
           <li key={item.id} className="editorial-cell">
             <button
@@ -216,7 +215,7 @@ export default function DownloadsBrowser() {
                   <span className="mt-1 block text-[0.82rem] leading-relaxed text-blue-100/85 sm:text-sm">
                     {item.category}
                     {' · '}
-                    Uploaded {item.uploadDate}
+                    {d.uploaded} {item.uploadDate}
                     {' · '}
                     {item.fileSize}
                   </span>
@@ -235,12 +234,9 @@ export default function DownloadsBrowser() {
       {filteredDownloads.length === 0 && (
         <div className="py-12 px-6 bg-white/5 border border-white/15">
           <h3 className="font-serif text-lg font-bold text-white">
-            No documents match this search
+            {d.emptyHeading}
           </h3>
-          <p className="mt-1 text-sm text-blue-100/85">
-            Term circulars, joining instructions, and newsletters are added
-            through the school office.
-          </p>
+          <p className="mt-1 text-sm text-blue-100/85">{d.emptyBody}</p>
           <div className="pt-3">
             <button
               type="button"
@@ -251,7 +247,7 @@ export default function DownloadsBrowser() {
               className="min-h-11 inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-white text-primary-dark text-sm font-semibold hover:bg-blue-50 transition-colors"
             >
               <RotateCcw className="w-4 h-4 stroke-[1.75]" aria-hidden="true" />
-              <span>Show all documents</span>
+              <span>{d.showAll}</span>
             </button>
           </div>
         </div>

@@ -27,9 +27,16 @@ export const OFFICE_SCHEDULE_LABEL = 'Mon to Fri 08:00 to 17:00 EAT';
 
 export type OfficeStatusTone = 'open' | 'soon' | 'closed';
 
+export type OfficeMessageKey =
+  | 'openNow'
+  | 'closesSoon'
+  | 'opensSoon'
+  | 'closedOpens';
+
 export interface OfficeStatus {
   tone: OfficeStatusTone;
-  message: string;
+  messageKey: OfficeMessageKey;
+  time: string;
   /** 0 = Sunday … 6 = Saturday, in Nairobi. */
   weekday: number;
 }
@@ -114,13 +121,15 @@ export function getOfficeStatus(now: Date = new Date()): OfficeStatus {
       if (closingIn <= OFFICE_SOON_WINDOW_MINUTES) {
         return {
           tone: 'soon',
-          message: `Closes soon, ${formatOfficeClock(OFFICE_CLOSE_MINUTES)}`,
+          messageKey: 'closesSoon',
+          time: formatOfficeClock(OFFICE_CLOSE_MINUTES),
           weekday,
         };
       }
       return {
         tone: 'open',
-        message: `Open now, closes ${formatOfficeClock(OFFICE_CLOSE_MINUTES)}`,
+        messageKey: 'openNow',
+        time: formatOfficeClock(OFFICE_CLOSE_MINUTES),
         weekday,
       };
     }
@@ -130,7 +139,8 @@ export function getOfficeStatus(now: Date = new Date()): OfficeStatus {
       if (openingIn <= OFFICE_SOON_WINDOW_MINUTES) {
         return {
           tone: 'soon',
-          message: `Opens soon, ${formatOfficeClock(OFFICE_OPEN_MINUTES)}`,
+          messageKey: 'opensSoon',
+          time: formatOfficeClock(OFFICE_OPEN_MINUTES),
           weekday,
         };
       }
@@ -151,7 +161,8 @@ export function getOfficeStatus(now: Date = new Date()): OfficeStatus {
   const nextWeekday = WEEKDAY_SHORT[(weekday + daysAhead) % 7];
   return {
     tone: 'closed',
-    message: `Closed, opens ${nextWeekday} ${formatOfficeClock(OFFICE_OPEN_MINUTES)}`,
+    messageKey: 'closedOpens',
+    time: `${nextWeekday} ${formatOfficeClock(OFFICE_OPEN_MINUTES)}`,
     weekday,
   };
 }

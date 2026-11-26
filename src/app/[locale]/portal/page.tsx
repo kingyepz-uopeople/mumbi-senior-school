@@ -1,11 +1,11 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
-import Link from 'next/link';
 import { ArrowRight } from '@/components/icons';
 import BlurRevealHeading from '@/components/shared/BlurRevealHeading';
 import PageHero from '@/components/shared/PageHero';
 import SectionStemBackdrop from '@/components/shared/SectionStemBackdrop';
-import { schoolInfo } from '@/data/mock-school-data';
+import LocaleLink from '@/i18n/LocaleLink';
+import { getLocaleDictionary } from '@/i18n/server';
 import { buildPageMetadata } from '@/lib/site';
 
 export const metadata: Metadata = buildPageMetadata({
@@ -15,32 +15,27 @@ export const metadata: Metadata = buildPageMetadata({
   path: '/portal',
 });
 
-const UPCOMING_MODULES = [
-  {
-    title: 'Students & Parents',
-    description:
-      'Term academic reports, holiday assignment downloads, attendance records, and fee statements.',
-  },
-  {
-    title: 'Teaching Staff',
-    description:
-      'Departmental assignment uploads, class lists, assessment entry, and internal notices.',
-  },
-  {
-    title: 'School Administration',
-    description:
-      'Publication of term circulars, joining instructions, examination timetables, and newsletters.',
-  },
-] as const;
+const UPCOMING_MODULE_KEYS = [
+  { titleKey: 'studentsParents' as const, bodyKey: 'studentsParentsBody' as const },
+  { titleKey: 'teachingStaff' as const, bodyKey: 'teachingStaffBody' as const },
+  { titleKey: 'schoolAdmin' as const, bodyKey: 'schoolAdminBody' as const },
+];
 
-export default function PortalComingSoonPage() {
+export default async function PortalComingSoonPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { dict } = await getLocaleDictionary(params);
+  const p = dict.portal;
+
   return (
     <div className="bg-slate-bg">
       <PageHero
         variant="portal"
-        kicker="Online Services"
-        title="Student & Staff Portal"
-        subtitle="Student, parent, and staff login accounts are scheduled for a later phase. Public circulars, holiday assignments, and fee schedules remain available below without sign-in."
+        kicker={p.kicker}
+        title={p.title}
+        subtitle={p.subtitle}
       />
 
       <div className="relative">
@@ -67,7 +62,7 @@ export default function PortalComingSoonPage() {
 
             <div className="space-y-4 max-w-2xl">
               <span className="inline-block px-2.5 py-0.5 rounded-xs text-[11px] font-bold uppercase tracking-[0.12em] bg-accent text-white">
-                Coming Soon
+                {p.comingSoon}
               </span>
 
               <BlurRevealHeading
@@ -75,39 +70,36 @@ export default function PortalComingSoonPage() {
                 seed="portal-status"
                 className="font-serif text-2xl sm:text-3xl font-bold text-slate-900"
               >
-                Online sign-in is not yet open
+                {p.notOpen}
               </BlurRevealHeading>
 
               <p className="text-sm sm:text-base text-slate-700 leading-relaxed">
-                {schoolInfo.name} is publishing its public school website first.
-                Accounts for students, parents, and teaching staff will open in
-                a later rollout and will be announced through official school
-                circulars. All current public documents can be accessed below.
+                {p.body}
               </p>
 
               <div className="pt-2 flex flex-col sm:flex-row flex-wrap gap-3">
-                <Link
+                <LocaleLink
                   href="/downloads"
                   className="min-h-11 inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full bg-primary hover:bg-primary-dark text-white text-sm font-semibold transition-colors"
                 >
-                  <span>Downloads &amp; circulars</span>
+                  <span>{p.downloadsCirculars}</span>
                   <ArrowRight
                     className="w-4 h-4 shrink-0 stroke-[1.75]"
                     aria-hidden="true"
                   />
-                </Link>
-                <Link
+                </LocaleLink>
+                <LocaleLink
                   href="/contact"
                   className="min-h-11 inline-flex items-center justify-center px-5 py-2.5 rounded-full border border-primary text-primary hover:bg-primary hover:text-white text-sm font-semibold transition-colors"
                 >
-                  Contact administration
-                </Link>
-                <Link
+                  {p.contactAdmin}
+                </LocaleLink>
+                <LocaleLink
                   href="/"
                   className="min-h-11 inline-flex items-center justify-center px-4 py-2.5 rounded-full text-slate-700 hover:text-primary hover:underline underline-offset-4 text-sm font-medium transition-colors"
                 >
-                  Return to home
-                </Link>
+                  {p.returnHome}
+                </LocaleLink>
               </div>
             </div>
           </div>
@@ -120,22 +112,22 @@ export default function PortalComingSoonPage() {
             seed="portal-modules"
             className="font-serif text-xl sm:text-2xl font-bold text-slate-900"
           >
-            Planned Portal Sections
+            {p.plannedSections}
           </BlurRevealHeading>
 
           <div className="bg-white/45 border-t-2 border-t-primary border-x border-b border-slate-200 grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-slate-200">
-            {UPCOMING_MODULES.map((module, idx) => (
+            {UPCOMING_MODULE_KEYS.map((module, idx) => (
               <article
-                key={module.title}
+                key={module.titleKey}
                 data-reveal=""
                 data-reveal-delay={idx > 0 ? String(idx) : undefined}
                 className="p-6"
               >
                 <h3 className="font-serif text-lg font-bold text-slate-900 mb-2">
-                  {module.title}
+                  {p[module.titleKey]}
                 </h3>
                 <p className="text-sm text-slate-600 leading-relaxed">
-                  {module.description}
+                  {p[module.bodyKey]}
                 </p>
               </article>
             ))}
@@ -145,10 +137,8 @@ export default function PortalComingSoonPage() {
             data-reveal=""
             className="text-xs sm:text-sm text-slate-600 border-l-2 border-primary pl-4 leading-relaxed"
           >
-            <strong className="text-slate-900">Notice to parents and students:</strong>{' '}
-            Do not share admission numbers or personal details through
-            unofficial links. Portal registration instructions will be issued
-            only by {schoolInfo.name} ({schoolInfo.postalAddress}).
+            <strong className="text-slate-900">{p.noticeTitle}</strong>{' '}
+            {p.noticeBody}
           </p>
         </section>
         </div>

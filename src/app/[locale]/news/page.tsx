@@ -3,6 +3,7 @@ import NewsIndexClient, {
   type FeaturedImage,
 } from '@/components/news/NewsIndexClient';
 import { galleryAlbums, newsItems } from '@/data/mock-school-data';
+import { getLocaleDictionary } from '@/i18n/server';
 import { getAvailablePublicAssets } from '@/lib/media';
 import { buildPageMetadata } from '@/lib/site';
 import { parseDateKE } from '@/lib/utils';
@@ -14,9 +15,6 @@ export const metadata: Metadata = buildPageMetadata({
   path: '/news',
 });
 
-// Photographs already catalogued in the gallery data, offered to the newest
-// notice as its lead image. Only files that exist in `public/` are used, so no
-// content is invented for the page.
 const leadPhotoCandidates = galleryAlbums
   .flatMap((album) => album.images)
   .filter((image) => Boolean(image.caption));
@@ -46,7 +44,14 @@ function buildFeaturedImages(): Record<string, FeaturedImage> {
   };
 }
 
-export default function NewsPage() {
+export default async function NewsPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { dict } = await getLocaleDictionary(params);
+  const n = dict.news;
+
   return (
     <div className="bg-slate-bg">
       <section
@@ -56,14 +61,13 @@ export default function NewsPage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
           <p className="mb-3 flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.16em] text-blue-100">
             <span className="h-0.5 w-7 bg-accent" aria-hidden="true" />
-            School Notices
+            {n.kicker}
           </p>
           <h1 className="font-serif text-4xl leading-tight font-bold sm:text-5xl lg:text-6xl">
-            News &amp; Events
+            {n.title}
           </h1>
           <p className="mt-4 max-w-xl text-base leading-relaxed text-blue-50 sm:text-lg">
-            Term circulars, newsletters, and school announcements. Filter by
-            category to read a notice.
+            {n.subtitle}
           </p>
 
           <div className="mt-10 sm:mt-12">

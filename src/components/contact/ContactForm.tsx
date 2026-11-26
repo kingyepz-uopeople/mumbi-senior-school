@@ -3,10 +3,12 @@
 import { useEffect, useRef, useState } from 'react';
 import { AlertCircle } from 'lucide-react';
 import { Check, Loader2 } from '@/components/icons';
+import { fill } from '@/i18n/fill';
+import { useLocale } from '@/i18n/locale-context';
 import { formatDateKE } from '@/lib/utils';
 import type { ContactInquiry } from '@/types';
 
-const INQUIRY_CATEGORIES = [
+const INQUIRY_CATEGORY_VALUES = [
   'Admissions & Placement',
   'Fee & Finance Inquiry',
   'Academic & Results',
@@ -23,12 +25,16 @@ type FormErrors = Partial<Record<FieldName, string>>;
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const PHONE_PATTERN = /^\+?[0-9\s()-]{9,20}$/;
 
-function validateField(field: FieldName, rawValue: string): string | undefined {
+function validateField(
+  field: FieldName,
+  rawValue: string,
+  contact: ReturnType<typeof useLocale>['dict']['contact']
+): string | undefined {
   const value = rawValue.trim();
 
   switch (field) {
     case 'name':
-      if (!value) return 'Please enter your full name.';
+      if (!value) return contact.validationName;
       if (value.length < 3)
         return 'Full name must be at least 3 characters long.';
       if (value.length > 100)
@@ -36,7 +42,7 @@ function validateField(field: FieldName, rawValue: string): string | undefined {
       return undefined;
 
     case 'phone': {
-      if (!value) return 'Please enter a valid phone number.';
+      if (!value) return contact.validationPhone;
       const digitCount = value.replace(/\D/g, '').length;
       if (!PHONE_PATTERN.test(value) || digitCount < 9 || digitCount > 15) {
         return 'Enter a valid phone number (for example, +254 712 345 678 or 0712 345 678).';
@@ -45,7 +51,7 @@ function validateField(field: FieldName, rawValue: string): string | undefined {
     }
 
     case 'email':
-      if (!value) return 'Please enter your email address.';
+      if (!value) return contact.validationEmail;
       if (!EMAIL_PATTERN.test(value) || value.length > 254) {
         return 'Enter a valid email address (for example, parent@example.com).';
       }
@@ -53,16 +59,16 @@ function validateField(field: FieldName, rawValue: string): string | undefined {
 
     case 'category':
       if (
-        !INQUIRY_CATEGORIES.includes(
-          value as (typeof INQUIRY_CATEGORIES)[number]
+        !INQUIRY_CATEGORY_VALUES.includes(
+          value as (typeof INQUIRY_CATEGORY_VALUES)[number]
         )
       ) {
-        return 'Please select an inquiry category.';
+        return contact.validationSubject;
       }
       return undefined;
 
     case 'message':
-      if (!value) return 'Please write your inquiry message.';
+      if (!value) return contact.validationMessage;
       if (value.length < MIN_MESSAGE_LENGTH) {
         return `Please provide at least ${MIN_MESSAGE_LENGTH} characters so the office can respond clearly.`;
       }
@@ -73,12 +79,15 @@ function validateField(field: FieldName, rawValue: string): string | undefined {
   }
 }
 
-function validateInquiry(form: ContactInquiry): FormErrors {
+function validateInquiry(
+  form: ContactInquiry,
+  contact: ReturnType<typeof useLocale>['dict']['contact']
+): FormErrors {
   const errors: FormErrors = {};
   const fields: FieldName[] = ['name', 'phone', 'email', 'category', 'message'];
 
   for (const field of fields) {
-    const error = validateField(field, form[field]);
+    const error = validateField(field, form[field], contact);
     if (error) errors[field] = error;
   }
 
@@ -89,7 +98,7 @@ const INITIAL_FORM: ContactInquiry = {
   name: '',
   phone: '',
   email: '',
-  category: INQUIRY_CATEGORIES[0],
+  category: INQUIRY_CATEGORY_VALUES[0],
   message: '',
 };
 
@@ -101,6 +110,16 @@ interface SubmissionReceipt {
 }
 
 export default function ContactForm() {
+  const { dict } = useLocale();
+  const c = dict.contact;
+  const inquiryCategories = [
+    { value: INQUIRY_CATEGORY_VALUES[0], label: c.catAdmissions },
+    { value: INQUIRY_CATEGORY_VALUES[1], label: c.catFees },
+    { value: INQUIRY_CATEGORY_VALUES[2], label: c.catAcademic },
+    { value: INQUIRY_CATEGORY_VALUES[3], label: c.catBoarding },
+    { value: INQUIRY_CATEGORY_VALUES[4], label: c.catGeneral },
+  ] as const;
+
   const [form, setForm] = useState<ContactInquiry>(INITIAL_FORM);
   const [honeypot, setHoneypot] = useState('');
   const [errors, setErrors] = useState<FormErrors>({});
@@ -124,7 +143,7 @@ export default function ContactForm() {
     if (touched[field]) {
       setErrors((prev) => ({
         ...prev,
-        [field]: validateField(field, value),
+        [field]: validateField(field, value, c),
       }));
     }
   };
@@ -133,7 +152,7 @@ export default function ContactForm() {
     setTouched((prev) => ({ ...prev, [field]: true }));
     setErrors((prev) => ({
       ...prev,
-      [field]: validateField(field, form[field]),
+      [field]: validateField(field, form[field], c),
     }));
   };
 
@@ -144,7 +163,7 @@ export default function ContactForm() {
       return;
     }
 
-    const nextErrors = validateInquiry(form);
+    const nextErrors = validateInquiry(form, c);
     setErrors(nextErrors);
     setTouched({
       name: true,
@@ -216,12 +235,12 @@ export default function ContactForm() {
       >
         <div className="flex items-center gap-2 text-primary text-xs font-semibold uppercase tracking-[0.12em]">
           <Check className="w-4 h-4 stroke-[2]" aria-hidden="true" />
-          <span>Enquiry Recorded</span>
+          <span>{c.recorded}</span>
         </div>
 
         <div className="space-y-1.5">
           <h3 className="font-serif font-bold text-xl text-slate-900">
-            Thank you, {receipt.name}
+            {fill(c.thankYou, { name: receipt.name })}
           </h3>
           <p className="text-sm text-slate-700 leading-relaxed">
             Your <strong>{receipt.category}</strong> message was recorded on{' '}
@@ -243,7 +262,7 @@ export default function ContactForm() {
             onClick={() => setReceipt(null)}
             className="min-h-11 inline-flex items-center justify-center px-5 py-2.5 rounded-full bg-primary hover:bg-primary-dark text-white text-sm font-semibold transition-colors"
           >
-            Send another enquiry
+            {c.sendAnother}
           </button>
         </div>
       </div>
@@ -266,8 +285,7 @@ export default function ContactForm() {
       aria-describedby="contact-form-note"
     >
       <p id="contact-form-note" className="text-xs text-slate-600">
-        Fields marked <span className="text-accent font-bold">*</span> are
-        required.
+        {c.requiredNote}
       </p>
 
       {activeErrorCount > 0 && (
@@ -313,7 +331,7 @@ export default function ContactForm() {
             htmlFor="contact-name"
             className="block text-xs font-semibold uppercase tracking-[0.1em] text-slate-800 mb-1.5"
           >
-            Full Name <span className="text-accent" aria-hidden="true">*</span>
+            {c.fullName} <span className="text-accent" aria-hidden="true">*</span>
           </label>
           <input
             id="contact-name"
@@ -351,7 +369,7 @@ export default function ContactForm() {
             htmlFor="contact-phone"
             className="block text-xs font-semibold uppercase tracking-[0.1em] text-slate-800 mb-1.5"
           >
-            Phone Number{' '}
+            {c.phoneNumber}{' '}
             <span className="text-accent" aria-hidden="true">*</span>
           </label>
           <input
@@ -394,7 +412,7 @@ export default function ContactForm() {
             htmlFor="contact-email"
             className="block text-xs font-semibold uppercase tracking-[0.1em] text-slate-800 mb-1.5"
           >
-            Email Address{' '}
+            {c.emailAddress}{' '}
             <span className="text-accent" aria-hidden="true">*</span>
           </label>
           <input
@@ -434,7 +452,7 @@ export default function ContactForm() {
             htmlFor="contact-category"
             className="block text-xs font-semibold uppercase tracking-[0.1em] text-slate-800 mb-1.5"
           >
-            Subject <span className="text-accent" aria-hidden="true">*</span>
+            {c.subject} <span className="text-accent" aria-hidden="true">*</span>
           </label>
           <select
             id="contact-category"
@@ -449,9 +467,9 @@ export default function ContactForm() {
             }
             className={inputClassName(Boolean(errors.category))}
           >
-            {INQUIRY_CATEGORIES.map((category) => (
-              <option key={category} value={category}>
-                {category}
+            {inquiryCategories.map((category) => (
+              <option key={category.value} value={category.value}>
+                {category.label}
               </option>
             ))}
           </select>
@@ -479,7 +497,7 @@ export default function ContactForm() {
             htmlFor="contact-message"
             className="block text-xs font-semibold uppercase tracking-[0.1em] text-slate-800"
           >
-            Message <span className="text-accent" aria-hidden="true">*</span>
+            {c.message} <span className="text-accent" aria-hidden="true">*</span>
           </label>
           <span
             id="contact-message-hint"
@@ -530,10 +548,10 @@ export default function ContactForm() {
         {isSubmitting ? (
           <>
             <Loader2 className="w-4 h-4 animate-spin" aria-hidden="true" />
-            <span>Sending enquiry...</span>
+            <span>{c.sending}</span>
           </>
         ) : (
-          <span>Send enquiry</span>
+          <span>{c.sendEnquiry}</span>
         )}
       </button>
     </form>

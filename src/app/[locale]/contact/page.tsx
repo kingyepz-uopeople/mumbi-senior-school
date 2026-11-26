@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
-import Link from 'next/link';
 import { MapPin } from 'lucide-react';
 import { ArrowRight, Clock, Mail, Phone } from '@/components/icons';
 import PhotoSlot from '@/components/shared/PhotoSlot';
@@ -11,6 +10,8 @@ import CopyValueButton from '@/components/shared/CopyValueButton';
 import OfficeHoursStatus from '@/components/shared/OfficeHoursStatus';
 import ContactForm from '@/components/contact/ContactForm';
 import DirectionsLink from '@/components/shared/DirectionsLink';
+import LocaleLink from '@/i18n/LocaleLink';
+import { getLocaleDictionary } from '@/i18n/server';
 import { schoolInfo } from '@/data/mock-school-data';
 import { PHOTO_SLOTS, publicAssetExists } from '@/lib/media';
 import { buildPageMetadata } from '@/lib/site';
@@ -21,7 +22,13 @@ export const metadata: Metadata = buildPageMetadata({
   path: '/contact',
 });
 
-export default function ContactPage() {
+export default async function ContactPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { dict } = await getLocaleDictionary(params);
+  const c = dict.contact;
   const hasCampusPhoto = publicAssetExists(PHOTO_SLOTS.campusLocation);
 
   return (
@@ -33,14 +40,13 @@ export default function ContactPage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
           <p className="mb-3 flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.16em] text-blue-100">
             <span className="h-0.5 w-7 bg-accent" aria-hidden="true" />
-            School Office
+            {c.kicker}
           </p>
           <h1 className="font-serif text-4xl leading-tight font-bold sm:text-5xl lg:text-6xl">
-            Contact &amp; Campus Location
+            {c.title}
           </h1>
           <p className="mt-4 max-w-xl text-base leading-relaxed text-blue-50 sm:text-lg">
-            Enquiries on Grade 10 admissions, joining instructions, fee payments,
-            examination records, and boarding matters.
+            {c.subtitle}
           </p>
           <div className="mt-6 border-t border-white/15 pt-5">
             <OfficeHoursStatus variant="hero" />
@@ -49,7 +55,6 @@ export default function ContactPage() {
       </section>
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 py-12 sm:py-16 space-y-10">
-        {/* Admissions band */}
         <section
           id="admissions"
           data-dark-surface
@@ -60,41 +65,37 @@ export default function ContactPage() {
           <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
             <div className="max-w-2xl">
               <p className="mb-1.5 text-xs font-semibold uppercase tracking-[0.14em] text-blue-100">
-                Senior School Admissions
+                {c.admissionsBand}
               </p>
               <h2
                 id="admissions-heading"
                 className="font-serif text-xl font-bold text-white sm:text-2xl"
               >
-                Joining Grade 10?
+                {c.joiningGrade10}
               </h2>
               <p className="mt-2 text-sm leading-relaxed text-blue-100/85 sm:text-base">
-                Find the reporting date, school fees, and a uniform photo in the
-                Grade 10 admissions guide. Confirm the latest details with the
-                school office before travelling, shopping, or paying fees.
+                {c.admissionsBody}
               </p>
             </div>
             <div className="flex flex-col gap-3 sm:flex-row">
-              <Link
+              <LocaleLink
                 href="/admissions"
                 className="inline-flex min-h-11 items-center justify-center gap-2 px-5 py-2.5 rounded-full bg-white text-sm font-semibold text-primary hover:bg-blue-50"
               >
-                View admissions guide
+                {c.viewAdmissions}
                 <ArrowRight className="size-4 shrink-0" aria-hidden="true" />
-              </Link>
-              <Link
+              </LocaleLink>
+              <LocaleLink
                 href="/admissions#uniform"
                 className="inline-flex min-h-11 items-center justify-center px-5 py-2.5 rounded-full border border-white/60 text-sm font-semibold text-white hover:bg-white/10"
               >
-                Uniform photo
-              </Link>
+                {c.uniformPhoto}
+              </LocaleLink>
             </div>
           </div>
         </section>
 
-        {/* Two-column layout */}
         <div className="grid grid-cols-1 items-start gap-10 lg:grid-cols-12 lg:gap-12">
-          {/* Left: office details + campus photo */}
           <div className="space-y-8 lg:col-span-5">
             <section
               id="school-office"
@@ -117,7 +118,7 @@ export default function ContactPage() {
                     id="office-heading"
                     className="font-serif text-xl font-bold leading-snug text-white"
                   >
-                    Administration Office
+                    {c.adminOffice}
                   </h2>
                   <p className="mt-0.5 text-xs text-blue-100">
                     {schoolInfo.category}
@@ -128,7 +129,7 @@ export default function ContactPage() {
               <dl className="divide-y divide-white/15 text-sm">
                 <div className="py-3.5">
                   <dt className="text-xs font-semibold uppercase tracking-[0.1em] text-blue-100">
-                    Registration Codes
+                    {c.registrationCodes}
                   </dt>
                   <dd className="mt-1 text-white">
                     KNEC Centre <strong>{schoolInfo.knecCode}</strong> · MoE Reg.{' '}
@@ -147,7 +148,7 @@ export default function ContactPage() {
                     aria-hidden="true"
                   />
                   <div>
-                    <dt className="font-semibold text-white">Physical Location</dt>
+                    <dt className="font-semibold text-white">{c.physicalLocation}</dt>
                     <dd className="mt-0.5 text-blue-100/85">
                       {schoolInfo.physicalLocation}
                     </dd>
@@ -163,9 +164,7 @@ export default function ContactPage() {
                     aria-hidden="true"
                   />
                   <div className="min-w-0">
-                    <dt className="font-semibold text-white">
-                      Postal &amp; Email Address
-                    </dt>
+                    <dt className="font-semibold text-white">{c.postalEmail}</dt>
                     <dd className="mt-0.5 text-blue-100/85">
                       {schoolInfo.postalAddress}
                     </dd>
@@ -176,7 +175,7 @@ export default function ContactPage() {
                       />
                       <CopyValueButton
                         value={schoolInfo.email}
-                        label="email address"
+                        label={c.emailAddress}
                         tone="dark"
                       />
                     </dd>
@@ -189,12 +188,12 @@ export default function ContactPage() {
                     aria-hidden="true"
                   />
                   <div>
-                    <dt className="font-semibold text-white">Telephone</dt>
+                    <dt className="font-semibold text-white">{c.telephone}</dt>
                     <dd className="mt-1 flex flex-wrap items-center gap-2">
                       <PhoneActions phone={schoolInfo.phone} tone="dark" />
                       <CopyValueButton
                         value={schoolInfo.phone}
-                        label="phone number"
+                        label={c.phoneNumber}
                         tone="dark"
                       />
                     </dd>
@@ -207,7 +206,7 @@ export default function ContactPage() {
                     aria-hidden="true"
                   />
                   <div>
-                    <dt className="font-semibold text-white">Office Hours</dt>
+                    <dt className="font-semibold text-white">{c.officeHours}</dt>
                     <dd className="mt-0.5 text-blue-100/85">
                       {schoolInfo.officeHours}
                     </dd>
@@ -219,7 +218,6 @@ export default function ContactPage() {
               </dl>
             </section>
 
-            {/* Campus entrance photograph */}
             <section
               aria-labelledby="visiting-heading"
               data-reveal=""
@@ -233,23 +231,21 @@ export default function ContactPage() {
                 height={900}
                 sizes="(max-width: 1024px) 100vw, 40vw"
                 aspectClassName="aspect-16/9"
-                placeholderLabel="Photo coming soon"
+                placeholderLabel={c.photoSoon}
               />
               <div>
                 <h2
                   id="visiting-heading"
                   className="font-serif text-lg font-bold text-slate-900"
                 >
-                  Visiting the School
+                  {c.visitingHeading}
                 </h2>
                 <p className="mt-1 text-xs leading-relaxed text-slate-600 sm:text-sm">
-                  The compound is in {schoolInfo.physicalLocation}. All visitors
-                  sign in at the main gate and report to the administration
-                  office during weekday working hours (08:00 – 17:00).
+                  {c.visitingBody}
                 </p>
                 <div className="mt-4 overflow-hidden rounded-md border border-slate-200 bg-white">
                   <iframe
-                    title="Google Map of Mumbi Girls Senior School"
+                    title={c.mapTitle}
                     src={schoolInfo.mapsEmbedUrl}
                     className="block aspect-16/9 w-full border-0"
                     loading="lazy"
@@ -262,7 +258,6 @@ export default function ContactPage() {
             </section>
           </div>
 
-          {/* Right: inquiry form */}
           <section
             data-reveal=""
             data-reveal-delay="1"
@@ -274,18 +269,10 @@ export default function ContactPage() {
                 id="inquiry-form-heading"
                 className="font-serif text-2xl font-bold text-slate-900"
               >
-                Write to the Administration Office
+                {c.writeHeading}
               </h2>
               <p className="mt-1.5 text-sm leading-relaxed text-slate-600">
-                This form is a preview and does not send messages to the school.
-                For admissions or fee enquiries, use the{' '}
-                <a
-                  href="#school-office"
-                  className="font-semibold text-primary underline underline-offset-4"
-                >
-                  school office contact details
-                </a>
-                .
+                {c.writeDisclaimer}
               </p>
             </div>
 

@@ -1,8 +1,9 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
-import Link from 'next/link';
 import OfflineRetryButton from '@/components/pwa/OfflineRetryButton';
 import SectionStemBackdrop from '@/components/shared/SectionStemBackdrop';
+import LocaleLink from '@/i18n/LocaleLink';
+import { fill, getLocaleDictionary } from '@/i18n/server';
 import { schoolInfo } from '@/data/mock-school-data';
 import { buildPageMetadata } from '@/lib/site';
 
@@ -14,7 +15,14 @@ export const metadata: Metadata = buildPageMetadata({
   noIndex: true,
 });
 
-export default function OfflinePage() {
+export default async function OfflinePage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { dict } = await getLocaleDictionary(params);
+  const o = dict.offline;
+
   return (
     <div className="relative bg-slate-bg py-14 sm:py-20 px-4 sm:px-6">
       <SectionStemBackdrop variant="notices" />
@@ -30,28 +38,26 @@ export default function OfflinePage() {
           />
           <div>
             <p className="text-xs font-bold uppercase tracking-[0.14em] text-accent mb-1">
-              No Internet Connection
+              {o.title}
             </p>
             <h1 className="font-serif text-2xl sm:text-3xl font-bold text-slate-900">
-              You are offline
+              {o.heading}
             </h1>
           </div>
         </div>
 
         <p className="text-sm sm:text-base text-slate-700 leading-relaxed">
-          This page could not be loaded because your device is not connected to
-          the internet. Check your mobile data or Wi-Fi connection and try
-          again.
+          {o.body}
         </p>
 
         <div className="flex flex-col sm:flex-row gap-3">
           <OfflineRetryButton />
-          <Link
+          <LocaleLink
             href="/"
             className="w-full sm:w-auto min-h-11 inline-flex items-center justify-center px-5 py-2.5 rounded-full border border-primary text-primary hover:bg-primary hover:text-white text-sm font-semibold transition-colors"
           >
-            Return to home
-          </Link>
+            {o.returnHome}
+          </LocaleLink>
         </div>
 
         {/* School Office Quick Reference */}
@@ -63,12 +69,12 @@ export default function OfflinePage() {
             id="offline-school-details"
             className="font-serif text-lg font-bold text-slate-900"
           >
-            {schoolInfo.name} — Office Details
+            {fill(o.officeDetails, { name: schoolInfo.name })}
           </h2>
           <dl className="divide-y divide-slate-200 text-xs sm:text-sm text-slate-700">
             <div className="py-2 tabular-nums">
               <dt className="inline font-semibold text-slate-900">
-                Registration:{' '}
+                {o.registration}{' '}
               </dt>
               <dd className="inline">
                 KNEC {schoolInfo.knecCode} · MoE {schoolInfo.moeReg}
@@ -76,19 +82,19 @@ export default function OfflinePage() {
             </div>
             <div className="py-2">
               <dt className="inline font-semibold text-slate-900">
-                Postal Address:{' '}
+                {o.postalAddress}{' '}
               </dt>
               <dd className="inline">{schoolInfo.postalAddress}</dd>
             </div>
             <div className="py-2">
               <dt className="inline font-semibold text-slate-900">
-                Location:{' '}
+                {o.location}{' '}
               </dt>
               <dd className="inline">{schoolInfo.physicalLocation}</dd>
             </div>
             <div className="py-2">
               <dt className="inline font-semibold text-slate-900">
-                Office Hours:{' '}
+                {o.officeHours}{' '}
               </dt>
               <dd className="inline">{schoolInfo.officeHours}</dd>
             </div>

@@ -1,4 +1,7 @@
+'use client';
+
 import { formatCPlusShare, kcseReports, type KcseReport } from '@/data/kcse';
+import { useLocale } from '@/i18n/locale-context';
 
 function sumGrades(report: KcseReport, targets: readonly string[]): number {
   return report.grades
@@ -13,6 +16,8 @@ export default function KcseMultiYearTable({
   selectedYear: number;
   onSelectYear?: (year: number) => void;
 }) {
+  const { dict } = useLocale();
+
   return (
     <section
       id="kcse-multi-year"
@@ -22,16 +27,16 @@ export default function KcseMultiYearTable({
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="mb-6 max-w-2xl">
           <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary mb-1.5">
-            Four-Year Trend (2022–2025)
+            {dict.academics.fourYearTrend}
           </p>
           <h2
             id="kcse-multi-year-heading"
             className="font-serif text-2xl sm:text-3xl font-bold text-slate-900"
           >
-            Multi-Year KCSE Summary
+            {dict.academics.multiYearSummary}
           </h2>
           <p className="mt-2 text-sm sm:text-base text-slate-600 leading-relaxed">
-            Entry, mean grade, mean points, university-entry qualifying share (C+ &amp; above), and grade spread across the 2022–2025 KCSE cohorts.
+            {dict.academics.multiYearBody}
           </p>
         </div>
 
@@ -40,16 +45,16 @@ export default function KcseMultiYearTable({
             <thead>
               <tr className="bg-primary-dark text-white text-xs uppercase tracking-[0.08em]">
                 <th scope="col" className="py-3.5 px-4 font-semibold sticky left-0 bg-primary-dark z-10">
-                  Year
+                  {dict.academics.year}
                 </th>
                 <th scope="col" className="py-3.5 px-4 font-semibold text-right">
-                  Entry
+                  {dict.academics.entry}
                 </th>
                 <th scope="col" className="py-3.5 px-4 font-semibold text-center">
-                  Mean Grade
+                  {dict.academics.meanGrade}
                 </th>
                 <th scope="col" className="py-3.5 px-4 font-semibold text-right">
-                  Mean Points
+                  {dict.academics.meanPoints}
                 </th>
                 <th scope="col" className="py-3.5 px-4 font-semibold text-right">
                   C+ &amp; Above
@@ -105,7 +110,7 @@ export default function KcseMultiYearTable({
                           {isSelected && (
                             <span
                               className="w-1.5 h-1.5 rounded-full bg-[#C22F2F]"
-                              aria-label="Currently selected"
+                              aria-label={dict.academics.currentlySelected}
                             />
                           )}
                         </button>
@@ -124,9 +129,7 @@ export default function KcseMultiYearTable({
                     </td>
                     <td className="py-3.5 px-4 text-right">
                       {report.cPlusOrHigher}{' '}
-                      <span className="text-xs text-slate-500">
-                        ({formatCPlusShare(report)})
-                      </span>
+                      <span className="text-xs text-slate-500">({formatCPlusShare(report)})</span>
                     </td>
                     <td className="py-3.5 px-4 text-right">{aCount}</td>
                     <td className="py-3.5 px-4 text-right">{bCount}</td>

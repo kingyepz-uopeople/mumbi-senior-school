@@ -1,8 +1,40 @@
+'use client';
+
 import CountUpStat from '@/components/shared/CountUpStat';
 import SectionStemBackdrop from '@/components/shared/SectionStemBackdrop';
-import { quickStats } from '@/data/mock-school-data';
+import { kcse2025 } from '@/data/kcse';
+import { schoolInfo } from '@/data/mock-school-data';
+import { fill } from '@/i18n/fill';
+import { useLocale } from '@/i18n/locale-context';
 
 export default function QuickStats() {
+  const { dict } = useLocale();
+  const s = dict.stats;
+  const h = dict.home;
+
+  const stats = [
+    {
+      value: String(schoolInfo.founded),
+      label: s.established,
+      detail: fill(s.foundationDetail, { date: schoolInfo.foundedOn }),
+    },
+    {
+      value: '1,200+',
+      label: s.enrolment,
+      detail: s.boardingDetail,
+    },
+    {
+      value: String(kcse2025.meanPoints),
+      label: fill(s.kcseMean, { year: kcse2025.year }),
+      detail: fill(s.gradeDetail, { grade: kcse2025.meanGrade }),
+    },
+    {
+      value: '3',
+      label: s.pathways,
+      detail: s.pathwaysDetail,
+    },
+  ];
+
   return (
     <section
       aria-labelledby="quick-stats-heading"
@@ -10,11 +42,11 @@ export default function QuickStats() {
     >
       <SectionStemBackdrop variant="stats" />
       <h2 id="quick-stats-heading" className="sr-only">
-        School Figures at a Glance
+        {h.statsAria}
       </h2>
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
         <dl className="grid grid-cols-2 lg:grid-cols-4 divide-y lg:divide-y-0 divide-slate-200">
-          {quickStats.map((stat, index) => (
+          {stats.map((stat, index) => (
             <div
               key={stat.label}
               data-reveal=""

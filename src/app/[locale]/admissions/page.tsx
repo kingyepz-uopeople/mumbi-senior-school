@@ -1,12 +1,13 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
-import Link from 'next/link';
 import { ArrowUpRight, MapPin, ReceiptText } from 'lucide-react';
 import { ArrowDown, ArrowRight, CalendarDays } from '@/components/icons';
 import { grade10Intake } from '@/data/admissions';
 import ReportingDayTimeline from '@/components/admissions/ReportingDayTimeline';
 import { schoolInfo } from '@/data/mock-school-data';
 import DirectionsLink from '@/components/shared/DirectionsLink';
+import LocaleLink from '@/i18n/LocaleLink';
+import { fill, getLocaleDictionary } from '@/i18n/server';
 import { buildPageMetadata } from '@/lib/site';
 
 const placementPortalUrl = 'https://placement.education.go.ke/';
@@ -45,7 +46,13 @@ const steps = [
   },
 ] as const;
 
-export default function AdmissionsPage() {
+export default async function AdmissionsPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { dict } = await getLocaleDictionary(params);
+  const a = dict.admissions;
   const { year, reportingDate, reportingDateProvisional } = grade10Intake;
   const reportingDay = new Intl.DateTimeFormat('en-KE', {
     dateStyle: 'full',
@@ -61,28 +68,27 @@ export default function AdmissionsPage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
           <p className="mb-3 flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.16em] text-blue-100">
             <span className="h-0.5 w-7 bg-accent" aria-hidden="true" />
-            {year} Intake · Senior School
+            {fill(a.kicker, { year })}
           </p>
           <h1 className="font-serif text-4xl leading-tight font-bold sm:text-5xl lg:text-6xl">
-            Grade 10 Admissions
+            {a.title}
           </h1>
           <p className="mt-4 max-w-xl text-base leading-relaxed text-blue-50 sm:text-lg">
-            Reporting, school fees, and uniform for learners joining Mumbi Girls
-            Senior School in {year}.
+            {a.subtitle}
           </p>
           <div className="mt-6 flex flex-wrap gap-3">
             <a
               href="#uniform"
               className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-primary hover:bg-blue-50"
             >
-              View uniform photo
+              {a.viewUniform}
               <ArrowDown className="size-4 shrink-0" aria-hidden="true" />
             </a>
             <a
               href={placementPortalUrl}
               className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-white/60 px-5 py-2.5 text-sm font-semibold text-white hover:bg-white/10"
             >
-              Check placement
+              {a.checkPlacement}
               <ArrowUpRight strokeWidth={1.75} className="size-4 shrink-0" aria-hidden="true" />
             </a>
           </div>
@@ -111,12 +117,12 @@ export default function AdmissionsPage() {
                   id="reporting-day-label"
                   className="font-sans text-xs font-bold uppercase tracking-[0.12em] text-primary-dark"
                 >
-                  Reporting day
+                  {a.reportingDay}
                 </h2>
               </div>
               {reportingDateProvisional && (
                 <span className="rounded-full border border-accent bg-white px-2.5 py-1 text-xs font-semibold text-accent">
-                  Provisional
+                  {a.provisional}
                 </span>
               )}
             </div>
@@ -135,13 +141,13 @@ export default function AdmissionsPage() {
 
           <div>
             <p className="mb-2 text-xs font-semibold uppercase tracking-[0.14em] text-primary">
-              Before you arrive
+              {a.beforeArrive}
             </p>
             <h2
               id="reporting-heading"
               className="font-serif text-2xl font-bold text-slate-900 sm:text-3xl"
             >
-              What to prepare
+              {a.whatToPrepare}
             </h2>
             <div className="mt-5">
               <ReportingDayTimeline
@@ -177,10 +183,10 @@ export default function AdmissionsPage() {
             id="steps-heading"
             className="font-serif text-2xl font-bold text-white sm:text-3xl"
           >
-            How to join
+            {a.howToJoin}
           </h2>
           <p className="mt-3 max-w-xl text-sm leading-relaxed text-blue-100/85 sm:text-base">
-            Three steps before reporting day.
+            {a.threeSteps}
           </p>
           <ol className="editorial-index mt-8">
             {steps.map((step) => (
@@ -211,7 +217,7 @@ export default function AdmissionsPage() {
                     />
                   </a>
                 ) : (
-                  <Link href={step.href} className="editorial-row" data-reveal="">
+                  <LocaleLink href={step.href} className="editorial-row" data-reveal="">
                     <span className="editorial-numeral" aria-hidden="true">
                       {step.n}
                     </span>
@@ -227,7 +233,7 @@ export default function AdmissionsPage() {
                       className="editorial-arrow size-5 shrink-0 text-white"
                       aria-hidden="true"
                     />
-                  </Link>
+                  </LocaleLink>
                 )}
               </li>
             ))}
@@ -249,24 +255,19 @@ export default function AdmissionsPage() {
               id="fees-heading"
               className="font-serif text-xl font-bold text-slate-900 sm:text-2xl"
             >
-              {year} Grade 10 school fees
+              {fill(a.feesHeading, { year })}
             </h2>
           </div>
-          <p className="mt-4 font-semibold text-slate-900">
-            The {year} fee structure isn&apos;t published on this site yet.
+          <p className="mt-4 text-sm leading-relaxed text-slate-700">
+            {a.feesUnpublished}
           </p>
-          <p className="mt-2 text-sm leading-relaxed text-slate-700">
-            Ask the school office to confirm the amount due on reporting day, any
-            later instalments, and the official payment instructions before
-            sending money.
-          </p>
-          <Link
+          <LocaleLink
             href={schoolOfficeHref}
             className="mt-3 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-primary underline underline-offset-4 hover:text-primary-dark"
           >
-            School office contact details
+            {a.officeContact}
             <ArrowRight className="size-4 shrink-0" aria-hidden="true" />
-          </Link>
+          </LocaleLink>
         </section>
 
         {/* Uniform */}
@@ -278,13 +279,13 @@ export default function AdmissionsPage() {
         >
           <div className="max-w-lg">
             <p className="mb-2 text-xs font-semibold uppercase tracking-[0.14em] text-primary">
-              Uniform colour reference
+              {a.uniformHeading}
             </p>
             <h2
               id="uniform-heading"
               className="font-serif text-2xl font-bold text-slate-900 sm:text-3xl"
             >
-              Grade 10 uniform photo
+              {a.uniformPhoto}
             </h2>
             <p className="mt-3 text-sm leading-relaxed text-slate-700 sm:text-base">
               This school prize-giving photo shows the blue top with the school
@@ -293,7 +294,7 @@ export default function AdmissionsPage() {
             </p>
             <div className="mt-5 border-l-2 border-primary bg-blue-50 px-4 py-3 text-sm leading-relaxed text-slate-700">
               <p className="mb-1 font-semibold text-primary-dark">
-                Before you buy
+                {a.beforeBuy}
               </p>
               <p>
                 Screens show colours differently. Confirm the current {year}{' '}
@@ -301,13 +302,13 @@ export default function AdmissionsPage() {
                 the fabric with a school-approved sample.
               </p>
             </div>
-            <Link
+            <LocaleLink
               href="/explore#boarding"
               className="mt-3 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-primary underline underline-offset-4 hover:text-primary-dark"
             >
-              Boarding and uniform overview
+              {a.boardingUniform}
               <ArrowRight className="size-4 shrink-0" aria-hidden="true" />
-            </Link>
+            </LocaleLink>
           </div>
 
           <figure className="m-0 w-full max-w-sm justify-self-center overflow-hidden rounded-md border border-slate-200 bg-slate-bg">
@@ -329,7 +330,7 @@ export default function AdmissionsPage() {
                 className="inline-flex items-center gap-1 text-sm font-semibold text-primary underline underline-offset-4 hover:text-primary-dark"
               >
                 Full-size photo
-                <span className="sr-only">(opens in a new tab)</span>
+                <span className="sr-only">{dict.common.opensNewTab}</span>
                 <ArrowUpRight strokeWidth={1.75} className="size-4 shrink-0" aria-hidden="true" />
               </a>
             </figcaption>
@@ -348,7 +349,7 @@ export default function AdmissionsPage() {
               id="help-heading"
               className="font-serif text-xl font-bold text-slate-900 sm:text-2xl"
             >
-              Questions about joining?
+              {a.questions}
             </h2>
             <p className="mt-2 flex items-start gap-2 text-sm leading-relaxed text-slate-700">
               <MapPin strokeWidth={1.75} className="mt-0.5 size-4 shrink-0 text-primary" aria-hidden="true" />
@@ -361,19 +362,19 @@ export default function AdmissionsPage() {
             </p>
           </div>
           <div className="flex flex-wrap gap-3">
-            <Link
+            <LocaleLink
               href={schoolOfficeHref}
               className="inline-flex min-h-11 items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-white hover:bg-primary-dark"
             >
-              Contact the school
+              {a.contactSchool}
               <ArrowRight className="size-4 shrink-0" aria-hidden="true" />
-            </Link>
-            <Link
+            </LocaleLink>
+            <LocaleLink
               href="/academics#pathways"
               className="inline-flex min-h-11 items-center rounded-full border border-primary bg-white px-5 py-2.5 text-sm font-semibold text-primary hover:bg-blue-50"
             >
-              Explore pathways
-            </Link>
+              {a.explorePathways}
+            </LocaleLink>
           </div>
         </section>
       </div>

@@ -1,4 +1,7 @@
+'use client';
+
 import Image from 'next/image';
+import { useLocale } from '@/i18n/locale-context';
 
 const boardingPhotos = [
   {
@@ -16,10 +19,12 @@ const boardingPhotos = [
 ];
 
 export default function BoardingPhotos() {
+  const { dict } = useLocale();
+
   return (
     <section aria-labelledby="boarding-photos-heading">
       <h3 id="boarding-photos-heading" className="mb-4 font-serif text-xl font-bold text-slate-900 sm:text-2xl">
-        Boarding area photos
+        {dict.explore.boardingPhotos}
       </h3>
       <div className="grid gap-4 sm:grid-cols-2 sm:gap-5">
         {boardingPhotos.map(({ src, label, caption, alt }) => (

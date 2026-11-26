@@ -1,8 +1,11 @@
-import Link from 'next/link';
+'use client';
+
 import { ArrowRight } from '@/components/icons';
 import BlurRevealHeading from '@/components/shared/BlurRevealHeading';
 import SectionStemBackdrop from '@/components/shared/SectionStemBackdrop';
 import { newsItems } from '@/data/mock-school-data';
+import LocaleLink from '@/i18n/LocaleLink';
+import { useLocale } from '@/i18n/locale-context';
 import { parseDateKE, toIsoDate } from '@/lib/utils';
 
 export const newsCategoryTextClasses: Record<string, string> = {
@@ -13,6 +16,9 @@ export const newsCategoryTextClasses: Record<string, string> = {
 };
 
 export default function LatestNews() {
+  const { dict } = useLocale();
+  const h = dict.home;
+
   const displayItems = [...newsItems]
     .sort(
       (a, b) => parseDateKE(b.date).getTime() - parseDateKE(a.date).getTime()
@@ -33,30 +39,29 @@ export default function LatestNews() {
         >
           <div className="max-w-2xl">
             <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary mb-2">
-              School Office Notices
+              {h.newsKicker}
             </p>
             <BlurRevealHeading
               id="latest-news-heading"
               seed="home-latest-news"
               className="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-900 leading-tight"
             >
-              Circulars, News &amp; Downloads
+              {h.newsHeading}
             </BlurRevealHeading>
           </div>
 
-          <Link
+          <LocaleLink
             href="/downloads"
             className="min-h-11 inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:text-primary-dark hover:underline underline-offset-4 transition-colors shrink-0"
           >
-            <span>All downloads &amp; circulars</span>
+            <span>{h.newsAllDownloads}</span>
             <ArrowRight
               className="w-4 h-4 shrink-0 stroke-[1.75]"
               aria-hidden="true"
             />
-          </Link>
+          </LocaleLink>
         </div>
 
-        {/* Editorial Notice Register */}
         <div className="bg-white/45 border-t-2 border-t-primary border-x border-b border-slate-200 divide-y divide-slate-200">
           {displayItems.map((item, idx) => {
             const categoryClass =
@@ -86,12 +91,12 @@ export default function LatestNews() {
 
                 <div className="md:col-span-7">
                   <h3 className="font-serif text-lg sm:text-xl font-bold text-slate-900 leading-snug mb-1.5">
-                    <Link
+                    <LocaleLink
                       href={`/news/${item.slug}`}
                       className="hover:text-primary hover:underline underline-offset-4 transition-colors"
                     >
                       {item.title}
-                    </Link>
+                    </LocaleLink>
                   </h3>
                   <p className="text-sm text-slate-600 leading-relaxed">
                     {item.excerpt}
@@ -99,16 +104,16 @@ export default function LatestNews() {
                 </div>
 
                 <div className="md:col-span-2 md:text-right">
-                  <Link
+                  <LocaleLink
                     href={`/news/${item.slug}`}
                     className="min-h-11 inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:text-primary-dark transition-colors"
                   >
-                    <span>Read notice</span>
+                    <span>{h.newsReadNotice}</span>
                     <ArrowRight
                       className="w-4 h-4 shrink-0 stroke-[1.75]"
                       aria-hidden="true"
                     />
-                  </Link>
+                  </LocaleLink>
                 </div>
               </article>
             );

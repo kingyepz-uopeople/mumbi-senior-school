@@ -7,8 +7,11 @@ import BlurRevealHeading from '@/components/shared/BlurRevealHeading';
 import SectionStemBackdrop from '@/components/shared/SectionStemBackdrop';
 import WallOfFameGrid, { type HonourYear } from '@/components/shared/WallOfFameGrid';
 import { kcseReports } from '@/data/kcse';
+import { fill } from '@/i18n/fill';
+import { useLocale } from '@/i18n/locale-context';
 
 export default function KcseResults({ knecCode }: { knecCode: string }) {
+  const { dict } = useLocale();
   const [reportYear, setReportYear] = useState(kcseReports[0].year);
   const [showAllHonourees, setShowAllHonourees] = useState(false);
   const report = kcseReports.find(({ year }) => year === reportYear) ?? kcseReports[0];
@@ -47,14 +50,14 @@ export default function KcseResults({ knecCode }: { knecCode: string }) {
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6">
           <div data-reveal="" className="mb-8 max-w-2xl">
             <p className="mb-2 text-xs font-semibold uppercase tracking-[0.14em] text-primary">
-              National Examinations · KNEC {knecCode}
+              {fill(dict.academics.resultsKicker, { code: knecCode })}
             </p>
             <BlurRevealHeading
               id="academics-wof-heading"
               seed="academics-roll-of-honour"
               className="font-serif text-2xl font-bold text-slate-900 sm:text-3xl"
             >
-              KCSE Roll of Honour
+              {dict.academics.rollHeading}
             </BlurRevealHeading>
             <p className="mt-2 text-sm leading-relaxed text-slate-600 sm:text-base">
               Top performers from the school&apos;s KCSE reports, with tied

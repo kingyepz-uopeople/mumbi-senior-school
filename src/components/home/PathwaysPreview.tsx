@@ -8,6 +8,7 @@ import BlurRevealHeading from '@/components/shared/BlurRevealHeading';
 import SectionStemBackdrop from '@/components/shared/SectionStemBackdrop';
 import SpotlightCardGroup from '@/components/shared/SpotlightCardGroup';
 import { cbcPathways } from '@/data/mock-school-data';
+import type { Dictionary } from '@/i18n/dictionaries/en';
 import LocaleLink from '@/i18n/LocaleLink';
 import { useLocale } from '@/i18n/locale-context';
 
@@ -15,25 +16,37 @@ const PATHWAY_VISUALS = {
   stem: {
     src: '/images/pathways/pathways-stem.jpg',
     alt: 'Students conducting a science practical in a laboratory',
-    code: 'STEM',
   },
   'social-sciences': {
     src: '/images/pathways/pathways-social-sciences.jpg',
     alt: 'Students studying together in a school library',
-    code: 'Social',
   },
   'arts-sports': {
     src: '/images/pathways/pathways-arts-sports-science.jpg',
     alt: 'Students training for an outdoor athletics event',
-    code: 'Arts & Sports',
   },
 } as const;
+
+type PathwayVisualId = keyof typeof PATHWAY_VISUALS;
+
+function pathwayTitle(id: string, dict: Dictionary) {
+  if (id === 'stem') return dict.pathways.stem;
+  if (id === 'social-sciences') return dict.pathways.socialSciences;
+  return dict.pathways.artsSports;
+}
+
+function pathwayCode(id: string, dict: Dictionary) {
+  if (id === 'stem') return dict.pathways.stem;
+  if (id === 'social-sciences') return dict.pathways.codeSocial;
+  return dict.pathways.codeArts;
+}
 
 interface PathwaysTabsProps {
   idPrefix?: string;
 }
 
 export function PathwaysTabs({ idPrefix = 'home-pathway' }: PathwaysTabsProps) {
+  const { dict } = useLocale();
   const [activeIndex, setActiveIndex] = useState(0);
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
@@ -65,12 +78,13 @@ export function PathwaysTabs({ idPrefix = 'home-pathway' }: PathwaysTabsProps) {
       <SpotlightCardGroup
         cardCount={cbcPathways.length}
         role="tablist"
-        aria-label="CBC Senior School Pathways"
+        aria-label={dict.pathways.ariaLabel}
         className="-mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-3 pt-2 lg:mx-0 lg:grid lg:grid-cols-3 lg:gap-5 lg:overflow-visible lg:px-0 lg:pt-2"
       >
         {cbcPathways.map((pathway, index) => {
           const selected = index === activeIndex;
-          const visual = PATHWAY_VISUALS[pathway.id];
+          const visual = PATHWAY_VISUALS[pathway.id as PathwayVisualId];
+          const title = pathwayTitle(pathway.id, dict);
           return (
             <button
               key={pathway.id}
@@ -80,7 +94,7 @@ export function PathwaysTabs({ idPrefix = 'home-pathway' }: PathwaysTabsProps) {
               id={`${idPrefix}-tab-${pathway.id}`}
               type="button"
               role="tab"
-              aria-label={pathway.name}
+              aria-label={title}
               aria-describedby={`${idPrefix}-summary-${pathway.id}`}
               aria-selected={selected}
               aria-controls={`${idPrefix}-panel-${pathway.id}`}
@@ -111,9 +125,11 @@ export function PathwaysTabs({ idPrefix = 'home-pathway' }: PathwaysTabsProps) {
                   />
 
                   <span className="absolute inset-x-3.5 top-3.5 flex items-center justify-between gap-2">
-                    <span className="pathway-preview-code">{visual.code}</span>
+                    <span className="pathway-preview-code">
+                      {pathwayCode(pathway.id, dict)}
+                    </span>
                     <span className="pathway-preview-explore">
-                      Explore{' '}
+                      {dict.common.explore}{' '}
                       <span className="pathway-preview-explore-arrow" aria-hidden="true">
                         →
                       </span>
@@ -122,7 +138,7 @@ export function PathwaysTabs({ idPrefix = 'home-pathway' }: PathwaysTabsProps) {
 
                   <span className="absolute inset-x-5 bottom-3.5">
                     <span className="block font-serif text-xl font-bold leading-snug text-white drop-shadow-sm sm:text-[1.35rem]">
-                      {pathway.name}
+                      {title}
                     </span>
                     <span className="pathway-preview-underline mt-1.5" aria-hidden="true" />
                   </span>
@@ -138,7 +154,7 @@ export function PathwaysTabs({ idPrefix = 'home-pathway' }: PathwaysTabsProps) {
 
                   <span className="mt-4 block">
                     <span className="block text-[11px] font-bold uppercase tracking-[0.12em] text-primary">
-                      Tracks
+                      {dict.common.tracks}
                     </span>
                     <span className="mt-2.5 flex flex-wrap gap-1.5">
                       {pathway.tracks.map((track, trackIndex) => (
@@ -186,7 +202,7 @@ export function PathwaysTabs({ idPrefix = 'home-pathway' }: PathwaysTabsProps) {
 
                 <div>
                   <h4 className="mb-2 font-sans text-[11px] font-semibold uppercase tracking-[0.12em] text-primary">
-                    Subjects Taught
+                    {dict.common.subjectsTaught}
                   </h4>
                   <ul className="space-y-1 text-sm text-slate-800">
                     {track.subjects.map((subject) => (
@@ -206,7 +222,7 @@ export function PathwaysTabs({ idPrefix = 'home-pathway' }: PathwaysTabsProps) {
 
               <div className="border-t border-slate-200 pt-4">
                 <h4 className="mb-1.5 font-sans text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-600">
-                  Related University Fields
+                  {dict.common.relatedFields}
                 </h4>
                 <p className="text-xs leading-relaxed text-slate-700">
                   {track.careers.join(' · ')}

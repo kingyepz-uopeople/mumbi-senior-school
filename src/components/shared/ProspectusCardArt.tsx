@@ -20,6 +20,7 @@ export type ProspectusArtKey =
   | 'hockey'
   | 'athletics'
   | 'handball'
+  | 'badminton'
   | 'christian-union'
   | 'young-christian-students'
   | 'sda-fellowship'
@@ -278,6 +279,20 @@ const ART: Record<ProspectusArtKey, ReactNode> = {
       <g {...DEEP_STROKE}>
         <circle cx="110" cy="28" r="10" />
         <path d="M104 23c5 3 8 7 11 12M98 29l20-3" />
+      </g>
+    </>
+  ),
+  badminton: (
+    <>
+      <g {...PRIMARY_STROKE}>
+        <ellipse cx="48" cy="78" rx="22" ry="28" transform="rotate(-28 48 78)" />
+        <path d="M62 58 118 18m-8 4 8-4-3 9" />
+        <path d="M38 62c8 2 14 8 16 16M42 90c6-2 12-1 17 4" />
+      </g>
+      <g {...DEEP_STROKE}>
+        <circle cx="112" cy="78" r="9" />
+        <path d="M112 69v-10m0 10-7-8m7 8 7-8M105 62l14 0" />
+        <path d="M26 112h108" />
       </g>
     </>
   ),

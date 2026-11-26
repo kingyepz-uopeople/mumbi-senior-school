@@ -1,12 +1,14 @@
-import Link from 'next/link';
+'use client';
+
 import { ArrowRight } from '@/components/icons';
 import ProspectusIndexReveal from '@/components/home/ProspectusIndexReveal';
 import { grade10Intake } from '@/data/admissions';
 import { kcseReports } from '@/data/kcse';
 import { downloads, schoolInfo } from '@/data/mock-school-data';
+import LocaleLink from '@/i18n/LocaleLink';
+import { useLocale } from '@/i18n/locale-context';
 import { parseDateKE } from '@/lib/utils';
 
-// The newest circular on /downloads, used for the index line and the dot.
 const latestCircular = [...downloads]
   .filter(({ category }) => category === 'Circular')
   .sort(
@@ -17,8 +19,6 @@ const kcseYears = kcseReports.map(({ year }) => year);
 const firstKcseYear = Math.min(...kcseYears);
 const lastKcseYear = Math.max(...kcseYears);
 
-// Every line below restates something the linked page actually shows.
-// Keep titles and details short and plain — this reads like a contents page.
 const parentLinks = [
   {
     title: 'Joining & reporting',
@@ -67,6 +67,8 @@ const parentLinks = [
 ];
 
 export default function ParentQuickLinks() {
+  const { dict } = useLocale();
+
   return (
     <section
       id="family-quick-links"
@@ -80,11 +82,10 @@ export default function ParentQuickLinks() {
           id="parent-quick-links-heading"
           className="font-serif text-4xl leading-[1.05] font-bold tracking-tight text-white sm:text-5xl lg:text-[3.5rem]"
         >
-          For parents
+          {dict.home.parentsKicker}
         </h2>
         <p className="mt-4 max-w-xl text-sm leading-relaxed text-blue-100/85 sm:text-lg">
-          Reporting, uniform guidance, fees, circulars, holiday work, KCSE
-          results and the school office.
+          {dict.home.parentsBody}
         </p>
 
         <ol
@@ -93,7 +94,7 @@ export default function ParentQuickLinks() {
         >
           {parentLinks.map((item, index) => (
             <li key={item.title} className="prospectus-cell">
-              <Link href={item.href} className="prospectus-row">
+              <LocaleLink href={item.href} className="prospectus-row">
                 <span className="prospectus-numeral" aria-hidden="true">
                   {String(index + 1).padStart(2, '0')}
                 </span>
@@ -114,7 +115,7 @@ export default function ParentQuickLinks() {
                   className="prospectus-arrow size-5 shrink-0 text-white"
                   aria-hidden="true"
                 />
-              </Link>
+              </LocaleLink>
             </li>
           ))}
         </ol>

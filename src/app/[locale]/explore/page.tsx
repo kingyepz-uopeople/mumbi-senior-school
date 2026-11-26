@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import PageHero from '@/components/shared/PageHero';
 import SectionStemBackdrop from '@/components/shared/SectionStemBackdrop';
 import ExploreTabs from '@/components/explore/ExploreTabs';
+import { getLocaleDictionary } from '@/i18n/server';
 import { buildPageMetadata } from '@/lib/site';
 
 export const metadata: Metadata = buildPageMetadata({
@@ -11,20 +12,22 @@ export const metadata: Metadata = buildPageMetadata({
   path: '/explore',
 });
 
-export default function ExplorePage() {
+export default async function ExplorePage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { dict } = await getLocaleDictionary(params);
+  const e = dict.explore;
+
   return (
     <div className="bg-slate-bg">
       <PageHero
         variant="student-life"
-        kicker="Boarding & Co-Curricular Life"
-        title="Student Life at Mumbi Girls"
-        subtitle="Uniformed movements and clubs, afternoon games, the 05:00 to 22:00 weekday boarding timetable, school chaplaincy, dining, and uniform guidelines."
-        meta={[
-          '7 Clubs & Movements',
-          '6 KSSSA Sports',
-          '05:00 – 22:00 Weekday Routine',
-          '4 Faith Fellowships',
-        ]}
+        kicker={e.kicker}
+        title={e.title}
+        subtitle={e.subtitle}
+        meta={[e.metaClubs, e.metaSports, e.metaRoutine, e.metaFaith]}
       />
 
       <div className="relative">

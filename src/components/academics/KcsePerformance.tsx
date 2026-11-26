@@ -1,5 +1,9 @@
+'use client';
+
 import { ArrowDown } from '@/components/icons';
 import { formatCPlusShare, kcseReports, type KcseReport } from '@/data/kcse';
+import { fill } from '@/i18n/fill';
+import { useLocale } from '@/i18n/locale-context';
 
 interface KcsePerformanceProps {
   report: KcseReport;
@@ -7,18 +11,40 @@ interface KcsePerformanceProps {
   onViewPerformers: () => void;
 }
 
-export default function KcsePerformance({ report, onYearChange, onViewPerformers }: KcsePerformanceProps) {
-  const { year, meanPoints, meanGrade, candidateCount, cPlusOrHigher, grades, streams, topPerformers } = report;
+export default function KcsePerformance({
+  report,
+  onYearChange,
+  onViewPerformers,
+}: KcsePerformanceProps) {
+  const { dict } = useLocale();
+  const { year, meanPoints, meanGrade, candidateCount, cPlusOrHigher, grades, streams, topPerformers } =
+    report;
   const cPlusShare = formatCPlusShare(report);
   const largestGradeCount = Math.max(...grades.map((grade) => grade.count));
   const leadingStream = streams[0];
   const topPerformer = topPerformers[0];
 
   const highlights = [
-    { label: 'School mean', value: meanPoints, detail: `Overall grade ${meanGrade}` },
-    { label: 'Candidates', value: candidateCount, detail: `Across ${streams.length} Form 4 streams` },
-    { label: 'C+ or higher', value: cPlusOrHigher, detail: `${cPlusShare} of all candidates` },
-    { label: 'Highest score', value: topPerformer.points, detail: `Total points · Grade ${topPerformer.meanGrade}` },
+    {
+      label: dict.academics.schoolMean,
+      value: meanPoints,
+      detail: `Overall grade ${meanGrade}`,
+    },
+    {
+      label: dict.academics.candidates,
+      value: candidateCount,
+      detail: `Across ${streams.length} Form 4 streams`,
+    },
+    {
+      label: dict.academics.cPlusOrHigher,
+      value: cPlusOrHigher,
+      detail: `${cPlusShare} of all candidates`,
+    },
+    {
+      label: dict.academics.highestScore,
+      value: topPerformer.points,
+      detail: `Total points · Grade ${topPerformer.meanGrade}`,
+    },
   ];
 
   return (
@@ -31,14 +57,14 @@ export default function KcsePerformance({ report, onYearChange, onViewPerformers
         <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div className="max-w-2xl">
             <p className="mb-2 text-xs font-semibold uppercase tracking-[0.14em] text-primary">
-              National examinations · {year} cohort
+              {fill(dict.academics.performanceKicker, { year })}
             </p>
             <h2 id="kcse-results-heading" className="font-serif text-3xl font-bold text-slate-900 sm:text-4xl">
-              {year} KCSE Performance
+              {fill(dict.academics.performanceHeading, { year })}
             </h2>
             <p className="mt-3 text-sm leading-relaxed text-slate-700 sm:text-base">
-              Mumbi Girls Senior School recorded a mean of {meanPoints} ({meanGrade}).
-              {' '}{cPlusOrHigher} of the {candidateCount} candidates earned C+ or higher.
+              Mumbi Girls Senior School recorded a mean of {meanPoints} ({meanGrade}). {cPlusOrHigher} of the{' '}
+              {candidateCount} candidates earned C+ or higher.
             </p>
           </div>
           <a
@@ -46,16 +72,23 @@ export default function KcsePerformance({ report, onYearChange, onViewPerformers
             onClick={onViewPerformers}
             className="inline-flex min-h-11 shrink-0 items-center gap-2 self-start rounded-full border border-primary bg-white px-5 py-2.5 text-sm font-semibold text-primary hover:bg-blue-50 sm:self-auto"
           >
-            View top performers
+            {dict.academics.viewTop}
             <ArrowDown className="size-4 shrink-0" aria-hidden="true" />
           </a>
         </div>
 
         <div className="mt-7">
-          <p id="kcse-year-picker-label" className="mb-2 text-xs font-semibold uppercase tracking-[0.1em] text-slate-600">
-            Examination year
+          <p
+            id="kcse-year-picker-label"
+            className="mb-2 text-xs font-semibold uppercase tracking-[0.1em] text-slate-600"
+          >
+            {dict.academics.examYear}
           </p>
-          <div role="group" aria-labelledby="kcse-year-picker-label" className="grid grid-cols-2 gap-2 sm:grid-cols-4 sm:gap-3">
+          <div
+            role="group"
+            aria-labelledby="kcse-year-picker-label"
+            className="grid grid-cols-2 gap-2 sm:grid-cols-4 sm:gap-3"
+          >
             {kcseReports.map((option) => (
               <button
                 key={option.year}
@@ -68,15 +101,18 @@ export default function KcsePerformance({ report, onYearChange, onViewPerformers
                     : 'border-slate-200 bg-white text-slate-800 hover:border-primary'
                 }`}
               >
-                <span className="block text-sm font-bold">KCSE {option.year}</span>
+                <span className="block text-sm font-bold">
+                  {fill(dict.home.kcseYear, { year: option.year })}
+                </span>
                 <span className="block text-xs text-slate-600 tabular-nums">
-                  Mean {option.meanPoints} ({option.meanGrade})
+                  {dict.academics.mean} {option.meanPoints} ({option.meanGrade})
                 </span>
               </button>
             ))}
           </div>
           <p role="status" className="sr-only">
-            Showing {year} KCSE results for {candidateCount} candidates. School mean {meanPoints}, grade {meanGrade}.
+            Showing {year} KCSE results for {candidateCount} candidates. School mean {meanPoints}, grade{' '}
+            {meanGrade}.
           </p>
         </div>
 
@@ -90,7 +126,9 @@ export default function KcsePerformance({ report, onYearChange, onViewPerformers
                   : 'border-slate-200 bg-white text-slate-900'
               }`}
             >
-              <dt className={`text-xs font-semibold uppercase tracking-[0.1em] ${index === 0 ? 'text-blue-100' : 'text-slate-600'}`}>
+              <dt
+                className={`text-xs font-semibold uppercase tracking-[0.1em] ${index === 0 ? 'text-blue-100' : 'text-slate-600'}`}
+              >
                 {label}
               </dt>
               <dd className="mt-2 font-serif text-3xl leading-none font-bold tabular-nums sm:text-4xl">{value}</dd>
@@ -102,12 +140,15 @@ export default function KcsePerformance({ report, onYearChange, onViewPerformers
         <div className="mt-6 grid items-start gap-4 lg:grid-cols-2 lg:gap-6">
           <section aria-labelledby="kcse-grade-heading" className="rounded-lg border border-slate-200 bg-white p-4 sm:p-6">
             <h3 id="kcse-grade-heading" className="font-serif text-xl font-bold text-slate-900">
-              Grade distribution
+              {dict.academics.gradeDistribution}
             </h3>
             <p className="mt-1 text-sm text-slate-600">Number of candidates in each grade awarded.</p>
             <ul role="list" className="mt-5 space-y-2.5">
               {grades.map(({ grade, gradePoints, count }) => (
-                <li key={grade} className="grid grid-cols-[2rem_1fr_2rem] items-center gap-2 text-sm tabular-nums sm:gap-3">
+                <li
+                  key={grade}
+                  className="grid grid-cols-[2rem_1fr_2rem] items-center gap-2 text-sm tabular-nums sm:gap-3"
+                >
                   <span className="font-semibold text-slate-800">{grade}</span>
                   <div className="h-2.5 overflow-hidden rounded-full bg-slate-100" aria-hidden="true">
                     <div
@@ -121,31 +162,44 @@ export default function KcsePerformance({ report, onYearChange, onViewPerformers
             </ul>
             <p className="mt-4 flex items-center gap-2 text-xs text-slate-600">
               <span className="size-2.5 rounded-full bg-primary" aria-hidden="true" />
-              Dark blue marks C+ or higher
+              {dict.academics.cPlusLegend}
             </p>
           </section>
 
           <section aria-labelledby="kcse-stream-heading" className="rounded-lg border border-slate-200 bg-white p-4 sm:p-6">
             <h3 id="kcse-stream-heading" className="font-serif text-xl font-bold text-slate-900">
-              Results by stream
+              {dict.academics.resultsByStream}
             </h3>
             <p className="mt-1 text-sm leading-relaxed text-slate-600">
-              {leadingStream.name} led the {streams.length} streams with a mean of {leadingStream.meanPoints} ({leadingStream.meanGrade}).
+              {leadingStream.name} led the {streams.length} streams with a mean of {leadingStream.meanPoints} (
+              {leadingStream.meanGrade}).
             </p>
             <table className="mt-4 w-full border-collapse text-left text-xs tabular-nums sm:text-sm">
-              <caption className="sr-only">{year} KCSE entries, mean points and grades by Form 4 stream</caption>
+              <caption className="sr-only">
+                {year} KCSE entries, mean points and grades by Form 4 stream
+              </caption>
               <thead className="border-y border-slate-200 bg-slate-bg text-slate-600">
                 <tr>
-                  <th scope="col" className="p-2">Stream</th>
-                  <th scope="col" className="p-2 text-right">Entries</th>
-                  <th scope="col" className="p-2 text-right">Mean</th>
-                  <th scope="col" className="p-2 text-right">Grade</th>
+                  <th scope="col" className="p-2">
+                    {dict.academics.stream}
+                  </th>
+                  <th scope="col" className="p-2 text-right">
+                    {dict.academics.entries}
+                  </th>
+                  <th scope="col" className="p-2 text-right">
+                    {dict.academics.mean}
+                  </th>
+                  <th scope="col" className="p-2 text-right">
+                    {dict.academics.grade}
+                  </th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-200">
                 {streams.map(({ name, entries, meanPoints, meanGrade }) => (
                   <tr key={name} className={name === leadingStream.name ? 'bg-blue-50' : undefined}>
-                    <th scope="row" className="p-2 font-semibold text-slate-900">{name}</th>
+                    <th scope="row" className="p-2 font-semibold text-slate-900">
+                      {name}
+                    </th>
                     <td className="p-2 text-right text-slate-700">{entries}</td>
                     <td className="p-2 text-right text-slate-700">{meanPoints}</td>
                     <td className="p-2 text-right font-semibold text-primary-dark">{meanGrade}</td>
@@ -155,9 +209,7 @@ export default function KcsePerformance({ report, onYearChange, onViewPerformers
             </table>
           </section>
         </div>
-        <p className="mt-4 text-xs text-slate-600">
-          Source: School&apos;s {year} KCSE results summary.
-        </p>
+        <p className="mt-4 text-xs text-slate-600">Source: School&apos;s {year} KCSE results summary.</p>
       </div>
     </section>
   );

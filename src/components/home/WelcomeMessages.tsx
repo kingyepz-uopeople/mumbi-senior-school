@@ -1,9 +1,13 @@
+'use client';
+
 import Image from 'next/image';
-import Link from 'next/link';
 import { ArrowRight } from '@/components/icons';
 import BlurRevealHeading from '@/components/shared/BlurRevealHeading';
 import SectionStemBackdrop from '@/components/shared/SectionStemBackdrop';
 import { schoolInfo } from '@/data/mock-school-data';
+import LocaleLink from '@/i18n/LocaleLink';
+import { fill } from '@/i18n/fill';
+import { useLocale } from '@/i18n/locale-context';
 
 interface WelcomeLetterProps {
   id: string;
@@ -80,7 +84,7 @@ function WelcomeLetter({
               {role}
             </p>
           </div>
-          <Link
+          <LocaleLink
             href={action.href}
             className="inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-primary transition-colors hover:text-primary-dark hover:underline hover:underline-offset-4"
           >
@@ -89,7 +93,7 @@ function WelcomeLetter({
               className="h-4 w-4 shrink-0 stroke-[1.75]"
               aria-hidden="true"
             />
-          </Link>
+          </LocaleLink>
         </div>
       </div>
     </article>
@@ -111,9 +115,12 @@ const principalParagraphs = [
 ];
 
 export default function WelcomeMessages() {
+  const { dict } = useLocale();
+  const h = dict.home;
+
   return (
     <section
-      aria-label="Welcome messages"
+      aria-label={h.welcomeAria}
       className="relative bg-slate-bg py-16 sm:py-24"
     >
       <SectionStemBackdrop variant="welcome" />
@@ -121,8 +128,8 @@ export default function WelcomeMessages() {
         <WelcomeLetter
           id="principal-welcome-heading"
           seed="home-principal-welcome"
-          kicker="Chief Principal's Welcome Message"
-          title={`Welcome to ${schoolInfo.name}`}
+          kicker={h.principalKicker}
+          title={fill(h.principalTitle, { name: schoolInfo.name })}
           paragraphs={principalParagraphs}
           name="Mrs. Florence Wahito Thumbi"
           role={`Chief Principal, ${schoolInfo.name}`}
@@ -133,14 +140,14 @@ export default function WelcomeMessages() {
             height: 1052,
             className: 'object-center',
           }}
-          action={{ href: '/about', label: 'School history & leadership' }}
+          action={{ href: '/about', label: h.principalAction }}
         />
         <div className="border-t border-slate-200" aria-hidden="true" />
         <WelcomeLetter
           id="dean-welcome-heading"
           seed="home-dean-welcome"
-          kicker="Dean's Welcome Message"
-          title="Academic Excellence & Senior School Pathways"
+          kicker={h.deanKicker}
+          title={h.deanTitle}
           paragraphs={deanParagraphs}
           name="Mr. Kiruri"
           role={`Dean of Studies, ${schoolInfo.name}`}
@@ -151,7 +158,7 @@ export default function WelcomeMessages() {
             height: 1600,
             className: 'object-[center_18%]',
           }}
-          action={{ href: '/academics', label: 'Academic pathways & results' }}
+          action={{ href: '/academics', label: h.deanAction }}
         />
       </div>
     </section>

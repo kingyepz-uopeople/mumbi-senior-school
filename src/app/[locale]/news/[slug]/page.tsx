@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ArrowLeft, ArrowRight } from '@/components/icons';
 import BlurRevealHeading from '@/components/shared/BlurRevealHeading';
@@ -7,6 +6,8 @@ import PageHero from '@/components/shared/PageHero';
 import SectionStemBackdrop from '@/components/shared/SectionStemBackdrop';
 import { newsItems, schoolInfo } from '@/data/mock-school-data';
 import { newsCategoryTextClasses } from '@/components/home/LatestNews';
+import LocaleLink from '@/i18n/LocaleLink';
+import { fill, getLocaleDictionary } from '@/i18n/server';
 import { buildPageMetadata } from '@/lib/site';
 import { parseDateKE, toIsoDate } from '@/lib/utils';
 
@@ -19,14 +20,17 @@ export function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ locale: string; slug: string }>;
 }): Promise<Metadata> {
-  const { slug } = await params;
+  const { slug, locale: localeParam } = await params;
   const item = newsItems.find((entry) => entry.slug === slug);
 
   if (!item) {
+    const { dict } = await getLocaleDictionary(
+      Promise.resolve({ locale: localeParam })
+    );
     return buildPageMetadata({
-      title: 'Notice Not Found',
+      title: dict.news.notFound,
       description: `The requested notice could not be found on ${schoolInfo.name}.`,
       path: `/news/${slug}`,
       noIndex: true,
@@ -45,9 +49,14 @@ export async function generateMetadata({
 export default async function NewsArticlePage({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ locale: string; slug: string }>;
 }) {
-  const { slug } = await params;
+  const { slug, dict } = await (async () => {
+    const p = await params;
+    const { dict: d } = await getLocaleDictionary(Promise.resolve({ locale: p.locale }));
+    return { slug: p.slug, dict: d };
+  })();
+  const n = dict.news;
   const item = newsItems.find((entry) => entry.slug === slug);
 
   if (!item) {
@@ -58,10 +67,10 @@ export default async function NewsArticlePage({
     item.slug === 'admission-joining-instructions-2025';
   const isKcseResultsNotice = item.slug === '2024-kcse-results';
   const primaryAction = isArchivedAdmissionsNotice
-    ? { href: '/admissions', label: 'Grade 10 admissions guide' }
+    ? { href: '/admissions', label: n.grade10Guide }
     : isKcseResultsNotice
-      ? { href: '/academics#kcse-results', label: 'View KCSE results by year' }
-      : { href: '/downloads', label: 'Downloads & circulars' };
+      ? { href: '/academics#kcse-results', label: n.viewKcse }
+      : { href: '/downloads', label: n.downloadsCirculars };
   const relatedItems = newsItems
     .filter((entry) => entry.slug !== item.slug)
     .sort(
@@ -71,7 +80,6 @@ export default async function NewsArticlePage({
 
   return (
     <div className="bg-slate-bg">
-      {/* Solid Crest-Blue Article Header (sole h1 on page) */}
       <PageHero
         as="header"
         maxWidth="narrow"
@@ -80,7 +88,7 @@ export default async function NewsArticlePage({
         title={item.title}
         topSlot={
           <>
-            <Link
+            <LocaleLink
               href="/#latest-news"
               className="min-h-11 inline-flex items-center gap-2 text-xs sm:text-sm font-medium text-blue-100 hover:text-white hover:underline underline-offset-4 transition-colors mb-5"
             >
@@ -88,8 +96,8 @@ export default async function NewsArticlePage({
                 className="w-4 h-4 shrink-0 stroke-[1.75]"
                 aria-hidden="true"
               />
-              <span>Back to school notices</span>
-            </Link>
+              <span>{n.backToNotices}</span>
+            </LocaleLink>
 
             <div className="flex flex-wrap items-center gap-3 text-xs mb-3 tabular-nums">
               {item.category === 'Circular' ? (
@@ -105,7 +113,7 @@ export default async function NewsArticlePage({
                 ·
               </span>
               <span className="text-white/90">
-                Published{' '}
+                {n.published}{' '}
                 <time dateTime={toIsoDate(item.date)} className="font-semibold">
                   {item.date}
                 </time>
@@ -115,7 +123,6 @@ export default async function NewsArticlePage({
         }
       />
 
-      {/* Article Body */}
       <div className="relative">
         <SectionStemBackdrop variant="article" />
         <div className="relative max-w-4xl mx-auto px-4 sm:px-6 py-12 sm:py-16 space-y-14">
@@ -123,112 +130,112 @@ export default async function NewsArticlePage({
             data-reveal=""
             className="bg-white/60 border border-slate-200 border-t-2 border-t-primary p-6 sm:p-10"
           >
-          <p className="font-serif text-lg sm:text-xl text-slate-900 leading-relaxed pb-6 mb-6 border-b border-slate-200">
-            {item.excerpt}
-          </p>
-
-          <div className="space-y-4 text-sm sm:text-base text-slate-700 leading-relaxed max-w-2xl">
-            {item.body.map((paragraph, index) => (
-              <p key={index}>{paragraph}</p>
-            ))}
-          </div>
-
-          {/* Official Sign-Off */}
-          <div className="mt-10 pt-6 border-t border-slate-200 text-xs sm:text-sm text-slate-600 space-y-1 tabular-nums">
-            <p className="font-serif font-bold text-base text-slate-900">
-              Administration Office — {schoolInfo.name}
+            <p className="font-serif text-lg sm:text-xl text-slate-900 leading-relaxed pb-6 mb-6 border-b border-slate-200">
+              {item.excerpt}
             </p>
-            <p>
-              {schoolInfo.postalAddress} · KNEC {schoolInfo.knecCode} · MoE{' '}
-              {schoolInfo.moeReg}
-            </p>
-            <p>Office Hours: {schoolInfo.officeHours}</p>
-          </div>
 
-          <div className="mt-8 flex flex-col sm:flex-row flex-wrap gap-3">
-            <Link
-              href={primaryAction.href}
-              className="min-h-11 inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full bg-primary hover:bg-primary-dark text-white text-sm font-semibold transition-colors"
-            >
-              <span>{primaryAction.label}</span>
-              <ArrowRight
-                className="w-4 h-4 shrink-0 stroke-[1.75]"
-                aria-hidden="true"
-              />
-            </Link>
-            <Link
-              href="/contact"
-              className="min-h-11 inline-flex items-center justify-center px-5 py-2.5 rounded-full border border-primary text-primary hover:bg-primary hover:text-white text-sm font-semibold transition-colors"
-            >
-              Contact administration
-            </Link>
-          </div>
-        </article>
+            <div className="space-y-4 text-sm sm:text-base text-slate-700 leading-relaxed max-w-2xl">
+              {item.body.map((paragraph, index) => (
+                <p key={index}>{paragraph}</p>
+              ))}
+            </div>
 
-        {/* Related Notices */}
-        {relatedItems.length > 0 && (
-          <section
-            data-reveal=""
-            aria-labelledby="related-news-heading"
-            className="space-y-4"
-          >
-            <div className="flex items-baseline justify-between gap-2">
-              <BlurRevealHeading
-                id="related-news-heading"
-                seed={`related-news-${item.slug}`}
-                className="font-serif text-xl sm:text-2xl font-bold text-slate-900"
+            <div className="mt-10 pt-6 border-t border-slate-200 text-xs sm:text-sm text-slate-600 space-y-1 tabular-nums">
+              <p className="font-serif font-bold text-base text-slate-900">
+                {fill(n.adminOffice, { name: schoolInfo.name })}
+              </p>
+              <p>
+                {schoolInfo.postalAddress} · KNEC {schoolInfo.knecCode} · MoE{' '}
+                {schoolInfo.moeReg}
+              </p>
+              <p>
+                {n.officeHours} {schoolInfo.officeHours}
+              </p>
+            </div>
+
+            <div className="mt-8 flex flex-col sm:flex-row flex-wrap gap-3">
+              <LocaleLink
+                href={primaryAction.href}
+                className="min-h-11 inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full bg-primary hover:bg-primary-dark text-white text-sm font-semibold transition-colors"
               >
-                Other School Notices
-              </BlurRevealHeading>
-              <Link
-                href="/downloads"
-                className="min-h-11 inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-primary hover:text-primary-dark hover:underline underline-offset-4 shrink-0"
-              >
-                <span>All documents</span>
+                <span>{primaryAction.label}</span>
                 <ArrowRight
-                  className="w-4 h-4 stroke-[1.75]"
+                  className="w-4 h-4 shrink-0 stroke-[1.75]"
                   aria-hidden="true"
                 />
-              </Link>
+              </LocaleLink>
+              <LocaleLink
+                href="/contact"
+                className="min-h-11 inline-flex items-center justify-center px-5 py-2.5 rounded-full border border-primary text-primary hover:bg-primary hover:text-white text-sm font-semibold transition-colors"
+              >
+                {n.contactAdmin}
+              </LocaleLink>
             </div>
+          </article>
 
-            <div className="bg-white/45 border-t-2 border-t-primary border-x border-b border-slate-200 divide-y divide-slate-200">
-              {relatedItems.map((related) => {
-                const catClass =
-                  newsCategoryTextClasses[related.category] ??
-                  newsCategoryTextClasses.Event;
-                return (
-                  <article
-                    key={related.id}
-                    className="p-5 flex flex-col sm:flex-row sm:items-baseline justify-between gap-2"
-                  >
-                    <div className="min-w-0">
-                      <span
-                        className={`text-[11px] font-bold uppercase tracking-[0.12em] ${catClass}`}
-                      >
-                        {related.category}
-                      </span>
-                      <h3 className="font-serif text-base sm:text-lg font-bold text-slate-900 leading-snug mt-0.5">
-                        <Link
-                          href={`/news/${related.slug}`}
-                          className="hover:text-primary hover:underline underline-offset-4 transition-colors"
-                        >
-                          {related.title}
-                        </Link>
-                      </h3>
-                    </div>
-                    <time
-                      dateTime={toIsoDate(related.date)}
-                      className="text-xs text-slate-600 tabular-nums shrink-0"
+          {relatedItems.length > 0 && (
+            <section
+              data-reveal=""
+              aria-labelledby="related-news-heading"
+              className="space-y-4"
+            >
+              <div className="flex items-baseline justify-between gap-2">
+                <BlurRevealHeading
+                  id="related-news-heading"
+                  seed={`related-news-${item.slug}`}
+                  className="font-serif text-xl sm:text-2xl font-bold text-slate-900"
+                >
+                  {n.otherNotices}
+                </BlurRevealHeading>
+                <LocaleLink
+                  href="/downloads"
+                  className="min-h-11 inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-primary hover:text-primary-dark hover:underline underline-offset-4 shrink-0"
+                >
+                  <span>{n.allDocuments}</span>
+                  <ArrowRight
+                    className="w-4 h-4 stroke-[1.75]"
+                    aria-hidden="true"
+                  />
+                </LocaleLink>
+              </div>
+
+              <div className="bg-white/45 border-t-2 border-t-primary border-x border-b border-slate-200 divide-y divide-slate-200">
+                {relatedItems.map((related) => {
+                  const catClass =
+                    newsCategoryTextClasses[related.category] ??
+                    newsCategoryTextClasses.Event;
+                  return (
+                    <article
+                      key={related.id}
+                      className="p-5 flex flex-col sm:flex-row sm:items-baseline justify-between gap-2"
                     >
-                      {related.date}
-                    </time>
-                  </article>
-                );
-              })}
-            </div>
-          </section>
-        )}
+                      <div className="min-w-0">
+                        <span
+                          className={`text-[11px] font-bold uppercase tracking-[0.12em] ${catClass}`}
+                        >
+                          {related.category}
+                        </span>
+                        <h3 className="font-serif text-base sm:text-lg font-bold text-slate-900 leading-snug mt-0.5">
+                          <LocaleLink
+                            href={`/news/${related.slug}`}
+                            className="hover:text-primary hover:underline underline-offset-4 transition-colors"
+                          >
+                            {related.title}
+                          </LocaleLink>
+                        </h3>
+                      </div>
+                      <time
+                        dateTime={toIsoDate(related.date)}
+                        className="text-xs text-slate-600 tabular-nums shrink-0"
+                      >
+                        {related.date}
+                      </time>
+                    </article>
+                  );
+                })}
+              </div>
+            </section>
+          )}
         </div>
       </div>
     </div>

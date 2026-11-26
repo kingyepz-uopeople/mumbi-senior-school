@@ -2,8 +2,9 @@
 
 import { useMemo, useState } from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
 import { ArrowRight } from '@/components/icons';
+import LocaleLink from '@/i18n/LocaleLink';
+import { useLocale } from '@/i18n/locale-context';
 import type { NewsItem } from '@/types';
 
 export interface FeaturedImage {
@@ -41,7 +42,6 @@ const MONTHS = [
   'Dec',
 ] as const;
 
-/** Splits a DD/MM/YYYY string into display parts (no timezone maths). */
 function dateParts(dateStr: string): { day: string; monthYear: string } {
   const [day, month, year] = dateStr.split('/');
   const monthIndex = Number(month) - 1;
@@ -70,7 +70,6 @@ function CategoryBadge({ category }: { category: string }) {
   );
 }
 
-/** Small date block: large serif day over an abbreviated month + year. */
 function DateBlock({
   date,
   className = '',
@@ -99,9 +98,10 @@ export default function NewsIndexClient({
   featuredImages = {},
 }: {
   items: NewsItem[];
-  /** Slug → real photograph in `public/`, resolved on the server. */
   featuredImages?: Record<string, FeaturedImage>;
 }) {
+  const { dict } = useLocale();
+  const n = dict.news;
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
 
   const sortedItems = useMemo(
@@ -127,7 +127,6 @@ export default function NewsIndexClient({
     [selectedCategory, sortedItems]
   );
 
-  // The newest notice leads the page; the rest follow as a dated list.
   const [lead, ...restItems] = filteredItems;
   const leadImage = lead ? featuredImages[lead.slug] : undefined;
 
@@ -138,12 +137,14 @@ export default function NewsIndexClient({
         : 'bg-transparent text-white border-white/40 hover:border-white'
     }`;
 
+  const categoryLabel = (category: string) =>
+    category === 'All' ? dict.common.all : category;
+
   return (
     <div className="space-y-10">
-      {/* Category filter */}
       <div
         role="group"
-        aria-label="Filter notices by category"
+        aria-label={n.filterByCategory}
         className="flex flex-wrap items-center gap-2"
       >
         {categories.map((category) => {
@@ -156,20 +157,19 @@ export default function NewsIndexClient({
               onClick={() => setSelectedCategory(category)}
               className={filterBtnClass(isActive)}
             >
-              {category}
+              {categoryLabel(category)}
             </button>
           );
         })}
       </div>
 
-      {/* Lead story */}
       {lead && (
         <article
           data-reveal=""
           className="news-lead grid overflow-hidden rounded-lg border border-white/20 bg-white/5 md:grid-cols-[1.05fr_1fr]"
         >
           {leadImage && (
-            <Link
+            <LocaleLink
               href={`/news/${lead.slug}`}
               tabIndex={-1}
               aria-hidden="true"
@@ -185,7 +185,7 @@ export default function NewsIndexClient({
                 className="kenburns-image absolute inset-0 h-full w-full object-cover"
               />
               <span className="absolute inset-0 bg-linear-to-t from-primary-dark/55 via-transparent to-transparent" />
-            </Link>
+            </LocaleLink>
           )}
 
           <div className="flex min-w-0 flex-col justify-center gap-3 p-5 sm:p-7 lg:p-9">
@@ -203,35 +203,34 @@ export default function NewsIndexClient({
             </div>
 
             <h2 className="font-serif text-2xl leading-tight font-bold text-white sm:text-3xl lg:text-4xl">
-              <Link
+              <LocaleLink
                 href={`/news/${lead.slug}`}
                 className="hover:underline underline-offset-4 decoration-white/50"
               >
                 {lead.title}
-              </Link>
+              </LocaleLink>
             </h2>
 
             <p className="max-w-prose text-sm leading-relaxed text-blue-100/85 sm:text-base">
               {lead.excerpt}
             </p>
 
-            <Link
+            <LocaleLink
               href={`/news/${lead.slug}`}
               className="mt-1 inline-flex min-h-11 w-fit items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-semibold text-primary transition-colors hover:bg-blue-50"
             >
-              Read the full notice
+              {n.readFull}
               <ArrowRight className="h-4 w-4 stroke-[1.75]" aria-hidden="true" />
-            </Link>
+            </LocaleLink>
           </div>
         </article>
       )}
 
-      {/* Dated list */}
       {restItems.length > 0 && (
-        <ol className="editorial-index" aria-label="More school notices">
+        <ol className="editorial-index" aria-label={n.moreNotices}>
           {restItems.map((item, index) => (
             <li key={item.id} className="editorial-cell">
-              <Link
+              <LocaleLink
                 href={`/news/${item.slug}`}
                 className="editorial-row"
                 data-reveal=""
@@ -253,7 +252,7 @@ export default function NewsIndexClient({
                   className="editorial-arrow size-5 shrink-0 text-white"
                   aria-hidden="true"
                 />
-              </Link>
+              </LocaleLink>
             </li>
           ))}
         </ol>
@@ -262,7 +261,7 @@ export default function NewsIndexClient({
       {filteredItems.length === 0 && (
         <div className="py-12 px-6 bg-white/5 border border-white/15">
           <h3 className="font-serif text-lg font-bold text-white">
-            No notices in this category yet
+            {n.empty}
           </h3>
           <p className="mt-1 text-sm text-blue-100/85">
             Circulars, newsletters, and event notices are published by the

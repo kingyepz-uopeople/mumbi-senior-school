@@ -6,6 +6,8 @@ import {
   kcseReports,
   meanGradeFromPoints,
 } from '@/data/kcse';
+import { fill } from '@/i18n/fill';
+import { useLocale } from '@/i18n/locale-context';
 
 export type HonourYear = number | 'all';
 
@@ -23,19 +25,30 @@ const candidates = kcseReports.flatMap(({ year, topPerformers }) =>
   }))
 );
 
-const yearFilters = [
-  { year: 'all' as const, label: 'All Years', count: candidates.length },
-  ...kcseReports.map(({ year, topPerformers }) => ({
-    year,
-    label: `KCSE ${year}`,
-    count: topPerformers.length,
-  })),
-];
-
 export default function WallOfFameGrid({ year, onYearChange }: WallOfFameGridProps) {
+  const { dict } = useLocale();
+  const h = dict.home;
   const [localYear, setLocalYear] = useState<HonourYear>(kcseReports[0].year);
   const selectedYear = year ?? localYear;
   const selectYear = onYearChange ?? setLocalYear;
+
+  const yearFilters = useMemo(
+    () => [
+      { year: 'all' as const, label: h.allYears, count: candidates.length },
+      ...kcseReports.map(({ year: reportYear, topPerformers }) => ({
+        year: reportYear,
+        label: fill(h.kcseYear, { year: reportYear }),
+        count: topPerformers.length,
+      })),
+    ],
+    [h.allYears, h.kcseYear]
+  );
+
+  const rankExplainer = fill(h.rankExplainer, {
+    scope:
+      selectedYear === 'all' ? h.rankScopeAll : fill(h.rankScopeYear, { year: selectedYear }),
+    max: KCSE_MAX_POINTS,
+  });
 
   const filtered = useMemo(() => {
     const list =
@@ -87,12 +100,7 @@ export default function WallOfFameGrid({ year, onYearChange }: WallOfFameGridPro
       </div>
 
       <p className="mb-4 text-xs leading-relaxed text-slate-600 sm:text-sm">
-        Ranked by total points
-        {selectedYear === 'all'
-          ? ' across the selected years'
-          : ` for KCSE ${selectedYear}`}
-        . Equal points share a rank; the next lower score skips ahead. Mean
-        grade follows points out of {KCSE_MAX_POINTS}.
+        {rankExplainer}
       </p>
 
       <p className="sr-only" role="status">
@@ -111,19 +119,19 @@ export default function WallOfFameGrid({ year, onYearChange }: WallOfFameGridPro
           <thead>
             <tr className="border-b border-slate-200 bg-slate-bg/60 text-xs font-semibold uppercase tracking-[0.1em] text-slate-600">
               <th scope="col" className="px-4 py-3.5">
-                Rank
+                {h.rank}
               </th>
               <th scope="col" className="px-4 py-3.5">
-                Points
+                {h.points}
               </th>
               <th scope="col" className="px-4 py-3.5">
-                Grade
+                {h.grade}
               </th>
               <th scope="col" className="px-5 py-3.5">
-                Candidate
+                {h.candidate}
               </th>
               <th scope="col" className="px-4 py-3.5">
-                Year
+                {h.year}
               </th>
             </tr>
           </thead>

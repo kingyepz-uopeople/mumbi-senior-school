@@ -1,5 +1,8 @@
+'use client';
+
 import { MapPin } from 'lucide-react';
 import { schoolInfo } from '@/data/mock-school-data';
+import { useLocale } from '@/i18n/locale-context';
 
 interface DirectionsLinkProps {
   /** `dark` for deep-blue panels, `light` for white or pale surfaces. */
@@ -9,14 +12,13 @@ interface DirectionsLinkProps {
   className?: string;
 }
 
-/**
- * Opens the school's shared Google Maps pin so visitors can get directions.
- */
 export default function DirectionsLink({
   tone = 'light',
   variant = 'text',
   className = '',
 }: DirectionsLinkProps) {
+  const { dict } = useLocale();
+
   const toneClass =
     variant === 'button'
       ? tone === 'dark'
@@ -37,11 +39,11 @@ export default function DirectionsLink({
       target="_blank"
       rel="noopener noreferrer"
       className={`${variantClass} ${toneClass} ${className}`}
-      aria-label="Get directions to Mumbi Girls Senior School on Google Maps"
+      aria-label={`${dict.common.getDirections} — ${schoolInfo.name}`}
     >
       <MapPin strokeWidth={1.75} className="size-4 shrink-0" aria-hidden="true" />
-      <span>Get directions</span>
-      <span className="sr-only"> (opens in a new tab)</span>
+      <span>{dict.common.getDirections}</span>
+      <span className="sr-only">{dict.common.opensNewTab}</span>
     </a>
   );
 }

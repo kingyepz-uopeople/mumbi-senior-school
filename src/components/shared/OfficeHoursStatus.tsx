@@ -1,7 +1,9 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
-import { OFFICE_SCHEDULE_LABEL, getOfficeStatus } from '@/lib/office-hours';
+import { fill } from '@/i18n/fill';
+import { useLocale } from '@/i18n/locale-context';
+import { getOfficeStatus } from '@/lib/office-hours';
 
 type OfficeStatusVariant = 'bar' | 'hero';
 
@@ -39,6 +41,9 @@ export default function OfficeHoursStatus({
   variant = 'bar',
   className = '',
 }: OfficeHoursStatusProps) {
+  const { dict } = useLocale();
+  const scheduleLabel = dict.officeHours.schedule;
+
   const [status, setStatus] = useState<ReturnType<
     typeof getOfficeStatus
   > | null>(null);
@@ -49,7 +54,6 @@ export default function OfficeHoursStatus({
 
     const timer = window.setInterval(sync, 60_000);
 
-    // Catch up immediately when a backgrounded tab becomes visible again.
     const onVisibilityChange = () => {
       if (document.visibilityState === 'visible') sync();
     };
@@ -62,7 +66,9 @@ export default function OfficeHoursStatus({
   }, []);
 
   const tone = status?.tone ?? 'neutral';
-  const message = status?.message ?? OFFICE_SCHEDULE_LABEL;
+  const message = status
+    ? fill(dict.officeHours[status.messageKey], { time: status.time })
+    : scheduleLabel;
 
   const dot = useMemo(
     () => (
@@ -90,7 +96,7 @@ export default function OfficeHoursStatus({
         </span>
         {status && (
           <span className="text-xs font-medium tracking-wide text-blue-100/80 tabular-nums">
-            {OFFICE_SCHEDULE_LABEL}
+            {scheduleLabel}
           </span>
         )}
       </p>
@@ -100,7 +106,7 @@ export default function OfficeHoursStatus({
   return (
     <span
       className={`inline-flex items-center gap-2 ${className}`}
-      title={OFFICE_SCHEDULE_LABEL}
+      title={scheduleLabel}
     >
       {dot}
       <span aria-live="polite" className={TEXT_TONE[tone] ?? TEXT_TONE.neutral}>

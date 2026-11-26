@@ -79,6 +79,14 @@ export interface Club {
   meetingDay: string;
   description: string;
   icon: string;
+  /** Optional note when a sport activity video will be added later. */
+  mediaNote?: string;
+}
+
+export interface GamesDepartmentMessage {
+  role: string;
+  name: string;
+  message: string[];
 }
 
 export interface DailyRoutineItem {
