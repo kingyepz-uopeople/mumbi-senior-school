@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "./noticeboard.css";
 
 /* ── Tailwind v4 Brand Theme Tokens ───────────────────────── */
 @theme {
@@ -25,6 +26,7 @@
   --font-sans: var(--font-inter), 'Inter', system-ui, -apple-system, sans-serif;
   --font-serif: var(--font-source-serif), 'Source Serif 4', Georgia, Cambria,
     'Times New Roman', serif;
+  --font-hand: var(--font-caveat), 'Caveat', cursive;
 }
 
 /* Shared glass interaction primitives for pathways & Student Life */

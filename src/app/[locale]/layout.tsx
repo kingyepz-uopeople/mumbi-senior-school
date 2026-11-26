@@ -43,7 +43,7 @@ export default async function LocaleLayout({
 
         <header
           data-dark-surface
-          className="sticky top-0 z-40 w-full shrink-0 border-b border-primary-dark bg-primary"
+          className="site-chrome-header sticky top-0 z-40 w-full shrink-0 border-b border-primary-dark bg-primary"
           data-locale={localeHtmlLang[locale]}
         >
           <Header />
