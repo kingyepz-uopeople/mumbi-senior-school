@@ -52,6 +52,8 @@ const SPORT_ART: Record<string, ProspectusArtKey> = {
   hockey: 'hockey',
   athletics: 'athletics',
   handball: 'handball',
+  football: 'athletics',
+  'table-tennis': 'badminton',
   badminton: 'badminton',
 };
 
@@ -81,9 +83,17 @@ const SPORT_PHOTOS: Record<string, { src: string; alt: string }> = {
     src: '/images/school/hero-assembly.jpg',
     alt: 'Campus assembly area near games facilities',
   },
+  football: {
+    src: '/images/sports/football.jpg',
+    alt: 'Mumbi Girls football team with coaches on the school grounds',
+  },
+  'table-tennis': {
+    src: '/images/sports/table-tennis.jpg',
+    alt: 'Table tennis learners and coaches at Mumbi Girls',
+  },
   badminton: {
-    src: '/images/school/gallery-campus-parade.jpg',
-    alt: 'School campus outdoor activity area',
+    src: '/images/sports/badminton.jpg',
+    alt: 'Badminton learners and coaches at Mumbi Girls',
   },
 };
 
@@ -345,43 +355,89 @@ export default function ExploreTabs() {
           aria-label={e.sportsAria}
           className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3"
         >
-          {sports.map((sport, index) => (
-            <article
-              key={sport.id}
-              role="listitem"
-              data-reveal=""
-              data-reveal-delay={index % 3 > 0 ? String(index % 3) : undefined}
-              className="h-full"
-            >
-              <LifePreviewCard
-                index={index}
-                code={sport.category}
-                title={sport.name}
-                description={sport.description}
-                photo={SPORT_PHOTOS[sport.id]}
-                artKind={SPORT_ART[sport.id] ?? 'athletics'}
-                chipsLabel={e.coachPatron}
-                chips={[sport.patron, sport.meetingDay]}
-                footer={
-                  sport.videoSrc ? (
-                    <SportActivityVideo
-                      src={sport.videoSrc}
-                      label={`${sport.name} activity video`}
-                      endSeconds={32}
-                    />
-                  ) : sport.mediaNote ? (
-                    <div className="mt-4 overflow-hidden rounded-2xl border border-dashed border-slate-300 bg-slate-bg/80">
-                      <div className="flex aspect-video items-center justify-center px-4 text-center">
-                        <p className="text-xs font-semibold uppercase tracking-[0.1em] text-slate-500">
-                          {sport.mediaNote || e.videoComingSoon}
-                        </p>
-                      </div>
-                    </div>
-                  ) : null
-                }
-              />
-            </article>
-          ))}
+          {sports.map((sport, index) => {
+            const activityPhoto =
+              sport.imageSrc != null
+                ? {
+                    src: sport.imageSrc,
+                    alt: SPORT_PHOTOS[sport.id]?.alt ?? `${sport.name} activity`,
+                  }
+                : undefined;
+
+            return (
+              <article
+                key={sport.id}
+                role="listitem"
+                data-reveal=""
+                data-reveal-delay={index % 3 > 0 ? String(index % 3) : undefined}
+                className="h-full"
+              >
+                <LifePreviewCard
+                  index={index}
+                  code={sport.category}
+                  title={sport.name}
+                  description={sport.description}
+                  photo={SPORT_PHOTOS[sport.id] ?? activityPhoto}
+                  artKind={SPORT_ART[sport.id] ?? 'athletics'}
+                  chipsLabel={e.coachPatron}
+                  chips={[sport.patron, sport.meetingDay]}
+                  footer={
+                    <>
+                      {sport.patronMessage && sport.patronMessage.length > 0 ? (
+                        <aside className="mt-4 border border-slate-200 border-l-2 border-l-primary bg-slate-bg/70 px-3.5 py-3">
+                          <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-primary">
+                            {e.patronMessageLabel}
+                          </p>
+                          <p className="mt-1 text-xs font-semibold text-slate-800">
+                            {sport.patron}
+                          </p>
+                          <div className="mt-2 space-y-2 text-sm leading-relaxed text-slate-600">
+                            {sport.patronMessage.map((paragraph) => (
+                              <p key={paragraph.slice(0, 40)}>{paragraph}</p>
+                            ))}
+                          </div>
+                        </aside>
+                      ) : null}
+
+                      {sport.videoSrc && activityPhoto ? (
+                        <div className="mt-4 grid gap-3 sm:grid-cols-2">
+                          <div className="overflow-hidden rounded-2xl border border-slate-200 bg-slate-bg">
+                            <Image
+                              src={activityPhoto.src}
+                              alt={activityPhoto.alt}
+                              width={960}
+                              height={540}
+                              className="aspect-video h-full w-full object-cover"
+                            />
+                          </div>
+                          <SportActivityVideo
+                            src={sport.videoSrc}
+                            label={`${sport.name} activity video`}
+                            endSeconds={32}
+                            className="h-full"
+                          />
+                        </div>
+                      ) : sport.videoSrc ? (
+                        <SportActivityVideo
+                          src={sport.videoSrc}
+                          label={`${sport.name} activity video`}
+                          endSeconds={32}
+                        />
+                      ) : sport.mediaNote ? (
+                        <div className="mt-4 overflow-hidden rounded-2xl border border-dashed border-slate-300 bg-slate-bg/80">
+                          <div className="flex aspect-video items-center justify-center px-4 text-center">
+                            <p className="text-xs font-semibold uppercase tracking-[0.1em] text-slate-500">
+                              {sport.mediaNote || e.videoComingSoon}
+                            </p>
+                          </div>
+                        </div>
+                      ) : null}
+                    </>
+                  }
+                />
+              </article>
+            );
+          })}
         </SpotlightCardGroup>
       </section>
 

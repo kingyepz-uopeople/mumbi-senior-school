@@ -121,7 +121,7 @@ export default function WelcomeMessages() {
           name="Mrs. Florence Wahito Thumbi"
           role={fill(h.principalRole, { name: schoolInfo.name })}
           photo={{
-            src: '/images/principal.jpg',
+            src: '/images/principal.png',
             alt: `Portrait of Mrs. Florence Wahito Thumbi, Chief Principal of ${schoolInfo.name}`,
             width: 1024,
             height: 1052,

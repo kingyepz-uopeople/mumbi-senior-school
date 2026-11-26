@@ -437,7 +437,7 @@ export const principals: Principal[] = [
     name: 'Mrs. Florence Wahito Thumbi',
     period: 'January 2025 – Present',
     isCurrent: true,
-    image: '/images/principal.jpg',
+    image: '/images/principal.png',
   },
 ];
 
@@ -702,6 +702,36 @@ export const sports: Club[] = [
     icon: 'Hand',
   },
   {
+    id: 'football',
+    name: 'Football',
+    category: 'Sport',
+    patron: 'Mr. Matunyo',
+    meetingDay: 'Daily, 16:00',
+    description:
+      'School football squads training for inter-house leagues and Murang’a County KSSSA secondary school championships.',
+    icon: 'Circle',
+    imageSrc: '/images/sports/football.jpg',
+    patronMessage: [
+      'Football builds stamina, teamwork, and courage. Our girls train hard every afternoon so they can represent Mumbi Girls with pride on the pitch.',
+      'I welcome every learner who is ready to commit to drills, fair play, and supporting her teammates.',
+    ],
+  },
+  {
+    id: 'table-tennis',
+    name: 'Table Tennis',
+    category: 'Sport',
+    patron: 'Mr. Kuria',
+    meetingDay: 'Daily, 16:00',
+    description:
+      'Table tennis coaching covering grip, serve, rally control, and recreational-to-competitive singles and doubles play.',
+    icon: 'Target',
+    imageSrc: '/images/sports/table-tennis.jpg',
+    patronMessage: [
+      'Table tennis sharpens focus, footwork, and quick decision-making. We practice daily so every girl can enjoy the game and grow her confidence.',
+      'Come ready to learn the basics, challenge yourself in rallies, and celebrate progress with your peers.',
+    ],
+  },
+  {
     id: 'badminton',
     name: 'Badminton',
     category: 'Sport',
@@ -710,7 +740,12 @@ export const sports: Club[] = [
     description:
       'Racket skills, doubles and singles drills, and recreational-to-competitive play for Senior School learners.',
     icon: 'Target',
+    imageSrc: '/images/sports/badminton.jpg',
     videoSrc: '/videos/sports/badminton.mp4',
+    patronMessage: [
+      'Badminton rewards discipline, agility, and sportsmanship. Our sessions blend skill drills with match play so every learner can improve at her own pace.',
+      'I invite girls who love racket sports to join us after lessons — bring energy, respect for teammates, and a willingness to practise.',
+    ],
   },
 ];
 

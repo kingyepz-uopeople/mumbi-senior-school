@@ -11,7 +11,7 @@ export const PHOTO_SLOTS = {
   /** Homepage hero photograph supplied with the school photo collection. */
   heroCampus: '/images/school/hero-assembly.jpg',
   /** Chief Principal portrait on the homepage. */
-  principalPortrait: '/images/principal.jpg',
+  principalPortrait: '/images/principal.png',
   /** Campus entrance photograph shown on /contact. */
   campusLocation: '/images/school/gallery-campus-gate.jpg',
 } as const;

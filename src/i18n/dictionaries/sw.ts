@@ -417,7 +417,7 @@ const sw: Dictionary = {
     subtitle:
       'Vilabu, michezo, ratiba ya bweni ya siku za wiki, vikundi vya imani, na maisha ya makazi kwa wanafunzi wa Shule ya Upili.',
     metaClubs: 'Vilabu na Harakati 7',
-    metaSports: 'Michezo 7 ya KSSSA',
+    metaSports: 'Michezo 9 ya KSSSA',
     metaRoutine: 'Ratiba ya Wiki 05:00 – 22:00',
     metaFaith: 'Vikundi 4 vya Imani',
     jumpSports: 'Michezo',
@@ -451,6 +451,7 @@ const sw: Dictionary = {
     clubsIntro: 'Vikundi vya wanafunzi, vilabu vya huduma, na harakati zilizo na sare.',
     meets: 'Hukutana:',
     messageFrom: 'Ujumbe kutoka kwa {role}',
+    patronMessageLabel: 'Ujumbe kutoka kwa Mlinzi',
     videoComingSoon: 'Video ya shughuli inakuja hivi karibuni.',
     boardingWelfare: 'Bweni na ustawi',
     sectionsAria: 'Sehemu za maisha ya wanafunzi',

@@ -5,7 +5,7 @@ import { Camera } from '@/components/icons';
 import { useLocale } from '@/i18n/locale-context';
 
 interface PhotoSlotProps {
-  /** Root-relative path under `public/`, e.g. `/images/principal.jpg` */
+  /** Root-relative path under `public/`, e.g. `/images/principal.png` */
   src: string;
   /** Whether the image file currently exists on disk */
   exists: boolean;

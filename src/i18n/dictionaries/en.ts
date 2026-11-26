@@ -413,7 +413,7 @@ const en = {
     subtitle:
       'Clubs, sports, weekday boarding routine, chaplaincy fellowships, and residential life for Senior School learners.',
     metaClubs: '7 Clubs & Movements',
-    metaSports: '7 KSSSA Sports',
+    metaSports: '9 KSSSA Sports',
     metaRoutine: '05:00 – 22:00 Weekday Routine',
     metaFaith: '4 Faith Fellowships',
     jumpSports: 'Sports & Games',
@@ -447,6 +447,7 @@ const en = {
     clubsIntro: 'Student societies, service clubs, and uniformed movements.',
     meets: 'Meets:',
     messageFrom: 'Message from the {role}',
+    patronMessageLabel: 'Message from the Patron',
     videoComingSoon: 'Activity video coming soon.',
     boardingWelfare: 'Boarding & welfare',
     sectionsAria: 'Student life sections',

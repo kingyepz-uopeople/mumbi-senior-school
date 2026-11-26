@@ -20,6 +20,7 @@ type LocalizedClubFields = {
   category: string;
   meetingDay: string;
   mediaNote?: string;
+  patronMessage?: string[];
 };
 
 type LocalizedBoardingFields = Pick<
@@ -70,12 +71,38 @@ const sportSw: Record<string, LocalizedClubFields> = {
     description:
       'Ufunzaji wa handball ya timu, mechi za darasa kwa darasa, na ushiriki katika mashindano ya KSSSA.',
   },
+  football: {
+    name: 'Football',
+    category: 'Michezo',
+    meetingDay: 'Kila siku, 16:00',
+    description:
+      'Timu za football za shule zinazojizoeza kwa ligi za nyumba kwa nyumba na michuano ya KSSSA ya Kaunti ya Murang\'a.',
+    patronMessage: [
+      'Football hujenga stamina, ushirikiano, na ujasiri. Wasichana wetu hufanya mazoezi kila alasiri ili kuiwakilisha Mumbi Girls kwa kiburi uwanjani.',
+      'Ninakaribisha kila mwanafunzi aliye tayari kujitolea katika mazoezi, mchezo wa haki, na kuwaunga mkono wenzake.',
+    ],
+  },
+  'table-tennis': {
+    name: 'Table Tennis',
+    category: 'Michezo',
+    meetingDay: 'Kila siku, 16:00',
+    description:
+      'Ufunzaji wa table tennis unaojumuisha grip, serve, udhibiti wa rally, na mchezo wa singles na doubles wa burudani hadi wa ushindani.',
+    patronMessage: [
+      'Table tennis hunoa umakini, footwork, na maamuzi ya haraka. Tunafanya mazoezi kila siku ili kila msichana afurahie mchezo na kukuza kujiamini.',
+      'Njoo ukiwa tayari kujifunza misingi, kujipa changamoto katika rallies, na kusherehekea maendeleo pamoja na wenzako.',
+    ],
+  },
   badminton: {
     name: 'Badminton',
     category: 'Michezo',
     meetingDay: 'Kila siku, 16:00',
     description:
       'Ujuzi wa racket, mazoezi ya doubles na singles, na mchezo wa burudani hadi wa ushindani kwa wanafunzi wa Shule ya Upili.',
+    patronMessage: [
+      'Badminton hutuzwa nidhamu, wepesi, na sportsmanship. Vipindi vyetu vinachanganya mazoezi ya ujuzi na mechi ili kila mwanafunzi aboreshe kwa kasi yake.',
+      'Ninawaalika wasichana wanaopenda michezo ya racket kujiunga nasi baada ya masomo — leteni nguvu, heshima kwa wenzake, na nia ya kufanya mazoezi.',
+    ],
   },
 };
 
@@ -268,6 +295,8 @@ function localizeClub(
     meetingDay: localized.meetingDay,
     mediaNote: localized.mediaNote ?? base.mediaNote,
     videoSrc: base.videoSrc,
+    imageSrc: base.imageSrc,
+    patronMessage: localized.patronMessage ?? base.patronMessage,
   };
 }
 

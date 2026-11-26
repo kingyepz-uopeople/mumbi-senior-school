@@ -7,10 +7,12 @@ export default function SportActivityVideo({
   src,
   label,
   endSeconds = 32,
+  className = 'mt-4',
 }: {
   src: string;
   label: string;
   endSeconds?: number;
+  className?: string;
 }) {
   const videoRef = useRef<HTMLVideoElement>(null);
 
@@ -48,10 +50,12 @@ export default function SportActivityVideo({
   }, [endSeconds, src]);
 
   return (
-    <div className="mt-4 overflow-hidden rounded-2xl border border-slate-200 bg-slate-950">
+    <div
+      className={`overflow-hidden rounded-2xl border border-slate-200 bg-slate-950 ${className}`}
+    >
       <video
         ref={videoRef}
-        className="aspect-video w-full bg-black object-cover"
+        className="aspect-video h-full w-full bg-black object-cover"
         controls
         controlsList="nodownload noplaybackrate"
         disablePictureInPicture

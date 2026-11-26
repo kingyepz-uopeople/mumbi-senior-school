@@ -83,6 +83,10 @@ export interface Club {
   mediaNote?: string;
   /** Optional public path to an activity video (e.g. /videos/sports/badminton.mp4). */
   videoSrc?: string;
+  /** Optional activity / team photograph shown on the sport card. */
+  imageSrc?: string;
+  /** Optional short message from the sport patron / coach. */
+  patronMessage?: string[];
 }
 
 export interface GamesDepartmentMessage {
