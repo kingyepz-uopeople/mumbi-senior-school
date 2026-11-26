@@ -264,6 +264,7 @@ const sw: Dictionary = {
     anthemsHeading: 'Wimbo wa Shule na Wimbo wa Kiswahili',
     anthemsIntro:
       'Huimbwa kwa Kiingereza na Kiswahili katika makusanyiko ya asubuhi na mikutano rasmi ya shule.',
+    anthemRefrain: 'Kiitikio',
     leadershipKicker: 'Uongozi na Utawala',
     leadershipHeading: 'Wakuu, Halmashauri ya Usimamizi na Baraza la Wanafunzi',
     rollOfPrincipals: 'Orodha ya Wakuu',

@@ -1248,12 +1248,14 @@ export const galleryAlbums: GalleryAlbum[] = [
 // ── School Anthems ──────────────────────────────────────────
 export const schoolAnthem = {
   english: {
-    title: 'School Anthem',
+    title: "Mumbi Girls' Senior School Anthem",
     verses: [
-      "Hail Mumbi Girls, our pride and joy,\nStanding tall through every test,\nWith wisdom's light we forge ahead,\nStriving always for the best.",
-      'In halls of learning, strong we grow,\nWith faith and honour as our guide,\nEmpowered daughters of this land,\nWe carry forth our name with pride.',
-      'Education lights our way,\nEmpowerment our lasting song,\nMumbi Girls, forever strong,\nTogether we shall march along.',
+      'Oh God Almighty, fount of knowledge,\nAll that we cherish to you we pledge,\nThe spring of virtue and honour and homage.\nOh Lord, we trust you to be our hedge.',
+      'We all envision greatness and honour,\nVirtue and goodness is at our core,\nThe all-round person the theme of our classes,\nOur Mumbi moulds nothing but the best.',
+      'Our banner shall rise high, firm on its base,\nOur name shall be held high in all grace,\nOur Mumbi shall prosper like trees by the waters,\nBearing the fruits to serve us all our days.',
     ],
+    refrain:
+      "Mumbi's the gem that gleams so bright,\nMumbi's the star that gives much light (coz we are)\nDetermined to excel, (we are)\nDetermined to excel.",
   },
   kiswahili: {
     title: 'Wimbo wa Shule',

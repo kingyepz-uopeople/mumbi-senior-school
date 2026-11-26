@@ -327,7 +327,7 @@ export default async function AboutPage({
         </div>
       </section>
 
-      {/* 3. School Anthems (English & Kiswahili) */}
+      {/* 3. School Anthem */}
       <section
         id="anthems"
         aria-labelledby="about-anthems-heading"
@@ -351,23 +351,22 @@ export default async function AboutPage({
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
-            {/* English Anthem */}
-            <article
-              data-reveal=""
-              className="bg-slate-bg/45 border border-slate-200 border-t-2 border-t-primary p-6 sm:p-10"
-            >
-              <div className="flex items-baseline justify-between gap-4 pb-4 mb-6 border-b border-slate-200">
-                <h3 className="font-serif text-xl sm:text-2xl font-bold text-slate-900">
-                  {schoolAnthem.english.title}
-                </h3>
-                <span className="text-xs font-semibold uppercase tracking-[0.12em] text-primary">
-                  {dict.common.english}
-                </span>
-              </div>
-              <ol className="space-y-6">
-                {schoolAnthem.english.verses.map((verse, i) => (
-                  <li key={i} className="grid grid-cols-12 gap-3">
+          <article
+            data-reveal=""
+            className="max-w-3xl bg-slate-bg/45 border border-slate-200 border-t-2 border-t-primary p-6 sm:p-10"
+          >
+            <div className="flex items-baseline justify-between gap-4 pb-4 mb-6 border-b border-slate-200">
+              <h3 className="font-serif text-xl sm:text-2xl font-bold text-slate-900">
+                {schoolAnthem.english.title}
+              </h3>
+              <span className="text-xs font-semibold uppercase tracking-[0.12em] text-primary">
+                {dict.common.english}
+              </span>
+            </div>
+            <ol className="space-y-6">
+              {schoolAnthem.english.verses.map((verse, i) => (
+                <li key={i} className="space-y-6">
+                  <div className="grid grid-cols-12 gap-3">
                     <span
                       aria-hidden="true"
                       className="col-span-2 sm:col-span-1 font-serif text-xs font-bold text-slate-500 pt-1"
@@ -377,43 +376,21 @@ export default async function AboutPage({
                     <p className="col-span-10 sm:col-span-11 whitespace-pre-line font-serif italic text-base sm:text-[1.05rem] text-slate-800 leading-relaxed">
                       {verse}
                     </p>
-                  </li>
-                ))}
-              </ol>
-            </article>
-
-            {/* Kiswahili Anthem */}
-            <article
-              lang="sw"
-              data-reveal=""
-              data-reveal-delay="1"
-              className="bg-slate-bg/45 border border-slate-200 border-t-2 border-t-primary p-6 sm:p-10"
-            >
-              <div className="flex items-baseline justify-between gap-4 pb-4 mb-6 border-b border-slate-200">
-                <h3 className="font-serif text-xl sm:text-2xl font-bold text-slate-900">
-                  {schoolAnthem.kiswahili.title}
-                </h3>
-                <span className="text-xs font-semibold uppercase tracking-[0.12em] text-primary">
-                  {dict.common.kiswahili}
-                </span>
-              </div>
-              <ol className="space-y-6">
-                {schoolAnthem.kiswahili.verses.map((verse, i) => (
-                  <li key={i} className="grid grid-cols-12 gap-3">
-                    <span
-                      aria-hidden="true"
-                      className="col-span-2 sm:col-span-1 font-serif text-xs font-bold text-slate-500 pt-1"
-                    >
-                      {ROMAN[i] ?? i + 1}.
-                    </span>
-                    <p className="col-span-10 sm:col-span-11 whitespace-pre-line font-serif italic text-base sm:text-[1.05rem] text-slate-800 leading-relaxed">
-                      {verse}
-                    </p>
-                  </li>
-                ))}
-              </ol>
-            </article>
-          </div>
+                  </div>
+                  {i === 0 && schoolAnthem.english.refrain ? (
+                    <div className="grid grid-cols-12 gap-3 rounded-md bg-blue-50/70 py-3">
+                      <span className="col-span-2 sm:col-span-1 pt-1 text-[0.65rem] font-semibold uppercase tracking-[0.12em] text-primary">
+                        {dict.about.anthemRefrain}
+                      </span>
+                      <p className="col-span-10 sm:col-span-11 whitespace-pre-line font-serif italic text-base sm:text-[1.05rem] font-semibold text-slate-800 leading-relaxed">
+                        {schoolAnthem.english.refrain}
+                      </p>
+                    </div>
+                  ) : null}
+                </li>
+              ))}
+            </ol>
+          </article>
         </div>
       </section>
 

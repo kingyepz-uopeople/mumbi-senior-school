@@ -260,6 +260,7 @@ const en = {
     anthemsHeading: 'School Anthem & Wimbo wa Shule',
     anthemsIntro:
       'Sung in English and Kiswahili at morning assemblies and official school gatherings.',
+    anthemRefrain: 'Refrain',
     leadershipKicker: 'Leadership & Governance',
     leadershipHeading: 'Principals, Board of Management & Student Council',
     rollOfPrincipals: 'Roll of Principals',
