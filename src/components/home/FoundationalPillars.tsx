@@ -64,7 +64,7 @@ export default function FoundationalPillars() {
               Core Values
             </h3>
 
-            <ol role="list" className="grid gap-x-6 sm:grid-cols-2">
+            <ol role="list" className="grid grid-cols-2 gap-x-4 sm:gap-x-6">
               {schoolInfo.coreValues.map((value, idx) => (
                 <li
                   key={value.id}
