@@ -1,6 +1,16 @@
 import type { Dictionary } from '@/i18n/dictionaries/en';
 import type { NavItem } from '@/types';
 
+export function navItemIsActive(pathname: string, item: NavItem): boolean {
+  if (pathname === item.href) return true;
+  return (
+    item.children?.some((child) => {
+      const path = child.href.split('#')[0] || '/';
+      return path !== '/' && pathname === path;
+    }) ?? false
+  );
+}
+
 export function getNavigation(dict: Dictionary): NavItem[] {
   return [
     { label: dict.nav.home, href: '/' },
@@ -40,7 +50,7 @@ export function getNavigation(dict: Dictionary): NavItem[] {
     { label: dict.nav.admissions, href: '/admissions' },
     {
       label: dict.nav.studentLife,
-      href: '/explore',
+      href: '/student-life',
       children: [
         { label: dict.nav.clubs, href: '/explore#clubs' },
         { label: dict.nav.sports, href: '/explore#sports' },

@@ -19,7 +19,7 @@ export default function Footer() {
     { label: dict.nav.home, href: '/' },
     { label: dict.footer.aboutSchool, href: '/about' },
     { label: dict.footer.academicsPathways, href: '/academics' },
-    { label: dict.footer.studentLife, href: '/explore' },
+    { label: dict.footer.studentLife, href: '/student-life' },
     { label: dict.footer.downloadsCirculars, href: '/downloads' },
     { label: dict.footer.newsEvents, href: '/news' },
     { label: dict.footer.photoGallery, href: '/gallery' },
