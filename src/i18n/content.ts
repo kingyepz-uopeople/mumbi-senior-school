@@ -234,11 +234,11 @@ const boardingSw: Record<string, LocalizedBoardingFields> = {
   uniform: {
     title: 'Sare Rasmi ya Shule',
     description:
-      'Wanafunzi huvaa sare rasmi ya Mumbi Girls Senior School yenye rangi za bluu na nyeupe wakati wa darasa na shughuli rasmi. Orodha kamili hutolewa katika maelekezo ya kujiunga.',
+      'Wanafunzi huvaa sare rasmi ya Mumbi Girls Senior School wakati wa darasa na shughuli rasmi. Wanafunzi wa Gredi 10 huvaa shati jeupe lenye mikono mifupi na nembo ya shule iliyoshonwa. Orodha kamili hutolewa katika maelekezo ya kujiunga.',
     highlights: [
-      'Blazer ya shule yenye nembo ya Mumbi Girls Senior School',
-      'Skirti yenye mikunjo, blauzi nyeupe yenye kola, na tai ya shule',
-      'Viatu vyeusi vya ngozi vyenye kamba, soksi zilizoidhinishwa, na kitanda cha michezo',
+      'Shati jeupe lenye mikono mifupi na kola, lenye nembo ya Mumbi Girls kwenye mfuko wa kifua',
+      'Skirti, soksi, na viatu vyeusi vya ngozi vyenye kamba vilivyoidhinishwa',
+      'Kitanda cha michezo na vitu vingine vilivyotajwa katika maelekezo ya kujiunga',
     ],
   },
   welfare: {

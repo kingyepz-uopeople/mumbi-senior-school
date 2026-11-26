@@ -841,11 +841,11 @@ export const boardingSections: BoardingSection[] = [
     id: 'uniform',
     title: 'Official School Uniform',
     description:
-      'Students wear the official Mumbi Girls Senior School uniform in school blue and white during classes and official functions. Full item lists are issued in the joining instructions.',
+      'Students wear the official Mumbi Girls Senior School uniform during classes and official functions. Grade 10 learners wear a white short-sleeved shirt with the embroidered school crest. Full item lists are issued in the joining instructions.',
     highlights: [
-      'School blazer bearing the Mumbi Girls Senior School crest',
-      'Pleated school skirt, white collared blouse, and school tie',
-      'Black lace-up leather shoes, approved socks, and games kit',
+      'White short-sleeved collared shirt with the Mumbi Girls crest on the chest pocket',
+      'Approved skirt, socks, and black lace-up leather shoes',
+      'Games kit and any additional items named in the joining instructions',
     ],
     icon: 'Shirt',
   },

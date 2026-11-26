@@ -369,8 +369,8 @@ const en = {
     feesUnpublished:
       'Detailed fee schedules are issued by the school office. Contact administration for the current circular.',
     officeContact: 'School office contact details',
-    uniformHeading: 'Uniform colour reference',
-    uniformPhoto: 'Grade 10 uniform photo',
+    uniformHeading: 'What to buy',
+    uniformPhoto: 'Grade 10 school shirt',
     beforeBuy: 'Before you buy',
     boardingUniform: 'Boarding and uniform overview',
     questions: 'Questions about joining?',
@@ -399,13 +399,13 @@ const en = {
     step3Detail:
       'The school is in {location}. Confirm your arrival time and where to check in before travelling.',
     uniformBody:
-      'This school prize-giving photo shows the blue top with the school crest and the blue-and-white checked skirt. Open the full-size photo to see the shade and check pattern.',
+      'Grade 10 learners wear a white short-sleeved collared shirt with the embroidered Mumbi Girls Senior School crest on the left chest pocket. Use this photo when shopping so you buy the correct shirt and badge.',
     uniformConfirm:
-      'Screens show colours differently. Confirm the current {year} uniform list with the school office and, if available, compare the fabric with a school-approved sample.',
-    uniformCaption: 'School prize giving',
+      'Confirm the full {year} uniform list with the school office before you buy other items. Screens can change colour and fabric shade.',
+    uniformCaption: 'Grade 10 shirt with school crest',
     uniformFullSize: 'Full-size photo',
     uniformAlt:
-      'A student at prize giving wearing a blue top with the school crest and a blue-and-white checked skirt',
+      'White short-sleeved Grade 10 school shirt with the Mumbi Girls Senior School crest embroidered on the left chest pocket',
   },
   explore: {
     kicker: 'Boarding & Co-Curricular Life',

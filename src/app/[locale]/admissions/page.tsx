@@ -12,7 +12,7 @@ import { buildPageMetadata } from '@/lib/site';
 
 const placementPortalUrl = 'https://placement.education.go.ke/';
 const schoolOfficeHref = '/contact#school-office';
-const uniformPhoto = '/images/school/about-prize-1.jpg';
+const uniformPhoto = '/images/school/grade-10-uniform-shirt.jpg';
 
 export const metadata: Metadata = buildPageMetadata({
   title: `Grade 10 Admissions ${grade10Intake.year}`,
