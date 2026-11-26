@@ -1,5 +1,6 @@
+'use client';
+
 import Image from 'next/image';
-import Link from 'next/link';
 import { ArrowDown, ArrowRight } from '@/components/icons';
 import HeroPathwaysRotator from '@/components/home/HeroPathwaysRotator';
 import HeroPhotoLoop from '@/components/home/HeroPhotoLoop';
@@ -7,12 +8,19 @@ import HeroMaskedTitle from '@/components/shared/HeroMaskedTitle';
 import HeroStemBackdrop from '@/components/shared/HeroStemBackdrop';
 import HeroTypewriterText from '@/components/shared/HeroTypewriterText';
 import { schoolInfo } from '@/data/mock-school-data';
+import LocaleLink from '@/i18n/LocaleLink';
+import { useLocale } from '@/i18n/locale-context';
 
 export default function CampusHero() {
+  const { locale, dict } = useLocale();
+  const intro = dict.hero.intro
+    .replace('{category}', dict.school.category)
+    .replace('{location}', schoolInfo.physicalLocation);
+
   return (
     <section
       aria-labelledby="school-hero-heading"
-      className="relative overflow-hidden border-b border-primary-dark bg-primary text-white scroll-mt-28"
+      className="relative scroll-mt-28 overflow-hidden border-b border-primary-dark bg-primary text-white"
     >
       <div className="grid grid-cols-1 lg:grid-cols-2">
         <div data-dark-surface className="relative overflow-hidden">
@@ -41,7 +49,8 @@ export default function CampusHero() {
                   data-hero-step="1"
                   className="hero-rise text-xs font-semibold uppercase tracking-[0.14em] text-blue-100 tabular-nums sm:text-sm"
                 >
-                  {schoolInfo.locationShort} · Est. {schoolInfo.founded}
+                  {schoolInfo.locationShort} · {dict.school.foundedLabel}{' '}
+                  {schoolInfo.founded}
                 </p>
 
                 <HeroMaskedTitle
@@ -60,7 +69,8 @@ export default function CampusHero() {
 
                 <div className="space-y-2">
                   <HeroTypewriterText
-                    text={schoolInfo.motto}
+                    key={dict.school.motto}
+                    text={dict.school.motto}
                     prefix="“"
                     suffix="”"
                     inline
@@ -72,7 +82,7 @@ export default function CampusHero() {
                     className="font-serif text-xl leading-snug text-white/95 italic sm:text-2xl"
                   />
 
-                  <HeroPathwaysRotator />
+                  <HeroPathwaysRotator key={locale} />
                 </div>
               </div>
             </div>
@@ -81,29 +91,27 @@ export default function CampusHero() {
               data-hero-step="intro"
               className="hero-rise mt-6 max-w-xl text-base leading-relaxed text-white/90 sm:text-lg"
             >
-              A {schoolInfo.category} in {schoolInfo.physicalLocation}. We offer
-              STEM, Social Sciences, and Arts &amp; Sports Science under
-              Kenya&apos;s Competency-Based Curriculum.
+              {intro}
             </p>
 
             <div className="mt-6 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center">
-              <Link
+              <LocaleLink
                 href="/admissions"
                 data-hero-step="cta-1"
                 className="hero-rise inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-primary transition-colors hover:bg-blue-50"
               >
-                <span>Grade 10 admissions</span>
+                <span>{dict.hero.admissionsCta}</span>
                 <ArrowRight
                   className="h-4 w-4 shrink-0 stroke-[1.75]"
                   aria-hidden="true"
                 />
-              </Link>
+              </LocaleLink>
               <a
                 href="#family-quick-links"
                 data-hero-step="cta-2"
                 className="hero-rise inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-white/75 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-primary-dark"
               >
-                <span>Quick links for families</span>
+                <span>{dict.hero.exploreCta}</span>
                 <ArrowDown className="size-4 shrink-0" aria-hidden="true" />
               </a>
             </div>

@@ -3,12 +3,13 @@
 import Image from 'next/image';
 import type { CSSProperties, KeyboardEvent as ReactKeyboardEvent } from 'react';
 import { useRef, useState } from 'react';
-import Link from 'next/link';
 import { ArrowRight } from '@/components/icons';
 import BlurRevealHeading from '@/components/shared/BlurRevealHeading';
 import SectionStemBackdrop from '@/components/shared/SectionStemBackdrop';
 import SpotlightCardGroup from '@/components/shared/SpotlightCardGroup';
 import { cbcPathways } from '@/data/mock-school-data';
+import LocaleLink from '@/i18n/LocaleLink';
+import { useLocale } from '@/i18n/locale-context';
 
 const PATHWAY_VISUALS = {
   stem: {
@@ -220,6 +221,8 @@ export function PathwaysTabs({ idPrefix = 'home-pathway' }: PathwaysTabsProps) {
 }
 
 export default function PathwaysPreview() {
+  const { dict } = useLocale();
+
   return (
     <section
       aria-labelledby="cbc-pathways-heading"
@@ -233,27 +236,27 @@ export default function PathwaysPreview() {
         >
           <div className="max-w-2xl">
             <p className="mb-2 text-xs font-semibold uppercase tracking-[0.14em] text-primary">
-              Senior School Curriculum · Grades 10 – 12
+              {dict.home.pathwaysKicker}
             </p>
             <BlurRevealHeading
               id="cbc-pathways-heading"
               seed="home-cbc-pathways"
               className="font-serif text-2xl font-bold leading-tight text-slate-900 sm:text-3xl lg:text-4xl"
             >
-              CBC Senior School Pathways
+              {dict.home.pathwaysHeading}
             </BlurRevealHeading>
           </div>
 
-          <Link
+          <LocaleLink
             href="/academics#departments"
             className="inline-flex min-h-11 shrink-0 items-center gap-1.5 text-sm font-semibold text-primary underline-offset-4 transition-colors hover:text-primary-dark hover:underline"
           >
-            <span>View all five academic departments</span>
+            <span>{dict.home.viewDepartments}</span>
             <ArrowRight
               className="h-4 w-4 shrink-0 stroke-[1.75]"
               aria-hidden="true"
             />
-          </Link>
+          </LocaleLink>
         </div>
 
         <div data-reveal="" data-reveal-delay="1">

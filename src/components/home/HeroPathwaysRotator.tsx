@@ -1,19 +1,12 @@
 'use client';
 
-import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
+import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from 'react';
 import {
   getReducedMotionServerSnapshot,
   getReducedMotionSnapshot,
   subscribeReducedMotion,
 } from '@/components/shared/HeroTypewriterText';
-
-const PATHWAYS = [
-  'STEM',
-  'Social Sciences',
-  'Arts & Sports Science',
-] as const;
-
-const LONGEST_PATHWAY = 'Arts & Sports Science';
+import { useLocale } from '@/i18n/locale-context';
 
 const ROTATOR_INITIAL_DELAY_MS = 1760;
 const ROTATOR_TYPE_MS = 52;
@@ -31,6 +24,24 @@ type RotatorPhase = 'initial' | 'typing' | 'pausing' | 'deleting' | 'next';
  * and shows static copy instantly when `prefers-reduced-motion: reduce` is set.
  */
 export default function HeroPathwaysRotator() {
+  const { dict } = useLocale();
+  const pathways = useMemo(
+    () =>
+      [
+        dict.pathways.stem,
+        dict.pathways.socialSciences,
+        dict.pathways.artsSports,
+      ] as const,
+    [dict]
+  );
+  const longestPathway = useMemo(
+    () =>
+      pathways.reduce((longest, name) =>
+        name.length > longest.length ? name : longest
+      ),
+    [pathways]
+  );
+
   const isStaticOrReduced = useSyncExternalStore(
     subscribeReducedMotion,
     getReducedMotionSnapshot,
@@ -85,7 +96,7 @@ export default function HeroPathwaysRotator() {
   useEffect(() => {
     if (isStaticOrReduced || paused) return;
 
-    const currentWord = PATHWAYS[pathwayIndex];
+    const currentWord = pathways[pathwayIndex] ?? pathways[0];
     let timer: number;
 
     if (phase === 'initial') {
@@ -118,17 +129,19 @@ export default function HeroPathwaysRotator() {
       }
     } else {
       timer = window.setTimeout(() => {
-        setPathwayIndex((prev) => (prev + 1) % PATHWAYS.length);
+        setPathwayIndex((prev) => (prev + 1) % pathways.length);
         setPhase('typing');
       }, 20);
     }
 
     return () => window.clearTimeout(timer);
-  }, [isStaticOrReduced, paused, pathwayIndex, pathwayCount, phase]);
+  }, [isStaticOrReduced, paused, pathwayIndex, pathwayCount, phase, pathways]);
 
   const displayedPathway = isStaticOrReduced
-    ? PATHWAYS[0]
-    : PATHWAYS[pathwayIndex].slice(0, pathwayCount);
+    ? pathways[0]
+    : pathways[pathwayIndex].slice(0, pathwayCount);
+
+  const staticList = `${pathways[0]}, ${pathways[1]} & ${pathways[2]}`;
 
   return (
     <p
@@ -137,24 +150,21 @@ export default function HeroPathwaysRotator() {
       className="hero-rise font-sans text-sm sm:text-base text-blue-100 leading-relaxed"
     >
       <span className="sr-only" aria-live="off">
-        Senior School pathways in STEM, Social Sciences, and Arts &amp; Sports
-        Science.
+        {dict.home.pathwaysKicker}: {staticList}.
       </span>
 
       {/* Shown immediately via CSS when prefers-reduced-motion: reduce is active */}
       <span aria-hidden="true" className="hero-pathways-static">
-        Senior School pathways in{' '}
-        <span className="font-semibold text-white">
-          STEM, Social Sciences &amp; Arts &amp; Sports Science
-        </span>
+        {dict.home.pathwaysHeading}{' '}
+        <span className="font-semibold text-white">{staticList}</span>
       </span>
 
       {/* Shown when motion is allowed — fixed grid cell prevents layout shift */}
       <span aria-hidden="true" className="hero-pathways-animated">
-        <span>Senior School pathways in </span>
+        <span>{dict.home.pathwaysHeading} </span>
         <span className="inline-grid items-baseline align-baseline">
           <span className="col-start-1 row-start-1 invisible select-none font-semibold whitespace-nowrap pr-2">
-            {LONGEST_PATHWAY}
+            {longestPathway}
           </span>
           <span className="col-start-1 row-start-1 font-semibold text-white whitespace-nowrap">
             {displayedPathway}

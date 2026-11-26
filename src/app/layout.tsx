@@ -1,14 +1,16 @@
 import type { Metadata, Viewport } from 'next';
+import { headers } from 'next/headers';
 import localFont from 'next/font/local';
 import './globals.css';
 
-import { PwaProvider } from '@/components/pwa/PwaProvider';
-import UtilityBar from '@/components/layout/UtilityBar';
-import Header from '@/components/layout/Header';
-import Footer from '@/components/layout/Footer';
-import MobileInstallBanner from '@/components/layout/MobileInstallBanner';
-import ScrollRevealObserver from '@/components/shared/ScrollRevealObserver';
 import { schoolInfo } from '@/data/mock-school-data';
+import {
+  defaultLocale,
+  isLocale,
+  localeHtmlLang,
+  LOCALE_COOKIE,
+  type Locale,
+} from '@/i18n/config';
 import { DEFAULT_OG_IMAGE, SITE_NAME, SITE_URL } from '@/lib/site';
 
 const inter = localFont({
@@ -107,49 +109,33 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+async function resolveLocale(): Promise<Locale> {
+  const headerStore = await headers();
+  const fromHeader = headerStore.get('x-locale');
+  if (fromHeader && isLocale(fromHeader)) return fromHeader;
+
+  const cookie = headerStore.get('cookie') ?? '';
+  const match = cookie.match(new RegExp(`${LOCALE_COOKIE}=([^;]+)`));
+  if (match?.[1] && isLocale(match[1])) return match[1];
+
+  return defaultLocale;
+}
+
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const locale = await resolveLocale();
+
   return (
     <html
-      lang="en"
+      lang={localeHtmlLang[locale]}
       data-scroll-behavior="smooth"
       className={`${inter.variable} ${sourceSerif.variable} antialiased font-sans`}
     >
-      <body className="min-h-dvh flex flex-col bg-slate-bg text-slate-800">
-        <PwaProvider>
-          {/* Keyboard Skip-to-Content Link */}
-          <a
-            href="#main-content"
-            className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:px-4 focus:py-2.5 focus:rounded-full focus:bg-primary-dark focus:text-white focus:font-semibold focus:text-sm focus:shadow-lg focus:outline-2 focus:outline-white focus:outline-offset-2"
-          >
-            Skip to main content
-          </a>
-
-          {/* Sticky primary header: crest + navigation only */}
-          <header
-            data-dark-surface
-            className="sticky top-0 z-40 shrink-0 w-full bg-primary border-b border-primary-dark"
-          >
-            <Header />
-          </header>
-
-          <main
-            id="main-content"
-            tabIndex={-1}
-            className="relative z-0 grow shrink-0 w-full overflow-x-clip scroll-mt-28 focus:outline-none"
-          >
-            {children}
-          </main>
-
-          {/* Slim registry & contact strip, directly above the footer */}
-          <UtilityBar />
-          <Footer />
-          <MobileInstallBanner />
-          <ScrollRevealObserver />
-        </PwaProvider>
+      <body className="flex min-h-dvh flex-col bg-slate-bg text-slate-800">
+        {children}
       </body>
     </html>
   );

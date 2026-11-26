@@ -8,14 +8,25 @@ import PathwaysPreview from '@/components/home/PathwaysPreview';
 import WallOfFame from '@/components/home/WallOfFame';
 import LatestNews from '@/components/home/LatestNews';
 import { schoolInfo } from '@/data/mock-school-data';
+import { isLocale, type Locale } from '@/i18n/config';
+import { getDictionary } from '@/i18n/get-dictionary';
 import { buildPageMetadata } from '@/lib/site';
 
-export const metadata: Metadata = buildPageMetadata({
-  title: 'Mumbi Girls Senior School',
-  description:
-    `${schoolInfo.name} — ${schoolInfo.motto}. ${schoolInfo.category} in ${schoolInfo.physicalLocation}. Explore CBC pathways, KCSE results, and student life.`,
-  path: '/',
-});
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale: localeParam } = await params;
+  const locale: Locale = isLocale(localeParam) ? localeParam : 'en';
+  const dict = getDictionary(locale);
+
+  return buildPageMetadata({
+    title: 'Mumbi Girls Senior School',
+    description: `${schoolInfo.name} — ${dict.school.motto}. ${dict.school.category} in ${schoolInfo.physicalLocation}.`,
+    path: `/${locale}`,
+  });
+}
 
 export default function HomePage() {
   return (

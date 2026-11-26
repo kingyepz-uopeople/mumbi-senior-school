@@ -1,15 +1,23 @@
 'use client';
 
-import { useCallback, useEffect, useId, useRef, useState } from 'react';
+import { useCallback, useEffect, useId, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import Image from 'next/image';
-import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { ChevronDown, Download, Menu, X } from '@/components/icons';
-import { navigation } from '@/data/navigation';
+import LanguageSwitcher from '@/components/layout/LanguageSwitcher';
 import { schoolInfo } from '@/data/mock-school-data';
 import { usePwa } from '@/components/pwa/PwaProvider';
+import { stripLocale } from '@/i18n/config';
+import LocaleLink from '@/i18n/LocaleLink';
+import { useLocale } from '@/i18n/locale-context';
+import { getNavigation } from '@/i18n/navigation';
 import type { NavItem } from '@/types';
+
+function useBarePathname() {
+  const pathname = usePathname() || '/';
+  return stripLocale(pathname);
+}
 
 function DesktopDropdown({
   item,
@@ -86,7 +94,7 @@ function DesktopDropdown({
 
   if (!item.children?.length) {
     return (
-      <Link
+      <LocaleLink
         href={item.href}
         aria-current={isActive ? 'page' : undefined}
         className={`relative px-3 py-2 rounded-full text-sm font-medium transition-colors text-white ${
@@ -96,7 +104,7 @@ function DesktopDropdown({
         }`}
       >
         {item.label}
-      </Link>
+      </LocaleLink>
     );
   }
 
@@ -115,7 +123,7 @@ function DesktopDropdown({
             : 'hover:bg-primary-dark/60'
         }`}
       >
-        <Link
+        <LocaleLink
           href={item.href}
           aria-current={isActive ? 'page' : undefined}
           onClick={() => setOpen(false)}
@@ -124,7 +132,7 @@ function DesktopDropdown({
           }`}
         >
           {item.label}
-        </Link>
+        </LocaleLink>
         <button
           ref={toggleRef}
           type="button"
@@ -166,13 +174,13 @@ function DesktopDropdown({
           <ul className="bg-white rounded-sm shadow-lg border border-slate-300 border-t-2 border-t-primary py-1.5 divide-y divide-slate-100">
             {item.children.map((child) => (
               <li key={child.href}>
-                <Link
+                <LocaleLink
                   href={child.href}
                   onClick={() => setOpen(false)}
                   className="block px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50 hover:text-primary focus-visible:outline-primary focus-visible:-outline-offset-2 transition-colors"
                 >
                   {child.label}
-                </Link>
+                </LocaleLink>
               </li>
             ))}
           </ul>
@@ -189,7 +197,9 @@ function MobileNavDrawer({
   onClose: () => void;
   triggerRef: React.RefObject<HTMLButtonElement | null>;
 }) {
-  const pathname = usePathname();
+  const pathname = useBarePathname();
+  const { dict } = useLocale();
+  const navigation = useMemo(() => getNavigation(dict), [dict]);
   const { canNativeInstall, triggerNativeInstall } = usePwa();
   const [expandedItems, setExpandedItems] = useState<Set<string>>(() => {
     const active = navigation.find(
@@ -304,7 +314,7 @@ function MobileNavDrawer({
             type="button"
             onClick={onClose}
             className="inline-flex items-center justify-center w-11 h-11 rounded-full text-white hover:bg-primary-dark transition-colors shrink-0"
-            aria-label="Close navigation menu"
+            aria-label={dict.a11y.closeMenu}
           >
             <X className="w-5 h-5" aria-hidden="true" />
           </button>
@@ -354,24 +364,24 @@ function MobileNavDrawer({
                       className="mt-1 mb-2 ml-3 pl-3 border-l border-slate-300 space-y-0.5"
                     >
                       <li>
-                        <Link
+                        <LocaleLink
                           href={item.href}
                           aria-current={isActive ? 'page' : undefined}
                           onClick={onClose}
                           className="flex items-center min-h-11 px-2 py-2 text-sm font-semibold text-primary hover:underline underline-offset-4"
                         >
-                          {item.label} Overview
-                        </Link>
+                          {item.label}
+                        </LocaleLink>
                       </li>
                       {item.children.map((child) => (
                         <li key={child.href}>
-                          <Link
+                          <LocaleLink
                             href={child.href}
                             onClick={onClose}
                             className="flex items-center min-h-11 px-2 py-2 text-sm text-slate-700 hover:text-primary"
                           >
                             {child.label}
-                          </Link>
+                          </LocaleLink>
                         </li>
                       ))}
                     </ul>
@@ -382,7 +392,7 @@ function MobileNavDrawer({
 
             return (
               <div key={item.label} className="py-1">
-                <Link
+                <LocaleLink
                   href={item.href}
                   aria-current={isActive ? 'page' : undefined}
                   onClick={onClose}
@@ -393,14 +403,15 @@ function MobileNavDrawer({
                   }`}
                 >
                   {item.label}
-                </Link>
+                </LocaleLink>
               </div>
             );
           })}
         </nav>
 
         {/* Mobile portal & install actions */}
-        <div className="p-4 border-t border-slate-200 bg-slate-bg space-y-2.5">
+        <div className="space-y-2.5 border-t border-slate-200 bg-slate-bg p-4">
+          <LanguageSwitcher />
           {canNativeInstall && (
             <button
               type="button"
@@ -408,29 +419,29 @@ function MobileNavDrawer({
                 await triggerNativeInstall();
                 onClose();
               }}
-              className="w-full min-h-11 px-4 py-2.5 rounded-full bg-primary-dark text-white font-semibold text-sm inline-flex items-center justify-center gap-2 hover:bg-primary transition-colors"
+              className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full bg-primary-dark px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-primary"
             >
-              <Download className="w-4 h-4 stroke-[1.75]" aria-hidden="true" />
-              <span>Install Mumbi Portal App</span>
+              <Download className="h-4 w-4 stroke-[1.75]" aria-hidden="true" />
+              <span>{dict.a11y.installApp}</span>
             </button>
           )}
           <div className="grid grid-cols-2 gap-2">
-            <Link
+            <LocaleLink
               href="/portal"
               onClick={onClose}
-              className="min-h-11 px-3 py-2.5 inline-flex items-center justify-center text-sm font-semibold text-white bg-primary rounded-full hover:bg-primary-dark transition-colors"
+              className="inline-flex min-h-11 items-center justify-center rounded-full bg-primary px-3 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-primary-dark"
             >
-              Student Portal
-            </Link>
-            <Link
+              {dict.a11y.studentPortal}
+            </LocaleLink>
+            <LocaleLink
               href="/portal"
               onClick={onClose}
-              className="min-h-11 px-3 py-2.5 inline-flex items-center justify-center text-sm font-semibold text-primary bg-white border border-primary rounded-full hover:bg-slate-50 transition-colors"
+              className="inline-flex min-h-11 items-center justify-center rounded-full border border-primary bg-white px-3 py-2.5 text-sm font-semibold text-primary transition-colors hover:bg-slate-50"
             >
-              Staff Portal
-            </Link>
+              {dict.a11y.staffPortal}
+            </LocaleLink>
           </div>
-          <p className="text-[11px] text-slate-600 pt-1">
+          <p className="pt-1 text-[11px] text-slate-600">
             {schoolInfo.officeHoursShort} · {schoolInfo.postalAddress}
           </p>
         </div>
@@ -441,7 +452,9 @@ function MobileNavDrawer({
 }
 
 export default function Header() {
-  const pathname = usePathname();
+  const pathname = useBarePathname();
+  const { dict } = useLocale();
+  const navigation = useMemo(() => getNavigation(dict), [dict]);
   const [mobileOpen, setMobileOpen] = useState(false);
   const hamburgerRef = useRef<HTMLButtonElement>(null);
 
@@ -453,17 +466,16 @@ export default function Header() {
     <>
       {/* Safe-area padding keeps the crest clear of the status bar in standalone mode */}
       <div className="bg-primary pt-[env(safe-area-inset-top)]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="flex items-center justify-between h-16 gap-3">
-            {/* Official Crest + School Name */}
-            <Link
+        <div className="mx-auto max-w-7xl px-4 sm:px-6">
+          <div className="flex h-16 items-center justify-between gap-3">
+            <LocaleLink
               href="/"
               onClick={() => {
                 if (pathname === '/') {
                   window.scrollTo({ top: 0, behavior: 'smooth' });
                 }
               }}
-              className="flex items-center gap-3 min-w-0 py-1 rounded-xs"
+              className="flex min-w-0 items-center gap-3 rounded-xs py-1"
             >
               <Image
                 src="/images/mumbi-logo.png"
@@ -473,43 +485,45 @@ export default function Header() {
                 sizes="64px"
                 quality={95}
                 priority
-                className="w-10 h-10 sm:w-11 sm:h-11 rounded-xs bg-[#f7f7f7] p-0.5 object-contain shrink-0 border border-white/80"
+                className="h-10 w-10 shrink-0 rounded-xs border border-white/80 bg-[#f7f7f7] object-contain p-0.5 sm:h-11 sm:w-11"
               />
               <div className="min-w-0">
-                <span className="block font-serif text-white text-base sm:text-lg font-bold leading-tight truncate">
+                <span className="block truncate font-serif text-base font-bold leading-tight text-white sm:text-lg">
                   {schoolInfo.name}
                 </span>
-                <span className="block text-blue-100 text-[11px] tracking-wide truncate">
-                  {schoolInfo.locationShort} · Est. {schoolInfo.founded}
+                <span className="block truncate text-[11px] tracking-wide text-blue-100">
+                  {schoolInfo.locationShort} · {dict.school.foundedLabel}{' '}
+                  {schoolInfo.founded}
                 </span>
               </div>
-            </Link>
+            </LocaleLink>
 
-            {/* Desktop Navigation */}
             <nav
-              aria-label="Primary navigation"
-              className="hidden lg:flex items-center gap-0.5"
+              aria-label={dict.a11y.primaryNav}
+              className="hidden items-center gap-0.5 lg:flex"
             >
               {navigation.map((item) => (
                 <DesktopDropdown
-                  key={item.label}
+                  key={item.href}
                   item={item}
                   isActive={pathname === item.href}
                 />
               ))}
+              <div className="ml-2">
+                <LanguageSwitcher compact />
+              </div>
             </nav>
 
-            {/* Mobile Menu Button (44x44px touch target) */}
             <button
               ref={hamburgerRef}
               type="button"
               onClick={() => setMobileOpen(true)}
-              className="lg:hidden inline-flex items-center justify-center w-11 h-11 rounded-full text-white hover:bg-primary-dark transition-colors shrink-0"
-              aria-label="Open navigation menu"
+              className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-white transition-colors hover:bg-primary-dark lg:hidden"
+              aria-label={dict.a11y.openMenu}
               aria-expanded={mobileOpen}
               aria-controls="mobile-nav-drawer"
             >
-              <Menu className="w-6 h-6 stroke-[1.75]" aria-hidden="true" />
+              <Menu className="h-6 w-6 stroke-[1.75]" aria-hidden="true" />
             </button>
           </div>
         </div>

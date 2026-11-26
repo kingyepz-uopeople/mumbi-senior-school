@@ -166,7 +166,12 @@ const en = {
     socialSciences: 'Social Sciences',
     artsSports: 'Arts & Sports Science',
   },
-} as const;
+};
 
 export default en;
-export type Dictionary = typeof en;
+
+type DeepStringify<T> = {
+  [K in keyof T]: T[K] extends string ? string : DeepStringify<T[K]>;
+};
+
+export type Dictionary = DeepStringify<typeof en>;

@@ -49,15 +49,14 @@ export default function WallOfFameGrid({ year, onYearChange }: WallOfFameGridPro
       return a.name.localeCompare(b.name, 'en', { sensitivity: 'base' });
     });
 
-    let rank = 1;
-    return sorted.map((student, index) => {
-      if (index > 0 && student.points < sorted[index - 1].points) {
-        rank = index + 1;
-      }
+    return sorted.map((student) => {
+      const firstWithSamePoints = sorted.findIndex(
+        (candidate) => candidate.points === student.points
+      );
 
       return {
         ...student,
-        overallRank: rank,
+        overallRank: firstWithSamePoints + 1,
         meanGrade: meanGradeFromPoints(student.points),
       };
     });
