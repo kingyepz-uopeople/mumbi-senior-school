@@ -1,5 +1,8 @@
+'use client';
+
 import Image from 'next/image';
 import { Camera } from '@/components/icons';
+import { useLocale } from '@/i18n/locale-context';
 
 interface PhotoSlotProps {
   /** Root-relative path under `public/`, e.g. `/images/principal.jpg` */
@@ -29,9 +32,12 @@ export default function PhotoSlot({
   sizes,
   aspectClassName = 'aspect-3/2',
   caption,
-  placeholderLabel = 'Photo coming soon',
+  placeholderLabel,
   priority = false,
 }: PhotoSlotProps) {
+  const { dict } = useLocale();
+  const label = placeholderLabel ?? dict.contact.photoSoon;
+
   return (
     <figure className="m-0">
       {exists ? (
@@ -51,7 +57,7 @@ export default function PhotoSlot({
       ) : (
         <div
           role="img"
-          aria-label={`${placeholderLabel}${caption ? ` — ${caption}` : ''}`}
+          aria-label={`${label}${caption ? ` — ${caption}` : ''}`}
           className={`relative w-full ${aspectClassName} bg-slate-100 border border-slate-300 flex flex-col items-center justify-center p-6 text-center`}
         >
           <div
@@ -63,7 +69,7 @@ export default function PhotoSlot({
             aria-hidden="true"
           />
           <span className="text-xs font-medium uppercase tracking-widest text-slate-600">
-            {placeholderLabel}
+            {label}
           </span>
         </div>
       )}

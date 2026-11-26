@@ -1,4 +1,8 @@
+'use client';
+
 import { MessageCircle } from '@/components/icons';
+import { fill } from '@/i18n/fill';
+import { useLocale } from '@/i18n/locale-context';
 
 interface PhoneActionsProps {
   /** E.164-style number, e.g. `+254711461192`. */
@@ -23,6 +27,8 @@ export default function PhoneActions({
   className = '',
   showNumber = true,
 }: PhoneActionsProps) {
+  const { dict } = useLocale();
+  const p = dict.phone;
   const digits = phone.replace(/[^0-9]/g, '');
   // Drop a leading 0 and prefix the Kenyan country code for a valid wa.me link.
   const waDigits = digits.startsWith('0') ? `254${digits.slice(1)}` : digits;
@@ -38,10 +44,11 @@ export default function PhoneActions({
       <a
         href={`tel:${phone}`}
         className={`inline-flex items-center gap-1.5 font-semibold underline underline-offset-4 ${linkTone}`}
-        aria-label={`Call the school office on ${phone}`}
+        aria-label={fill(p.callAria, { phone })}
       >
         <span>
-          Call{showNumber ? ` ${phone}` : ''}
+          {p.call}
+          {showNumber ? ` ${phone}` : ''}
         </span>
       </a>
       <a
@@ -49,10 +56,10 @@ export default function PhoneActions({
         target="_blank"
         rel="noopener noreferrer"
         className={`inline-flex items-center gap-1.5 font-semibold underline underline-offset-4 ${linkTone}`}
-        aria-label="Message the school office on WhatsApp"
+        aria-label={p.whatsappAria}
       >
         <MessageCircle className={`size-4 shrink-0 ${iconTone}`} aria-hidden="true" />
-        <span>WhatsApp</span>
+        <span>{p.whatsapp}</span>
       </a>
     </span>
   );

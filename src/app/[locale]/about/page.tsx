@@ -196,7 +196,7 @@ export default async function AboutPage({
               <div className="py-3.5">
                 <dt className="text-xs text-slate-600">{dict.about.officeHours}</dt>
                 <dd className="text-slate-800 mt-0.5">
-                  {schoolInfo.officeHours}
+                  {dict.officeHours.full}
                 </dd>
               </div>
             </dl>

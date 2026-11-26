@@ -96,7 +96,7 @@ export default async function OfflinePage({
               <dt className="inline font-semibold text-slate-900">
                 {o.officeHours}{' '}
               </dt>
-              <dd className="inline">{schoolInfo.officeHours}</dd>
+              <dd className="inline">{dict.officeHours.full}</dd>
             </div>
           </dl>
         </section>

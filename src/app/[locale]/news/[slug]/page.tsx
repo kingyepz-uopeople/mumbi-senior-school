@@ -149,7 +149,7 @@ export default async function NewsArticlePage({
                 {schoolInfo.moeReg}
               </p>
               <p>
-                {n.officeHours} {schoolInfo.officeHours}
+                {n.officeHours} {dict.officeHours.full}
               </p>
             </div>
 

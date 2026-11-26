@@ -20,44 +20,45 @@ export const metadata: Metadata = buildPageMetadata({
   path: '/admissions',
 });
 
-const steps = [
-  {
-    n: '01',
-    title: 'Confirm your placement',
-    detail:
-      'Check the Ministry of Education Grade 10 placement portal for your placement and admission letter. If you cannot find your letter, ask your junior school.',
-    href: placementPortalUrl,
-    external: true,
-  },
-  {
-    n: '02',
-    title: 'Read your joining instructions',
-    detail:
-      'Use the current instructions to see which documents and forms to bring, what to pack for boarding, and which uniform items to buy.',
-    href: '/downloads',
-    external: false,
-  },
-  {
-    n: '03',
-    title: 'Check before you travel',
-    detail: `The school is in ${schoolInfo.physicalLocation}. Confirm your arrival time and where to check in before travelling.`,
-    href: schoolOfficeHref,
-    external: false,
-  },
-] as const;
-
 export default async function AdmissionsPage({
   params,
 }: {
   params: Promise<{ locale: string }>;
 }) {
-  const { dict } = await getLocaleDictionary(params);
+  const { locale, dict } = await getLocaleDictionary(params);
   const a = dict.admissions;
   const { year, reportingDate, reportingDateProvisional } = grade10Intake;
-  const reportingDay = new Intl.DateTimeFormat('en-KE', {
-    dateStyle: 'full',
-    timeZone: 'Africa/Nairobi',
-  }).format(new Date(`${reportingDate}T00:00:00Z`));
+  const reportingDay = new Intl.DateTimeFormat(
+    locale === 'sw' ? 'sw-KE' : 'en-KE',
+    {
+      dateStyle: 'full',
+      timeZone: 'Africa/Nairobi',
+    }
+  ).format(new Date(`${reportingDate}T00:00:00Z`));
+
+  const steps = [
+    {
+      n: '01',
+      title: a.step1Title,
+      detail: a.step1Detail,
+      href: placementPortalUrl,
+      external: true,
+    },
+    {
+      n: '02',
+      title: a.step2Title,
+      detail: a.step2Detail,
+      href: '/downloads',
+      external: false,
+    },
+    {
+      n: '03',
+      title: a.step3Title,
+      detail: fill(a.step3Detail, { location: schoolInfo.physicalLocation }),
+      href: schoolOfficeHref,
+      external: false,
+    },
+  ] as const;
 
   return (
     <div className="bg-slate-bg">
@@ -134,8 +135,8 @@ export default async function AdmissionsPage({
             </time>
             <p className="mt-2 text-sm leading-relaxed text-slate-600">
               {reportingDateProvisional
-                ? 'This date may change. Confirm the date and arrival time with the school office before travelling.'
-                : 'Check your joining instructions for your arrival time before travelling.'}
+                ? a.reportingProvisionalNote
+                : a.reportingConfirmNote}
             </p>
           </div>
 
@@ -153,19 +154,16 @@ export default async function AdmissionsPage({
               <ReportingDayTimeline
                 steps={[
                   {
-                    title: 'Your placement letter',
-                    detail:
-                      'Bring the admission letter from the Ministry of Education Grade 10 placement portal.',
+                    title: a.timelinePlacementTitle,
+                    detail: a.timelinePlacementDetail,
                   },
                   {
-                    title: 'Documents and forms',
-                    detail:
-                      'Pack the forms named in your joining instructions and what you need for boarding.',
+                    title: a.timelineDocsTitle,
+                    detail: a.timelineDocsDetail,
                   },
                   {
-                    title: 'Uniform and arrival time',
-                    detail:
-                      'Buy the uniform items listed by the school and confirm your arrival time before travelling.',
+                    title: a.timelineUniformTitle,
+                    detail: a.timelineUniformDetail,
                   },
                 ]}
               />
@@ -288,19 +286,13 @@ export default async function AdmissionsPage({
               {a.uniformPhoto}
             </h2>
             <p className="mt-3 text-sm leading-relaxed text-slate-700 sm:text-base">
-              This school prize-giving photo shows the blue top with the school
-              crest and the blue-and-white checked skirt. Open the full-size
-              photo to see the shade and check pattern.
+              {a.uniformBody}
             </p>
             <div className="mt-5 border-l-2 border-primary bg-blue-50 px-4 py-3 text-sm leading-relaxed text-slate-700">
               <p className="mb-1 font-semibold text-primary-dark">
                 {a.beforeBuy}
               </p>
-              <p>
-                Screens show colours differently. Confirm the current {year}{' '}
-                uniform list with the school office and, if available, compare
-                the fabric with a school-approved sample.
-              </p>
+              <p>{fill(a.uniformConfirm, { year })}</p>
             </div>
             <LocaleLink
               href="/explore#boarding"
@@ -314,7 +306,7 @@ export default async function AdmissionsPage({
           <figure className="m-0 w-full max-w-sm justify-self-center overflow-hidden rounded-md border border-slate-200 bg-slate-bg">
             <Image
               src={uniformPhoto}
-              alt="A student at prize giving wearing a blue top with the school crest and a blue-and-white checked skirt"
+              alt={a.uniformAlt}
               width={960}
               height={1280}
               quality={95}
@@ -322,14 +314,14 @@ export default async function AdmissionsPage({
               className="block h-auto w-full"
             />
             <figcaption className="flex items-center justify-between gap-3 border-t border-slate-200 px-3 text-sm sm:px-4">
-              <span className="text-xs text-slate-600">School prize giving</span>
+              <span className="text-xs text-slate-600">{a.uniformCaption}</span>
               <a
                 href={uniformPhoto}
                 target="_blank"
                 rel="noreferrer"
                 className="inline-flex items-center gap-1 text-sm font-semibold text-primary underline underline-offset-4 hover:text-primary-dark"
               >
-                Full-size photo
+                {a.uniformFullSize}
                 <span className="sr-only">{dict.common.opensNewTab}</span>
                 <ArrowUpRight strokeWidth={1.75} className="size-4 shrink-0" aria-hidden="true" />
               </a>
@@ -355,7 +347,7 @@ export default async function AdmissionsPage({
               <MapPin strokeWidth={1.75} className="mt-0.5 size-4 shrink-0 text-primary" aria-hidden="true" />
               <span>
                 <span className="block">
-                  {schoolInfo.physicalLocation} · {schoolInfo.officeHoursShort}
+                  {schoolInfo.physicalLocation} · {dict.officeHours.schedule}
                 </span>
                 <DirectionsLink />
               </span>

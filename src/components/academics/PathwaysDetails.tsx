@@ -14,7 +14,12 @@ import HeroTypewriterText from '@/components/shared/HeroTypewriterText';
 import SectionStemBackdrop from '@/components/shared/SectionStemBackdrop';
 import { useReducedMotion, useViewportActivity } from '@/components/shared/motion-utils';
 import { cbcPathways, departments } from '@/data/mock-school-data';
+import { fill } from '@/i18n/fill';
+import { useLocale } from '@/i18n/locale-context';
+import type { Dictionary } from '@/i18n/dictionaries/en';
 import type { CBCPathway, PathwayTrack } from '@/types';
+
+type PathwaysUi = Dictionary['academics']['pathwaysUi'];
 
 interface TrackVisual {
   src: string;
@@ -73,19 +78,20 @@ interface SelectedTrack {
 
 type PathwayViewMode = 'loop' | 'grid';
 
-const CAROUSEL_SPEEDS = [
-  { id: 'slow', label: 'Slow', duration: 72 },
-  { id: 'normal', label: 'Normal', duration: 54 },
-  { id: 'fast', label: 'Fast', duration: 36 },
-] as const;
+const CAROUSEL_SPEED_DURATIONS = {
+  slow: 72,
+  normal: 54,
+  fast: 36,
+} as const;
 
-type CarouselSpeed = (typeof CAROUSEL_SPEEDS)[number]['id'];
+type CarouselSpeed = keyof typeof CAROUSEL_SPEED_DURATIONS;
 
 interface TrackCardProps {
   pathway: CBCPathway;
   track: PathwayTrack;
   trackIndex: number;
   duplicate?: boolean;
+  ui: PathwaysUi;
   onOpen: (
     pathway: CBCPathway,
     track: PathwayTrack,
@@ -94,7 +100,13 @@ interface TrackCardProps {
   ) => void;
 }
 
-function TrackArtwork({ track }: { track: PathwayTrack }) {
+function TrackArtwork({
+  track,
+  ui,
+}: {
+  track: PathwayTrack;
+  ui: PathwaysUi;
+}) {
   const visual = TRACK_VISUALS[track.id];
 
   if (!visual) {
@@ -102,7 +114,7 @@ function TrackArtwork({ track }: { track: PathwayTrack }) {
       <div
         className="pathway-photo-placeholder"
         role="img"
-        aria-label={`Blue placeholder image for ${track.name} track`}
+        aria-label={fill(ui.placeholderAria, { name: track.name })}
       >
         <span className="pathway-placeholder-orbit" aria-hidden="true" />
         <span className="pathway-placeholder-mark" aria-hidden="true" />
@@ -126,6 +138,7 @@ function TrackCard({
   track,
   trackIndex,
   duplicate = false,
+  ui,
   onOpen,
 }: TrackCardProps) {
   const trackNumber = String(trackIndex + 1).padStart(2, '0');
@@ -133,21 +146,22 @@ function TrackCard({
   return (
     <article className="pathway-track-card" role="listitem">
       <div className="pathway-track-card-photo">
-        <TrackArtwork track={track} />
+        <TrackArtwork track={track} ui={ui} />
         <span className="pathway-track-code">
-          Track {trackNumber} <span aria-hidden="true">·</span> {pathway.name}
+          {fill(ui.trackCode, { number: trackNumber })}{' '}
+          <span aria-hidden="true">·</span> {pathway.name}
         </span>
       </div>
 
       <div className="pathway-track-card-content">
         <div>
-          <p className="pathway-track-eyebrow">CBC Senior School pathway</p>
+          <p className="pathway-track-eyebrow">{ui.pathwayEyebrow}</p>
           <h3 className="pathway-track-title">{track.name}</h3>
           <p className="pathway-track-description">{track.description}</p>
         </div>
 
         <div className="pathway-subject-block">
-          <h4 className="pathway-subject-heading">Subjects taught</h4>
+          <h4 className="pathway-subject-heading">{ui.subjectsTaught}</h4>
           <ul className="pathway-subject-list" aria-label={`${track.name} subjects`}>
             {track.subjects.map((subject, index) => (
               <li
@@ -164,13 +178,13 @@ function TrackCard({
         <button
           type="button"
           className="pill-3d-secondary pathway-track-open"
-          aria-label={`Explore ${track.name} track details`}
+          aria-label={fill(ui.exploreTrackAria, { name: track.name })}
           tabIndex={duplicate ? -1 : undefined}
           onClick={(event) =>
             onOpen(pathway, track, trackIndex, event.currentTarget)
           }
         >
-          <span>Explore track details</span>
+          <span>{ui.exploreTrackDetails}</span>
           <ArrowRight className="h-4 w-4" aria-hidden="true" />
         </button>
       </div>
@@ -218,11 +232,13 @@ function TrackDetailDialog({
   onClose,
   closeButtonRef,
   dialogRef,
+  ui,
 }: {
   selected: SelectedTrack | null;
   onClose: () => void;
   closeButtonRef: RefObject<HTMLButtonElement | null>;
   dialogRef: RefObject<HTMLDivElement | null>;
+  ui: PathwaysUi;
 }) {
   if (!selected) return null;
 
@@ -245,24 +261,24 @@ function TrackDetailDialog({
         tabIndex={-1}
       >
         <div className="pathway-dialog-photo">
-          <TrackArtwork track={selected.track} />
+          <TrackArtwork track={selected.track} ui={ui} />
           <span className="pathway-track-code">
-            Track {trackNumber} <span aria-hidden="true">·</span>{' '}
-            {selected.pathway.name}
+            {fill(ui.trackCode, { number: trackNumber })}{' '}
+            <span aria-hidden="true">·</span> {selected.pathway.name}
           </span>
           <button
             ref={closeButtonRef}
             type="button"
             className="pill-3d-secondary pathway-dialog-close"
             onClick={onClose}
-            aria-label="Close track details"
+            aria-label={ui.closeTrackDetails}
           >
             <X className="h-5 w-5" aria-hidden="true" />
           </button>
         </div>
 
         <div className="pathway-dialog-content">
-          <p className="pathway-track-eyebrow">CBC Senior School pathway</p>
+          <p className="pathway-track-eyebrow">{ui.pathwayEyebrow}</p>
           <h2 id="pathway-track-dialog-title" className="pathway-dialog-title">
             {selected.track.name}
           </h2>
@@ -274,8 +290,8 @@ function TrackDetailDialog({
           </p>
 
           <div className="pathway-dialog-detail">
-            <h3 className="pathway-subject-heading">Subjects taught</h3>
-            <ul className="pathway-subject-list" aria-label="Subjects taught">
+            <h3 className="pathway-subject-heading">{ui.subjectsTaught}</h3>
+            <ul className="pathway-subject-list" aria-label={ui.subjectsTaught}>
               {selected.track.subjects.map((subject, index) => (
                 <li
                   key={subject}
@@ -289,7 +305,7 @@ function TrackDetailDialog({
           </div>
 
           <div className="pathway-dialog-detail">
-            <h3 className="pathway-subject-heading">Related university fields</h3>
+            <h3 className="pathway-subject-heading">{ui.relatedFields}</h3>
             <p className="pathway-career-list">
               {selected.track.careers.join(' · ')}
             </p>
@@ -301,7 +317,7 @@ function TrackDetailDialog({
               className="pill-3d-primary pathway-dialog-done"
               onClick={onClose}
             >
-              Done
+              {ui.done}
             </button>
           </div>
         </div>
@@ -311,6 +327,17 @@ function TrackDetailDialog({
 }
 
 export default function PathwaysDetails() {
+  const { dict } = useLocale();
+  const ui = dict.academics.pathwaysUi;
+  const carouselSpeeds = [
+    { id: 'slow' as const, label: ui.slow, duration: CAROUSEL_SPEED_DURATIONS.slow },
+    {
+      id: 'normal' as const,
+      label: ui.normal,
+      duration: CAROUSEL_SPEED_DURATIONS.normal,
+    },
+    { id: 'fast' as const, label: ui.fast, duration: CAROUSEL_SPEED_DURATIONS.fast },
+  ];
   const [activeIndex, setActiveIndex] = useState(0);
   const [userPaused, setUserPaused] = useState(false);
   const [viewMode, setViewMode] = useState<PathwayViewMode>('loop');
@@ -329,7 +356,7 @@ export default function PathwaysDetails() {
 
   const activeViewMode: PathwayViewMode = reducedMotion ? 'grid' : viewMode;
   const carouselDuration =
-    CAROUSEL_SPEEDS.find((speed) => speed.id === carouselSpeed)?.duration ?? 54;
+    carouselSpeeds.find((speed) => speed.id === carouselSpeed)?.duration ?? 54;
   const activePathway = cbcPathways[activeIndex];
   const activeTabId = `academics-detail-tab-${activePathway.id}`;
   const trackCount = activePathway.tracks.length;
@@ -445,35 +472,32 @@ export default function PathwaysDetails() {
         <div className="grid grid-cols-1 items-end gap-7 lg:grid-cols-12 lg:gap-10">
           <div className="max-w-3xl lg:col-span-8">
             <p className="mb-2 text-xs font-semibold uppercase tracking-[0.14em] text-primary">
-              Grades 10 – 12 · Senior School curriculum
+              {ui.gradesKicker}
             </p>
             <p className="mb-3 text-sm font-medium text-slate-600">
-              Pathways to <RotatingPathwayWord />
-              <span className="sr-only">
-                {' '}
-                STEM, Social Sciences, and Arts &amp; Sports Science.
-              </span>
+              {ui.pathwaysTo} <RotatingPathwayWord />
+              <span className="sr-only"> {ui.pathwaysListSr}</span>
             </p>
             <HeroScrambleTitle
               id="academics-pathway-details-heading"
               as="h2"
-              text="Explore pathway tracks"
+              text={ui.exploreTracks}
               durationMs={760}
               startDelayMs={60}
               className="font-serif text-3xl font-bold leading-tight text-slate-900 sm:text-4xl"
             />
             <p className="mt-3 max-w-2xl text-sm leading-relaxed text-slate-600 sm:text-base">
-              Choose a pathway to view its tracks, subjects, and related university fields.
+              {ui.choosePathway}
             </p>
           </div>
 
           <div className="lg:col-span-4 lg:justify-self-end">
             <dl
               className="grid grid-cols-3 gap-2 sm:gap-3"
-              aria-label={`${activePathway.name} pathway overview`}
+              aria-label={fill(ui.overviewAria, { name: activePathway.name })}
             >
               <div className="pathway-stat-pill">
-                <dt className="pathway-stat-label">Tracks</dt>
+                <dt className="pathway-stat-label">{ui.tracks}</dt>
                 <CountUpStat
                   key={`${activePathway.id}-tracks`}
                   value={String(trackCount)}
@@ -482,7 +506,7 @@ export default function PathwaysDetails() {
                 />
               </div>
               <div className="pathway-stat-pill">
-                <dt className="pathway-stat-label">Subject listings</dt>
+                <dt className="pathway-stat-label">{ui.subjectListings}</dt>
                 <CountUpStat
                   key={`${activePathway.id}-subjects`}
                   value={String(subjectCount)}
@@ -491,7 +515,7 @@ export default function PathwaysDetails() {
                 />
               </div>
               <div className="pathway-stat-pill">
-                <dt className="pathway-stat-label">Departments</dt>
+                <dt className="pathway-stat-label">{ui.departments}</dt>
                 <CountUpStat
                   key="academic-departments"
                   value={String(departments.length)}
@@ -507,7 +531,7 @@ export default function PathwaysDetails() {
           <div
             className="flex flex-wrap items-center gap-2.5"
             role="tablist"
-            aria-label="CBC Senior School Pathways"
+            aria-label={dict.pathways.ariaLabel}
           >
             {cbcPathways.map((pathway, index) => {
               const selected = index === activeIndex;
@@ -537,7 +561,7 @@ export default function PathwaysDetails() {
             <div
               className="pathway-carousel-control-group"
               role="group"
-              aria-label="Track display mode"
+              aria-label={ui.trackDisplayMode}
             >
               <button
                 type="button"
@@ -546,7 +570,7 @@ export default function PathwaysDetails() {
                 disabled={reducedMotion}
                 onClick={() => setViewMode('loop')}
               >
-                Loop
+                {ui.loop}
               </button>
               <button
                 type="button"
@@ -554,16 +578,16 @@ export default function PathwaysDetails() {
                 aria-pressed={activeViewMode === 'grid'}
                 onClick={() => setViewMode('grid')}
               >
-                Grid
+                {ui.grid}
               </button>
             </div>
 
             <div
               className="pathway-carousel-control-group"
               role="group"
-              aria-label="Carousel speed"
+              aria-label={ui.carouselSpeed}
             >
-              {CAROUSEL_SPEEDS.map((speed) => {
+              {carouselSpeeds.map((speed) => {
                 const selected = carouselSpeed === speed.id;
                 return (
                   <button
@@ -584,7 +608,9 @@ export default function PathwaysDetails() {
               type="button"
               className="pill-3d-secondary pathway-carousel-control"
               aria-pressed={userPaused}
-              aria-label={userPaused ? 'Resume track carousel' : 'Pause track carousel'}
+              aria-label={
+                userPaused ? ui.resumeCarousel : ui.pauseCarousel
+              }
               disabled={activeViewMode !== 'loop' || reducedMotion}
               onClick={() => setUserPaused((paused) => !paused)}
             >
@@ -593,7 +619,9 @@ export default function PathwaysDetails() {
               ) : (
                 <Pause className="h-3.5 w-3.5" aria-hidden="true" />
               )}
-              <span>{userPaused ? 'Resume carousel' : 'Pause carousel'}</span>
+              <span>
+                {userPaused ? ui.resumeCarousel : ui.pauseCarousel}
+              </span>
             </button>
           </div>
         </div>
@@ -622,7 +650,7 @@ export default function PathwaysDetails() {
             className={`pathways-carousel-desktop pathways-carousel marquee-viewport${activeViewMode === 'grid' ? ' pathways-carousel--grid' : ''}`}
             role="region"
             aria-roledescription={activeViewMode === 'loop' ? 'carousel' : undefined}
-            aria-label={`${activePathway.name} tracks`}
+            aria-label={fill(ui.tracksAria, { name: activePathway.name })}
           >
             <div
               className="pathways-carousel-track marquee-track"
@@ -634,7 +662,11 @@ export default function PathwaysDetails() {
                   key={duplicate ? 'clone' : 'original'}
                   className={`pathway-carousel-group${duplicate ? ' pathway-carousel-group--clone' : ''}`}
                   role="list"
-                  aria-label={duplicate ? undefined : `${activePathway.name} tracks`}
+                  aria-label={
+                    duplicate
+                      ? undefined
+                      : fill(ui.tracksAria, { name: activePathway.name })
+                  }
                   aria-hidden={duplicate ? true : undefined}
                 >
                   {activePathway.tracks.map((track, index) => (
@@ -644,6 +676,7 @@ export default function PathwaysDetails() {
                       track={track}
                       trackIndex={index}
                       duplicate={duplicate}
+                      ui={ui}
                       onOpen={openTrackDetails}
                     />
                   ))}
@@ -655,7 +688,7 @@ export default function PathwaysDetails() {
           <div
             className="pathways-mobile-grid"
             role="list"
-            aria-label={`${activePathway.name} tracks`}
+            aria-label={fill(ui.tracksAria, { name: activePathway.name })}
           >
             {activePathway.tracks.map((track, index) => (
               <TrackCard
@@ -663,14 +696,13 @@ export default function PathwaysDetails() {
                 pathway={activePathway}
                 track={track}
                 trackIndex={index}
+                ui={ui}
                 onOpen={openTrackDetails}
               />
             ))}
           </div>
 
-          <p className="mt-4 text-xs text-slate-500">
-            Select a track to view its subjects and related university fields.
-          </p>
+          <p className="mt-4 text-xs text-slate-500">{ui.selectTrackHint}</p>
         </div>
       </div>
 
@@ -679,6 +711,7 @@ export default function PathwaysDetails() {
         onClose={closeTrackDetails}
         closeButtonRef={closeButtonRef}
         dialogRef={dialogRef}
+        ui={ui}
       />
     </section>
   );

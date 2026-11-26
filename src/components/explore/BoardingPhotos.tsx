@@ -3,35 +3,45 @@
 import Image from 'next/image';
 import { useLocale } from '@/i18n/locale-context';
 
-const boardingPhotos = [
-  {
-    src: '/images/school/boarding-1.jpg',
-    label: 'Boarding 1',
-    caption: 'Boarding corridor',
-    alt: 'Blue-and-white corridor with open doorways in the boarding area',
-  },
-  {
-    src: '/images/school/boarding-2.jpg',
-    label: 'Boarding 2',
-    caption: 'Boarding wash area',
-    alt: 'Tiled wash area with taps and cubicles in the boarding area',
-  },
-];
-
 export default function BoardingPhotos() {
   const { dict } = useLocale();
+  const e = dict.explore;
+
+  const boardingPhotos = [
+    {
+      src: '/images/school/boarding-1.jpg',
+      label: e.boardingPhoto1Label,
+      caption: e.boardingPhoto1Caption,
+      alt: e.boardingPhoto1Alt,
+    },
+    {
+      src: '/images/school/boarding-2.jpg',
+      label: e.boardingPhoto2Label,
+      caption: e.boardingPhoto2Caption,
+      alt: e.boardingPhoto2Alt,
+    },
+    {
+      src: '/images/school/school-bus.jpg',
+      label: e.boardingPhoto3Label,
+      caption: e.boardingPhoto3Caption,
+      alt: e.boardingPhoto3Alt,
+    },
+  ];
 
   return (
     <section aria-labelledby="boarding-photos-heading">
-      <h3 id="boarding-photos-heading" className="mb-4 font-serif text-xl font-bold text-slate-900 sm:text-2xl">
-        {dict.explore.boardingPhotos}
+      <h3
+        id="boarding-photos-heading"
+        className="mb-4 font-serif text-xl font-bold text-slate-900 sm:text-2xl"
+      >
+        {e.boardingPhotos}
       </h3>
       <div className="grid gap-4 sm:grid-cols-2 sm:gap-5">
         {boardingPhotos.map(({ src, label, caption, alt }) => (
           <figure
-        key={src}
-        className="m-0 overflow-hidden rounded-3xl border border-t-2 border-slate-200 border-t-primary bg-white shadow-sm"
-      >
+            key={src}
+            className="m-0 overflow-hidden rounded-3xl border border-t-2 border-slate-200 border-t-primary bg-white shadow-sm"
+          >
             <Image
               src={src}
               alt={alt}

@@ -7,6 +7,7 @@ export type ProspectusArtKey =
   | 'innovation-creativity'
   | 'faith-morality'
   | 'inclusivity-respect'
+  | 'scout-association'
   | 'girl-guides'
   | 'st-john'
   | 'red-cross'
@@ -118,6 +119,22 @@ const ART: Record<ProspectusArtKey, ReactNode> = {
       <g {...DEEP_STROKE}>
         <path d="M43 85c10 4 23 6 37 6s27-2 37-6M61 110h38" />
         <path d="M80 10v6M21 30l5 4m108-4-5 4" />
+      </g>
+    </>
+  ),
+  'scout-association': (
+    <>
+      <g fill="#5B2C86" stroke="none">
+        <path d="M80 14c5 12 9 28 9 45 0 12-2 22-5 32l-4 14h-1l-4-14c-3-10-5-20-5-32 0-17 4-33 9-45z" />
+        <path d="M80 38c-14 5-28 18-36 36-5 12-7 22-5 32l9 5c1-10 5-20 12-29 8-12 17-20 25-24z" />
+        <path d="M80 38c14 5 28 18 36 36 5 12 7 22 5 32l-9 5c-1-10-5-20-12-29-8-12-17-20-25-24z" />
+        <path d="M58 108h44l-5 12H63z" />
+        <path d="m54 74 2.6 5.4 5.9.7-4.4 4.1 1.2 5.8L54 87l-5.3 3 1.2-5.8-4.4-4.1 5.9-.7z" />
+        <path d="m106 74 2.6 5.4 5.9.7-4.4 4.1 1.2 5.8L106 87l-5.3 3 1.2-5.8-4.4-4.1 5.9-.7z" />
+      </g>
+      <g {...DEEP_STROKE} stroke="#5B2C86">
+        <circle cx="80" cy="92" r="48" />
+        <path d="M68 140c5 7 19 7 24 0M80 132v16" />
       </g>
     </>
   ),

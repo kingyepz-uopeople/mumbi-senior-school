@@ -1,6 +1,7 @@
 'use client';
 
 import { useMemo, useState } from 'react';
+import Image from 'next/image';
 import BoardingPhotos from '@/components/explore/BoardingPhotos';
 import { fill } from '@/i18n/fill';
 import { useLocale } from '@/i18n/locale-context';
@@ -9,13 +10,13 @@ import ProspectusCardArt, {
 } from '@/components/shared/ProspectusCardArt';
 import SpotlightCardGroup from '@/components/shared/SpotlightCardGroup';
 import {
-  boardingSections,
-  clubs,
-  dailyRoutine,
-  faithGroups,
-  headOfGames,
-  sports,
-} from '@/data/mock-school-data';
+  getBoardingSections,
+  getClubs,
+  getDailyRoutine,
+  getFaithGroups,
+  getHeadOfGames,
+  getSports,
+} from '@/i18n/content';
 
 type RoutineFilterId = 'all' | 'morning' | 'school-day' | 'evening';
 
@@ -27,13 +28,20 @@ const SCHEDULE_FILTER_RANGES: Record<RoutineFilterId, string> = {
 };
 
 const CLUB_ART: Record<string, ProspectusArtKey> = {
-  'girl-guides': 'girl-guides',
+  'scout-association': 'scout-association',
   'st-john': 'st-john',
   'red-cross': 'red-cross',
   journalism: 'journalism',
   drama: 'drama',
   wildlife: 'wildlife',
   integrity: 'integrity-club',
+};
+
+const CLUB_LOGOS: Record<string, { src: string; alt: string }> = {
+  'scout-association': {
+    src: '/images/clubs/scout-association.svg',
+    alt: 'Scout Association emblem',
+  },
 };
 
 const SPORT_ART: Record<string, ProspectusArtKey> = {
@@ -44,6 +52,38 @@ const SPORT_ART: Record<string, ProspectusArtKey> = {
   athletics: 'athletics',
   handball: 'handball',
   badminton: 'badminton',
+};
+
+/** Campus / activity photos for pathway-style sport cards. */
+const SPORT_PHOTOS: Record<string, { src: string; alt: string }> = {
+  volleyball: {
+    src: '/images/school/gallery-campus-parade.jpg',
+    alt: 'Campus parade ground used for games and assemblies',
+  },
+  netball: {
+    src: '/images/school/hero-assembly.jpg',
+    alt: 'Students assembled on the school grounds',
+  },
+  basketball: {
+    src: '/images/school/gallery-campus-parade.jpg',
+    alt: 'Open campus grounds used for afternoon games',
+  },
+  hockey: {
+    src: '/images/school/hero-assembly.jpg',
+    alt: 'School grounds used for field sports and drills',
+  },
+  athletics: {
+    src: '/images/school/gallery-campus-parade.jpg',
+    alt: 'Parade and athletics ground at Mumbi Girls',
+  },
+  handball: {
+    src: '/images/school/hero-assembly.jpg',
+    alt: 'Campus assembly area near games facilities',
+  },
+  badminton: {
+    src: '/images/school/gallery-campus-parade.jpg',
+    alt: 'School campus outdoor activity area',
+  },
 };
 
 const FAITH_ART: Record<string, ProspectusArtKey> = {
@@ -103,9 +143,11 @@ function SectionIntro({
 function StudentLifeArtwork({
   kind,
   index,
+  logo,
 }: {
-  kind: ProspectusArtKey;
+  kind?: ProspectusArtKey;
   index: number;
+  logo?: { src: string; alt: string };
 }) {
   return (
     <div
@@ -115,7 +157,19 @@ function StudentLifeArtwork({
       <span className="absolute right-4 top-3 font-mono text-[11px] font-semibold tracking-[0.12em] text-primary/45">
         {String(index + 1).padStart(2, '0')}
       </span>
-      <ProspectusCardArt kind={kind} className="h-28 w-36 sm:h-32 sm:w-40" />
+      {logo ? (
+        // Official emblems are SVG assets; use img to avoid Next Image SVG limits.
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={logo.src}
+          alt={logo.alt}
+          width={128}
+          height={148}
+          className="h-28 w-auto object-contain sm:h-32"
+        />
+      ) : kind ? (
+        <ProspectusCardArt kind={kind} className="h-28 w-36 sm:h-32 sm:w-40" />
+      ) : null}
     </div>
   );
 }
@@ -138,8 +192,18 @@ function JumpLink({
 }
 
 export default function ExploreTabs() {
-  const { dict } = useLocale();
+  const { locale, dict } = useLocale();
   const e = dict.explore;
+
+  const sports = useMemo(() => getSports(locale), [locale]);
+  const headOfGames = useMemo(() => getHeadOfGames(locale), [locale]);
+  const faithGroups = useMemo(() => getFaithGroups(locale), [locale]);
+  const boardingSections = useMemo(
+    () => getBoardingSections(locale),
+    [locale]
+  );
+  const clubs = useMemo(() => getClubs(locale), [locale]);
+  const dailyRoutine = useMemo(() => getDailyRoutine(locale), [locale]);
 
   const scheduleFilters: {
     id: RoutineFilterId;
@@ -163,12 +227,12 @@ export default function ExploreTabs() {
         (item) =>
           routineFilter === 'all' || getRoutinePeriod(item.time) === routineFilter
       ),
-    [routineFilter]
+    [dailyRoutine, routineFilter]
   );
 
   return (
     <div className="space-y-16 sm:space-y-20">
-      <nav aria-label="Student life sections" className="student-life-jump-nav">
+      <nav aria-label={e.sectionsAria} className="student-life-jump-nav">
         <JumpLink href="#sports" label={e.jumpSports} count={sports.length} />
         <JumpLink href="#faith" label={e.jumpFaith} count={faithGroups.length} />
         <JumpLink
@@ -202,7 +266,7 @@ export default function ExploreTabs() {
           className="mb-8 border border-t-2 border-slate-200 border-t-primary bg-white/70 p-5 sm:p-7"
         >
           <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-primary">
-            Message from the {headOfGames.role}
+            {fill(e.messageFrom, { role: headOfGames.role })}
           </p>
           <h3 className="mt-2 font-serif text-xl font-bold text-slate-900 sm:text-2xl">
             {headOfGames.name}
@@ -217,58 +281,105 @@ export default function ExploreTabs() {
         <SpotlightCardGroup
           cardCount={sports.length}
           role="list"
-          aria-label="School sports"
+          aria-label={e.sportsAria}
           className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3"
         >
-          {sports.map((sport, index) => (
-            <article
-              key={sport.id}
-              role="listitem"
-              data-reveal=""
-              data-reveal-delay={index % 3 > 0 ? String(index % 3) : undefined}
-              className="h-full"
-            >
-              <div
-                data-card-cycle
-                className="student-life-card flex h-full min-h-[450px] flex-col rounded-3xl border border-t-2 border-slate-200 border-t-primary bg-white p-5 sm:min-h-[470px] sm:p-6"
+          {sports.map((sport, index) => {
+            const photo = SPORT_PHOTOS[sport.id];
+            const artKind = SPORT_ART[sport.id] ?? 'athletics';
+            return (
+              <article
+                key={sport.id}
+                role="listitem"
+                data-reveal=""
+                data-reveal-delay={index % 3 > 0 ? String(index % 3) : undefined}
+                className="h-full"
               >
-                <StudentLifeArtwork
-                  kind={SPORT_ART[sport.id] ?? 'athletics'}
-                  index={index}
-                />
-                <div className="mt-5 flex-1">
-                  <p className="mb-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-primary">
-                    {sport.category}
-                  </p>
-                  <h3 className="font-serif text-xl font-bold text-primary-dark sm:text-2xl">
-                    {sport.name}
-                  </h3>
-                  <p className="mt-3 text-sm leading-relaxed text-slate-700">
-                    {sport.description}
-                  </p>
-                  {sport.mediaNote ? (
-                    <div className="mt-4 overflow-hidden rounded-2xl border border-dashed border-slate-300 bg-slate-bg/80">
-                      <div className="flex aspect-video items-center justify-center px-4 text-center">
-                        <p className="text-xs font-semibold uppercase tracking-[0.1em] text-slate-500">
-                          {sport.mediaNote}
-                        </p>
+                <div data-card-cycle className="pathway-preview-card">
+                  <div className="pathway-preview-photo">
+                    {photo ? (
+                      <Image
+                        src={photo.src}
+                        alt={photo.alt}
+                        fill
+                        sizes="(max-width: 767px) 100vw, (max-width: 1279px) 50vw, 33vw"
+                        className="pathway-preview-image object-cover"
+                      />
+                    ) : (
+                      <span className="pathway-photo-placeholder" aria-hidden="true">
+                        <span className="pathway-placeholder-orbit" />
+                        <span className="pathway-placeholder-mark" />
+                        <ProspectusCardArt
+                          kind={artKind}
+                          className="absolute inset-0 m-auto h-24 w-32 opacity-90 brightness-0 invert"
+                        />
+                      </span>
+                    )}
+                    <span
+                      className="absolute inset-0 bg-linear-to-t from-slate-950/75 via-slate-900/15 to-transparent"
+                      aria-hidden="true"
+                    />
+
+                    <span className="absolute inset-x-3.5 top-3.5 flex items-center justify-between gap-2">
+                      <span className="pathway-preview-code">
+                        {String(index + 1).padStart(2, '0')} · {sport.category}
+                      </span>
+                    </span>
+
+                    <span className="absolute inset-x-5 bottom-3.5">
+                      <span className="block font-serif text-xl font-bold leading-snug text-white drop-shadow-sm sm:text-[1.35rem]">
+                        {sport.name}
+                      </span>
+                      <span
+                        className="pathway-preview-underline mt-1.5"
+                        aria-hidden="true"
+                      />
+                    </span>
+                  </div>
+
+                  <div className="pathway-preview-body">
+                    <p className="text-sm leading-relaxed text-slate-600">
+                      {sport.description}
+                    </p>
+
+                    {sport.videoSrc ? (
+                      <div className="mt-4 overflow-hidden rounded-2xl border border-slate-200 bg-slate-950">
+                        <video
+                          className="aspect-video w-full bg-black object-cover"
+                          controls
+                          playsInline
+                          preload="metadata"
+                          aria-label={`${sport.name} activity video`}
+                        >
+                          <source src={sport.videoSrc} type="video/mp4" />
+                        </video>
+                      </div>
+                    ) : sport.mediaNote ? (
+                      <div className="mt-4 overflow-hidden rounded-2xl border border-dashed border-slate-300 bg-slate-bg/80">
+                        <div className="flex aspect-video items-center justify-center px-4 text-center">
+                          <p className="text-xs font-semibold uppercase tracking-[0.1em] text-slate-500">
+                            {sport.mediaNote || e.videoComingSoon}
+                          </p>
+                        </div>
+                      </div>
+                    ) : null}
+
+                    <div className="mt-4">
+                      <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-primary">
+                        {e.coachPatron}
+                      </p>
+                      <div className="mt-2.5 flex flex-wrap gap-1.5">
+                        <span className="subject-chip">{sport.patron}</span>
+                        <span className="subject-chip tabular-nums">
+                          {sport.meetingDay}
+                        </span>
                       </div>
                     </div>
-                  ) : null}
+                  </div>
                 </div>
-                <dl className="mt-5 space-y-2 border-t border-slate-200 pt-4 text-xs text-slate-600">
-                  <div className="flex flex-wrap items-center gap-2">
-                    <dt className="font-semibold text-slate-800">{e.coachPatron}</dt>
-                    <dd className="subject-chip">{sport.patron}</dd>
-                  </div>
-                  <div className="flex flex-wrap items-center gap-2">
-                    <dt className="font-semibold text-slate-800">{e.training}</dt>
-                    <dd className="subject-chip tabular-nums">{sport.meetingDay}</dd>
-                  </div>
-                </dl>
-              </div>
-            </article>
-          ))}
+              </article>
+            );
+          })}
         </SpotlightCardGroup>
       </section>
 
@@ -287,7 +398,7 @@ export default function ExploreTabs() {
         <SpotlightCardGroup
           cardCount={faithGroups.length}
           role="list"
-          aria-label="Chaplaincy and faith fellowships"
+          aria-label={e.faithAria}
           className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4"
         >
           {faithGroups.map((group, index) => (
@@ -341,7 +452,7 @@ export default function ExploreTabs() {
         <SpotlightCardGroup
           cardCount={boardingSections.length}
           role="list"
-          aria-label="Boarding, meals, and uniform"
+          aria-label={e.boardingAria}
           className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3"
         >
           {boardingSections.map((section, index) => (
@@ -359,7 +470,7 @@ export default function ExploreTabs() {
                 <StudentLifeArtwork kind={BOARDING_ART[section.id]} index={index} />
                 <div className="mt-5">
                   <p className="mb-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-primary">
-                    Boarding &amp; welfare
+                    {e.boardingWelfare}
                   </p>
                   <h3 className="font-serif text-xl font-bold text-primary-dark sm:text-2xl">
                     {section.title}
@@ -424,7 +535,7 @@ export default function ExploreTabs() {
             <div
               className="student-life-time-range"
               aria-hidden="true"
-              title="Schedule spans 05:00 to 22:00"
+              title={e.scheduleSpanTitle}
             >
               <span>05:00</span>
               <span className="student-life-time-range-line" />
@@ -433,7 +544,7 @@ export default function ExploreTabs() {
 
             <div
               role="group"
-              aria-label="Filter daily schedule by time of day"
+              aria-label={e.routineFilterAria}
               className="student-life-schedule-filters"
             >
               {scheduleFilters.map((filter) => {
@@ -459,12 +570,12 @@ export default function ExploreTabs() {
           <ol
             id="daily-routine-list"
             className="student-life-schedule-list"
-            aria-label="Daily routine activities"
+            aria-label={e.routineListAria}
           >
             {filteredRoutine.map((item) => (
               <li key={item.time} className="student-life-schedule-row">
                 <time className="student-life-schedule-time subject-chip" dateTime={item.time}>
-                  {item.time} <span>hrs</span>
+                  {item.time} <span>{e.hrs}</span>
                 </time>
                 <span className="student-life-schedule-activity subject-chip">
                   {item.activity}
@@ -490,7 +601,7 @@ export default function ExploreTabs() {
         <SpotlightCardGroup
           cardCount={clubs.length}
           role="list"
-          aria-label="Clubs and uniformed movements"
+          aria-label={e.clubsAria}
           className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3"
         >
           {clubs.map((club, index) => (
@@ -505,7 +616,11 @@ export default function ExploreTabs() {
                 data-card-cycle
                 className="student-life-card flex h-full min-h-[490px] flex-col rounded-3xl border border-t-2 border-slate-200 border-t-primary bg-white p-5 sm:min-h-[510px] sm:p-6"
               >
-                <StudentLifeArtwork kind={CLUB_ART[club.id]} index={index} />
+                <StudentLifeArtwork
+                  kind={CLUB_ART[club.id]}
+                  logo={CLUB_LOGOS[club.id]}
+                  index={index}
+                />
                 <div className="mt-5 flex-1">
                   <p className="mb-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-primary">
                     {club.category}

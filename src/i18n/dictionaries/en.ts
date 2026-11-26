@@ -107,12 +107,34 @@ const en = {
     parentsKicker: 'For parents',
     parentsBody:
       'Reporting, uniform guidance, fees, circulars, holiday work, KCSE results and the school office.',
+    parents: {
+      joiningTitle: 'Joining & reporting',
+      joiningDetail: 'Reporting date, placement check and what to bring.',
+      uniformTitle: 'Uniform guide',
+      uniformDetail: 'Check the uniform colours before you shop.',
+      feesTitle: 'School fees',
+      feesDetail:
+        '{year} amounts are not published yet. Ask the school office for fees and instalments.',
+      holidayTitle: 'Holiday assignments',
+      holidayDetail:
+        'Papers for Grade 10–12 and Form 3–4, filtered by class and subject.',
+      circularTitle: 'Latest circular',
+      circularFallback: 'Term circulars and newsletters.',
+      kcseTitle: 'KCSE results',
+      kcseDetail:
+        'School mean, grade spread and top performers for {first}–{last}.',
+      contactTitle: 'Contact & location',
+      contactDetail:
+        'Phone, email, office hours and the {location} campus.',
+    },
     welcomeAria: 'Welcome messages',
     principalKicker: "Chief Principal's Welcome Message",
     principalTitle: 'Welcome to {name}',
+    principalRole: 'Chief Principal, {name}',
     principalAction: 'School history & leadership',
     deanKicker: "Dean's Welcome Message",
     deanTitle: 'Academic Excellence & Senior School Pathways',
+    deanRole: 'Dean of Studies, {name}',
     deanAction: 'Academic pathways & results',
     wofKicker: 'National Examinations · KNEC 10204102',
     wofHeading: 'KCSE Roll of Honour',
@@ -296,6 +318,39 @@ const en = {
     meanGrade: 'Mean Grade',
     meanPoints: 'Mean Points',
     currentlySelected: 'Currently selected',
+    pathwaysUi: {
+      gradesKicker: 'Grades 10 – 12 · Senior School curriculum',
+      pathwaysTo: 'Pathways to',
+      pathwaysListSr: 'STEM, Social Sciences, and Arts & Sports Science.',
+      exploreTracks: 'Explore pathway tracks',
+      choosePathway:
+        'Choose a pathway to view its tracks, subjects, and related university fields.',
+      tracks: 'Tracks',
+      subjectListings: 'Subject listings',
+      departments: 'Departments',
+      trackDisplayMode: 'Track display mode',
+      loop: 'Loop',
+      grid: 'Grid',
+      carouselSpeed: 'Carousel speed',
+      slow: 'Slow',
+      normal: 'Normal',
+      fast: 'Fast',
+      resumeCarousel: 'Resume carousel',
+      pauseCarousel: 'Pause carousel',
+      selectTrackHint:
+        'Select a track to view its subjects and related university fields.',
+      trackCode: 'Track {number}',
+      pathwayEyebrow: 'CBC Senior School pathway',
+      subjectsTaught: 'Subjects taught',
+      relatedFields: 'Related university fields',
+      exploreTrackDetails: 'Explore track details',
+      exploreTrackAria: 'Explore {name} track details',
+      closeTrackDetails: 'Close track details',
+      done: 'Done',
+      placeholderAria: 'Blue placeholder image for {name} track',
+      overviewAria: '{name} pathway overview',
+      tracksAria: '{name} tracks',
+    },
   },
   admissions: {
     kicker: '{year} Intake · Senior School',
@@ -321,6 +376,36 @@ const en = {
     questions: 'Questions about joining?',
     contactSchool: 'Contact the school',
     explorePathways: 'Explore pathways',
+    reportingProvisionalNote:
+      'This date may change. Confirm the date and arrival time with the school office before travelling.',
+    reportingConfirmNote:
+      'Check your joining instructions for your arrival time before travelling.',
+    timelinePlacementTitle: 'Your placement letter',
+    timelinePlacementDetail:
+      'Bring the admission letter from the Ministry of Education Grade 10 placement portal.',
+    timelineDocsTitle: 'Documents and forms',
+    timelineDocsDetail:
+      'Pack the forms named in your joining instructions and what you need for boarding.',
+    timelineUniformTitle: 'Uniform and arrival time',
+    timelineUniformDetail:
+      'Buy the uniform items listed by the school and confirm your arrival time before travelling.',
+    step1Title: 'Confirm your placement',
+    step1Detail:
+      'Check the Ministry of Education Grade 10 placement portal for your placement and admission letter. If you cannot find your letter, ask your junior school.',
+    step2Title: 'Read your joining instructions',
+    step2Detail:
+      'Use the current instructions to see which documents and forms to bring, what to pack for boarding, and which uniform items to buy.',
+    step3Title: 'Check before you travel',
+    step3Detail:
+      'The school is in {location}. Confirm your arrival time and where to check in before travelling.',
+    uniformBody:
+      'This school prize-giving photo shows the blue top with the school crest and the blue-and-white checked skirt. Open the full-size photo to see the shade and check pattern.',
+    uniformConfirm:
+      'Screens show colours differently. Confirm the current {year} uniform list with the school office and, if available, compare the fabric with a school-approved sample.',
+    uniformCaption: 'School prize giving',
+    uniformFullSize: 'Full-size photo',
+    uniformAlt:
+      'A student at prize giving wearing a blue top with the school crest and a blue-and-white checked skirt',
   },
   explore: {
     kicker: 'Boarding & Co-Curricular Life',
@@ -361,6 +446,30 @@ const en = {
     clubsHeading: 'Clubs & Uniformed Movements',
     clubsIntro: 'Student societies, service clubs, and uniformed movements.',
     meets: 'Meets:',
+    messageFrom: 'Message from the {role}',
+    videoComingSoon: 'Activity video coming soon.',
+    boardingWelfare: 'Boarding & welfare',
+    sectionsAria: 'Student life sections',
+    sportsAria: 'School sports',
+    faithAria: 'Chaplaincy and faith fellowships',
+    boardingAria: 'Boarding, meals, and uniform',
+    routineFilterAria: 'Filter daily schedule by time of day',
+    routineListAria: 'Daily routine activities',
+    scheduleSpanTitle: 'Schedule spans 05:00 to 22:00',
+    clubsAria: 'Clubs and uniformed movements',
+    hrs: 'hrs',
+    boardingPhoto1Label: 'Boarding 1',
+    boardingPhoto1Caption: 'Boarding corridor',
+    boardingPhoto1Alt:
+      'Blue-and-white corridor with open doorways in the boarding area',
+    boardingPhoto2Label: 'Boarding 2',
+    boardingPhoto2Caption: 'Boarding wash area',
+    boardingPhoto2Alt:
+      'Tiled wash area with taps and cubicles in the boarding area',
+    boardingPhoto3Label: 'School bus',
+    boardingPhoto3Caption: 'School bus',
+    boardingPhoto3Alt:
+      'Mumbi Girls High School yellow school bus parked on campus',
   },
   downloads: {
     kicker: 'School Documents',
@@ -459,6 +568,63 @@ const en = {
     validationEmail: 'Please enter a valid email address.',
     validationSubject: 'Please choose a subject.',
     validationMessage: 'Please enter your message.',
+    validationNameMin: 'Full name must be at least 3 characters long.',
+    validationNameMax: 'Full name must be 100 characters or fewer.',
+    validationPhoneFormat:
+      'Enter a valid phone number (for example, +254 712 345 678 or 0712 345 678).',
+    validationEmailFormat:
+      'Enter a valid email address (for example, parent@example.com).',
+    validationMessageMin:
+      'Please provide at least {min} characters so the office can respond clearly.',
+    validationMessageMax: 'Message must be {max} characters or fewer.',
+    placeholderName: 'e.g. Jane Wanjiku Kamau',
+    placeholderMessage:
+      'State your question clearly (e.g. Grade 10 reporting documents, fee structure query, or examination slip collection).',
+    checkFields: 'Please check {count} {fields} before sending.',
+    field: 'field',
+    fields: 'fields',
+    checkFieldsHint: 'See the notes directly beneath each highlighted field.',
+    honeypotLabel: 'Leave this field empty',
+    receiptBody:
+      'Your {category} message was recorded on {date} under {email}.',
+    previewNoticeTitle: 'Preview notice:',
+    previewNoticeBody:
+      'Direct online filing will be activated alongside the school portal database. For time-sensitive matters, please contact the administration office during weekday hours (08:00 – 17:00) or write to P.O. Box 115 - 10200, Murang\'a.',
+  },
+  phone: {
+    call: 'Call',
+    whatsapp: 'WhatsApp',
+    callAria: 'Call the school office on {phone}',
+    whatsappAria: 'Message the school office on WhatsApp',
+  },
+  install: {
+    ariaLabel: 'Install Mumbi Portal App',
+    title: 'Save Mumbi Portal to Home Screen',
+    body: 'Quick access to term circulars, holiday assignments, and school contact details.',
+    dismissAria: 'Dismiss install app banner',
+    iosHintBefore: 'In Safari, tap',
+    iosShare: 'Share',
+    iosHintMid: 'at the bottom of the screen, then select',
+    iosAdd: 'Add to Home Screen',
+    iosHintEnd: '.',
+    androidHintBefore: 'Open your browser menu (',
+    androidMenu: '⋮',
+    androidHintMid: ') and choose',
+    androidInstall: 'Install app',
+    androidOr: 'or',
+    androidAdd: 'Add to Home screen',
+    androidHintEnd: '.',
+    closeDontShow: "Close & Don't Show Again",
+    installApp: 'Install App',
+    notNow: 'Not Now',
+  },
+  notFound: {
+    error: 'Error 404',
+    title: 'Page not found',
+    body: 'The page or circular you requested could not be found on the {name} website. It may have been moved or replaced.',
+    home: 'Home page',
+    downloads: 'Downloads & circulars',
+    contact: 'Contact office',
   },
   portal: {
     kicker: 'Online Services',
@@ -515,6 +681,7 @@ const en = {
     opensSoon: 'Opens soon · {time}',
     closedOpens: 'Closed · opens {time}',
     schedule: 'Mon–Fri: 08:00 – 17:00',
+    full: 'Monday – Friday: 08:00 – 17:00 | Weekends: Closed',
   },
 };
 

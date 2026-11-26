@@ -5,6 +5,7 @@ import ProspectusIndexReveal from '@/components/home/ProspectusIndexReveal';
 import { grade10Intake } from '@/data/admissions';
 import { kcseReports } from '@/data/kcse';
 import { downloads, schoolInfo } from '@/data/mock-school-data';
+import { fill } from '@/i18n/fill';
 import LocaleLink from '@/i18n/LocaleLink';
 import { useLocale } from '@/i18n/locale-context';
 import { parseDateKE } from '@/lib/utils';
@@ -19,55 +20,59 @@ const kcseYears = kcseReports.map(({ year }) => year);
 const firstKcseYear = Math.min(...kcseYears);
 const lastKcseYear = Math.max(...kcseYears);
 
-const parentLinks = [
-  {
-    title: 'Joining & reporting',
-    detail: 'Reporting date, placement check and what to bring.',
-    href: '/admissions#reporting',
-    isLatestCircular: false,
-  },
-  {
-    title: 'Uniform guide',
-    detail: 'Check the uniform colours before you shop.',
-    href: '/admissions#uniform',
-    isLatestCircular: false,
-  },
-  {
-    title: 'School fees',
-    detail: `${grade10Intake.year} amounts are not published yet. Ask the school office for fees and instalments.`,
-    href: '/admissions#fees',
-    isLatestCircular: false,
-  },
-  {
-    title: 'Holiday assignments',
-    detail: 'Papers for Grade 10–12 and Form 3–4, filtered by class and subject.',
-    href: '/downloads',
-    isLatestCircular: false,
-  },
-  {
-    title: 'Latest circular',
-    detail: latestCircular
-      ? `${latestCircular.title} — ${latestCircular.uploadDate}`
-      : 'Term circulars and newsletters.',
-    href: '/downloads',
-    isLatestCircular: true,
-  },
-  {
-    title: 'KCSE results',
-    detail: `School mean, grade spread and top performers for ${firstKcseYear}–${lastKcseYear}.`,
-    href: '/academics#kcse-results',
-    isLatestCircular: false,
-  },
-  {
-    title: 'Contact & location',
-    detail: `Phone, email, office hours and the ${schoolInfo.locationShort} campus.`,
-    href: '/contact',
-    isLatestCircular: false,
-  },
-];
-
 export default function ParentQuickLinks() {
   const { dict } = useLocale();
+  const p = dict.home.parents;
+
+  const parentLinks = [
+    {
+      title: p.joiningTitle,
+      detail: p.joiningDetail,
+      href: '/admissions#reporting',
+      isLatestCircular: false,
+    },
+    {
+      title: p.uniformTitle,
+      detail: p.uniformDetail,
+      href: '/admissions#uniform',
+      isLatestCircular: false,
+    },
+    {
+      title: p.feesTitle,
+      detail: fill(p.feesDetail, { year: grade10Intake.year }),
+      href: '/admissions#fees',
+      isLatestCircular: false,
+    },
+    {
+      title: p.holidayTitle,
+      detail: p.holidayDetail,
+      href: '/downloads',
+      isLatestCircular: false,
+    },
+    {
+      title: p.circularTitle,
+      detail: latestCircular
+        ? `${latestCircular.title} — ${latestCircular.uploadDate}`
+        : p.circularFallback,
+      href: '/downloads',
+      isLatestCircular: true,
+    },
+    {
+      title: p.kcseTitle,
+      detail: fill(p.kcseDetail, {
+        first: firstKcseYear,
+        last: lastKcseYear,
+      }),
+      href: '/academics#kcse-results',
+      isLatestCircular: false,
+    },
+    {
+      title: p.contactTitle,
+      detail: fill(p.contactDetail, { location: schoolInfo.locationShort }),
+      href: '/contact',
+      isLatestCircular: false,
+    },
+  ];
 
   return (
     <section
@@ -93,7 +98,7 @@ export default function ParentQuickLinks() {
           data-prospectus-index=""
         >
           {parentLinks.map((item, index) => (
-            <li key={item.title} className="prospectus-cell">
+            <li key={item.href + item.title} className="prospectus-cell">
               <LocaleLink href={item.href} className="prospectus-row">
                 <span className="prospectus-numeral" aria-hidden="true">
                   {String(index + 1).padStart(2, '0')}

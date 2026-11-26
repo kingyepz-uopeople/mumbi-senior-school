@@ -121,7 +121,7 @@ export default async function ContactPage({
                     {c.adminOffice}
                   </h2>
                   <p className="mt-0.5 text-xs text-blue-100">
-                    {schoolInfo.category}
+                    {dict.school.category}
                   </p>
                 </div>
               </div>
@@ -208,7 +208,7 @@ export default async function ContactPage({
                   <div>
                     <dt className="font-semibold text-white">{c.officeHours}</dt>
                     <dd className="mt-0.5 text-blue-100/85">
-                      {schoolInfo.officeHours}
+                      {dict.officeHours.full}
                     </dd>
                     <dd className="mt-2">
                       <OfficeHoursStatus variant="bar" />

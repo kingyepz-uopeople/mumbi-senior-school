@@ -3,8 +3,11 @@
 import Image from 'next/image';
 import { Download, Share, X } from '@/components/icons';
 import { usePwa } from '@/components/pwa/PwaProvider';
+import { useLocale } from '@/i18n/locale-context';
 
 export default function MobileInstallBanner() {
+  const { dict } = useLocale();
+  const i = dict.install;
   const { bannerVisible, manualHint, handleBannerInstall, dismissBanner } =
     usePwa();
 
@@ -13,7 +16,7 @@ export default function MobileInstallBanner() {
   return (
     <aside
       data-light-surface
-      aria-label="Install Mumbi Portal App"
+      aria-label={i.ariaLabel}
       className="fixed bottom-0 inset-x-0 md:inset-x-auto md:right-5 md:bottom-5 z-50 p-3 md:p-0 pointer-events-none"
     >
       <div className="pointer-events-auto bg-white rounded-sm shadow-lg border border-slate-300 border-t-2 border-t-primary p-4 max-w-md md:w-96 mx-auto">
@@ -29,11 +32,10 @@ export default function MobileInstallBanner() {
 
           <div className="flex-1 min-w-0">
             <p className="font-serif text-slate-900 font-bold text-sm leading-snug">
-              Save Mumbi Portal to Home Screen
+              {i.title}
             </p>
             <p className="text-slate-600 text-xs mt-0.5 leading-relaxed">
-              Quick access to term circulars, holiday assignments, and school
-              contact details.
+              {i.body}
             </p>
           </div>
 
@@ -41,7 +43,7 @@ export default function MobileInstallBanner() {
             type="button"
             onClick={dismissBanner}
             className="inline-flex items-center justify-center w-11 h-11 -mr-2 -mt-2 rounded-full text-slate-600 hover:text-primary transition-colors shrink-0"
-            aria-label="Dismiss install app banner"
+            aria-label={i.dismissAria}
           >
             <X className="w-4 h-4" aria-hidden="true" />
           </button>
@@ -60,15 +62,18 @@ export default function MobileInstallBanner() {
                   aria-hidden="true"
                 />
                 <span>
-                  In Safari, tap <strong>Share</strong> at the bottom of the
-                  screen, then select <strong>Add to Home Screen</strong>.
+                  {i.iosHintBefore} <strong>{i.iosShare}</strong>{' '}
+                  {i.iosHintMid} <strong>{i.iosAdd}</strong>
+                  {i.iosHintEnd}
                 </span>
               </p>
             ) : (
               <p className="leading-relaxed">
-                Open your browser menu (<strong>⋮</strong>) and choose{' '}
-                <strong>Install app</strong> or{' '}
-                <strong>Add to Home screen</strong>.
+                {i.androidHintBefore}
+                <strong>{i.androidMenu}</strong>
+                {i.androidHintMid} <strong>{i.androidInstall}</strong>{' '}
+                {i.androidOr} <strong>{i.androidAdd}</strong>
+                {i.androidHintEnd}
               </p>
             )}
             <button
@@ -76,7 +81,7 @@ export default function MobileInstallBanner() {
               onClick={dismissBanner}
               className="w-full min-h-11 px-4 py-2.5 rounded-full bg-primary text-white font-semibold text-xs hover:bg-primary-dark transition-colors"
             >
-              Close &amp; Don&apos;t Show Again
+              {i.closeDontShow}
             </button>
           </div>
         ) : (
@@ -87,14 +92,14 @@ export default function MobileInstallBanner() {
               className="flex-1 min-h-11 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-full bg-primary hover:bg-primary-dark text-white text-xs font-semibold transition-colors"
             >
               <Download className="w-4 h-4 stroke-[1.75]" aria-hidden="true" />
-              <span>Install App</span>
+              <span>{i.installApp}</span>
             </button>
             <button
               type="button"
               onClick={dismissBanner}
               className="min-h-11 px-3.5 py-2.5 rounded-full border border-slate-300 text-slate-700 hover:text-primary hover:border-primary text-xs font-medium transition-colors"
             >
-              Not Now
+              {i.notNow}
             </button>
           </div>
         )}

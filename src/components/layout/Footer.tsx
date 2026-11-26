@@ -153,7 +153,7 @@ export default function Footer() {
                     aria-hidden="true"
                   />
                   <span className="text-xs leading-relaxed">
-                    {schoolInfo.officeHours}
+                    {dict.officeHours.full}
                   </span>
                 </li>
               </ul>

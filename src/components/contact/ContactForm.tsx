@@ -35,17 +35,15 @@ function validateField(
   switch (field) {
     case 'name':
       if (!value) return contact.validationName;
-      if (value.length < 3)
-        return 'Full name must be at least 3 characters long.';
-      if (value.length > 100)
-        return 'Full name must be 100 characters or fewer.';
+      if (value.length < 3) return contact.validationNameMin;
+      if (value.length > 100) return contact.validationNameMax;
       return undefined;
 
     case 'phone': {
       if (!value) return contact.validationPhone;
       const digitCount = value.replace(/\D/g, '').length;
       if (!PHONE_PATTERN.test(value) || digitCount < 9 || digitCount > 15) {
-        return 'Enter a valid phone number (for example, +254 712 345 678 or 0712 345 678).';
+        return contact.validationPhoneFormat;
       }
       return undefined;
     }
@@ -53,7 +51,7 @@ function validateField(
     case 'email':
       if (!value) return contact.validationEmail;
       if (!EMAIL_PATTERN.test(value) || value.length > 254) {
-        return 'Enter a valid email address (for example, parent@example.com).';
+        return contact.validationEmailFormat;
       }
       return undefined;
 
@@ -70,10 +68,10 @@ function validateField(
     case 'message':
       if (!value) return contact.validationMessage;
       if (value.length < MIN_MESSAGE_LENGTH) {
-        return `Please provide at least ${MIN_MESSAGE_LENGTH} characters so the office can respond clearly.`;
+        return fill(contact.validationMessageMin, { min: MIN_MESSAGE_LENGTH });
       }
       if (value.length > MAX_MESSAGE_LENGTH) {
-        return `Message must be ${MAX_MESSAGE_LENGTH} characters or fewer.`;
+        return fill(contact.validationMessageMax, { max: MAX_MESSAGE_LENGTH });
       }
       return undefined;
   }
@@ -243,17 +241,16 @@ export default function ContactForm() {
             {fill(c.thankYou, { name: receipt.name })}
           </h3>
           <p className="text-sm text-slate-700 leading-relaxed">
-            Your <strong>{receipt.category}</strong> message was recorded on{' '}
-            <strong className="tabular-nums">{receipt.submittedDate}</strong>{' '}
-            under <strong>{receipt.email}</strong>.
+            {fill(c.receiptBody, {
+              category: receipt.category,
+              date: receipt.submittedDate,
+              email: receipt.email,
+            })}
           </p>
         </div>
 
         <p className="text-xs text-slate-600 pt-3 border-t border-slate-200 leading-relaxed">
-          <strong>Preview notice:</strong> Direct online filing will be
-          activated alongside the school portal database. For time-sensitive
-          matters, please contact the administration office during weekday hours
-          (08:00 – 17:00) or write to P.O. Box 115 - 10200, Murang&apos;a.
+          <strong>{c.previewNoticeTitle}</strong> {c.previewNoticeBody}
         </p>
 
         <div className="pt-1">
@@ -300,19 +297,19 @@ export default function ContactForm() {
           />
           <div>
             <p className="font-semibold">
-              Please check {activeErrorCount}{' '}
-              {activeErrorCount === 1 ? 'field' : 'fields'} before sending.
+              {fill(c.checkFields, {
+                count: activeErrorCount,
+                fields: activeErrorCount === 1 ? c.field : c.fields,
+              })}
             </p>
-            <p className="text-slate-700 mt-0.5">
-              See the notes directly beneath each highlighted field.
-            </p>
+            <p className="text-slate-700 mt-0.5">{c.checkFieldsHint}</p>
           </div>
         </div>
       )}
 
       {/* Anti-spam honeypot */}
       <div className="hidden" aria-hidden="true">
-        <label htmlFor="contact-website">Leave this field empty</label>
+        <label htmlFor="contact-website">{c.honeypotLabel}</label>
         <input
           id="contact-website"
           name="website"
@@ -345,7 +342,7 @@ export default function ContactForm() {
             onBlur={() => handleBlur('name')}
             aria-invalid={Boolean(errors.name)}
             aria-describedby={errors.name ? 'contact-name-error' : undefined}
-            placeholder="e.g. Jane Wanjiku Kamau"
+            placeholder={c.placeholderName}
             className={inputClassName(Boolean(errors.name))}
           />
           {errors.name && (
@@ -521,7 +518,7 @@ export default function ContactForm() {
               ? 'contact-message-error contact-message-hint'
               : 'contact-message-hint'
           }
-          placeholder="State your question clearly (e.g. Grade 10 reporting documents, fee structure query, or examination slip collection)."
+          placeholder={c.placeholderMessage}
           className={`${inputClassName(Boolean(errors.message))} resize-y`}
         />
         {errors.message && (

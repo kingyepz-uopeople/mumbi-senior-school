@@ -5,6 +5,7 @@ import { ArrowRight } from '@/components/icons';
 import BlurRevealHeading from '@/components/shared/BlurRevealHeading';
 import SectionStemBackdrop from '@/components/shared/SectionStemBackdrop';
 import { schoolInfo } from '@/data/mock-school-data';
+import { getWelcomeParagraphs } from '@/i18n/content';
 import LocaleLink from '@/i18n/LocaleLink';
 import { fill } from '@/i18n/fill';
 import { useLocale } from '@/i18n/locale-context';
@@ -100,22 +101,8 @@ function WelcomeLetter({
   );
 }
 
-const deanParagraphs = [
-  'Welcome to the Academic Office of Mumbi Girls Senior School. As Dean of Studies, it is a privilege to work alongside a dedicated team of educators and highly motivated learners who consistently push the boundaries of academic achievement.',
-  'Our academic philosophy is anchored in rigorous preparation, individualized mentorship, and seamless adaptation to the Competency-Based Education Senior School curriculum. Whether a learner is pursuing STEM, Social Sciences, or Arts and Sports Science, our departments ensure she receives hands-on laboratory exposure, structured revision schedules, and close academic tracking from Grade 10 through to national examinations.',
-  'Beyond classroom instruction, we foster a culture of intellectual curiosity, disciplined study habits, and peer collaboration. Through our digital learning portal, learners and parents can easily access holiday assignments, termly academic calendars, and revision materials to keep learning uninterrupted both in school and at home.',
-  'We remain committed to guiding every girl toward realizing her highest academic potential and securing competitive placements in premier universities and tertiary institutions across Kenya and beyond.',
-];
-
-const principalParagraphs = [
-  'It is with immense pride and warm hospitality that I welcome you to the official digital home of Mumbi Girls Senior School. Located in the serene learning environment of Mukuyu in Kiharu, Murang\u2019a County, our institution stands as a center of academic rigor, moral integrity, and holistic girl-child empowerment.',
-  'For decades, Mumbi Girls has nurtured young women into confident, disciplined, and visionary leaders who excel across national examinations, university placements, and diverse spheres of society. Today, as we embrace the Competency-Based Education Senior School framework, we are equipping our learners not just to pass exams, but to discover and master their unique potential across our STEM, Social Sciences, and Arts and Sports Science pathways.',
-  'At Mumbi Girls Senior School, we believe that true education balances sharp intellect with strong character. Alongside dedicated classroom instruction from our committed teaching staff, we place deep emphasis on spiritual nourishment, co-curricular excellence, leadership, and personal responsibility. Every learner who walks through our gates is mentored to think critically, serve selflessly, and lead with courage.',
-  'Whether you are a prospective parent, a current learner, a proud alumna, or an education partner, I invite you to explore our programs, track our achievements, and connect with our vibrant school community through this portal. Together, let us continue shaping women of substance who will transform our nation and the world.',
-];
-
 export default function WelcomeMessages() {
-  const { dict } = useLocale();
+  const { locale, dict } = useLocale();
   const h = dict.home;
 
   return (
@@ -130,9 +117,9 @@ export default function WelcomeMessages() {
           seed="home-principal-welcome"
           kicker={h.principalKicker}
           title={fill(h.principalTitle, { name: schoolInfo.name })}
-          paragraphs={principalParagraphs}
+          paragraphs={getWelcomeParagraphs(locale, 'principal')}
           name="Mrs. Florence Wahito Thumbi"
-          role={`Chief Principal, ${schoolInfo.name}`}
+          role={fill(h.principalRole, { name: schoolInfo.name })}
           photo={{
             src: '/images/principal.jpg',
             alt: `Portrait of Mrs. Florence Wahito Thumbi, Chief Principal of ${schoolInfo.name}`,
@@ -148,9 +135,9 @@ export default function WelcomeMessages() {
           seed="home-dean-welcome"
           kicker={h.deanKicker}
           title={h.deanTitle}
-          paragraphs={deanParagraphs}
+          paragraphs={getWelcomeParagraphs(locale, 'dean')}
           name="Mr. Kiruri"
-          role={`Dean of Studies, ${schoolInfo.name}`}
+          role={fill(h.deanRole, { name: schoolInfo.name })}
           photo={{
             src: '/images/school/dean-of-studies.jpg',
             alt: 'Mr. Kiruri, Dean of Studies, holding a trophy beside the school KCSE target banner',

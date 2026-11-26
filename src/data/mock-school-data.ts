@@ -404,7 +404,7 @@ export const newsItems: NewsItem[] = [
       'Term 3 report covering syllabus coverage, internal assessments, Prayer Day, inter-house games, and closing dates.',
     body: [
       'The Term 3 Mid-Term Newsletter reports on syllabus progress, internal examination dates, and laboratory and library preparations for Senior School classes.',
-      'It also covers Prayer Day, inter-house sports fixtures, Girl Guides and St. John Ambulance activities, and key calendar dates for the close of term.',
+      'It also covers Prayer Day, inter-house sports fixtures, Scout Association and St. John Ambulance activities, and key calendar dates for the close of term.',
       'Parents and guardians can download the full PDF copy from the Downloads page.',
     ],
     slug: 'term-3-mid-term-newsletter-2024',
@@ -559,13 +559,13 @@ export const departments: Department[] = [
 // ── Clubs & Activities ──────────────────────────────────────
 export const clubs: Club[] = [
   {
-    id: 'girl-guides',
-    name: 'Girl Guides',
+    id: 'scout-association',
+    name: 'Scout Association',
     category: 'Movement',
-    patron: 'Mrs. Sarah Kimani',
+    patron: 'Ms. Ndathi',
     meetingDay: 'Saturday, 14:00',
     description:
-      'Parade drills, campcraft, outdoor skills, and community service under the Kenya Girl Guides programme.',
+      'Parade drills, campcraft, outdoor skills, and community service under the Kenya Scouts Association programme.',
     icon: 'Compass',
   },
   {
@@ -710,7 +710,7 @@ export const sports: Club[] = [
     description:
       'Racket skills, doubles and singles drills, and recreational-to-competitive play for Senior School learners.',
     icon: 'Target',
-    mediaNote: 'Activity video coming soon.',
+    videoSrc: '/videos/sports/badminton.mp4',
   },
 ];
 
@@ -965,6 +965,13 @@ export const galleryAlbums: GalleryAlbum[] = [
         id: 22,
         src: '/images/school/gallery-campus-parade.jpg',
         alt: 'Entrance to the school parade and assembly ground with the campus pine and school bus',
+        width: 1600,
+        height: 900,
+      },
+      {
+        id: 23,
+        src: '/images/school/school-bus.jpg',
+        alt: 'Mumbi Girls High School yellow school bus parked on campus',
         width: 1600,
         height: 900,
       },

@@ -81,6 +81,8 @@ export interface Club {
   icon: string;
   /** Optional note when a sport activity video will be added later. */
   mediaNote?: string;
+  /** Optional public path to an activity video (e.g. /videos/sports/badminton.mp4). */
+  videoSrc?: string;
 }
 
 export interface GamesDepartmentMessage {

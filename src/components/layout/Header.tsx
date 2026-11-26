@@ -442,7 +442,7 @@ function MobileNavDrawer({
             </LocaleLink>
           </div>
           <p className="pt-1 text-[11px] text-slate-600">
-            {schoolInfo.officeHoursShort} · {schoolInfo.postalAddress}
+            {dict.officeHours.schedule} · {schoolInfo.postalAddress}
           </p>
         </div>
       </div>
