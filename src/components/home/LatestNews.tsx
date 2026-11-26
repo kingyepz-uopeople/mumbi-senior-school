@@ -1,23 +1,28 @@
 'use client';
 
 import { ArrowRight } from '@/components/icons';
+import NoticeBoard from '@/components/news/NoticeBoard';
+import {
+  getReturningSlugServerSnapshot,
+  getReturningSlugSnapshot,
+  subscribeReturningSlug,
+} from '@/components/news/notice-theme';
 import BlurRevealHeading from '@/components/shared/BlurRevealHeading';
 import SectionStemBackdrop from '@/components/shared/SectionStemBackdrop';
 import { getNewsItems } from '@/i18n/content';
 import LocaleLink from '@/i18n/LocaleLink';
 import { useLocale } from '@/i18n/locale-context';
-import { parseDateKE, toIsoDate } from '@/lib/utils';
-
-export const newsCategoryTextClasses: Record<string, string> = {
-  Circular: 'text-accent',
-  Newsletter: 'text-primary',
-  Download: 'text-primary-dark',
-  Event: 'text-slate-700',
-};
+import { parseDateKE } from '@/lib/utils';
+import { useSyncExternalStore } from 'react';
 
 export default function LatestNews() {
   const { locale, dict } = useLocale();
   const h = dict.home;
+  const returningSlug = useSyncExternalStore(
+    subscribeReturningSlug,
+    getReturningSlugSnapshot,
+    getReturningSlugServerSnapshot
+  );
 
   const displayItems = [...getNewsItems(locale)]
     .sort(
@@ -29,96 +34,58 @@ export default function LatestNews() {
     <section
       id="latest-news"
       aria-labelledby="latest-news-heading"
-      className="relative py-16 sm:py-24 bg-slate-bg scroll-mt-28"
+      className="relative scroll-mt-28 bg-slate-bg py-16 sm:py-24"
     >
       <SectionStemBackdrop variant="notices" />
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
+      <div className="relative mx-auto max-w-7xl px-4 sm:px-6">
         <div
           data-reveal=""
-          className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8"
+          className="mb-8 flex flex-col justify-between gap-4 md:flex-row md:items-end"
         >
           <div className="max-w-2xl">
-            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary mb-2">
-              {h.newsKicker}
-            </p>
             <BlurRevealHeading
               id="latest-news-heading"
               seed="home-latest-news"
-              className="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-900 leading-tight"
+              className="font-serif text-2xl font-bold leading-tight text-primary-dark sm:text-3xl lg:text-4xl"
             >
               {h.newsHeading}
             </BlurRevealHeading>
+            <p className="mt-2 text-xs font-semibold tracking-[0.18em] text-primary uppercase">
+              {h.newsKicker}
+            </p>
           </div>
 
-          <LocaleLink
-            href="/downloads"
-            className="min-h-11 inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:text-primary-dark hover:underline underline-offset-4 transition-colors shrink-0"
-          >
-            <span>{h.newsAllDownloads}</span>
-            <ArrowRight
-              className="w-4 h-4 shrink-0 stroke-[1.75]"
-              aria-hidden="true"
-            />
-          </LocaleLink>
+          <div className="flex flex-col items-start gap-2 sm:flex-row sm:items-center sm:gap-4">
+            <LocaleLink
+              href="/news"
+              className="inline-flex min-h-11 shrink-0 items-center gap-1.5 text-sm font-semibold text-primary underline-offset-4 transition-colors hover:text-primary-dark hover:underline"
+            >
+              <span>{h.newsAllNotices}</span>
+              <ArrowRight
+                className="h-4 w-4 shrink-0 stroke-[1.75]"
+                aria-hidden="true"
+              />
+            </LocaleLink>
+            <LocaleLink
+              href="/downloads"
+              className="inline-flex min-h-11 shrink-0 items-center gap-1.5 text-sm font-semibold text-primary underline-offset-4 transition-colors hover:text-primary-dark hover:underline"
+            >
+              <span>{h.newsAllDownloads}</span>
+              <ArrowRight
+                className="h-4 w-4 shrink-0 stroke-[1.75]"
+                aria-hidden="true"
+              />
+            </LocaleLink>
+          </div>
         </div>
 
-        <div className="bg-white/45 border-t-2 border-t-primary border-x border-b border-slate-200 divide-y divide-slate-200">
-          {displayItems.map((item, idx) => {
-            const categoryClass =
-              newsCategoryTextClasses[item.category] ??
-              newsCategoryTextClasses.Event;
-
-            return (
-              <article
-                key={item.id}
-                data-reveal=""
-                data-reveal-delay={idx > 0 ? String(Math.min(idx, 3)) : undefined}
-                className="p-5 sm:p-7 grid grid-cols-1 md:grid-cols-12 gap-3 md:gap-6 items-start"
-              >
-                <div className="md:col-span-3 flex md:flex-col items-center md:items-start gap-3 md:gap-1">
-                  <time
-                    dateTime={toIsoDate(item.date)}
-                    className="text-xs sm:text-sm font-medium text-slate-600 tabular-nums"
-                  >
-                    {item.date}
-                  </time>
-                  <span
-                    className={`text-[11px] font-bold uppercase tracking-[0.12em] ${categoryClass}`}
-                  >
-                    {item.category}
-                  </span>
-                </div>
-
-                <div className="md:col-span-7">
-                  <h3 className="font-serif text-lg sm:text-xl font-bold text-slate-900 leading-snug mb-1.5">
-                    <LocaleLink
-                      href={`/news/${item.slug}`}
-                      className="hover:text-primary hover:underline underline-offset-4 transition-colors"
-                    >
-                      {item.title}
-                    </LocaleLink>
-                  </h3>
-                  <p className="text-sm text-slate-600 leading-relaxed">
-                    {item.excerpt}
-                  </p>
-                </div>
-
-                <div className="md:col-span-2 md:text-right">
-                  <LocaleLink
-                    href={`/news/${item.slug}`}
-                    className="min-h-11 inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:text-primary-dark transition-colors"
-                  >
-                    <span>{h.newsReadNotice}</span>
-                    <ArrowRight
-                      className="w-4 h-4 shrink-0 stroke-[1.75]"
-                      aria-hidden="true"
-                    />
-                  </LocaleLink>
-                </div>
-              </article>
-            );
-          })}
-        </div>
+        <NoticeBoard
+          items={displayItems}
+          readMoreLabel={dict.common.readMore}
+          variant="home"
+          returningSlug={returningSlug}
+          labelledBy="latest-news-heading"
+        />
       </div>
     </section>
   );

@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from 'next';
+import { Caveat } from 'next/font/google';
 import localFont from 'next/font/local';
 import './globals.css';
 
@@ -37,6 +38,12 @@ const sourceSerif = localFont({
     },
   ],
   variable: '--font-source-serif',
+  display: 'swap',
+});
+
+const caveat = Caveat({
+  subsets: ['latin'],
+  variable: '--font-caveat',
   display: 'swap',
 });
 
@@ -113,7 +120,7 @@ export default function RootLayout({
     <html
       lang={localeHtmlLang[defaultLocale]}
       data-scroll-behavior="smooth"
-      className={`${inter.variable} ${sourceSerif.variable} antialiased font-sans`}
+      className={`${inter.variable} ${sourceSerif.variable} ${caveat.variable} antialiased font-sans`}
     >
       <body className="flex min-h-dvh flex-col bg-slate-bg text-slate-800">
         {children}
