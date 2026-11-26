@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from 'react';
 
-/** Play muted, looped sport clips and stop (reloop) at endSeconds. */
+/** Muted, looping sport clip that only plays the first `endSeconds`. */
 export default function SportActivityVideo({
   src,
   label,
@@ -18,35 +18,32 @@ export default function SportActivityVideo({
     const video = videoRef.current;
     if (!video) return;
 
-    const keepMuted = () => {
+    const keepSilent = () => {
       video.muted = true;
+      video.defaultMuted = true;
       video.volume = 0;
     };
 
-    const clampAndLoop = () => {
+    const enforceTrimmedLoop = () => {
       if (video.currentTime >= endSeconds) {
-        video.currentTime = 0;
+        video.currentTime = 0.05;
         void video.play().catch(() => {});
       }
     };
 
-    keepMuted();
-    video.addEventListener('volumechange', keepMuted);
-    video.addEventListener('timeupdate', clampAndLoop);
-    video.addEventListener('loadedmetadata', () => {
-      if (video.duration > endSeconds) {
-        // Hint duration UI toward the trimmed length where supported.
-        try {
-          video.currentTime = 0;
-        } catch {
-          /* ignore seek errors before ready */
-        }
-      }
+    keepSilent();
+    video.addEventListener('play', keepSilent);
+    video.addEventListener('volumechange', keepSilent);
+    video.addEventListener('timeupdate', enforceTrimmedLoop);
+    video.addEventListener('ended', () => {
+      video.currentTime = 0.05;
+      void video.play().catch(() => {});
     });
 
     return () => {
-      video.removeEventListener('volumechange', keepMuted);
-      video.removeEventListener('timeupdate', clampAndLoop);
+      video.removeEventListener('play', keepSilent);
+      video.removeEventListener('volumechange', keepSilent);
+      video.removeEventListener('timeupdate', enforceTrimmedLoop);
     };
   }, [endSeconds, src]);
 
@@ -56,9 +53,10 @@ export default function SportActivityVideo({
         ref={videoRef}
         className="aspect-video w-full bg-black object-cover"
         controls
+        controlsList="nodownload noplaybackrate"
+        disablePictureInPicture
         playsInline
         muted
-        loop
         preload="metadata"
         aria-label={label}
         src={`${src}#t=0,${endSeconds}`}
