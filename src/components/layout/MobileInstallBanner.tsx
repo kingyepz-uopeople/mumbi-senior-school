@@ -17,24 +17,24 @@ export default function MobileInstallBanner() {
     <aside
       data-light-surface
       aria-label={i.ariaLabel}
-      className="fixed bottom-0 inset-x-0 md:inset-x-auto md:right-5 md:bottom-5 z-50 p-3 md:p-0 pointer-events-none"
+      className="pointer-events-none fixed inset-x-0 bottom-0 z-50 p-2 pb-[max(0.5rem,env(safe-area-inset-bottom))] md:inset-x-auto md:right-5 md:bottom-5 md:p-0 md:pb-0"
     >
-      <div className="pointer-events-auto bg-white rounded-sm shadow-lg border border-slate-300 border-t-2 border-t-primary p-4 max-w-md md:w-96 mx-auto">
-        <div className="flex items-start gap-3">
+      <div className="pointer-events-auto mx-auto max-w-sm rounded-sm border border-slate-300 border-t-2 border-t-primary bg-white px-3 py-2 shadow-lg md:w-96 md:max-w-md md:p-4">
+        <div className="flex items-center gap-2.5 md:items-start md:gap-3">
           <Image
             src="/icons/icon-192x192.png"
             alt="Mumbi Girls' Senior School crest"
             width={44}
             height={44}
             sizes="44px"
-            className="w-11 h-11 rounded-xs bg-white border border-slate-200 object-contain shrink-0"
+            className="h-8 w-8 shrink-0 rounded-xs border border-slate-200 bg-white object-contain md:h-11 md:w-11"
           />
 
-          <div className="flex-1 min-w-0">
-            <p className="font-serif text-slate-900 font-bold text-sm leading-snug">
+          <div className="min-w-0 flex-1">
+            <p className="font-serif text-[13px] leading-snug font-bold text-slate-900 md:text-sm">
               {i.title}
             </p>
-            <p className="text-slate-600 text-xs mt-0.5 leading-relaxed">
+            <p className="mt-0.5 hidden text-xs leading-relaxed text-slate-600 md:block">
               {i.body}
             </p>
           </div>
@@ -42,10 +42,10 @@ export default function MobileInstallBanner() {
           <button
             type="button"
             onClick={dismissBanner}
-            className="inline-flex items-center justify-center w-11 h-11 -mr-2 -mt-2 rounded-full text-slate-600 hover:text-primary transition-colors shrink-0"
+            className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-slate-600 transition-colors hover:text-primary md:-mt-2 md:-mr-2 md:h-11 md:w-11"
             aria-label={i.dismissAria}
           >
-            <X className="w-4 h-4" aria-hidden="true" />
+            <X className="h-4 w-4" aria-hidden="true" />
           </button>
         </div>
 
@@ -53,12 +53,12 @@ export default function MobileInstallBanner() {
           <div
             role="status"
             aria-live="polite"
-            className="mt-3 pt-3 border-t border-slate-200 text-xs text-slate-700 space-y-2.5"
+            className="mt-2 space-y-2 border-t border-slate-200 pt-2 text-xs text-slate-700 md:mt-3 md:space-y-2.5 md:pt-3"
           >
             {manualHint === 'ios' ? (
               <p className="flex items-start gap-2 leading-relaxed">
                 <Share
-                  className="w-4 h-4 text-primary shrink-0 mt-0.5 stroke-[1.75]"
+                  className="mt-0.5 h-4 w-4 shrink-0 text-primary stroke-[1.75]"
                   aria-hidden="true"
                 />
                 <span>
@@ -79,25 +79,25 @@ export default function MobileInstallBanner() {
             <button
               type="button"
               onClick={dismissBanner}
-              className="w-full min-h-11 px-4 py-2.5 rounded-full bg-primary text-white font-semibold text-xs hover:bg-primary-dark transition-colors"
+              className="min-h-9 w-full rounded-full bg-primary px-4 py-2 text-[11px] font-semibold text-white transition-colors hover:bg-primary-dark md:min-h-11 md:py-2.5 md:text-xs"
             >
               {i.closeDontShow}
             </button>
           </div>
         ) : (
-          <div className="mt-3 pt-3 border-t border-slate-200 flex items-center gap-2">
+          <div className="mt-2 flex items-center gap-2 border-t border-slate-200 pt-2 md:mt-3 md:pt-3">
             <button
               type="button"
               onClick={handleBannerInstall}
-              className="flex-1 min-h-11 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-full bg-primary hover:bg-primary-dark text-white text-xs font-semibold transition-colors"
+              className="inline-flex min-h-9 flex-1 items-center justify-center gap-1.5 rounded-full bg-primary px-3 py-2 text-[11px] font-semibold text-white transition-colors hover:bg-primary-dark md:min-h-11 md:gap-2 md:px-4 md:py-2.5 md:text-xs"
             >
-              <Download className="w-4 h-4 stroke-[1.75]" aria-hidden="true" />
+              <Download className="h-3.5 w-3.5 stroke-[1.75] md:h-4 md:w-4" aria-hidden="true" />
               <span>{i.installApp}</span>
             </button>
             <button
               type="button"
               onClick={dismissBanner}
-              className="min-h-11 px-3.5 py-2.5 rounded-full border border-slate-300 text-slate-700 hover:text-primary hover:border-primary text-xs font-medium transition-colors"
+              className="min-h-9 rounded-full border border-slate-300 px-3 py-2 text-[11px] font-medium text-slate-700 transition-colors hover:border-primary hover:text-primary md:min-h-11 md:px-3.5 md:py-2.5 md:text-xs"
             >
               {i.notNow}
             </button>
