@@ -6,7 +6,6 @@ import BlurRevealHeading from '@/components/shared/BlurRevealHeading';
 import PageHero from '@/components/shared/PageHero';
 import SectionStemBackdrop from '@/components/shared/SectionStemBackdrop';
 import { PathwaysTabs } from '@/components/home/PathwaysPreview';
-import PathwaysDetails from '@/components/academics/PathwaysDetails';
 import { departments, schoolInfo } from '@/data/mock-school-data';
 import { buildPageMetadata } from '@/lib/site';
 
@@ -80,9 +79,6 @@ export default function AcademicsPage() {
           </div>
         </div>
       </section>
-
-      {/* Expanded track detail experience; homepage pathway cards remain unchanged. */}
-      <PathwaysDetails />
 
       {/* 2. Academic Departments Directory */}
       <section

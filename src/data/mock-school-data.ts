@@ -1105,19 +1105,9 @@ export const galleryAlbums: GalleryAlbum[] = [
     name: 'STEM Innovation Fair 2025',
     description:
       "Student science, agriculture, and computing exhibits entered at the 2025 Murang'a County STEM Fair.",
-    coverImage: '/images/school/gallery-11.jpg',
+    coverImage: '/images/school/gallery-04.jpg',
     year: 2025,
     images: [
-      {
-        id: 8,
-        src: '/images/school/gallery-11.jpg',
-        alt: 'Students sharing a meal in the dining hall',
-        caption: 'Computing and applied science demonstration by STEM students, 2025',
-        event: 'STEM Innovation Fair',
-        year: 2025,
-        width: 1536,
-        height: 864,
-      },
       {
         id: 9,
         src: '/images/school/gallery-04.jpg',
@@ -1176,15 +1166,6 @@ export const galleryAlbums: GalleryAlbum[] = [
         year: 2025,
         width: 1599,
         height: 899,
-      },
-      {
-        id: 15,
-        src: '/images/school/gallery-19.jpg',
-        alt: 'Teacher standing with students on school grounds',
-        event: 'KSSSA Sports',
-        year: 2025,
-        width: 899,
-        height: 1599,
       },
     ],
   },
