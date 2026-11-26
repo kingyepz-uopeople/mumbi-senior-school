@@ -22,6 +22,7 @@ export async function generateMetadata({
 }: {
   params: Promise<{ locale: string; slug: string }>;
 }): Promise<Metadata> {
+  'use cache';
   const { slug, locale: localeParam } = await params;
   const item = newsItems.find((entry) => entry.slug === slug);
 

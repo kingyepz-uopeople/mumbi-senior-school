@@ -16,6 +16,7 @@ export async function generateMetadata({
 }: {
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
+  'use cache';
   const { locale, dict } = await getLocaleDictionary(params);
 
   return buildPageMetadata({
