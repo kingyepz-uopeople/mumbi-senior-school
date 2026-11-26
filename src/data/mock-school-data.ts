@@ -650,7 +650,12 @@ export const sports: Club[] = [
     description:
       'School volleyball teams competing in inter-house matches and sub-county, county, and regional KSSSA fixtures.',
     icon: 'CircleDot',
-    imageSrc: '/images/sports/volleyball.jpg',
+    imageSrc: '/images/sports/volleyball-team-1.jpg',
+    gallerySrcs: [
+      '/images/sports/volleyball-team-1.jpg',
+      '/images/sports/volleyball-team-2.jpg',
+      '/images/sports/volleyball-team-3.jpg',
+    ],
     videoSrc: '/videos/sports/volleyball.mp4',
     patronMessage: [
       'Volleyball teaches teamwork, timing, and resilience. Every afternoon our girls train to serve, set, and spike with discipline and joy.',

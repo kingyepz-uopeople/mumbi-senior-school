@@ -85,6 +85,8 @@ export interface Club {
   videoSrc?: string;
   /** Optional activity / team photograph shown on the sport card. */
   imageSrc?: string;
+  /** Optional extra team / activity photographs shown under the sport card. */
+  gallerySrcs?: string[];
   /** Optional short message from the sport patron / coach. */
   patronMessage?: string[];
 }

@@ -5,6 +5,7 @@ import UtilityBar from '@/components/layout/UtilityBar';
 import MobileInstallBanner from '@/components/layout/MobileInstallBanner';
 import ScrollRevealObserver from '@/components/shared/ScrollRevealObserver';
 import { PwaProvider } from '@/components/pwa/PwaProvider';
+import DynamicMarker from '@/components/shared/DynamicMarker';
 import {
   isLocale,
   localeHtmlLang,
@@ -60,6 +61,7 @@ export default async function LocaleLayout({
         <Footer />
         <MobileInstallBanner />
         <ScrollRevealObserver />
+        <DynamicMarker />
       </PwaProvider>
     </LocaleProvider>
   );
