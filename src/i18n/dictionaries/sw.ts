@@ -423,7 +423,7 @@ const sw: Dictionary = {
     metaClubs: 'Vilabu na Harakati 7',
     metaSports: 'Michezo 9 ya KSSSA',
     metaRoutine: 'Ratiba ya Wiki 05:00 – 22:00',
-    metaFaith: 'Vikundi 4 vya Imani',
+    metaFaith: 'Vikundi 3 vya Imani',
     jumpSports: 'Michezo',
     jumpFaith: 'Huduma za Kichungaji',
     jumpBoarding: 'Bweni',

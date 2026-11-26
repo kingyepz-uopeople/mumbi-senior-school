@@ -580,7 +580,7 @@ export const clubs: Club[] = [
   },
   {
     id: 'red-cross',
-    name: 'Red Cross',
+    name: 'Kenya Red Cross',
     category: 'Movement',
     patron: 'Mrs. Agnes Njeri',
     meetingDay: 'Wednesday, 16:30',
@@ -800,16 +800,6 @@ export const faithGroups: Club[] = [
     description:
       'Catholic student fellowship holding weekly prayer, liturgy preparation, and service activities.',
     icon: 'Heart',
-  },
-  {
-    id: 'sda',
-    name: 'SDA Fellowship',
-    category: 'Faith',
-    patron: 'Mrs. Naomi Njiru',
-    meetingDay: 'Saturday 09:00',
-    description:
-      'Seventh-Day Adventist Sabbath worship, Scripture study, and choir fellowship.',
-    icon: 'Sun',
   },
   {
     id: 'muslim',

@@ -40,8 +40,16 @@ const CLUB_ART: Record<string, ProspectusArtKey> = {
 
 const CLUB_LOGOS: Record<string, { src: string; alt: string }> = {
   'scout-association': {
-    src: '/images/clubs/scout-association.svg',
-    alt: 'Scout Association emblem',
+    src: '/images/clubs/scout-association.png',
+    alt: 'Kenya Scouts Association emblem',
+  },
+  'st-john': {
+    src: '/images/clubs/st-john-ambulance.png',
+    alt: 'St John Ambulance logo',
+  },
+  'red-cross': {
+    src: '/images/clubs/kenya-red-cross.png',
+    alt: 'Kenya Red Cross logo',
   },
 };
 
@@ -100,7 +108,6 @@ const SPORT_PHOTOS: Record<string, { src: string; alt: string }> = {
 const FAITH_ART: Record<string, ProspectusArtKey> = {
   cu: 'christian-union',
   ycs: 'young-christian-students',
-  sda: 'sda-fellowship',
   muslim: 'muslim-association',
 };
 
@@ -194,9 +201,9 @@ function LifePreviewCard({
               <img
                 src={logo.src}
                 alt=""
-                width={112}
-                height={128}
-                className="absolute inset-0 m-auto h-24 w-auto object-contain drop-shadow-md sm:h-28"
+                width={160}
+                height={112}
+                className="absolute inset-0 m-auto max-h-24 max-w-[78%] w-auto object-contain drop-shadow-md sm:max-h-28"
               />
             ) : artKind ? (
               <ProspectusCardArt
@@ -476,7 +483,7 @@ export default function ExploreTabs() {
           cardCount={faithGroups.length}
           role="list"
           aria-label={e.faithAria}
-          className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4"
+          className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3"
         >
           {faithGroups.map((group, index) => (
             <article

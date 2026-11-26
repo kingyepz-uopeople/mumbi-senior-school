@@ -135,7 +135,7 @@ const clubSw: Record<string, LocalizedClubFields> = {
       'Vyeti vya huduma ya kwanza, mazoezi ya majibu ya dharura, na kuhudumu wakati wa michezo na makusanyiko ya shule.',
   },
   'red-cross': {
-    name: 'Red Cross',
+    name: 'Kenya Red Cross',
     category: 'Harakati',
     meetingDay: 'Jumatano, 16:30',
     description:
@@ -185,13 +185,6 @@ const faithSw: Record<string, LocalizedClubFields> = {
     meetingDay: 'Jumapili 09:00 na Alhamisi 17:00',
     description:
       'Ushirika wa wanafunzi Wakatoliki wenye sala ya kila wiki, maandalizi ya liturujia, na shughuli za huduma.',
-  },
-  sda: {
-    name: 'SDA Fellowship',
-    category: 'Imani',
-    meetingDay: 'Jumamosi 09:00',
-    description:
-      'Ibada ya Sabato ya Seventh-Day Adventist, somo la Maandiko, na ushirika wa kwaya.',
   },
   muslim: {
     name: 'Muslim Student Association',

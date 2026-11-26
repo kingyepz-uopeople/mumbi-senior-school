@@ -419,7 +419,7 @@ const en = {
     metaClubs: '7 Clubs & Movements',
     metaSports: '9 KSSSA Sports',
     metaRoutine: '05:00 – 22:00 Weekday Routine',
-    metaFaith: '4 Faith Fellowships',
+    metaFaith: '3 Faith Fellowships',
     jumpSports: 'Sports & Games',
     jumpFaith: 'Chaplaincy',
     jumpBoarding: 'Boarding',
