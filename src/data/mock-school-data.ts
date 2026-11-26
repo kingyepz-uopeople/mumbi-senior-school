@@ -105,14 +105,20 @@ export const schoolInfo: SchoolInfo = {
   officeHoursShort: 'Mon–Fri: 08:00 – 17:00',
   email: 'mumbigirls1968@gmail.com',
   phone: '+254711461192',
-  founded: 1960,
+  founded: 1968,
+  foundedOn: '09/11/1968',
+  founder: 'Hon. Dr. J. G. Kiano, E.G.H., D.Ph., M.P.',
   category: "C2 Public Girls' Boarding Senior School",
   domain: 'mumbiseniorschool.sc.ke',
 };
 
 // ── Quick Facts ─────────────────────────────────────────────
 export const quickStats: QuickStat[] = [
-  { label: 'Established', value: String(schoolInfo.founded), detail: schoolInfo.locationShort },
+  {
+    label: 'Established',
+    value: String(schoolInfo.founded),
+    detail: `Foundation stone · ${schoolInfo.foundedOn}`,
+  },
   {
     label: 'Student Enrolment',
     value: '1,200+',
@@ -420,7 +426,7 @@ export const newsItems: NewsItem[] = [
 
 // ── Principals Timeline ─────────────────────────────────────
 export const principals: Principal[] = [
-  { id: 1, name: 'Mrs. Mary Wambui Kamau', period: '1960 – 1972' },
+  { id: 1, name: 'Mrs. Mary Wambui Kamau', period: '1968 – 1972' },
   { id: 2, name: 'Mrs. Hannah Njeri Mwangi', period: '1973 – 1985' },
   { id: 3, name: 'Mrs. Grace Wanjiku Kariuki', period: '1986 – 1998' },
   { id: 4, name: 'Mrs. Margaret Nyambura Gitau', period: '1999 – 2010' },
@@ -436,7 +442,7 @@ export const principals: Principal[] = [
 
 // ── BOM Chairpersons Timeline ───────────────────────────────
 export const bomChairpersons: BOMChairperson[] = [
-  { id: 1, name: 'Mr. Joseph Kamau Ndirangu', period: '1960 – 1975' },
+  { id: 1, name: 'Mr. Joseph Kamau Ndirangu', period: '1968 – 1975' },
   { id: 2, name: 'Mr. Peter Mwangi Gitonga', period: '1976 – 1990' },
   { id: 3, name: 'Mrs. Dorothy Wanjiru Njoroge', period: '1991 – 2005' },
   { id: 4, name: 'Dr. Samuel Kariuki Maina', period: '2006 – 2018' },
@@ -924,7 +930,7 @@ export const galleryAlbums: GalleryAlbum[] = [
     id: 'school-campus',
     name: serenityAlbumName,
     description:
-      'A look around Mumbi Girls Senior School, from the main gate to the Tahidi study area and academic buildings.',
+      'A look around Mumbi Girls Senior School, from the parade ground and main gate to the Tahidi study area and academic buildings.',
     coverImage: '/images/school/gallery-campus-serenity.jpg',
     images: [
       {
@@ -933,6 +939,13 @@ export const galleryAlbums: GalleryAlbum[] = [
         alt: 'Elevated view of campus lawns, palm trees, paths, and blue-pillared buildings',
         width: 1600,
         height: 777,
+      },
+      {
+        id: 22,
+        src: '/images/school/gallery-campus-parade.jpg',
+        alt: 'Entrance to the school parade and assembly ground with the campus pine and school bus',
+        width: 1600,
+        height: 900,
       },
       {
         id: 17,

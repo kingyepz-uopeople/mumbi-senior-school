@@ -1080,6 +1080,154 @@
   gap: 1rem;
 }
 
+/* Homepage / shared pathway selector cards — match CBC pathways reference */
+.pathway-preview-card {
+  display: flex;
+  height: 100%;
+  min-height: 100%;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid rgb(219 228 239 / 95%);
+  border-radius: 1.25rem;
+  background: rgb(255 255 255 / 96%);
+  box-shadow:
+    0 6px 24px -8px rgb(15 23 42 / 8%),
+    0 1px 3px rgb(15 23 42 / 4%);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  text-align: left;
+  transition:
+    transform 0.38s var(--ease-editorial, cubic-bezier(0.22, 1, 0.36, 1)),
+    box-shadow 0.38s var(--ease-editorial, cubic-bezier(0.22, 1, 0.36, 1)),
+    border-color 0.3s ease;
+}
+
+.pathway-preview-card[data-selected='true'] {
+  border-color: rgb(147 197 253 / 95%);
+  box-shadow:
+    0 0 0 1px rgb(17 81 145 / 18%),
+    0 18px 36px -14px rgb(14 77 146 / 22%),
+    0 6px 14px -6px rgb(15 23 42 / 8%);
+}
+
+.pathway-preview-photo {
+  position: relative;
+  display: block;
+  height: 11rem;
+  overflow: hidden;
+  background: #eaf2fa;
+}
+
+.pathway-preview-image {
+  transition: transform 0.65s var(--ease-editorial, cubic-bezier(0.22, 1, 0.36, 1));
+}
+
+.pathway-preview-code {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 9999px;
+  padding: 0.25rem 0.75rem;
+  background: rgb(255 255 255 / 90%);
+  color: var(--color-primary-dark);
+  box-shadow: 0 1px 3px rgb(15 23 42 / 12%);
+  -webkit-backdrop-filter: blur(10px) saturate(135%);
+  backdrop-filter: blur(10px) saturate(135%);
+  font-size: 0.6875rem;
+  font-weight: 650;
+  letter-spacing: 0.04em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.pathway-preview-explore {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  border-radius: 9999px;
+  padding: 0.25rem 0.75rem;
+  background: rgb(15 23 42 / 60%);
+  color: #fff;
+  -webkit-backdrop-filter: blur(10px) saturate(135%);
+  backdrop-filter: blur(10px) saturate(135%);
+  font-size: 0.6875rem;
+  font-weight: 650;
+  line-height: 1.2;
+}
+
+.pathway-preview-explore-arrow {
+  display: inline-block;
+  transition: transform 0.25s ease;
+}
+
+.pathway-preview-underline {
+  display: block;
+  height: 2px;
+  width: 0%;
+  border-radius: 9999px;
+  background: linear-gradient(90deg, #60a5fa, #fff, #38bdf8);
+  transition: width 0.45s var(--ease-editorial, cubic-bezier(0.22, 1, 0.36, 1));
+}
+
+.pathway-preview-body {
+  display: block;
+  flex: 1;
+  padding: 1.15rem 1.25rem 1.35rem;
+}
+
+@media (min-width: 640px) {
+  .pathway-preview-photo {
+    height: 12rem;
+  }
+
+  .pathway-preview-body {
+    padding: 1.25rem 1.5rem 1.5rem;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  button:hover .pathway-preview-card,
+  button:focus-visible .pathway-preview-card {
+    transform: translateY(-8px);
+    border-color: #93c5fd;
+    box-shadow:
+      0 24px 44px -14px rgb(14 77 146 / 22%),
+      0 8px 16px -4px rgb(15 23 42 / 7%);
+  }
+
+  button:hover .pathway-preview-image,
+  button:focus-visible .pathway-preview-image {
+    transform: scale(1.07);
+  }
+
+  button:hover .pathway-preview-explore-arrow,
+  button:focus-visible .pathway-preview-explore-arrow {
+    transform: translateX(4px);
+  }
+
+  button:hover .pathway-preview-underline,
+  button:focus-visible .pathway-preview-underline,
+  .pathway-preview-card[data-selected='true'] .pathway-preview-underline,
+  .pathway-preview-card[data-cycle-active='true'] .pathway-preview-underline {
+    width: 100%;
+  }
+
+  button:hover .pathway-preview-card .subject-chip,
+  button:focus-visible .pathway-preview-card .subject-chip {
+    transform: translateY(-2px);
+    border-color: rgb(147 197 253 / 85%);
+    background: linear-gradient(
+      135deg,
+      rgb(255 255 255 / 92%) 0%,
+      rgb(219 234 254 / 72%) 100%
+    );
+    color: var(--color-primary-dark);
+    box-shadow:
+      0 4px 0 rgb(147 197 253 / 55%),
+      0 8px 16px -4px rgb(14 77 146 / 16%),
+      inset 0 1.5px 1px #fff;
+  }
+}
+
 .pathway-track-card {
   display: flex;
   min-width: 0;

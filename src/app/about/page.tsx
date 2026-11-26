@@ -58,7 +58,7 @@ export default function AboutPage() {
         variant="about"
         kicker="About the School"
         title={schoolInfo.name}
-        subtitle={`A ${schoolInfo.category} in ${schoolInfo.physicalLocation}. Established in ${schoolInfo.founded}.`}
+        subtitle={`A ${schoolInfo.category} in ${schoolInfo.physicalLocation}. Foundation stone laid on ${schoolInfo.foundedOn}.`}
         meta={[
           `Est. ${schoolInfo.founded}`,
           `KNEC ${schoolInfo.knecCode}`,
@@ -92,21 +92,23 @@ export default function AboutPage() {
               <ScrollHighlightText
                 seed="about-history-intro"
                 segments={[
-                  `${schoolInfo.name} was founded in `,
-                  { text: String(schoolInfo.founded), strong: true },
-                  " to expand public secondary schooling for girls in Murang'a and the wider region. The school carries the name ",
+                  `The foundation stone of Mumbi Girls Secondary School was laid on `,
+                  { text: '9 November 1968', strong: true },
+                  ' by ',
+                  { text: schoolInfo.founder, strong: true },
+                  ". The school was established to expand public secondary schooling for girls in Murang'a and the wider region, and carries the name ",
                   { text: 'Mumbi', em: true },
                   ', the matriarch of the Agikuyu people.',
                 ]}
               />
               <p>
-                Supported over six decades by successive Boards of Management,
-                parents, teaching and non-teaching staff, and the Ministry of
-                Education, the institution operates today as a registered{' '}
-                <strong>{schoolInfo.category}</strong> (KNEC Centre Code{' '}
-                <strong>{schoolInfo.knecCode}</strong>, Ministry of Education
-                Registration <strong>{schoolInfo.moeReg}</strong>) with a
-                boarding enrolment of over 1,200 students.
+                Supported for more than five decades by successive Boards of
+                Management, parents, teaching and non-teaching staff, and the
+                Ministry of Education, the institution operates today as a
+                registered <strong>{schoolInfo.category}</strong> (KNEC Centre
+                Code <strong>{schoolInfo.knecCode}</strong>, Ministry of
+                Education Registration <strong>{schoolInfo.moeReg}</strong>) with
+                a boarding enrolment of over 1,200 students.
               </p>
               <p>
                 In line with Kenya&apos;s Competency-Based Curriculum (CBC), the
@@ -135,6 +137,15 @@ export default function AboutPage() {
                 <dt className="text-xs text-slate-600">Official Name</dt>
                 <dd className="font-serif font-bold text-base text-slate-900 mt-0.5">
                   {schoolInfo.name}
+                </dd>
+              </div>
+              <div className="py-3.5">
+                <dt className="text-xs text-slate-600">Foundation Stone</dt>
+                <dd className="font-medium text-slate-900 mt-0.5">
+                  {schoolInfo.foundedOn}
+                </dd>
+                <dd className="text-slate-700 mt-1 text-xs leading-relaxed">
+                  Laid by {schoolInfo.founder}
                 </dd>
               </div>
               <div className="py-3.5">
@@ -186,14 +197,17 @@ export default function AboutPage() {
             <figure data-reveal="" className="m-0">
               <div className="relative w-full aspect-3/4 overflow-hidden bg-slate-100 border border-slate-300">
                 <Image
-                  src="/images/school/about-prize-1.jpg"
-                  alt="Student receiving a prize from school staff"
+                  src="/images/school/foundation-plaque.jpg"
+                  alt="Foundation stone plaque laid by Hon. Dr. J. G. Kiano on 9 November 1968"
                   width={960}
                   height={1280}
                   sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 600px"
                   className="w-full h-full object-cover"
                 />
               </div>
+              <figcaption className="mt-2 text-xs text-slate-600">
+                Foundation stone · 9 November 1968 · Hon. Dr. J. G. Kiano
+              </figcaption>
             </figure>
 
             <figure data-reveal="" data-reveal-delay="1" className="m-0">

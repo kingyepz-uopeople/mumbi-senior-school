@@ -70,7 +70,8 @@ export default function Footer() {
             </div>
 
             <p className="text-white/85 text-sm leading-relaxed mb-5 max-w-sm">
-              {schoolInfo.category} in {schoolInfo.locationShort}. Established in {schoolInfo.founded}.
+              {schoolInfo.category} in {schoolInfo.locationShort}. Established{' '}
+              {schoolInfo.foundedOn}.
             </p>
 
             <dl className="pt-4 border-t border-white/15 text-xs text-white/90 space-y-3 tabular-nums">

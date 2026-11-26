@@ -51,7 +51,7 @@ export const viewport: Viewport = {
   themeColor: '#115191',
 };
 
-const schoolDescription = `${SITE_NAME} — ${schoolInfo.motto}. ${schoolInfo.category} in ${schoolInfo.physicalLocation}. Established ${schoolInfo.founded}. KNEC ${schoolInfo.knecCode}, MoE ${schoolInfo.moeReg}.`;
+const schoolDescription = `${SITE_NAME} — ${schoolInfo.motto}. ${schoolInfo.category} in ${schoolInfo.physicalLocation}. Foundation stone laid ${schoolInfo.foundedOn} by ${schoolInfo.founder}. KNEC ${schoolInfo.knecCode}, MoE ${schoolInfo.moeReg}.`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),

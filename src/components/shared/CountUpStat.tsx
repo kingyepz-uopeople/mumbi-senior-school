@@ -47,7 +47,7 @@ function formatStatNumber(parsed: ParsedStat, current: number): string {
 }
 
 interface CountUpStatProps {
-  /** Exact real figure string (e.g. `"1960"`, `"1,200+"`, `"78%"`, `"3"`) */
+  /** Exact real figure string (e.g. `"1968"`, `"1,200+"`, `"78%"`, `"3"`) */
   value: string;
   /** Index in the stats strip for gentle initial & loop staggering */
   index?: number;
@@ -59,7 +59,7 @@ interface CountUpStatProps {
  * Viewport-triggered count-up figure for the school statistics band.
  * - Counts smoothly from `0` to the exact final value when scrolled into view,
  *   preserving prefixes, comma separators (`1,200+`), `+`, `%`, and plain years
- *   (`1960`) unchanged.
+ *   (`1968`) unchanged.
  * - Locks exact final width with an invisible CSS `inline-grid` sizer +
  *   `tabular-nums` so zero layout shift occurs during initial count or replays.
  * - Holds the finished real figure for ~8.6–11.8s (staggered per column), then

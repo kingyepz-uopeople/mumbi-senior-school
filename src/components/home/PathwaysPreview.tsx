@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import type { CSSProperties, KeyboardEvent as ReactKeyboardEvent } from 'react';
 import { useRef, useState } from 'react';
 import Link from 'next/link';
 import { ArrowRight } from '@/components/icons';
@@ -13,14 +14,17 @@ const PATHWAY_VISUALS = {
   stem: {
     src: '/images/pathways/pathways-stem.jpg',
     alt: 'Students conducting a science practical in a laboratory',
+    code: 'STEM',
   },
   'social-sciences': {
     src: '/images/pathways/pathways-social-sciences.jpg',
     alt: 'Students studying together in a school library',
+    code: 'Social',
   },
   'arts-sports': {
     src: '/images/pathways/pathways-arts-sports-science.jpg',
     alt: 'Students training for an outdoor athletics event',
+    code: 'Arts & Sports',
   },
 } as const;
 
@@ -33,7 +37,7 @@ export function PathwaysTabs({ idPrefix = 'home-pathway' }: PathwaysTabsProps) {
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
   const handleTabKeyDown = (
-    event: React.KeyboardEvent<HTMLButtonElement>,
+    event: ReactKeyboardEvent<HTMLButtonElement>,
     index: number
   ) => {
     const total = cbcPathways.length;
@@ -57,7 +61,6 @@ export function PathwaysTabs({ idPrefix = 'home-pathway' }: PathwaysTabsProps) {
 
   return (
     <div>
-      {/* Tall pathway-card WAI-ARIA Tablist */}
       <SpotlightCardGroup
         cardCount={cbcPathways.length}
         role="tablist"
@@ -85,33 +88,73 @@ export function PathwaysTabs({ idPrefix = 'home-pathway' }: PathwaysTabsProps) {
               data-reveal-delay={index > 0 ? String(index) : undefined}
               onClick={() => setActiveIndex(index)}
               onKeyDown={(e) => handleTabKeyDown(e, index)}
-              className="w-[82vw] max-w-sm shrink-0 snap-center text-left focus-visible:rounded-3xl lg:w-full lg:max-w-none"
+              className="w-[82vw] max-w-sm shrink-0 snap-center text-left focus-visible:rounded-[1.25rem] lg:w-full lg:max-w-none"
             >
               <span
                 data-card-cycle
-                className={`flex h-full min-h-[430px] flex-col rounded-3xl border border-t-2 bg-white p-5 text-left sm:min-h-[460px] sm:p-6 ${
-                  selected
-                    ? 'border-primary ring-1 ring-primary/15'
-                    : 'border-slate-200 border-t-primary'
-                }`}
+                data-pathway-preview-card=""
+                data-selected={selected ? 'true' : 'false'}
+                className="pathway-preview-card"
               >
-                <span className="font-serif text-xl font-bold text-primary-dark sm:text-2xl">
-                  {pathway.name}
-                </span>
-                <span className="relative mt-5 block aspect-[4/3] w-full overflow-hidden rounded-2xl bg-slate-bg">
+                <span className="pathway-preview-photo">
                   <Image
                     src={visual.src}
                     alt={visual.alt}
                     fill
                     sizes="(max-width: 639px) 82vw, (max-width: 1023px) 384px, 32vw"
-                    className="object-cover"
+                    className="pathway-preview-image object-cover"
                   />
+                  <span
+                    className="absolute inset-0 bg-linear-to-t from-slate-950/75 via-slate-900/15 to-transparent"
+                    aria-hidden="true"
+                  />
+
+                  <span className="absolute inset-x-3.5 top-3.5 flex items-center justify-between gap-2">
+                    <span className="pathway-preview-code">{visual.code}</span>
+                    <span className="pathway-preview-explore">
+                      Explore{' '}
+                      <span className="pathway-preview-explore-arrow" aria-hidden="true">
+                        →
+                      </span>
+                    </span>
+                  </span>
+
+                  <span className="absolute inset-x-5 bottom-3.5">
+                    <span className="block font-serif text-xl font-bold leading-snug text-white drop-shadow-sm sm:text-[1.35rem]">
+                      {pathway.name}
+                    </span>
+                    <span className="pathway-preview-underline mt-1.5" aria-hidden="true" />
+                  </span>
                 </span>
-                <span
-                  id={`${idPrefix}-summary-${pathway.id}`}
-                  className="mt-auto pt-5 text-sm leading-relaxed text-slate-700"
-                >
-                  {pathway.summary}
+
+                <span className="pathway-preview-body">
+                  <span
+                    id={`${idPrefix}-summary-${pathway.id}`}
+                    className="block text-sm leading-relaxed text-slate-600"
+                  >
+                    {pathway.summary}
+                  </span>
+
+                  <span className="mt-4 block">
+                    <span className="block text-[11px] font-bold uppercase tracking-[0.12em] text-primary">
+                      Tracks
+                    </span>
+                    <span className="mt-2.5 flex flex-wrap gap-1.5">
+                      {pathway.tracks.map((track, trackIndex) => (
+                        <span
+                          key={track.id}
+                          className="subject-chip"
+                          style={
+                            {
+                              '--chip-delay': `${trackIndex * 35}ms`,
+                            } as CSSProperties
+                          }
+                        >
+                          {track.name}
+                        </span>
+                      ))}
+                    </span>
+                  </span>
                 </span>
               </span>
             </button>
@@ -119,7 +162,6 @@ export function PathwaysTabs({ idPrefix = 'home-pathway' }: PathwaysTabsProps) {
         })}
       </SpotlightCardGroup>
 
-      {/* Active Pathway Tabpanel */}
       <div
         id={activePanelId}
         role="tabpanel"
@@ -127,29 +169,29 @@ export function PathwaysTabs({ idPrefix = 'home-pathway' }: PathwaysTabsProps) {
         tabIndex={0}
         className="mt-8 animate-fadeIn"
       >
-        <div className="bg-white/45 border-t-2 border-t-primary border-x border-b border-slate-200 grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-slate-200">
+        <div className="grid grid-cols-1 divide-y divide-slate-200 border-x border-b border-slate-200 border-t-2 border-t-primary bg-white/45 md:grid-cols-3 md:divide-x md:divide-y-0">
           {activePathway.tracks.map((track) => (
             <article
               key={track.id}
-              className="p-6 sm:p-7 flex flex-col justify-between gap-6"
+              className="flex flex-col justify-between gap-6 p-6 sm:p-7"
             >
               <div>
-                <h3 className="font-serif text-xl font-bold text-slate-900 mb-2">
+                <h3 className="mb-2 font-serif text-xl font-bold text-slate-900">
                   {track.name}
                 </h3>
-                <p className="text-slate-600 text-sm leading-relaxed mb-5">
+                <p className="mb-5 text-sm leading-relaxed text-slate-600">
                   {track.description}
                 </p>
 
                 <div>
-                  <h4 className="font-sans text-[11px] font-semibold uppercase tracking-[0.12em] text-primary mb-2">
+                  <h4 className="mb-2 font-sans text-[11px] font-semibold uppercase tracking-[0.12em] text-primary">
                     Subjects Taught
                   </h4>
                   <ul className="space-y-1 text-sm text-slate-800">
                     {track.subjects.map((subject) => (
                       <li key={subject} className="flex items-baseline gap-2">
                         <span
-                          className="text-slate-400 select-none"
+                          className="select-none text-slate-400"
                           aria-hidden="true"
                         >
                           –
@@ -161,11 +203,11 @@ export function PathwaysTabs({ idPrefix = 'home-pathway' }: PathwaysTabsProps) {
                 </div>
               </div>
 
-              <div className="pt-4 border-t border-slate-200">
-                <h4 className="font-sans text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-600 mb-1.5">
+              <div className="border-t border-slate-200 pt-4">
+                <h4 className="mb-1.5 font-sans text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-600">
                   Related University Fields
                 </h4>
-                <p className="text-xs text-slate-700 leading-relaxed">
+                <p className="text-xs leading-relaxed text-slate-700">
                   {track.careers.join(' · ')}
                 </p>
               </div>
@@ -181,22 +223,22 @@ export default function PathwaysPreview() {
   return (
     <section
       aria-labelledby="cbc-pathways-heading"
-      className="relative py-16 sm:py-24 bg-slate-bg"
+      className="relative bg-slate-bg py-16 sm:py-24"
     >
       <SectionStemBackdrop variant="stem" />
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
+      <div className="relative mx-auto max-w-7xl px-4 sm:px-6">
         <div
           data-reveal=""
-          className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8"
+          className="mb-8 flex flex-col justify-between gap-4 md:flex-row md:items-end"
         >
           <div className="max-w-2xl">
-            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary mb-2">
+            <p className="mb-2 text-xs font-semibold uppercase tracking-[0.14em] text-primary">
               Senior School Curriculum · Grades 10 – 12
             </p>
             <BlurRevealHeading
               id="cbc-pathways-heading"
               seed="home-cbc-pathways"
-              className="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-900 leading-tight"
+              className="font-serif text-2xl font-bold leading-tight text-slate-900 sm:text-3xl lg:text-4xl"
             >
               CBC Senior School Pathways
             </BlurRevealHeading>
@@ -204,11 +246,11 @@ export default function PathwaysPreview() {
 
           <Link
             href="/academics#departments"
-            className="min-h-11 inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:text-primary-dark hover:underline underline-offset-4 transition-colors shrink-0"
+            className="inline-flex min-h-11 shrink-0 items-center gap-1.5 text-sm font-semibold text-primary underline-offset-4 transition-colors hover:text-primary-dark hover:underline"
           >
             <span>View all five academic departments</span>
             <ArrowRight
-              className="w-4 h-4 shrink-0 stroke-[1.75]"
+              className="h-4 w-4 shrink-0 stroke-[1.75]"
               aria-hidden="true"
             />
           </Link>

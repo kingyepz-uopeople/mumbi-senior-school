@@ -284,7 +284,7 @@ const VARIANT_MOTIFS: Record<HeroBackdropVariant, MotifPlacement[]> = {
     },
   ],
 
-  /* About: scholarship, heritage since 1960, school anthems & leadership */
+  /* About: scholarship, heritage since 1968, school anthems & leadership */
   about: [
     {
       motif: 'openBook',

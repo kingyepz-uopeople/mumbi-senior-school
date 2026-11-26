@@ -160,7 +160,12 @@ export interface SchoolInfo {
   officeHoursShort: string;
   email: string;
   phone: string;
+  /** Year the foundation stone was laid. */
   founded: number;
+  /** Foundation-stone date in DD/MM/YYYY. */
+  foundedOn: string;
+  /** Person who laid the foundation stone. */
+  founder: string;
   category: string;
   domain: string;
 }

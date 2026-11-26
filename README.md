@@ -38,9 +38,9 @@ UXWing credit: icons by UXWing, used under the [UXWing license](https://uxwing.c
    - The sticky header carries only the crest and primary navigation; a slim utility strip sits directly above the footer on every page.
    - The strip displays KNEC Centre Code `10204102`, MoE registration `F2030609`, the postal address, a live open/closed office-hours line (Africa/Nairobi), student/staff portal shortcuts, and the PWA install trigger, and it wraps cleanly on narrow screens.
 2. **Home (`/`):**
-   - Homepage hero with the school crest, motto, provenance (`Murang'a Township · Est. 1960`), school particulars, and a campus photo background (`public/images/school/hero-assembly.jpg`).
+   - Homepage hero with the school crest, motto, provenance (`Murang'a Township · Est. 1968`), school particulars, and a campus photo background (`public/images/school/hero-assembly.jpg`).
    - A hero shortcut to the For parents index, with links to Grade 10 reporting, the uniform guide, fees, resources, KCSE results, and school contacts.
-   - Key school figures (Established 1960, 1,200+ students, 2025 KCSE mean of 7.1926 (C+), 3 CBC Senior School pathways).
+   - Key school figures (Established 1968, 1,200+ students, 2025 KCSE mean of 7.1926 (C+), 3 CBC Senior School pathways).
    - Chief Principal's welcome message and portrait of Mrs. Florence Wahito Thumbi (`public/images/principal.jpg`).
    - Motto, Mission, Vision, and the school’s 12 Core Values, with a link to their full descriptions.
    - 3-tab CBC Senior School Pathways overview (Grades 10–12).
@@ -50,7 +50,7 @@ UXWing credit: icons by UXWing, used under the [UXWing license](https://uxwing.c
    - Historical background and transition to Mumbi Girls Senior School.
    - All 12 Core Values with their existing descriptions in editorial rows, serif names, blue icons, and hairline separators. Staggered scroll reveals use only opacity/transform via `ScrollRevealObserver`, with a static reduced-motion fallback.
    - Dual School Anthems card (English *School Anthem* & Kiswahili *Wimbo wa Shule*).
-   - Roll of Principals timeline (1960 to Present).
+   - Roll of Principals timeline (1968 to Present).
    - Board of Management (BOM) Chairpersons timeline.
    - Administrative Deputies and democratic Student Council governance.
 4. **Academics & CBC Pathways (`/academics`):**

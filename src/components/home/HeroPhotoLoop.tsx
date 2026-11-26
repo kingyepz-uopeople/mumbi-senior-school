@@ -13,8 +13,8 @@ const SWAP_MS = 3000;
 const HERO_PHOTOS = [
   {
     src: '/images/school/hero-assembly.jpg',
-    alt: 'Students gathered outside Mumbi Girls Senior School',
-    position: 'object-[center_28%]',
+    alt: 'Entrance to the school parade and assembly ground with the campus pine and school bus',
+    position: 'object-center',
   },
   {
     src: '/images/school/gallery-campus-gate.jpg',
