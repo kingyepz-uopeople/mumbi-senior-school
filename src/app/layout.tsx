@@ -1,16 +1,9 @@
 import type { Metadata, Viewport } from 'next';
-import { headers } from 'next/headers';
 import localFont from 'next/font/local';
 import './globals.css';
 
 import { schoolInfo } from '@/data/mock-school-data';
-import {
-  defaultLocale,
-  isLocale,
-  localeHtmlLang,
-  LOCALE_COOKIE,
-  type Locale,
-} from '@/i18n/config';
+import { defaultLocale, localeHtmlLang } from '@/i18n/config';
 import { DEFAULT_OG_IMAGE, SITE_NAME, SITE_URL } from '@/lib/site';
 
 const inter = localFont({
@@ -109,28 +102,16 @@ export const metadata: Metadata = {
   },
 };
 
-async function resolveLocale(): Promise<Locale> {
-  const headerStore = await headers();
-  const fromHeader = headerStore.get('x-locale');
-  if (fromHeader && isLocale(fromHeader)) return fromHeader;
-
-  const cookie = headerStore.get('cookie') ?? '';
-  const match = cookie.match(new RegExp(`${LOCALE_COOKIE}=([^;]+)`));
-  if (match?.[1] && isLocale(match[1])) return match[1];
-
-  return defaultLocale;
-}
-
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const locale = await resolveLocale();
-
+  // Keep the root shell static under Cache Components: do not read
+  // cookies()/headers() here. LocaleProvider sets documentElement.lang.
   return (
     <html
-      lang={localeHtmlLang[locale]}
+      lang={localeHtmlLang[defaultLocale]}
       data-scroll-behavior="smooth"
       className={`${inter.variable} ${sourceSerif.variable} antialiased font-sans`}
     >
