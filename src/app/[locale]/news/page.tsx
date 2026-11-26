@@ -3,6 +3,7 @@ import NewsIndexClient, {
   type FeaturedImage,
 } from '@/components/news/NewsIndexClient';
 import { galleryAlbums, newsItems } from '@/data/mock-school-data';
+import { getNewsItems } from '@/i18n/content';
 import { getLocaleDictionary } from '@/i18n/server';
 import { getAvailablePublicAssets } from '@/lib/media';
 import { buildPageMetadata } from '@/lib/site';
@@ -49,8 +50,9 @@ export default async function NewsPage({
 }: {
   params: Promise<{ locale: string }>;
 }) {
-  const { dict } = await getLocaleDictionary(params);
+  const { locale, dict } = await getLocaleDictionary(params);
   const n = dict.news;
+  const items = getNewsItems(locale);
 
   return (
     <div className="bg-slate-bg">
@@ -71,7 +73,7 @@ export default async function NewsPage({
           </p>
 
           <div className="mt-10 sm:mt-12">
-            <NewsIndexClient items={newsItems} featuredImages={buildFeaturedImages()} />
+            <NewsIndexClient items={items} featuredImages={buildFeaturedImages()} />
           </div>
         </div>
       </section>

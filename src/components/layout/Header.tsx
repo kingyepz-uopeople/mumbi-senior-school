@@ -11,7 +11,7 @@ import { usePwa } from '@/components/pwa/PwaProvider';
 import { stripLocale } from '@/i18n/config';
 import LocaleLink from '@/i18n/LocaleLink';
 import { useLocale } from '@/i18n/locale-context';
-import { getNavigation } from '@/i18n/navigation';
+import { getNavigation, navItemIsActive } from '@/i18n/navigation';
 import type { NavItem } from '@/types';
 
 function useBarePathname() {
@@ -203,7 +203,7 @@ function MobileNavDrawer({
   const { canNativeInstall, triggerNativeInstall } = usePwa();
   const [expandedItems, setExpandedItems] = useState<Set<string>>(() => {
     const active = navigation.find(
-      (item) => item.children?.length && pathname === item.href
+      (item) => item.children?.length && navItemIsActive(pathname, item)
     );
     return active ? new Set([active.label]) : new Set();
   });
@@ -325,60 +325,62 @@ function MobileNavDrawer({
           className="flex-1 overflow-y-auto px-4 py-3 divide-y divide-slate-200"
         >
           {navigation.map((item) => {
-            const isActive = pathname === item.href;
+            const isActive = navItemIsActive(pathname, item);
             const isExpanded = expandedItems.has(item.label);
             const sectionId = `mobile-sub-${item.href.replace(/\W+/g, '')}`;
 
             if (item.children?.length) {
               return (
                 <div key={item.label} className="py-1">
-                  <button
-                    type="button"
-                    aria-expanded={isExpanded}
-                    aria-controls={sectionId}
-                    onClick={() => toggleExpand(item.label)}
-                    className={`w-full min-h-11 flex items-center justify-between px-3.5 py-2.5 rounded-full text-sm font-medium transition-colors ${
-                      isActive
-                        ? 'bg-primary text-white font-semibold'
-                        : 'text-slate-800 hover:text-primary hover:bg-slate-100'
+                  <div
+                    className={`flex min-h-11 items-center rounded-full ${
+                      isActive ? 'bg-primary text-white' : ''
                     }`}
                   >
-                    <span>{item.label}</span>
-                    <ChevronDown
-                      className={`w-4 h-4 shrink-0 transition-transform duration-150 ${
-                        isExpanded ? 'rotate-180' : ''
-                      } ${
+                    <LocaleLink
+                      href={item.href}
+                      aria-current={isActive ? 'page' : undefined}
+                      onClick={onClose}
+                      className={`flex min-h-11 min-w-0 flex-1 items-center px-3.5 py-2.5 text-sm font-medium transition-colors ${
                         isActive
-                          ? 'text-white'
-                          : isExpanded
-                            ? 'text-primary'
-                            : 'text-slate-500'
+                          ? 'font-semibold text-white'
+                          : 'text-slate-800 hover:text-primary'
                       }`}
-                      aria-hidden="true"
-                    />
-                  </button>
+                    >
+                      {item.label}
+                    </LocaleLink>
+                    <button
+                      type="button"
+                      aria-expanded={isExpanded}
+                      aria-controls={sectionId}
+                      aria-label={`${item.label} submenu`}
+                      onClick={() => toggleExpand(item.label)}
+                      className={`inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full transition-colors ${
+                        isActive
+                          ? 'text-white hover:bg-primary-dark'
+                          : 'text-slate-500 hover:bg-slate-100 hover:text-primary'
+                      }`}
+                    >
+                      <ChevronDown
+                        className={`h-4 w-4 transition-transform duration-150 ${
+                          isExpanded ? 'rotate-180' : ''
+                        }`}
+                        aria-hidden="true"
+                      />
+                    </button>
+                  </div>
 
                   {isExpanded && (
                     <ul
                       id={sectionId}
-                      className="mt-1 mb-2 ml-3 pl-3 border-l border-slate-300 space-y-0.5"
+                      className="mt-1 mb-2 ml-3 space-y-0.5 border-l border-slate-300 pl-3"
                     >
-                      <li>
-                        <LocaleLink
-                          href={item.href}
-                          aria-current={isActive ? 'page' : undefined}
-                          onClick={onClose}
-                          className="flex items-center min-h-11 px-2 py-2 text-sm font-semibold text-primary hover:underline underline-offset-4"
-                        >
-                          {item.label}
-                        </LocaleLink>
-                      </li>
                       {item.children.map((child) => (
                         <li key={child.href}>
                           <LocaleLink
                             href={child.href}
                             onClick={onClose}
-                            className="flex items-center min-h-11 px-2 py-2 text-sm text-slate-700 hover:text-primary"
+                            className="flex min-h-11 items-center px-2 py-2 text-sm text-slate-700 hover:text-primary"
                           >
                             {child.label}
                           </LocaleLink>
@@ -506,7 +508,7 @@ export default function Header() {
                   <DesktopDropdown
                     key={item.href}
                     item={item}
-                    isActive={pathname === item.href}
+                    isActive={navItemIsActive(pathname, item)}
                   />
                 ))}
               </nav>

@@ -3,7 +3,7 @@
 import { ArrowRight } from '@/components/icons';
 import BlurRevealHeading from '@/components/shared/BlurRevealHeading';
 import SectionStemBackdrop from '@/components/shared/SectionStemBackdrop';
-import { newsItems } from '@/data/mock-school-data';
+import { getNewsItems } from '@/i18n/content';
 import LocaleLink from '@/i18n/LocaleLink';
 import { useLocale } from '@/i18n/locale-context';
 import { parseDateKE, toIsoDate } from '@/lib/utils';
@@ -16,10 +16,10 @@ export const newsCategoryTextClasses: Record<string, string> = {
 };
 
 export default function LatestNews() {
-  const { dict } = useLocale();
+  const { locale, dict } = useLocale();
   const h = dict.home;
 
-  const displayItems = [...newsItems]
+  const displayItems = [...getNewsItems(locale)]
     .sort(
       (a, b) => parseDateKE(b.date).getTime() - parseDateKE(a.date).getTime()
     )

@@ -29,7 +29,7 @@ export const navigation: NavItem[] = [
   { label: 'Admissions', href: '/admissions' },
   {
     label: 'Student Life',
-    href: '/explore',
+    href: '/student-life',
     children: [
       { label: 'Clubs & Movements', href: '/explore#clubs' },
       { label: 'Sports & Games', href: '/explore#sports' },

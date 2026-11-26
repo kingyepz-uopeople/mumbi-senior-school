@@ -11,7 +11,11 @@ import {
 import type { BeforeInstallPromptEvent } from '@/types';
 import { isBeforeInstallPromptEvent } from '@/lib/utils';
 
-const DISMISSED_KEY = 'mumbi-install-banner-dismissed';
+const DISMISS_UNTIL_KEY = 'mumbi-install-banner-dismiss-until';
+const LEGACY_DISMISSED_KEY = 'mumbi-install-banner-dismissed';
+const DISMISS_MS = 7 * 24 * 60 * 60 * 1000;
+const SHOW_DELAY_MS = 30_000;
+const SCROLL_PX_THRESHOLD = 480;
 
 export type ManualInstallHint = 'ios' | 'browser' | null;
 
@@ -29,15 +33,31 @@ const PwaContext = createContext<PwaContextValue | null>(null);
 
 function readDismissedFlag(): boolean {
   try {
-    return window.localStorage.getItem(DISMISSED_KEY) === 'true';
+    const untilRaw = window.localStorage.getItem(DISMISS_UNTIL_KEY);
+    if (untilRaw) {
+      const until = Number(untilRaw);
+      if (Number.isFinite(until) && Date.now() < until) return true;
+    }
+
+    if (window.localStorage.getItem(LEGACY_DISMISSED_KEY) === 'true') {
+      const until = Date.now() + DISMISS_MS;
+      window.localStorage.setItem(DISMISS_UNTIL_KEY, String(until));
+      window.localStorage.removeItem(LEGACY_DISMISSED_KEY);
+      return true;
+    }
   } catch {
     return false;
   }
+  return false;
 }
 
 function writeDismissedFlag(): void {
   try {
-    window.localStorage.setItem(DISMISSED_KEY, 'true');
+    window.localStorage.setItem(
+      DISMISS_UNTIL_KEY,
+      String(Date.now() + DISMISS_MS)
+    );
+    window.localStorage.removeItem(LEGACY_DISMISSED_KEY);
   } catch {
     // Ignore storage errors in restricted/private browsing contexts
   }
@@ -64,6 +84,15 @@ function detectIos(): boolean {
   );
 }
 
+function hasScrolledMeaningfully(): boolean {
+  const y = window.scrollY;
+  if (y >= SCROLL_PX_THRESHOLD) return true;
+  if (y >= window.innerHeight * 0.75) return true;
+  const scrollable =
+    document.documentElement.scrollHeight - window.innerHeight;
+  return scrollable > 0 && y / scrollable >= 0.35;
+}
+
 export function PwaProvider({ children }: { children: React.ReactNode }) {
   const [deferredPrompt, setDeferredPrompt] =
     useState<BeforeInstallPromptEvent | null>(null);
@@ -85,17 +114,27 @@ export function PwaProvider({ children }: { children: React.ReactNode }) {
     }
 
     const alreadyStandalone = detectStandalone();
-    const dismissed = readDismissedFlag();
-    const compactViewportQuery = window.matchMedia('(max-width: 768px)');
+    let revealed = false;
+    let timer: ReturnType<typeof setTimeout> | undefined;
+
+    const revealBanner = () => {
+      if (revealed) return;
+      if (readDismissedFlag() || detectStandalone()) return;
+      revealed = true;
+      setBannerVisible(true);
+      window.removeEventListener('scroll', onScroll);
+      if (timer) clearTimeout(timer);
+    };
+
+    const onScroll = () => {
+      if (hasScrolledMeaningfully()) revealBanner();
+    };
 
     const onBeforeInstallPrompt = (event: Event) => {
       if (!isBeforeInstallPromptEvent(event)) return;
       event.preventDefault();
       setDeferredPrompt(event);
       setManualHint(null);
-      if (!readDismissedFlag() && !detectStandalone()) {
-        setBannerVisible(true);
-      }
     };
 
     const onAppInstalled = () => {
@@ -108,20 +147,19 @@ export function PwaProvider({ children }: { children: React.ReactNode }) {
     window.addEventListener('beforeinstallprompt', onBeforeInstallPrompt);
     window.addEventListener('appinstalled', onAppInstalled);
 
-    let timer: ReturnType<typeof setTimeout> | undefined;
+    const compactViewport = window.matchMedia('(max-width: 768px)');
+
     if (alreadyStandalone) {
       timer = setTimeout(() => setIsInstalled(true), 0);
-    } else if (!dismissed && compactViewportQuery.matches) {
-      timer = setTimeout(() => {
-        if (!readDismissedFlag() && !detectStandalone()) {
-          setBannerVisible(true);
-        }
-      }, 2500);
+    } else if (!readDismissedFlag() && compactViewport.matches) {
+      timer = setTimeout(revealBanner, SHOW_DELAY_MS);
+      window.addEventListener('scroll', onScroll, { passive: true });
     }
 
     return () => {
       window.removeEventListener('beforeinstallprompt', onBeforeInstallPrompt);
       window.removeEventListener('appinstalled', onAppInstalled);
+      window.removeEventListener('scroll', onScroll);
       if (timer) clearTimeout(timer);
     };
   }, []);

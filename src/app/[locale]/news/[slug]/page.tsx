@@ -4,9 +4,12 @@ import { ArrowLeft, ArrowRight } from '@/components/icons';
 import BlurRevealHeading from '@/components/shared/BlurRevealHeading';
 import PageHero from '@/components/shared/PageHero';
 import SectionStemBackdrop from '@/components/shared/SectionStemBackdrop';
+import { MOE_2027_CALENDAR } from '@/data/academic-calendar';
 import { newsItems, schoolInfo } from '@/data/mock-school-data';
 import { newsCategoryTextClasses } from '@/components/home/LatestNews';
+import { getNewsItem, getNewsItems } from '@/i18n/content';
 import LocaleLink from '@/i18n/LocaleLink';
+import { isLocale, type Locale } from '@/i18n/config';
 import { fill, getLocaleDictionary } from '@/i18n/server';
 import { buildPageMetadata } from '@/lib/site';
 import { parseDateKE, toIsoDate } from '@/lib/utils';
@@ -24,7 +27,8 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   'use cache';
   const { slug, locale: localeParam } = await params;
-  const item = newsItems.find((entry) => entry.slug === slug);
+  const locale: Locale = isLocale(localeParam) ? localeParam : 'en';
+  const item = getNewsItem(locale, slug);
 
   if (!item) {
     const { dict } = await getLocaleDictionary(
@@ -52,13 +56,15 @@ export default async function NewsArticlePage({
 }: {
   params: Promise<{ locale: string; slug: string }>;
 }) {
-  const { slug, dict } = await (async () => {
+  const { slug, locale, dict } = await (async () => {
     const p = await params;
-    const { dict: d } = await getLocaleDictionary(Promise.resolve({ locale: p.locale }));
-    return { slug: p.slug, dict: d };
+    const { locale: loc, dict: d } = await getLocaleDictionary(
+      Promise.resolve({ locale: p.locale })
+    );
+    return { slug: p.slug, locale: loc, dict: d };
   })();
   const n = dict.news;
-  const item = newsItems.find((entry) => entry.slug === slug);
+  const item = getNewsItem(locale, slug);
 
   if (!item) {
     notFound();
@@ -66,13 +72,21 @@ export default async function NewsArticlePage({
 
   const isArchivedAdmissionsNotice =
     item.slug === 'admission-joining-instructions-2025';
+  const isArchivedOpeningCircular =
+    item.slug === 'term-1-opening-circular-2025';
   const isKcseResultsNotice = item.slug === '2024-kcse-results';
+  const isMinistryCalendar = item.slug === MOE_2027_CALENDAR.slug;
   const primaryAction = isArchivedAdmissionsNotice
     ? { href: '/admissions', label: n.grade10Guide }
-    : isKcseResultsNotice
-      ? { href: '/academics#kcse-results', label: n.viewKcse }
-      : { href: '/downloads', label: n.downloadsCirculars };
-  const relatedItems = newsItems
+    : isArchivedOpeningCircular
+      ? {
+          href: `/news/${MOE_2027_CALENDAR.slug}`,
+          label: n.readCircular,
+        }
+      : isKcseResultsNotice
+        ? { href: '/academics#kcse-results', label: n.viewKcse }
+        : { href: '/downloads', label: n.downloadsCirculars };
+  const relatedItems = getNewsItems(locale)
     .filter((entry) => entry.slug !== item.slug)
     .sort(
       (a, b) => parseDateKE(b.date).getTime() - parseDateKE(a.date).getTime()
@@ -141,6 +155,105 @@ export default async function NewsArticlePage({
               ))}
             </div>
 
+            {isMinistryCalendar ? (
+              <section
+                aria-labelledby="senior-secondary-calendar-heading"
+                className="mt-10 border-t border-slate-200 pt-8"
+              >
+                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary">
+                  {n.calendarKicker}
+                </p>
+                <h2
+                  id="senior-secondary-calendar-heading"
+                  className="mt-2 font-serif text-xl font-bold text-slate-900 sm:text-2xl"
+                >
+                  {n.calendarCaption}
+                </h2>
+                <p className="mt-3 max-w-2xl text-sm leading-relaxed text-slate-600">
+                  {n.calendarNote}
+                </p>
+
+                <div className="mt-6 overflow-x-auto">
+                  <table className="w-full min-w-[36rem] border-t-2 border-primary text-left text-sm text-slate-800">
+                    <caption className="sr-only">{n.calendarCaption}</caption>
+                    <thead>
+                      <tr className="border-b border-slate-200 text-xs font-semibold uppercase tracking-[0.12em] text-slate-600">
+                        <th scope="col" className="py-3 pr-4 font-semibold">
+                          {n.calendarPeriod}
+                        </th>
+                        <th scope="col" className="py-3 pr-4 font-semibold">
+                          {n.calendarOpens}
+                        </th>
+                        <th scope="col" className="py-3 pr-4 font-semibold">
+                          {n.calendarCloses}
+                        </th>
+                        <th scope="col" className="py-3 font-semibold">
+                          {n.calendarDuration}
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-200">
+                      {MOE_2027_CALENDAR.rows.map((row) => (
+                        <tr key={row.id}>
+                          <th
+                            scope="row"
+                            className="py-3 pr-4 font-serif font-semibold text-slate-900"
+                          >
+                            {row.label}
+                          </th>
+                          <td className="py-3 pr-4 tabular-nums">{row.opens}</td>
+                          <td className="py-3 pr-4 tabular-nums">{row.closes}</td>
+                          <td className="py-3 tabular-nums">{row.duration}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+
+                <dl className="mt-6 space-y-2 text-sm text-slate-700">
+                  <div>
+                    <dt className="inline font-semibold text-slate-900">
+                      {n.calendarRef}{' '}
+                    </dt>
+                    <dd className="inline tabular-nums">{MOE_2027_CALENDAR.ref}</dd>
+                  </div>
+                  <div>
+                    <dt className="inline font-semibold text-slate-900">
+                      {n.calendarSigned}{' '}
+                    </dt>
+                    <dd className="inline">
+                      {MOE_2027_CALENDAR.signedBy}, {MOE_2027_CALENDAR.signedByRole}
+                    </dd>
+                  </div>
+                </dl>
+
+                <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+                  <a
+                    href={MOE_2027_CALENDAR.sourceUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-primary-dark"
+                  >
+                    <span>{n.calendarSource}</span>
+                    <ArrowRight
+                      className="h-4 w-4 shrink-0 stroke-[1.75]"
+                      aria-hidden="true"
+                    />
+                    <span className="sr-only">{dict.common.opensNewTab}</span>
+                  </a>
+                  <a
+                    href={MOE_2027_CALENDAR.sourceUrlAlt}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex min-h-11 items-center text-sm font-semibold text-primary underline underline-offset-4 hover:text-primary-dark"
+                  >
+                    {n.calendarSourceAlt}
+                    <span className="sr-only">{dict.common.opensNewTab}</span>
+                  </a>
+                </div>
+              </section>
+            ) : null}
+
             <div className="mt-10 pt-6 border-t border-slate-200 text-xs sm:text-sm text-slate-600 space-y-1 tabular-nums">
               <p className="font-serif font-bold text-base text-slate-900">
                 {fill(n.adminOffice, { name: schoolInfo.name })}
@@ -155,16 +268,32 @@ export default async function NewsArticlePage({
             </div>
 
             <div className="mt-8 flex flex-col sm:flex-row flex-wrap gap-3">
-              <LocaleLink
-                href={primaryAction.href}
-                className="min-h-11 inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full bg-primary hover:bg-primary-dark text-white text-sm font-semibold transition-colors"
-              >
-                <span>{primaryAction.label}</span>
-                <ArrowRight
-                  className="w-4 h-4 shrink-0 stroke-[1.75]"
-                  aria-hidden="true"
-                />
-              </LocaleLink>
+              {isMinistryCalendar ? (
+                <a
+                  href={MOE_2027_CALENDAR.sourceUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="min-h-11 inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full bg-primary hover:bg-primary-dark text-white text-sm font-semibold transition-colors"
+                >
+                  <span>{n.calendarSource}</span>
+                  <ArrowRight
+                    className="w-4 h-4 shrink-0 stroke-[1.75]"
+                    aria-hidden="true"
+                  />
+                  <span className="sr-only">{dict.common.opensNewTab}</span>
+                </a>
+              ) : (
+                <LocaleLink
+                  href={primaryAction.href}
+                  className="min-h-11 inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full bg-primary hover:bg-primary-dark text-white text-sm font-semibold transition-colors"
+                >
+                  <span>{primaryAction.label}</span>
+                  <ArrowRight
+                    className="w-4 h-4 shrink-0 stroke-[1.75]"
+                    aria-hidden="true"
+                  />
+                </LocaleLink>
+              )}
               <LocaleLink
                 href="/contact"
                 className="min-h-11 inline-flex items-center justify-center px-5 py-2.5 rounded-full border border-primary text-primary hover:bg-primary hover:text-white text-sm font-semibold transition-colors"

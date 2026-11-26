@@ -117,9 +117,10 @@ const en = {
         '{year} amounts are not published yet. Ask the school office for fees and instalments.',
       holidayTitle: 'Holiday assignments',
       holidayDetail:
-        'Papers for Grade 10–12 and Form 3–4, filtered by class and subject.',
+        'Papers for Grade 10–12 and Form 3–4, filtered by class and subject. ICT assignments are also on Zeraki.',
       circularTitle: 'Latest circular',
-      circularFallback: 'Term circulars and newsletters.',
+      circularFallback:
+        'Term circulars and school notices from the office.',
       kcseTitle: 'KCSE results',
       kcseDetail:
         'School mean, grade spread and top performers for {first}–{last}.',
@@ -476,11 +477,27 @@ const en = {
     boardingPhoto3Alt:
       'Mumbi Girls High School yellow school bus parked on campus',
   },
+  studentLifePage: {
+    kicker: 'Boarding & Co-Curricular Life',
+    title: 'Student Life at Mumbi Girls',
+    subtitle:
+      'Clubs, sports, the weekday boarding timetable, chaplaincy fellowships, and residential life — start here, then open any section.',
+    intro:
+      'Beyond the classroom, learners at Mumbi Girls Senior School belong to clubs and uniformed movements, train in KSSSA sports, keep a weekday boarding rhythm from 05:00 to 22:00, gather in chaplaincy fellowships, and live in supervised hostels with a clear school uniform standard.',
+    indexKicker: 'In this chapter',
+    indexHeading: 'Open a student life section',
+    indexBody:
+      'Each heading leads to the full page for that part of boarding and co-curricular life.',
+    photoAlt:
+      'Learners assembled on the parade ground at Mumbi Girls Senior School',
+    photoCaption:
+      'Parade ground used for assembly, games, and school occasions',
+  },
   downloads: {
     kicker: 'School Documents',
     title: 'Downloads & Circulars',
     subtitle:
-      'Circulars, timetables, holiday assignments, and other documents issued by the school office.',
+      'Ministry and school circulars, timetables, holiday assignments, and other documents for parents and students.',
     joiningGrade10: 'Joining Grade 10?',
     admissionsGuide: 'admissions guide',
     searchLabel: 'Search school documents',
@@ -515,6 +532,19 @@ const en = {
     otherNotices: 'Other School Notices',
     allDocuments: 'All documents',
     notFound: 'Notice Not Found',
+    calendarKicker: 'Ministry of Education',
+    calendarCaption: 'Senior & Secondary Schools, 2027',
+    calendarPeriod: 'Period',
+    calendarOpens: 'Opens',
+    calendarCloses: 'Closes',
+    calendarDuration: 'Duration',
+    calendarRef: 'Circular ref.',
+    calendarSigned: 'Signed',
+    calendarSource: 'Read the full circular',
+    calendarSourceAlt: 'Term dates summary',
+    calendarNote:
+      'These are national Senior and Secondary School dates from the Ministry of Education. School reporting hours, fees, and boarding instructions are issued separately by the school office when published.',
+    readCircular: 'Read the Ministry circular',
   },
   gallery: {
     kicker: 'School Archives',
