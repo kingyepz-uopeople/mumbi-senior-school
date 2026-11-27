@@ -668,11 +668,11 @@
   }
 
   .notice-slot[data-opening='true'] .notice-pin {
-    animation: notice-pin-pull 380ms var(--ease-editorial) forwards;
+    animation: notice-pin-pull 220ms var(--ease-editorial) forwards;
   }
 
   .notice-slot[data-opening='true'] .notice-tape {
-    animation: notice-tape-peel 380ms var(--ease-editorial) forwards;
+    animation: notice-tape-peel 220ms var(--ease-editorial) forwards;
   }
 
   .notice-slot[data-returning='true'] .notice-cluster {
@@ -819,19 +819,19 @@
 ::view-transition-group(.news-note-morph) {
   z-index: 20;
   overflow: clip;
-  animation-duration: 320ms;
+  animation-duration: 250ms;
   animation-timing-function: var(--ease-editorial);
 }
 
 ::view-transition-image-pair(.news-note-morph) {
-  animation: notice-morph-blur 320ms var(--ease-editorial) both;
+  animation: notice-morph-blur 250ms var(--ease-editorial) both;
 }
 
 ::view-transition-old(.news-note-morph),
 ::view-transition-new(.news-note-morph) {
   height: 100%;
   overflow: clip;
-  animation-duration: 320ms;
+  animation-duration: 250ms;
   mix-blend-mode: normal;
 }
 
