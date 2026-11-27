@@ -4,18 +4,13 @@ import {
   useCallback,
   useEffect,
   useRef,
-  useState,
-  useSyncExternalStore,
   type CSSProperties,
   type MouseEvent,
-  type PointerEvent,
   type ReactNode,
 } from 'react';
-import { useRouter } from 'next/navigation';
 import { ViewTransition } from 'react';
 import { useReducedMotion } from '@/components/shared/motion-utils';
 import LocaleLink from '@/i18n/LocaleLink';
-import { useLocale } from '@/i18n/locale-context';
 import { toIsoDate } from '@/lib/utils';
 import type { NewsItem } from '@/types';
 import {
@@ -30,22 +25,6 @@ import {
   type TapeHue,
   type TapePlacement,
 } from '@/components/news/notice-theme';
-
-const OPEN_MS = 380;
-
-function subscribeFineHover(onChange: () => void) {
-  const query = window.matchMedia('(hover: hover) and (pointer: fine)');
-  query.addEventListener('change', onChange);
-  return () => query.removeEventListener('change', onChange);
-}
-
-function fineHoverSnapshot() {
-  return window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-}
-
-function useFineHover() {
-  return useSyncExternalStore(subscribeFineHover, fineHoverSnapshot, () => true);
-}
 
 function PushPin() {
   return (
@@ -117,13 +96,8 @@ export default function NoticeNote({
   readMoreLabel?: string;
   children?: ReactNode;
 }) {
-  const router = useRouter();
-  const { href: localize } = useLocale();
   const reducedMotion = useReducedMotion();
-  const fineHover = useFineHover();
-  const [lifted, setLifted] = useState(false);
   const slotRef = useRef<HTMLDivElement>(null);
-  const pointerTypeRef = useRef<string>('mouse');
 
   const tone = noteTone(item);
   const tilt = expanded ? 0 : noteTilt(index);
@@ -146,13 +120,6 @@ export default function NoticeNote({
     };
   }, [item.slug]);
 
-  const handlePointerDown = useCallback(
-    (event: PointerEvent<HTMLAnchorElement>) => {
-      pointerTypeRef.current = event.pointerType;
-    },
-    []
-  );
-
   const handleClick = useCallback(
     (event: MouseEvent<HTMLAnchorElement>) => {
       if (
@@ -166,34 +133,16 @@ export default function NoticeNote({
         return;
       }
 
+      rememberOpenSlug(item.slug);
+
       if (reducedMotion) return;
 
-      const fromReadMore = Boolean(
-        (event.target as HTMLElement | null)?.closest('[data-read-more]')
-      );
-
-      if (
-        !fineHover &&
-        !lifted &&
-        !fromReadMore &&
-        pointerTypeRef.current === 'touch'
-      ) {
-        event.preventDefault();
-        setLifted(true);
-        return;
-      }
-
-      event.preventDefault();
+      // Peel and pin-pull run alongside navigation. Do not preventDefault or
+      // delay the LocaleLink, and do not clear data-opening here so the tape
+      // does not snap back before the next page takes over.
       slotRef.current?.setAttribute('data-opening', 'true');
-      rememberOpenSlug(item.slug);
-      const url = localize(href);
-      window.setTimeout(() => {
-        router.push(url, { transitionTypes: ['news-open'] });
-        slotRef.current?.removeAttribute('data-opening');
-        setLifted(false);
-      }, OPEN_MS);
     },
-    [fineHover, href, item.slug, lifted, localize, reducedMotion, router]
+    [item.slug, reducedMotion]
   );
 
   const paperClass = [
@@ -250,7 +199,6 @@ export default function NoticeNote({
           '--note-delay': `${Math.min(index, 8) * 55}ms`,
         } as CSSProperties
       }
-      data-lifted={lifted && !returning ? 'true' : undefined}
       data-returning={returning ? 'true' : undefined}
     >
       <div className="notice-cluster">
@@ -265,9 +213,7 @@ export default function NoticeNote({
             className={paperClass}
             style={paperStyle}
             transitionTypes={['news-open']}
-            onPointerDown={handlePointerDown}
             onClick={handleClick}
-            onBlur={() => setLifted(false)}
           >
             {body}
           </LocaleLink>
